@@ -1,0 +1,10 @@
+{
+    "antlr4.generation": {
+ 
+        "mode": "external",
+        "language": "Dart",
+        "listeners": true,
+        "visitors": false,
+        "outputDir": "../lib/antlr"
+    }
+}
