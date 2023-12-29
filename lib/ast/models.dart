@@ -18,6 +18,26 @@ class Position extends Equatable {
 
   @override
   List<Object?> get props => [start, end];
+
+  operator <(Position other) {
+    return start.line < other.start.line ||
+        (start.line == other.start.line && start.column < other.start.column);
+  }
+
+  operator >(Position other) {
+    return start.line > other.start.line ||
+        (start.line == other.start.line && start.column > other.start.column);
+  }
+
+  operator <=(Position other) {
+    return start.line <= other.start.line ||
+        (start.line == other.start.line && start.column <= other.start.column);
+  }
+
+  operator >=(Position other) {
+    return start.line >= other.start.line ||
+        (start.line == other.start.line && start.column >= other.start.column);
+  }
 }
 
 abstract class Node extends Equatable {
