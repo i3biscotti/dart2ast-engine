@@ -20,7 +20,7 @@ class Position extends Equatable{
   List<Object?> get props => [start, end];
 }
 
-abstract class Node {
+abstract class Node extends Equatable{
   final Position position;
 
   Node(this.position);
@@ -30,6 +30,9 @@ class DartFile extends Node {
   final List<Statement> lines;
 
   DartFile(this.lines, super.position);
+  
+  @override
+  List<Object?> get props => [lines];
 }
 
 abstract class Statement extends Node {
@@ -49,6 +52,9 @@ class VariableDeclarationStatement extends Statement {
     this.value,
     super.position,
   );
+
+  @override
+  List<Object?> get props => [type, name, valueType, value];
 }
 
 enum VariableType {
