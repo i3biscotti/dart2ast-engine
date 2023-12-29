@@ -9,30 +9,30 @@ const text = "Hello World";
 
 */
 
-NEWLINE            : '\r\n' | '\r' | '\n' ;
-WS                 : [\t ]+ -> skip ;
+NEWLINE                     : '\r\n' | '\r' | '\n' ;
+WS                          : [\t ]+ -> skip ;
 
-VAR                : 'var';
-FINAL              : 'final';
-CONST              : 'const';
+VAR                         : 'var';
+FINAL                       : 'final';
+CONST                       : 'const';
 
-INT                : 'int';
-DOUBLE             : 'double';
-STRING             : 'String';
-BOOL               : 'bool';
+INT                         : 'int';
+DOUBLE                      : 'double';
+STRING                      : 'String';
+BOOL                        : 'bool';
 
-ASSIGN             : '=';
-SEMICOLON          : ';';
+ASSIGN                      : '=';
+SEMICOLON                   : ';';
 
-fragment DecDigit: '0'..'9';
-fragment DecDigitNoZero: '1'..'9';
-fragment DecDigits: DecDigit+;
+fragment DecDigit           : '0'..'9';
+fragment DecDigitNoZero     : '1'..'9';
+fragment DecDigits          : DecDigit+;
 
-INTLIT             : DecDigitNoZero DecDigit* | DecDigit;
-DOUBLELIT          : DecDigit '.' DecDigits;
-BOOLLIT            : 'true' | 'false';
+INTLIT                      : DecDigitNoZero DecDigit* | DecDigit;
+DOUBLELIT                   : DecDigit '.' DecDigits;
+BOOLLIT                     : 'true' | 'false';
 
-STRINGLIT          : UnterminatedStringLiteral '"';
-UnterminatedStringLiteral: '"' (~["\\\r\n] | '\\' (. | EOF))* ;
+STRINGLIT                   : UnterminatedStringLiteral '"';
+UnterminatedStringLiteral   : '"' (~["\\\r\n] | '\\' (. | EOF))* ;
 
-ID                 : [A-Za-z_][A-Za-z_0-9]*;
+ID                          : [A-Za-z_][A-Za-z_0-9]*;

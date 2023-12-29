@@ -11,17 +11,34 @@ const text = "Hello World";
 
 */
 
-dartFile       :line+;
-line           :statement(NEWLINE|EOF);
-statement      :variableDeclaration #VariableDeclarationStatement | assigment #AssigmentStatement;
+dartFile       : line+;
+line           : statement(NEWLINE|EOF);
 
-type           :INT | DOUBLE | BOOL | STRING | ID;
+statement      
+    : variableDeclaration #VariableDeclarationStatement 
+    | assigment #AssigmentStatement
+    ;
+
+type           
+    : INT #IntType
+    | DOUBLE #DoubleType
+    | BOOL #BoolType
+    | STRING #StringType
+    | ID #CustomType
+    ;
 
 variableDeclaration 
-            : (VAR|VAR NEWLINE* type |type) NEWLINE* ID ASSIGN expression  #VarDeclarationStatement
-            | FINAL type? ID ASSIGN expression                             #FinalDeclarationStatement
-            | CONST type? ID ASSIGN expression                             #ConstDeclarationStatement
-            ;
+    : ( VAR | VAR NEWLINE* type | type ) NEWLINE* ID ASSIGN expression  #VarDeclarationStatement
+    | FINAL type? ID ASSIGN expression                                  #FinalDeclarationStatement
+    | CONST type? ID ASSIGN expression                                  #ConstDeclarationStatement
+    ;
 
-expression      :BOOLLIT | INTLIT | DOUBLELIT | STRINGLIT;
 assigment      : ID ASSIGN expression;
+
+expression      
+    : BOOLLIT       #BoolLiteralExpression
+    | INTLIT        #IntLiteralExpression
+    | DOUBLELIT     #DoubleLiteralExpression
+    | STRINGLIT     #StringLiteralExpression
+    ;
+
