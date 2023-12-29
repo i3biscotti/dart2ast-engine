@@ -10,6 +10,7 @@ environment:
 dependencies:
   path: ^1.8.0
   antlr4: ^4.13.1
+  equatable: ^2.0.5
 
 dev_dependencies:
   lints: ^2.0.0
