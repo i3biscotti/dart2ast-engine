@@ -12,7 +12,7 @@ const text = "Hello World";
 */
 
 dartFile       : line+;
-line           : statement(NEWLINE|EOF);
+line           : statement SEMICOLON (NEWLINE|EOF);
 
 statement      
     : variableDeclaration #VariableDeclarationStatement 
