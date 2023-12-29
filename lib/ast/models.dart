@@ -1,15 +1,23 @@
-class Point {
+import 'package:equatable/equatable.dart';
+
+class Point extends Equatable {
   final int line;
   final int column;
 
   Point(this.line, this.column);
+  
+  @override
+  List<Object?> get props => [line, column];
 }
 
-class Position {
+class Position extends Equatable{
   final Point start;
   final Point end;
 
   Position(this.start, this.end);
+  
+  @override
+  List<Object?> get props => [start, end];
 }
 
 abstract class Node {
