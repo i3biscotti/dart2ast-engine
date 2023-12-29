@@ -63,6 +63,41 @@ enum VariableType {
   constant
 }
 
-enum VariableValueType {}
+enum VariableValueType {
+  Int,
+  Double,
+  String,
+  Boolean,
+  Reference
+}
 
-class Expression {}
+class Assigment extends Statement{
+  final String name;
+  final Expression value;
+  Assigment(this.name, this.value, super.position);
+} 
+
+abstract class Expression extends Node{
+  Expression(super.position);
+}
+
+class IntLit extends Expression{
+  final String value;
+  IntLit(this.value, super.position);
+}
+
+class DecLit extends Expression{
+  final String value;
+  DecLit(this.value, super.position);
+}
+
+class StringLit extends Expression{
+  final String value;
+  StringLit(this.value, super.position);
+}
+
+class BoolLit extends Expression{
+  final String value;
+  BoolLit(this.value, super.position);
+}
+
