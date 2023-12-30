@@ -5,6 +5,7 @@ import '../antlr.dart';
 
 extension TokenExtension on Token {
   startPoint() => Point(line!, charPositionInLine);
+
   endPoint() => Point(line!, charPositionInLine + text!.length);
 }
 
@@ -22,7 +23,7 @@ extension DartScript2AstConverter on DartFileContext {
 
     for (final line in lines()) {
       final statement = line.statement();
-      astLines.add(statement?.toAst(considerPosition));
+      astLines.add(statement!.toAst(considerPosition));
     }
 
     return DartFile(astLines, toPosition(considerPosition)!);
@@ -33,39 +34,39 @@ extension Statement2AstConverter on StatementContext {
   Statement toAst(bool considerPosition) {
     return switch (this) {
       VariableDeclarationStatementContext varDeclarationStm =>
-        varDeclarationStm.toAst(considerPosition),
+          varDeclarationStm.toAst(considerPosition),
       _ => throw UnimplementedError()
     };
   }
 }
 
 extension VariableDeclarationStatement2AstConverter
-    on VariableDeclarationStatementContext {
+on VariableDeclarationStatementContext {
   VariableDeclarationStatement toAst(bool considerPosition) {
-  
-    return VariableDeclarationStatement(
-      varType,
-      name,
-      valueType,
-      value,
-      toPosition(considerPosition)!,
-    );
+    return switch(this){
+      VarDeclarationStatementContext st => st.toAst(considerPosition),
+      FinalDeclarationStatementContext st => st.toAst(considerPosition),
+      ConstDeclarationStatementContext st => st.toAst(considerPosition),
+      _ => throw UnimplementedError()
+    };
   }
 }
 
+VariableValueType _Antlr4ToAstValueType(TypeContext type) => switch(type) {
+  IntTypeContext _ => VariableValueType.Int,
+  DoubleTypeContext _ => VariableValueType.Double,
+  BoolTypeContext _ => VariableValueType.Boolean,
+  StringTypeContext _ => VariableValueType.String,
+  CustomTypeContext _ => VariableValueType.Reference,
+  _ => throw UnimplementedError()
+};
+
 extension VarDeclarationStatement2AstConverter on VarDeclarationStatementContext{
-  VariableDeclarationStatement toAst(bool considerPosition){
-    final name = this.ID()!.text!; 
+  VariableDeclarationStatement toAst(bool considerPosition) {
+    final name = this.ID()!.text!;
     final value = this.expression()!.toAst();
-    final valueType = switch(this.type()) {
-       IntTypeContext type => VariableValueType.Int,
-       DoubleTypeContext type => VariableValueType.Double,
-       BoolTypeContext type => VariableValueType.Boolean,
-       StringTypeContext type => VariableValueType.String,
-       CustomTypeContext type => VariableValueType.Reference,
-       _ => throw UnimplementedError()
-      };
-      
+    final valueType = _Antlr4ToAstValueType(this.type()!);
+
     return VariableDeclarationStatement(
       VariableType.variable,
       name,
@@ -73,23 +74,15 @@ extension VarDeclarationStatement2AstConverter on VarDeclarationStatementContext
       value,
       toPosition(considerPosition)!,
     );
-
   }
 }
 
-extension FinalDeclarationStatement2AstConverter on VarDeclarationStatementContext{
-  VariableDeclarationStatement toAst(bool considerPosition){
-    final name = this.ID()!.text!; 
+extension FinalDeclarationStatement2AstConverter on FinalDeclarationStatementContext{
+  VariableDeclarationStatement toAst(bool considerPosition) {
+    final name = this.ID()!.text!;
     final value = this.expression()!.toAst();
-    final valueType = switch(this.type()) {
-       IntTypeContext type => VariableValueType.Int,
-       DoubleTypeContext type => VariableValueType.Double,
-       BoolTypeContext type => VariableValueType.Boolean,
-       StringTypeContext type => VariableValueType.String,
-       CustomTypeContext type => VariableValueType.Reference,
-       _ => throw UnimplementedError()
-      };
-      
+    final valueType = _Antlr4ToAstValueType(this.type()!);
+
     return VariableDeclarationStatement(
       VariableType.immutable,
       name,
@@ -97,23 +90,15 @@ extension FinalDeclarationStatement2AstConverter on VarDeclarationStatementConte
       value,
       toPosition(considerPosition)!,
     );
-
   }
 }
 
-extension ConstDeclarationStatement2AstConverter on VarDeclarationStatementContext{
-  VariableDeclarationStatement toAst(bool considerPosition){
-    final name = this.ID()!.text!; 
+extension ConstDeclarationStatement2AstConverter on ConstDeclarationStatementContext{
+  VariableDeclarationStatement toAst(bool considerPosition) {
+    final name = this.ID()!.text!;
     final value = this.expression()!.toAst();
-    final valueType = switch(this.type()) {
-       IntTypeContext type => VariableValueType.Int,
-       DoubleTypeContext type => VariableValueType.Double,
-       BoolTypeContext type => VariableValueType.Boolean,
-       StringTypeContext type => VariableValueType.String,
-       CustomTypeContext type => VariableValueType.Reference,
-       _ => throw UnimplementedError()
-      };
-      
+    final valueType = _Antlr4ToAstValueType(this.type()!);
+
     return VariableDeclarationStatement(
       VariableType.constant,
       name,
@@ -121,7 +106,6 @@ extension ConstDeclarationStatement2AstConverter on VarDeclarationStatementConte
       value,
       toPosition(considerPosition)!,
     );
-
   }
 }
 

@@ -497,6 +497,8 @@ class ExpressionContext extends ParserRuleContext {
   void copyFrom(ParserRuleContext ctx) {
     super.copyFrom(ctx);
   }
+
+  toAst() {}
 }
 
 class VariableDeclarationStatementContext extends StatementContext {

@@ -1,0 +1,165 @@
+openapi: 3.0.0
+info:
+  title: Dart2Ast
+  description: Microservice API Specs
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+paths:
+  /compile:
+    post:
+      description: Given the AST, generates the code
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ast:
+                  type: object
+                  properties:
+                    program:
+                      $ref: '#/components/schemas/Program'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: boolean
+                  code:
+                    type: string
+
+  /ast:
+    post:
+      description: Given the code, generates the AST
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: boolean
+                  ast:
+                    type: object
+                    properties:
+                      program:
+                        $ref: '#/components/schemas/Program'
+
+components:
+  schemas:
+    Node:
+      type: object
+      properties:
+        position:
+          $ref: '#/components/schemas/Position'
+    Point:
+      type: object
+      properties:
+        line:
+          type: integer
+        col:
+          type: integer
+    Position:
+      type: object
+      properties:
+        start:
+          $ref: '#/components/schemas/Point'
+        end:
+          $ref: '#/components/schemas/Point'
+    Program:
+      allOf:
+        - $ref: '#/components/schemas/Node'
+        - type: object
+          properties:
+            lines:
+              type: array
+              items:
+                $ref: '#/components/schemas/Statement'
+
+    Statement:
+      allOf:
+        - $ref: '#/components/schemas/Node'
+        - type: object
+    VariableType:
+      type: string
+      enum:
+        - variable
+        - immutable
+        - constant
+    VariableDeclaration:
+      allOf:
+        - $ref: '#/components/schemas/Statement'
+        - type: object
+          properties:
+            name:
+              type: string
+            type:
+              $ref: '#/components/schemas/VariableType'
+            valueType:
+              $ref: '#/components/schemas/VariableValueType'
+            value:
+              $ref: '#/components/schemas/Expression'
+    Assignment:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          $ref: '#/components/schemas/Expression'
+    Expression:
+      allOf:
+        - $ref: '#/components/schemas/Node'
+        - type: object
+    IntLit:
+      allOf:
+        - $ref: '#/components/schemas/Expression'
+        - type: object
+        - properties:
+            value:
+              type: string
+    DecLit:
+      allOf:
+        - $ref: '#/components/schemas/Expression'
+        - type: object
+        - properties:
+            value:
+              type: string
+    BooleanLit:
+      allOf:
+        - $ref: '#/components/schemas/Expression'
+        - type: object
+        - properties:
+            value:
+              type: string
+    StringLit:
+      allOf:
+        - $ref: '#/components/schemas/Expression'
+        - type: object
+        - properties:
+            value:
+              type: string
+    VariableValueType:
+      type: string
+      enum:
+        - Int
+        - Double
+        - String
+        - Boolean
+        - Reference
