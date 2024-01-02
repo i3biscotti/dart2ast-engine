@@ -1,9 +1,7 @@
-// Generated from d://Progetti personali//dart2kotlin//dart2ast_engine//antrl4//DartParser.g4 by ANTLR 4.13.1
+// Generated from /Users/bonfry/Desktop/dart2kotlin/dart2ast_engine/antrl4/DartParser.g4 by ANTLR 4.13.1
 // ignore_for_file: unused_import, unused_local_variable, prefer_single_quotes
 import 'package:antlr4/antlr4.dart';
 
-import 'DartParserListener.dart';
-import 'DartParserBaseListener.dart';
 const int RULE_dartFile = 0, RULE_line = 1, RULE_statement = 2, RULE_type = 3, 
           RULE_variableDeclaration = 4, RULE_assigment = 5, RULE_expression = 6;
 class DartParser extends Parser {
@@ -206,7 +204,7 @@ class DartParser extends Parser {
       case TOKEN_STRING:
       case TOKEN_BOOL:
       case TOKEN_ID:
-        _localctx = VarDeclarationStatementContext(_localctx);
+        _localctx = VarDeclarationContext(_localctx);
         enterOuterAlt(_localctx, 1);
         state = 44;
         errorHandler.sync(this);
@@ -254,7 +252,7 @@ class DartParser extends Parser {
         expression();
         break;
       case TOKEN_FINAL:
-        _localctx = FinalDeclarationStatementContext(_localctx);
+        _localctx = FinalDeclarationContext(_localctx);
         enterOuterAlt(_localctx, 2);
         state = 55;
         match(TOKEN_FINAL);
@@ -274,7 +272,7 @@ class DartParser extends Parser {
         expression();
         break;
       case TOKEN_CONST:
-        _localctx = ConstDeclarationStatementContext(_localctx);
+        _localctx = ConstDeclarationContext(_localctx);
         enterOuterAlt(_localctx, 3);
         state = 62;
         match(TOKEN_CONST);
@@ -410,14 +408,6 @@ class DartFileContext extends ParserRuleContext {
   DartFileContext([ParserRuleContext? parent, int? invokingState]) : super(parent, invokingState);
   @override
   int get ruleIndex => RULE_dartFile;
-  @override
-  void enterRule(ParseTreeListener listener) {
-    if (listener is DartParserListener) listener.enterDartFile(this);
-  }
-  @override
-  void exitRule(ParseTreeListener listener) {
-    if (listener is DartParserListener) listener.exitDartFile(this);
-  }
 }
 
 class LineContext extends ParserRuleContext {
@@ -428,14 +418,6 @@ class LineContext extends ParserRuleContext {
   LineContext([ParserRuleContext? parent, int? invokingState]) : super(parent, invokingState);
   @override
   int get ruleIndex => RULE_line;
-  @override
-  void enterRule(ParseTreeListener listener) {
-    if (listener is DartParserListener) listener.enterLine(this);
-  }
-  @override
-  void exitRule(ParseTreeListener listener) {
-    if (listener is DartParserListener) listener.exitLine(this);
-  }
 }
 
 class StatementContext extends ParserRuleContext {
@@ -478,14 +460,6 @@ class AssigmentContext extends ParserRuleContext {
   AssigmentContext([ParserRuleContext? parent, int? invokingState]) : super(parent, invokingState);
   @override
   int get ruleIndex => RULE_assigment;
-  @override
-  void enterRule(ParseTreeListener listener) {
-    if (listener is DartParserListener) listener.enterAssigment(this);
-  }
-  @override
-  void exitRule(ParseTreeListener listener) {
-    if (listener is DartParserListener) listener.exitAssigment(this);
-  }
 }
 
 class ExpressionContext extends ParserRuleContext {
@@ -497,98 +471,40 @@ class ExpressionContext extends ParserRuleContext {
   void copyFrom(ParserRuleContext ctx) {
     super.copyFrom(ctx);
   }
-
-  toAst() {}
 }
 
 class VariableDeclarationStatementContext extends StatementContext {
   VariableDeclarationContext? variableDeclaration() => getRuleContext<VariableDeclarationContext>(0);
   VariableDeclarationStatementContext(StatementContext ctx) { copyFrom(ctx); }
-  @override
-  void enterRule(ParseTreeListener listener) {
-    if (listener is DartParserListener) listener.enterVariableDeclarationStatement(this);
-  }
-  @override
-  void exitRule(ParseTreeListener listener) {
-    if (listener is DartParserListener) listener.exitVariableDeclarationStatement(this);
-  }
 }
 
 class AssigmentStatementContext extends StatementContext {
   AssigmentContext? assigment() => getRuleContext<AssigmentContext>(0);
   AssigmentStatementContext(StatementContext ctx) { copyFrom(ctx); }
-  @override
-  void enterRule(ParseTreeListener listener) {
-    if (listener is DartParserListener) listener.enterAssigmentStatement(this);
-  }
-  @override
-  void exitRule(ParseTreeListener listener) {
-    if (listener is DartParserListener) listener.exitAssigmentStatement(this);
-  }
 }class CustomTypeContext extends TypeContext {
   TerminalNode? ID() => getToken(DartParser.TOKEN_ID, 0);
   CustomTypeContext(TypeContext ctx) { copyFrom(ctx); }
-  @override
-  void enterRule(ParseTreeListener listener) {
-    if (listener is DartParserListener) listener.enterCustomType(this);
-  }
-  @override
-  void exitRule(ParseTreeListener listener) {
-    if (listener is DartParserListener) listener.exitCustomType(this);
-  }
 }
 
 class BoolTypeContext extends TypeContext {
   TerminalNode? BOOL() => getToken(DartParser.TOKEN_BOOL, 0);
   BoolTypeContext(TypeContext ctx) { copyFrom(ctx); }
-  @override
-  void enterRule(ParseTreeListener listener) {
-    if (listener is DartParserListener) listener.enterBoolType(this);
-  }
-  @override
-  void exitRule(ParseTreeListener listener) {
-    if (listener is DartParserListener) listener.exitBoolType(this);
-  }
 }
 
 class StringTypeContext extends TypeContext {
   TerminalNode? STRING() => getToken(DartParser.TOKEN_STRING, 0);
   StringTypeContext(TypeContext ctx) { copyFrom(ctx); }
-  @override
-  void enterRule(ParseTreeListener listener) {
-    if (listener is DartParserListener) listener.enterStringType(this);
-  }
-  @override
-  void exitRule(ParseTreeListener listener) {
-    if (listener is DartParserListener) listener.exitStringType(this);
-  }
 }
 
 class DoubleTypeContext extends TypeContext {
   TerminalNode? DOUBLE() => getToken(DartParser.TOKEN_DOUBLE, 0);
   DoubleTypeContext(TypeContext ctx) { copyFrom(ctx); }
-  @override
-  void enterRule(ParseTreeListener listener) {
-    if (listener is DartParserListener) listener.enterDoubleType(this);
-  }
-  @override
-  void exitRule(ParseTreeListener listener) {
-    if (listener is DartParserListener) listener.exitDoubleType(this);
-  }
 }
 
 class IntTypeContext extends TypeContext {
   TerminalNode? INT() => getToken(DartParser.TOKEN_INT, 0);
   IntTypeContext(TypeContext ctx) { copyFrom(ctx); }
-  @override
-  void enterRule(ParseTreeListener listener) {
-    if (listener is DartParserListener) listener.enterIntType(this);
-  }
-  @override
-  void exitRule(ParseTreeListener listener) {
-    if (listener is DartParserListener) listener.exitIntType(this);
-  }
-}class VarDeclarationStatementContext extends VariableDeclarationContext {
+}class VarDeclarationContext extends VariableDeclarationContext {
   TerminalNode? ID() => getToken(DartParser.TOKEN_ID, 0);
   TerminalNode? ASSIGN() => getToken(DartParser.TOKEN_ASSIGN, 0);
   ExpressionContext? expression() => getRuleContext<ExpressionContext>(0);
@@ -596,97 +512,41 @@ class IntTypeContext extends TypeContext {
   TypeContext? type() => getRuleContext<TypeContext>(0);
   List<TerminalNode> NEWLINEs() => getTokens(DartParser.TOKEN_NEWLINE);
   TerminalNode? NEWLINE(int i) => getToken(DartParser.TOKEN_NEWLINE, i);
-  VarDeclarationStatementContext(VariableDeclarationContext ctx) { copyFrom(ctx); }
-  @override
-  void enterRule(ParseTreeListener listener) {
-    if (listener is DartParserListener) listener.enterVarDeclarationStatement(this);
-  }
-  @override
-  void exitRule(ParseTreeListener listener) {
-    if (listener is DartParserListener) listener.exitVarDeclarationStatement(this);
-  }
+  VarDeclarationContext(VariableDeclarationContext ctx) { copyFrom(ctx); }
 }
 
-class ConstDeclarationStatementContext extends VariableDeclarationContext {
-  TerminalNode? CONST() => getToken(DartParser.TOKEN_CONST, 0);
-  TerminalNode? ID() => getToken(DartParser.TOKEN_ID, 0);
-  TerminalNode? ASSIGN() => getToken(DartParser.TOKEN_ASSIGN, 0);
-  ExpressionContext? expression() => getRuleContext<ExpressionContext>(0);
-  TypeContext? type() => getRuleContext<TypeContext>(0);
-  ConstDeclarationStatementContext(VariableDeclarationContext ctx) { copyFrom(ctx); }
-  @override
-  void enterRule(ParseTreeListener listener) {
-    if (listener is DartParserListener) listener.enterConstDeclarationStatement(this);
-  }
-  @override
-  void exitRule(ParseTreeListener listener) {
-    if (listener is DartParserListener) listener.exitConstDeclarationStatement(this);
-  }
-}
-
-class FinalDeclarationStatementContext extends VariableDeclarationContext {
+class FinalDeclarationContext extends VariableDeclarationContext {
   TerminalNode? FINAL() => getToken(DartParser.TOKEN_FINAL, 0);
   TerminalNode? ID() => getToken(DartParser.TOKEN_ID, 0);
   TerminalNode? ASSIGN() => getToken(DartParser.TOKEN_ASSIGN, 0);
   ExpressionContext? expression() => getRuleContext<ExpressionContext>(0);
   TypeContext? type() => getRuleContext<TypeContext>(0);
-  FinalDeclarationStatementContext(VariableDeclarationContext ctx) { copyFrom(ctx); }
-  @override
-  void enterRule(ParseTreeListener listener) {
-    if (listener is DartParserListener) listener.enterFinalDeclarationStatement(this);
-  }
-  @override
-  void exitRule(ParseTreeListener listener) {
-    if (listener is DartParserListener) listener.exitFinalDeclarationStatement(this);
-  }
+  FinalDeclarationContext(VariableDeclarationContext ctx) { copyFrom(ctx); }
+}
+
+class ConstDeclarationContext extends VariableDeclarationContext {
+  TerminalNode? CONST() => getToken(DartParser.TOKEN_CONST, 0);
+  TerminalNode? ID() => getToken(DartParser.TOKEN_ID, 0);
+  TerminalNode? ASSIGN() => getToken(DartParser.TOKEN_ASSIGN, 0);
+  ExpressionContext? expression() => getRuleContext<ExpressionContext>(0);
+  TypeContext? type() => getRuleContext<TypeContext>(0);
+  ConstDeclarationContext(VariableDeclarationContext ctx) { copyFrom(ctx); }
 }class DoubleLiteralExpressionContext extends ExpressionContext {
   TerminalNode? DOUBLELIT() => getToken(DartParser.TOKEN_DOUBLELIT, 0);
   DoubleLiteralExpressionContext(ExpressionContext ctx) { copyFrom(ctx); }
-  @override
-  void enterRule(ParseTreeListener listener) {
-    if (listener is DartParserListener) listener.enterDoubleLiteralExpression(this);
-  }
-  @override
-  void exitRule(ParseTreeListener listener) {
-    if (listener is DartParserListener) listener.exitDoubleLiteralExpression(this);
-  }
 }
 
 class StringLiteralExpressionContext extends ExpressionContext {
   TerminalNode? STRINGLIT() => getToken(DartParser.TOKEN_STRINGLIT, 0);
   StringLiteralExpressionContext(ExpressionContext ctx) { copyFrom(ctx); }
-  @override
-  void enterRule(ParseTreeListener listener) {
-    if (listener is DartParserListener) listener.enterStringLiteralExpression(this);
-  }
-  @override
-  void exitRule(ParseTreeListener listener) {
-    if (listener is DartParserListener) listener.exitStringLiteralExpression(this);
-  }
 }
 
 class BoolLiteralExpressionContext extends ExpressionContext {
   TerminalNode? BOOLLIT() => getToken(DartParser.TOKEN_BOOLLIT, 0);
   BoolLiteralExpressionContext(ExpressionContext ctx) { copyFrom(ctx); }
-  @override
-  void enterRule(ParseTreeListener listener) {
-    if (listener is DartParserListener) listener.enterBoolLiteralExpression(this);
-  }
-  @override
-  void exitRule(ParseTreeListener listener) {
-    if (listener is DartParserListener) listener.exitBoolLiteralExpression(this);
-  }
 }
 
 class IntLiteralExpressionContext extends ExpressionContext {
   TerminalNode? INTLIT() => getToken(DartParser.TOKEN_INTLIT, 0);
   IntLiteralExpressionContext(ExpressionContext ctx) { copyFrom(ctx); }
-  @override
-  void enterRule(ParseTreeListener listener) {
-    if (listener is DartParserListener) listener.enterIntLiteralExpression(this);
-  }
-  @override
-  void exitRule(ParseTreeListener listener) {
-    if (listener is DartParserListener) listener.exitIntLiteralExpression(this);
-  }
 }

@@ -1,4 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ANTLRGenerationPreferences">
+    <option name="perGrammarGenerationSettings">
+      <list>
+        <PerGrammarGenerationSettings>
+          <option name="fileName" value="$PROJECT_DIR$/antrl4/DartParser.g4" />
+          <option name="autoGen" value="true" />
+          <option name="outputDir" value="$PROJECT_DIR$/lib/antlr" />
+          <option name="libDir" value="$PROJECT_DIR$/lib/antlr" />
+          <option name="encoding" value="" />
+          <option name="pkg" value="" />
+          <option name="language" value="Dart" />
+          <option name="generateListener" value="false" />
+        </PerGrammarGenerationSettings>
+        <PerGrammarGenerationSettings>
+          <option name="fileName" value="$PROJECT_DIR$/antrl4/DartLexer.g4" />
+          <option name="autoGen" value="true" />
+          <option name="outputDir" value="$PROJECT_DIR$/lib/antlr" />
+          <option name="libDir" value="$PROJECT_DIR$/lib/antlr" />
+          <option name="encoding" value="" />
+          <option name="pkg" value="" />
+          <option name="language" value="Dart" />
+          <option name="generateListener" value="false" />
+        </PerGrammarGenerationSettings>
+      </list>
+    </option>
+  </component>
   <component name="ProjectRootManager">
     <output url="file://$PROJECT_DIR$/out" />
   </component>

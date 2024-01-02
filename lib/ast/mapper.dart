@@ -17,7 +17,7 @@ extension ParserRuleContextExtension on ParserRuleContext {
   }
 }
 
-extension DartScript2AstConverter on DartFileContext {
+extension DartScriptConverterExtension  on DartFileContext {
   DartFile toAst([bool considerPosition = false]) {
     final astLines = <Statement>[];
 
@@ -30,7 +30,7 @@ extension DartScript2AstConverter on DartFileContext {
   }
 }
 
-extension Statement2AstConverter on StatementContext {
+extension StatementConverterExtension  on StatementContext {
   Statement toAst(bool considerPosition) {
     return switch (this) {
       VariableDeclarationStatementContext varDeclarationStm =>
@@ -40,13 +40,13 @@ extension Statement2AstConverter on StatementContext {
   }
 }
 
-extension VariableDeclarationStatement2AstConverter
+extension VariableDeclarationStatementConverterExtension 
 on VariableDeclarationStatementContext {
   VariableDeclarationStatement toAst(bool considerPosition) {
     return switch(this){
-      VarDeclarationStatementContext st => st.toAst(considerPosition),
-      FinalDeclarationStatementContext st => st.toAst(considerPosition),
-      ConstDeclarationStatementContext st => st.toAst(considerPosition),
+      VarDeclarationContext st => st.toAst(considerPosition),
+      FinalDeclarationContext st => st.toAst(considerPosition),
+      ConstDeclarationContext st => st.toAst(considerPosition),
       _ => throw UnimplementedError()
     };
   }
@@ -61,7 +61,7 @@ VariableValueType _Antlr4ToAstValueType(TypeContext type) => switch(type) {
   _ => throw UnimplementedError()
 };
 
-extension VarDeclarationStatement2AstConverter on VarDeclarationStatementContext{
+extension VarDeclarationStatementConverterExtension  on VarDeclarationContext{
   VariableDeclarationStatement toAst(bool considerPosition) {
     final name = this.ID()!.text!;
     final value = this.expression()!.toAst();
@@ -77,7 +77,7 @@ extension VarDeclarationStatement2AstConverter on VarDeclarationStatementContext
   }
 }
 
-extension FinalDeclarationStatement2AstConverter on FinalDeclarationStatementContext{
+extension FinalDeclarationStatementConverterExtension  on FinalDeclarationContext{
   VariableDeclarationStatement toAst(bool considerPosition) {
     final name = this.ID()!.text!;
     final value = this.expression()!.toAst();
@@ -93,7 +93,7 @@ extension FinalDeclarationStatement2AstConverter on FinalDeclarationStatementCon
   }
 }
 
-extension ConstDeclarationStatement2AstConverter on ConstDeclarationStatementContext{
+extension ConstDeclarationStatementConverterExtension  on ConstDeclarationContext{
   VariableDeclarationStatement toAst(bool considerPosition) {
     final name = this.ID()!.text!;
     final value = this.expression()!.toAst();

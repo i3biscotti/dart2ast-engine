@@ -81,11 +81,11 @@ enum VariableType { variable, immutable, constant }
 
 enum VariableValueType { Int, Double, String, Boolean, Reference }
 
-class Assigment extends Statement {
+class AssignmentStatement extends Statement {
   final String name;
   final Expression value;
 
-  Assigment(this.name, this.value, super.position);
+  AssignmentStatement(this.name, this.value, super.position);
 
   @override
   List<Object?> get props => [name, value];

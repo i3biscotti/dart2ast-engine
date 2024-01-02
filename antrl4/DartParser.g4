@@ -28,9 +28,9 @@ type
     ;
 
 variableDeclaration 
-    : ( VAR | VAR NEWLINE* type | type ) NEWLINE* ID ASSIGN expression  #VarDeclarationStatement
-    | FINAL type? ID ASSIGN expression                                  #FinalDeclarationStatement
-    | CONST type? ID ASSIGN expression                                  #ConstDeclarationStatement
+    : ( VAR | VAR NEWLINE* type | type ) NEWLINE* ID ASSIGN expression  #VarDeclaration
+    | FINAL type? ID ASSIGN expression                                  #FinalDeclaration
+    | CONST type? ID ASSIGN expression                                  #ConstDeclaration
     ;
 
 assigment      : ID ASSIGN expression;
