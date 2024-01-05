@@ -8,6 +8,7 @@ double height = 1.75;
 const text = "Hello World";
 
 */
+// TASK 1
 
 NEWLINE                     : '\r\n' | '\r' | '\n' ;
 WS                          : [\t ]+ -> skip ;
@@ -36,3 +37,23 @@ STRINGLIT                   : UnterminatedStringLiteral '"';
 UnterminatedStringLiteral   : '"' (~["\\\r\n] | '\\' (. | EOF))* ;
 
 ID                          : [A-Za-z_][A-Za-z_0-9]*;
+
+//TASK 2
+PLUS                        : '+';
+MINUS                       : '-';
+DIVISION                    : '/';
+TIMES                       : '*';
+MODULE                      : '%';
+
+GREATER_EQUAL_THAN          : '>=';
+LOWER_EQUAL_THAN            : '<=';
+GREATER_THAN                : '>';
+LOWER_THAN                  : '<';
+EQUAL                       : '==';
+
+AND                         : '&&';
+OR                          : '||';
+NOT                         : '!';
+
+PAREN_OPEN                  : '(';
+PAREN_CLOSE                 : ')';

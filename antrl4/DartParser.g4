@@ -36,9 +36,24 @@ variableDeclaration
 assigment      : ID ASSIGN expression;
 
 expression      
-    : BOOLLIT       #BoolLiteralExpression
-    | INTLIT        #IntLiteralExpression
-    | DOUBLELIT     #DoubleLiteralExpression
-    | STRINGLIT     #StringLiteralExpression
+    : BOOLLIT                                                                           #BoolLiteralExpression
+    | INTLIT                                                                            #IntLiteralExpression
+    | DOUBLELIT                                                                         #DoubleLiteralExpression
+    | STRINGLIT                                                                         #StringLiteralExpression
+    | left=expression NEWLINE* openand=PLUS NEWLINE* right=expression                   #BinaryMathExpression
+    | left=expression NEWLINE* openand=MINUS NEWLINE* right=expression                  #BinaryMathExpression
+    | left=expression NEWLINE* openand=TIMES NEWLINE* right=expression                  #BinaryMathExpression
+    | left=expression NEWLINE* openand=DIVISION NEWLINE* right=expression               #BinaryMathExpression
+    | left=expression NEWLINE* openand=AND NEWLINE* right=expression                    #BinaryLogicExpression
+    | left=expression NEWLINE* openand=OR NEWLINE* right=expression                     #BinaryLogicExpression
+    | left=expression NEWLINE* openand=GREATER_THAN NEWLINE* right=expression           #BinaryLogicExpression
+    | left=expression NEWLINE* openand=LOWER_THAN NEWLINE* right=expression             #BinaryLogicExpression
+    | left=expression NEWLINE* openand=GREATER_EQUAL_THAN NEWLINE* right=expression     #BinaryLogicExpression
+    | left=expression NEWLINE* openand=LOWER_EQUAL_THAN NEWLINE* right=expression       #BinaryLogicExpression
+    | left=expression NEWLINE* openand=EQUAL NEWLINE* right=expression                  #BinaryLogicExpression
+    | MINUS NEWLINE* value=expression                                                   #UnaryMathNegationExpression
+    | NOT NEWLINE* value=expression                                                     #UnatyLogicNegationExpression
+    | PAREN_OPEN NEWLINE* value=expression NEWLINE* PAREN_OPEN                          #ParenthesysExpression
+    | ID                                                                                #VarReferenceExpression
     ;
 
