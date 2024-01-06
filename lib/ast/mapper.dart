@@ -1,6 +1,5 @@
 import 'package:antlr4/antlr4.dart';
 import 'package:dart2ast_engine/ast.dart';
-
 import '../antlr.dart';
 
 extension TokenExtension on Token {
@@ -64,7 +63,7 @@ VariableValueType _Antlr4ToAstValueType(TypeContext type) => switch(type) {
 extension VarDeclarationStatementConverterExtension  on VarDeclarationContext{
   VariableDeclarationStatement toAst(bool considerPosition) {
     final name = this.ID()!.text!;
-    final value = this.expression()!.toAst();
+    final value = this.expression()!.toAst(considerPosition);
     final valueType = _Antlr4ToAstValueType(this.type()!);
 
     return VariableDeclarationStatement(
@@ -80,7 +79,7 @@ extension VarDeclarationStatementConverterExtension  on VarDeclarationContext{
 extension FinalDeclarationStatementConverterExtension  on FinalDeclarationContext{
   VariableDeclarationStatement toAst(bool considerPosition) {
     final name = this.ID()!.text!;
-    final value = this.expression()!.toAst();
+    final value = this.expression()!.toAst(considerPosition);
     final valueType = _Antlr4ToAstValueType(this.type()!);
 
     return VariableDeclarationStatement(
@@ -96,7 +95,7 @@ extension FinalDeclarationStatementConverterExtension  on FinalDeclarationContex
 extension ConstDeclarationStatementConverterExtension  on ConstDeclarationContext{
   VariableDeclarationStatement toAst(bool considerPosition) {
     final name = this.ID()!.text!;
-    final value = this.expression()!.toAst();
+    final value = this.expression()!.toAst(considerPosition);
     final valueType = _Antlr4ToAstValueType(this.type()!);
 
     return VariableDeclarationStatement(
@@ -106,6 +105,18 @@ extension ConstDeclarationStatementConverterExtension  on ConstDeclarationContex
       value,
       toPosition(considerPosition)!,
     );
+  }
+}
+
+extension ExpressionSatementConverterExtension on ExpressionContext{
+  Expression toAst(bool considerPosition) {
+    return switch (this){
+      IntLiteralExpressionContext _ => IntLit(text, toPosition(considerPosition)!),
+      DoubleLiteralExpressionContext _ => DecLit(text, toPosition(considerPosition)!),
+      BoolLiteralExpressionContext _ => BoolLit(text, toPosition(considerPosition)!),
+      StringLiteralExpressionContext _ => StringLit(text, toPosition(considerPosition)!),
+      _ => throw UnimplementedError()
+    };
   }
 }
 
