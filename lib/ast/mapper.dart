@@ -16,8 +16,8 @@ extension ParserRuleContextExtension on ParserRuleContext {
   }
 }
 
-extension DartScriptConverterExtension  on DartFileContext {
-  DartFile toAst([bool considerPosition = false]) {
+extension DartScriptConverterExtension on DartFileContext {
+  ProgramFile toAst([bool considerPosition = false]) {
     final astLines = <Statement>[];
 
     for (final line in lines()) {
@@ -25,24 +25,24 @@ extension DartScriptConverterExtension  on DartFileContext {
       astLines.add(statement!.toAst(considerPosition));
     }
 
-    return DartFile(astLines, toPosition(considerPosition)!);
+    return ProgramFile(astLines, toPosition(considerPosition)!);
   }
 }
 
-extension StatementConverterExtension  on StatementContext {
+extension StatementConverterExtension on StatementContext {
   Statement toAst(bool considerPosition) {
     return switch (this) {
       VariableDeclarationStatementContext varDeclarationStm =>
-          varDeclarationStm.toAst(considerPosition),
+        varDeclarationStm.toAst(considerPosition),
       _ => throw UnimplementedError()
     };
   }
 }
 
-extension VariableDeclarationStatementConverterExtension 
-on VariableDeclarationStatementContext {
+extension VariableDeclarationStatementConverterExtension
+    on VariableDeclarationStatementContext {
   VariableDeclarationStatement toAst(bool considerPosition) {
-    return switch(this){
+    return switch (this) {
       VarDeclarationContext st => st.toAst(considerPosition),
       FinalDeclarationContext st => st.toAst(considerPosition),
       ConstDeclarationContext st => st.toAst(considerPosition),
@@ -51,16 +51,16 @@ on VariableDeclarationStatementContext {
   }
 }
 
-VariableValueType _Antlr4ToAstValueType(TypeContext type) => switch(type) {
-  IntTypeContext _ => VariableValueType.Int,
-  DoubleTypeContext _ => VariableValueType.Double,
-  BoolTypeContext _ => VariableValueType.Boolean,
-  StringTypeContext _ => VariableValueType.String,
-  CustomTypeContext _ => VariableValueType.Reference,
-  _ => throw UnimplementedError()
-};
+VariableValueType _Antlr4ToAstValueType(TypeContext type) => switch (type) {
+      IntTypeContext _ => VariableValueType.Int,
+      DoubleTypeContext _ => VariableValueType.Double,
+      BoolTypeContext _ => VariableValueType.Boolean,
+      StringTypeContext _ => VariableValueType.String,
+      CustomTypeContext _ => VariableValueType.Reference,
+      _ => throw UnimplementedError()
+    };
 
-extension VarDeclarationStatementConverterExtension  on VarDeclarationContext{
+extension VarDeclarationStatementConverterExtension on VarDeclarationContext {
   VariableDeclarationStatement toAst(bool considerPosition) {
     final name = this.ID()!.text!;
     final value = this.expression()!.toAst(considerPosition);
@@ -76,7 +76,8 @@ extension VarDeclarationStatementConverterExtension  on VarDeclarationContext{
   }
 }
 
-extension FinalDeclarationStatementConverterExtension  on FinalDeclarationContext{
+extension FinalDeclarationStatementConverterExtension
+    on FinalDeclarationContext {
   VariableDeclarationStatement toAst(bool considerPosition) {
     final name = this.ID()!.text!;
     final value = this.expression()!.toAst(considerPosition);
@@ -92,7 +93,8 @@ extension FinalDeclarationStatementConverterExtension  on FinalDeclarationContex
   }
 }
 
-extension ConstDeclarationStatementConverterExtension  on ConstDeclarationContext{
+extension ConstDeclarationStatementConverterExtension
+    on ConstDeclarationContext {
   VariableDeclarationStatement toAst(bool considerPosition) {
     final name = this.ID()!.text!;
     final value = this.expression()!.toAst(considerPosition);
@@ -108,16 +110,18 @@ extension ConstDeclarationStatementConverterExtension  on ConstDeclarationContex
   }
 }
 
-extension ExpressionSatementConverterExtension on ExpressionContext{
+extension ExpressionSatementConverterExtension on ExpressionContext {
   Expression toAst(bool considerPosition) {
-    return switch (this){
-      IntLiteralExpressionContext _ => IntLit(text, toPosition(considerPosition)!),
-      DoubleLiteralExpressionContext _ => DecLit(text, toPosition(considerPosition)!),
-      BoolLiteralExpressionContext _ => BoolLit(text, toPosition(considerPosition)!),
-      StringLiteralExpressionContext _ => StringLit(text, toPosition(considerPosition)!),
+    return switch (this) {
+      IntLiteralExpressionContext _ =>
+        IntLit(text, toPosition(considerPosition)!),
+      DoubleLiteralExpressionContext _ =>
+        DecLit(text, toPosition(considerPosition)!),
+      BoolLiteralExpressionContext _ =>
+        BoolLit(text, toPosition(considerPosition)!),
+      StringLiteralExpressionContext _ =>
+        StringLit(text, toPosition(considerPosition)!),
       _ => throw UnimplementedError()
     };
   }
 }
-
-

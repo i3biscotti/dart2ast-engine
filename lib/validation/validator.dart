@@ -1,8 +1,7 @@
 import 'package:dart2ast_engine/ast.dart';
 import 'package:dart2ast_engine/parsing/models.dart';
 
-
-extension ScriptFileValidator on DartFile {
+extension ScriptFileValidator on ProgramFile {
   List<LangError> validate() {
     final errors = <LangError>[];
     final varsByName = <String, VariableDeclarationStatement>{};
@@ -12,7 +11,7 @@ extension ScriptFileValidator on DartFile {
         errors.add(
           LangError(
             'Variable ${node.name} already declared',
-            node.position!.start,
+            node.position.start,
           ),
         );
       } else {

@@ -19,7 +19,7 @@ class AntlrParsingResult with EquatableMixin {
 }
 
 class ParsingResult with EquatableMixin {
-  final DartFile? root;
+  final ProgramFile? root;
   final List<LangError> errors;
 
   ParsingResult(this.root, this.errors);
@@ -40,7 +40,6 @@ class LangError with EquatableMixin {
   List<Object?> get props => [message, position];
 }
 
-
 class GrammarErrorListener implements ErrorListener {
   final Function(String, Point)? onError;
 
@@ -48,38 +47,38 @@ class GrammarErrorListener implements ErrorListener {
 
   @override
   void reportAmbiguity(
-      Parser recognizer,
-      DFA dfa,
-      int startIndex,
-      int stopIndex,
-      bool exact,
-      BitSet? ambigAlts,
-      ATNConfigSet configs,
-      ) {
+    Parser recognizer,
+    DFA dfa,
+    int startIndex,
+    int stopIndex,
+    bool exact,
+    BitSet? ambigAlts,
+    ATNConfigSet configs,
+  ) {
     // Ignored for now
   }
 
   @override
   void reportAttemptingFullContext(
-      Parser recognizer,
-      DFA dfa,
-      int startIndex,
-      int stopIndex,
-      BitSet? conflictingAlts,
-      ATNConfigSet configs,
-      ) {
+    Parser recognizer,
+    DFA dfa,
+    int startIndex,
+    int stopIndex,
+    BitSet? conflictingAlts,
+    ATNConfigSet configs,
+  ) {
     // Ignored for now
   }
 
   @override
   void reportContextSensitivity(
-      Parser recognizer,
-      DFA dfa,
-      int startIndex,
-      int stopIndex,
-      int prediction,
-      ATNConfigSet configs,
-      ) {
+    Parser recognizer,
+    DFA dfa,
+    int startIndex,
+    int stopIndex,
+    int prediction,
+    ATNConfigSet configs,
+  ) {
     // Ignored for now
   }
 
