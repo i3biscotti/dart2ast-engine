@@ -15,8 +15,10 @@ dartFile       : line+;
 line           : statement SEMICOLON (NEWLINE|EOF);
 
 statement      
-    : variableDeclaration #VariableDeclarationStatement 
-    | assigment #AssigmentStatement
+    : ( VAR | VAR NEWLINE* type | type ) NEWLINE* ID ASSIGN expression  #VarDeclarationStatement
+    | FINAL type? ID ASSIGN expression                                  #FinalDeclarationStatement
+    | CONST type? ID ASSIGN expression                                  #ConstDeclarationStatment
+    | ID ASSIGN expression                                              #AssigmentStatement
     ;
 
 type           
@@ -26,14 +28,6 @@ type
     | STRING #StringType
     | ID #CustomType
     ;
-
-variableDeclaration 
-    : ( VAR | VAR NEWLINE* type | type ) NEWLINE* ID ASSIGN expression  #VarDeclaration
-    | FINAL type? ID ASSIGN expression                                  #FinalDeclaration
-    | CONST type? ID ASSIGN expression                                  #ConstDeclaration
-    ;
-
-assigment      : ID ASSIGN expression;
 
 expression      
     : BOOLLIT                                                                           #BoolLiteralExpression

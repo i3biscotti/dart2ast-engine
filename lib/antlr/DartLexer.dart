@@ -1,4 +1,4 @@
-// Generated from /Users/bonfry/Desktop/dart2kotlin/dart2ast_engine/antrl4/DartLexer.g4 by ANTLR 4.13.1
+// Generated from d://Progetti personali//dart2kotlin//dart2ast_engine//antrl4//DartLexer.g4 by ANTLR 4.13.1
 // ignore_for_file: unused_import, unused_local_variable, prefer_single_quotes
 import 'package:antlr4/antlr4.dart';
 
