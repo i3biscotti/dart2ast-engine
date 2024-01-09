@@ -36,6 +36,11 @@ class LangError with EquatableMixin {
 
   LangError(this.message, this.position);
 
+  Map<String, dynamic> toJson() => {
+        "message": message,
+        "position": position.toJson(),
+      };
+
   @override
   List<Object?> get props => [message, position];
 }

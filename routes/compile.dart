@@ -1,6 +1,14 @@
+import 'dart:convert';
+
+import 'package:dart2ast_engine/dart2ast.dart';
 import 'package:dart_frog/dart_frog.dart';
 
-Response onRequest(RequestContext context) {
-  // TODO: implement route handler
-  return Response(body: 'This is a new route!');
+Future<Response> onRequest(RequestContext context) async {
+  final astText = await context.request.body();
+  final astDeserialized = jsonDecode(astText);
+  final ast = ProgramFile.fromJson(astDeserialized);
+
+  final code = ast.Transpile();
+
+  return Response(body: code);
 }

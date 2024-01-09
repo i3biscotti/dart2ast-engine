@@ -32,39 +32,31 @@ extension DartScriptConverterExtension on DartFileContext {
 extension StatementConverterExtension on StatementContext {
   Statement toAst(bool considerPosition) {
     return switch (this) {
-      VariableDeclarationStatementContext varDeclarationStm =>
-        varDeclarationStm.toAst(considerPosition),
+      VarDeclarationStatementContext st => st.toAst(considerPosition),
+      FinalDeclarationStatementContext st => st.toAst(considerPosition),
+      ConstDeclarationStatmentContext st => st.toAst(considerPosition),
+      AssigmentStatementContext st => st.toAst(considerPosition),
       _ => throw UnimplementedError()
     };
   }
 }
 
-extension VariableDeclarationStatementConverterExtension
-    on VariableDeclarationStatementContext {
-  VariableDeclarationStatement toAst(bool considerPosition) {
-    return switch (this) {
-      VarDeclarationContext st => st.toAst(considerPosition),
-      FinalDeclarationContext st => st.toAst(considerPosition),
-      ConstDeclarationContext st => st.toAst(considerPosition),
-      _ => throw UnimplementedError()
-    };
-  }
-}
-
-VariableValueType _Antlr4ToAstValueType(TypeContext type) => switch (type) {
+VariableValueType? _Antlr4ToAstValueType(TypeContext? type) => switch (type) {
       IntTypeContext _ => VariableValueType.Int,
       DoubleTypeContext _ => VariableValueType.Double,
       BoolTypeContext _ => VariableValueType.Boolean,
       StringTypeContext _ => VariableValueType.String,
       CustomTypeContext _ => VariableValueType.Reference,
+      null => null,
       _ => throw UnimplementedError()
     };
 
-extension VarDeclarationStatementConverterExtension on VarDeclarationContext {
+extension VarDeclarationStatementConverterExtension
+    on VarDeclarationStatementContext {
   VariableDeclarationStatement toAst(bool considerPosition) {
     final name = this.ID()!.text!;
     final value = this.expression()!.toAst(considerPosition);
-    final valueType = _Antlr4ToAstValueType(this.type()!);
+    final valueType = _Antlr4ToAstValueType(this.type());
 
     return VariableDeclarationStatement(
       VariableType.variable,
@@ -77,11 +69,11 @@ extension VarDeclarationStatementConverterExtension on VarDeclarationContext {
 }
 
 extension FinalDeclarationStatementConverterExtension
-    on FinalDeclarationContext {
+    on FinalDeclarationStatementContext {
   VariableDeclarationStatement toAst(bool considerPosition) {
     final name = this.ID()!.text!;
     final value = this.expression()!.toAst(considerPosition);
-    final valueType = _Antlr4ToAstValueType(this.type()!);
+    final valueType = _Antlr4ToAstValueType(this.type());
 
     return VariableDeclarationStatement(
       VariableType.immutable,
@@ -94,16 +86,29 @@ extension FinalDeclarationStatementConverterExtension
 }
 
 extension ConstDeclarationStatementConverterExtension
-    on ConstDeclarationContext {
+    on ConstDeclarationStatmentContext {
   VariableDeclarationStatement toAst(bool considerPosition) {
     final name = this.ID()!.text!;
     final value = this.expression()!.toAst(considerPosition);
-    final valueType = _Antlr4ToAstValueType(this.type()!);
+    final valueType = _Antlr4ToAstValueType(this.type());
 
     return VariableDeclarationStatement(
       VariableType.constant,
       name,
       valueType,
+      value,
+      toPosition(considerPosition)!,
+    );
+  }
+}
+
+extension AssignmentStatementConverterExtension on AssigmentStatementContext {
+  AssignmentStatement toAst(bool considerPosition) {
+    final name = this.ID()!.text!;
+    final value = this.expression()!.toAst(considerPosition);
+
+    return AssignmentStatement(
+      name,
       value,
       toPosition(considerPosition)!,
     );

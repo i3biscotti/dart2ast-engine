@@ -82,7 +82,7 @@ class ProgramFile extends Node {
 
   @override
   Map<String, dynamic> toJson() => {
-        'nodeType': runtimeType.toString(),
+        'type': runtimeType.toString(),
         'lines': lines.map((e) => e.toJson()).toList(),
         'position': position.toJson(),
       };
@@ -92,7 +92,7 @@ abstract class Statement extends Node {
   Statement(super.position);
 
   factory Statement.fromJson(Map<String, dynamic> json) {
-    return switch (json['nodeType']) {
+    return switch (json['type']) {
       'VariableDeclarationStatement' =>
         VariableDeclarationStatement.fromJson(json),
       'AssignmentStatement' => AssignmentStatement.fromJson(json),
@@ -102,13 +102,13 @@ abstract class Statement extends Node {
 }
 
 class VariableDeclarationStatement extends Statement {
-  final VariableType type;
+  final VariableType varType;
   final String name;
-  final VariableValueType valueType;
+  final VariableValueType? valueType;
   final Expression value;
 
   VariableDeclarationStatement(
-    this.type,
+    this.varType,
     this.name,
     this.valueType,
     this.value,
@@ -117,7 +117,7 @@ class VariableDeclarationStatement extends Statement {
 
   factory VariableDeclarationStatement.fromJson(Map<String, dynamic> json) {
     return VariableDeclarationStatement(
-      switch (json['type']) {
+      switch (json['varType']) {
         'variable' => VariableType.variable,
         'immutable' => VariableType.immutable,
         'constant' => VariableType.constant,
@@ -130,7 +130,8 @@ class VariableDeclarationStatement extends Statement {
         'String' => VariableValueType.String,
         'Boolean' => VariableValueType.Boolean,
         'Reference' => VariableValueType.Reference,
-        _ => throw UnimplementedError(),
+        null => null,
+        _ => throw UnimplementedError(json['valueType']),
       },
       Expression.fromJson(json['value']),
       Position.fromJson(json['position']),
@@ -138,14 +139,14 @@ class VariableDeclarationStatement extends Statement {
   }
 
   @override
-  List<Object?> get props => [type, name, valueType, value];
+  List<Object?> get props => [varType, name, valueType, value];
 
   @override
   Map<String, dynamic> toJson() => {
-        'nodeType': runtimeType.toString(),
-        'type': type.toString(),
+        'type': runtimeType.toString(),
+        'varType': varType.name,
         'name': name,
-        'valueType': valueType.toString(),
+        'valueType': valueType?.name,
         'value': value.toJson(),
         'position': position.toJson(),
       };
@@ -174,7 +175,7 @@ class AssignmentStatement extends Statement {
 
   @override
   Map<String, dynamic> toJson() => {
-        'nodeType': runtimeType.toString(),
+        'type': runtimeType.toString(),
         'name': name,
         'value': value.toJson(),
         'position': position.toJson(),
@@ -185,7 +186,7 @@ abstract class Expression extends Node {
   Expression(super.position);
 
   factory Expression.fromJson(Map<String, dynamic> json) {
-    return switch (json['nodeType']) {
+    return switch (json['type']) {
       'IntLit' => IntLit.fromJson(json),
       'DecLit' => DecLit.fromJson(json),
       'StringLit' => StringLit.fromJson(json),
@@ -208,7 +209,7 @@ class IntLit extends Expression {
 
   @override
   Map<String, dynamic> toJson() => {
-        'nodeType': runtimeType.toString(),
+        'type': runtimeType.toString(),
         'value': value,
         'position': position.toJson(),
       };
@@ -227,7 +228,7 @@ class DecLit extends Expression {
 
   @override
   Map<String, dynamic> toJson() => {
-        'nodeType': runtimeType.toString(),
+        'type': runtimeType.toString(),
         'value': value,
         'position': position.toJson(),
       };
@@ -246,7 +247,7 @@ class StringLit extends Expression {
 
   @override
   Map<String, dynamic> toJson() => {
-        'nodeType': runtimeType.toString(),
+        'type': runtimeType.toString(),
         'value': value,
         'position': position.toJson(),
       };
@@ -265,7 +266,7 @@ class BoolLit extends Expression {
 
   @override
   Map<String, dynamic> toJson() => {
-        'nodeType': runtimeType.toString(),
+        'type': runtimeType.toString(),
         'value': value,
         'position': position.toJson(),
       };

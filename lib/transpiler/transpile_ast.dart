@@ -25,17 +25,18 @@ extension StatementTranspilerExtension on Statement {
 extension VariableDeclarationStatementTranspilerExtension
     on VariableDeclarationStatement {
   String Transpile() {
-    String variableTypeTranspiler = switch (type) {
+    String variableTypeTranspiler = switch (varType) {
       VariableType.variable => 'var',
       VariableType.immutable => 'final',
       VariableType.constant => 'const',
-      _ => throw UnimplementedError()
     };
     String variableValueTypeTranspiler = switch (valueType) {
       VariableValueType.Int => 'int',
       VariableValueType.Double => 'double',
       VariableValueType.String => 'String',
       VariableValueType.Boolean => 'bool',
+      VariableValueType.Reference => '',
+      null => '',
       _ => throw UnimplementedError()
     };
     String valueTranspiler = value.Transpile();
