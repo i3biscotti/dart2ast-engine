@@ -126,7 +126,124 @@ extension ExpressionSatementConverterExtension on ExpressionContext {
         BoolLit(text, toPosition(considerPosition)!),
       StringLiteralExpressionContext _ =>
         StringLit(text, toPosition(considerPosition)!),
+      BinaryMathExpressionContext _ => toAst(considerPosition),
+      BinaryLogicExpressionContext _ => toAst(considerPosition),
+      UnaryMathExpressionContext _ => toAst(considerPosition),
+      UnaryLogicNegationExpressionContext _ => toAst(considerPosition),
+      ParenthesysExpressionContext _ => toAst(considerPosition),
+      VarReferenceExpressionContext _ => toAst(considerPosition),
       _ => throw UnimplementedError()
     };
+  }
+}
+
+extension BinaryMathExpressionConverterExtension
+    on BinaryMathExpressionContext {
+  BinaryMathExpression toAst(bool considerPosition) {
+    final left = this.left!.toAst(considerPosition);
+    final right = this.right!.toAst(considerPosition);
+
+    var operand = switch (this.openand?.text) {
+      '+' => MathOperand.plus,
+      '-' => MathOperand.minus,
+      '*' => MathOperand.times,
+      '/' => MathOperand.division,
+      _ => throw UnimplementedError()
+    };
+
+    return BinaryMathExpression(
+      left,
+      right,
+      operand,
+      toPosition(considerPosition)!,
+    );
+  }
+}
+
+extension BinaryLogicExpressionConverterExtension
+    on BinaryLogicExpressionContext {
+  BinaryLogicExpression toAst(bool considerPosition) {
+    final left = this.left!.toAst(considerPosition);
+    final right = this.right!.toAst(considerPosition);
+
+    var operand = switch (this.openand?.text) {
+      '&&' => LogicOperand.and,
+      '||' => LogicOperand.or,
+      '==' => LogicOperand.equal,
+      '!=' => LogicOperand.notEqual,
+      '!' => LogicOperand.not,
+      '<' => LogicOperand.lessThan,
+      '>' => LogicOperand.greaterThan,
+      '<=' => LogicOperand.lessThanOrEqual,
+      '>=' => LogicOperand.greaterThanOrEqual,
+      _ => throw UnimplementedError()
+    };
+
+    return BinaryLogicExpression(
+      left,
+      right,
+      operand,
+      toPosition(considerPosition)!,
+    );
+  }
+}
+
+extension UnaryMathExpressionConverterExtension on UnaryMathExpressionContext {
+  UnaryMathExpression toAst(bool considerPosition) {
+    final value = this.value!.toAst(considerPosition);
+
+    var operand = switch (this.operand?.text) {
+      '-' => MathOperand.minus,
+      '+' => MathOperand.plus,
+      _ => throw UnimplementedError()
+    };
+
+    return UnaryMathExpression(
+      value,
+      operand,
+      toPosition(considerPosition)!,
+    );
+  }
+}
+
+extension UnaryLogicExpressionConverterExtension
+    on UnaryLogicNegationExpressionContext {
+  UnaryLogicExpression toAst(bool considerPosition) {
+    final value = this.value!.toAst(considerPosition);
+
+    var operand = switch (this.operand?.text) {
+      '!' => LogicOperand.not,
+      _ => throw UnimplementedError()
+    };
+
+    return UnaryLogicExpression(
+      value,
+      operand,
+      toPosition(considerPosition)!,
+    );
+  }
+}
+
+extension ParenthesysExpressionConverterExtension
+    on ParenthesysExpressionContext {
+  ParenthesysExpression toAst(bool considerPosition) {
+    final value = this.value!.toAst(considerPosition);
+
+    return ParenthesysExpression(
+      value,
+      toPosition(considerPosition)!,
+    );
+  }
+}
+
+extension VarReferenceExpressionConverterExtension
+    on VarReferenceExpressionContext {
+  VarReferenceExpression toAst(bool considerPosition) {
+    final name = this.ID()!.text!;
+
+    return VarReferenceExpression(
+      name,
+      toPosition(considerPosition)!,
+    );
   }
 }

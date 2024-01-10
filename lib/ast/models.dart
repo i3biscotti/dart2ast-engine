@@ -271,3 +271,212 @@ class BoolLit extends Expression {
         'position': position.toJson(),
       };
 }
+
+abstract class BinaryExpression extends Expression {
+  final Expression left;
+  final Expression right;
+
+  BinaryExpression(this.left, this.right, super.position);
+
+  @override
+  List<Object?> get props => [left, right];
+}
+
+enum MathOperand {
+  plus("+"),
+  minus("-"),
+  times("*"),
+  division("/");
+
+  final String symbol;
+
+  const MathOperand(this.symbol);
+}
+
+class BinaryMathExpression extends BinaryExpression {
+  final MathOperand operand;
+
+  BinaryMathExpression(super.left, super.right, this.operand, super.position);
+
+  BinaryMathExpression.fromJson(Map<String, dynamic> json)
+      : operand = switch (json['operand']) {
+          '+' => MathOperand.plus,
+          '-' => MathOperand.minus,
+          '*' => MathOperand.times,
+          '/' => MathOperand.division,
+          _ => throw UnimplementedError(),
+        },
+        super(
+          Expression.fromJson(json['left']),
+          Expression.fromJson(json['right']),
+          Position.fromJson(json['position']),
+        );
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "type": runtimeType.toString(),
+      "left": left.toJson(),
+      "right": right.toJson(),
+      "operand": operand.symbol,
+    };
+  }
+
+  @override
+  List<Object?> get props => [left, operand, right];
+}
+
+enum LogicOperand {
+  and("&&"),
+  or("||"),
+  not("!"),
+  equal("=="),
+  lessThan("<"),
+  lessThanOrEqual("<="),
+  greaterThan(">"),
+  greaterThanOrEqual(">="),
+  notEqual("!=");
+
+  final String symbol;
+
+  const LogicOperand(this.symbol);
+}
+
+class BinaryLogicExpression extends BinaryExpression {
+  final LogicOperand operand;
+
+  BinaryLogicExpression(super.left, super.right, this.operand, super.position);
+
+  BinaryLogicExpression.fromJson(Map<String, dynamic> json)
+      : operand = switch (json['operand']) {
+          '&&' => LogicOperand.and,
+          '||' => LogicOperand.or,
+          '!' => LogicOperand.not,
+          '==' => LogicOperand.equal,
+          '<' => LogicOperand.lessThan,
+          '<=' => LogicOperand.lessThanOrEqual,
+          '>' => LogicOperand.greaterThan,
+          '>=' => LogicOperand.greaterThanOrEqual,
+          '!=' => LogicOperand.notEqual,
+          _ => throw UnimplementedError(),
+        },
+        super(
+          Expression.fromJson(json['left']),
+          Expression.fromJson(json['right']),
+          Position.fromJson(json['position']),
+        );
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "type": runtimeType.toString(),
+      "left": left.toJson(),
+      "right": right.toJson(),
+      "operand": operand.symbol,
+    };
+  }
+
+  @override
+  List<Object?> get props => [left, operand, right];
+}
+
+class UnaryMathExpression extends Expression {
+  final Expression value;
+  final MathOperand operand;
+
+  UnaryMathExpression(this.value, this.operand, super.position);
+
+  UnaryMathExpression.fromJson(Map<String, dynamic> json)
+      : operand = switch (json['operand']) {
+          '+' => MathOperand.plus,
+          '-' => MathOperand.minus,
+          _ => throw UnimplementedError(),
+        },
+        value = Expression.fromJson(json['value']),
+        super(Position.fromJson(json['position']));
+
+  @override
+  List<Object?> get props => [value, operand];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "type": runtimeType.toString(),
+      "value": value.toJson(),
+      "operand": operand.symbol,
+      "position": position.toJson(),
+    };
+  }
+}
+
+class UnaryLogicExpression extends Node {
+  final Expression value;
+  final LogicOperand operand;
+
+  UnaryLogicExpression(this.value, this.operand, super.position);
+
+  UnaryLogicExpression.fromJson(Map<String, dynamic> json)
+      : operand = switch (json['operand']) {
+          '!' => LogicOperand.not,
+          _ => throw UnimplementedError(),
+        },
+        value = Expression.fromJson(json['value']),
+        super(Position.fromJson(json['position']));
+
+  @override
+  List<Object?> get props => [value, operand];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "type": runtimeType.toString(),
+      "value": value.toJson(),
+      "operand": operand.symbol,
+      "position": position.toJson(),
+    };
+  }
+}
+
+class VarReferenceExpression extends Expression {
+  final String name;
+
+  VarReferenceExpression(this.name, super.position);
+
+  VarReferenceExpression.fromJson(Map<String, dynamic> json)
+      : name = json['name'],
+        super(Position.fromJson(json['position']));
+
+  @override
+  List<Object?> get props => [name];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "type": runtimeType.toString(),
+      "name": name,
+      "position": position.toJson(),
+    };
+  }
+}
+
+class ParenthesysExpression extends Node {
+  final Expression value;
+
+  ParenthesysExpression(this.value, super.position);
+
+  ParenthesysExpression.fromJson(Map<String, dynamic> json)
+      : value = Expression.fromJson(json['value']),
+        super(Position.fromJson(json['position']));
+
+  @override
+  List<Object?> get props => [value];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "type": runtimeType.toString(),
+      "value": value.toJson(),
+      "position": position.toJson(),
+    };
+  }
+}

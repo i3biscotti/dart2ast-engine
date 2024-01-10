@@ -45,8 +45,9 @@ expression
     | left=expression NEWLINE* openand=GREATER_EQUAL_THAN NEWLINE* right=expression     #BinaryLogicExpression
     | left=expression NEWLINE* openand=LOWER_EQUAL_THAN NEWLINE* right=expression       #BinaryLogicExpression
     | left=expression NEWLINE* openand=EQUAL NEWLINE* right=expression                  #BinaryLogicExpression
-    | MINUS NEWLINE* value=expression                                                   #UnaryMathNegationExpression
-    | NOT NEWLINE* value=expression                                                     #UnatyLogicNegationExpression
+    | operand=MINUS NEWLINE* value=expression                                           #UnaryMathExpression
+    | operand=PLUS NEWLINE* value=expression                                            #UnaryMathExpression
+    | operand=NOT NEWLINE* value=expression                                             #UnaryLogicNegationExpression
     | PAREN_OPEN NEWLINE* value=expression NEWLINE* PAREN_OPEN                          #ParenthesysExpression
     | ID                                                                                #VarReferenceExpression
     ;

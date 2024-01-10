@@ -7,6 +7,12 @@ extension ExpressionTranspilerExtension on Expression {
       DecLit declit => declit.value,
       BoolLit boollit => boollit.value,
       StringLit stringlit => stringlit.value,
+      BinaryLogicExpression expression => expression.Transpile(),
+      BinaryMathExpression expression => expression.Transpile(),
+      UnaryLogicExpression expression => expression.Transpile(),
+      UnaryMathExpression expression => expression.Transpile(),
+      ParenthesysExpression expression => expression.Transpile(),
+      VarReferenceExpression expression => expression.Transpile(),
       _ => throw UnimplementedError()
     };
   }
@@ -69,5 +75,60 @@ extension DartFileTranspilerExtension on ProgramFile {
   String Transpile() {
     final linesTranspiled = lines.map((l) => l.Transpile()).join('\n');
     return linesTranspiled;
+  }
+}
+
+extension BinaryMathExpressionTranspilerExtension on BinaryMathExpression {
+  String Transpile() {
+    String leftTranspiler = left.Transpile();
+    String rightTranspiler = right.Transpile();
+    String operatorTranspiler = switch (operand) {
+      MathOperand.plus => '+',
+      MathOperand.minus => '-',
+      MathOperand.times => '*',
+      MathOperand.division => '/',
+    };
+    String expression = '$leftTranspiler $operatorTranspiler $rightTranspiler';
+    return expression;
+  }
+}
+
+extension BinaryLogicExpressionTranspilerExtension on BinaryLogicExpression {
+  String Transpile() {
+    String leftTranspiler = left.Transpile();
+    String rightTranspiler = right.Transpile();
+    String operatorTranspiler = switch (operand) {
+      LogicOperand.and => '&&',
+      LogicOperand.or => '||',
+      LogicOperand.equal => '==',
+      LogicOperand.notEqual => '!=',
+      LogicOperand.not => '!',
+      LogicOperand.lessThan => '<',
+      LogicOperand.greaterThan => '>',
+      LogicOperand.lessThanOrEqual => '<=',
+      LogicOperand.greaterThanOrEqual => '>=',
+    };
+    String expression = '$leftTranspiler $operatorTranspiler $rightTranspiler';
+    return expression;
+  }
+}
+
+extension UnaryMathExpressionTranspilerExtension on UnaryMathExpression {
+  String Transpile() {
+    String valueTranspiler = value.Transpile();
+    String operatorTranspiler = switch (operand) {
+      MathOperand.minus => '-',
+      MathOperand.plus => '',
+      _ => throw UnsupportedError('${operand.symbol} is not supported'),
+    };
+
+    String expression = '$operatorTranspiler$valueTranspiler';
+    return expression;
+  }
+}
+
+extension VariableReferenceTranspilerExtension on VarReferenceExpression {
+  String Transpile() {
+    return name;
   }
 }

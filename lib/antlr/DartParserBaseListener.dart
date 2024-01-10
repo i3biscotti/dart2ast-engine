@@ -132,14 +132,6 @@ class DartParserBaseListener implements DartParserListener {
 
   /// The default implementation does nothing.
   @override
-  void enterUnatyLogicNegationExpression(UnatyLogicNegationExpressionContext ctx) {}
-
-  /// The default implementation does nothing.
-  @override
-  void exitUnatyLogicNegationExpression(UnatyLogicNegationExpressionContext ctx) {}
-
-  /// The default implementation does nothing.
-  @override
   void enterStringLiteralExpression(StringLiteralExpressionContext ctx) {}
 
   /// The default implementation does nothing.
@@ -148,19 +140,27 @@ class DartParserBaseListener implements DartParserListener {
 
   /// The default implementation does nothing.
   @override
+  void enterUnaryLogicNegationExpression(UnaryLogicNegationExpressionContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitUnaryLogicNegationExpression(UnaryLogicNegationExpressionContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void enterUnaryMathExpression(UnaryMathExpressionContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitUnaryMathExpression(UnaryMathExpressionContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
   void enterBoolLiteralExpression(BoolLiteralExpressionContext ctx) {}
 
   /// The default implementation does nothing.
   @override
   void exitBoolLiteralExpression(BoolLiteralExpressionContext ctx) {}
-
-  /// The default implementation does nothing.
-  @override
-  void enterUnaryMathNegationExpression(UnaryMathNegationExpressionContext ctx) {}
-
-  /// The default implementation does nothing.
-  @override
-  void exitUnaryMathNegationExpression(UnaryMathNegationExpressionContext ctx) {}
 
   /// The default implementation does nothing.
   @override

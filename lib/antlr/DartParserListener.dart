@@ -138,15 +138,6 @@ abstract class DartParserListener extends ParseTreeListener {
   /// [ctx] the parse tree
   void exitDoubleLiteralExpression(DoubleLiteralExpressionContext ctx);
 
-  /// Enter a parse tree produced by the [UnatyLogicNegationExpression]
-  /// labeled alternative in [file.parserName>.expression].
-  /// [ctx] the parse tree
-  void enterUnatyLogicNegationExpression(UnatyLogicNegationExpressionContext ctx);
-  /// Exit a parse tree produced by the [UnatyLogicNegationExpression]
-  /// labeled alternative in [DartParser.expression].
-  /// [ctx] the parse tree
-  void exitUnatyLogicNegationExpression(UnatyLogicNegationExpressionContext ctx);
-
   /// Enter a parse tree produced by the [StringLiteralExpression]
   /// labeled alternative in [file.parserName>.expression].
   /// [ctx] the parse tree
@@ -156,6 +147,24 @@ abstract class DartParserListener extends ParseTreeListener {
   /// [ctx] the parse tree
   void exitStringLiteralExpression(StringLiteralExpressionContext ctx);
 
+  /// Enter a parse tree produced by the [UnaryLogicNegationExpression]
+  /// labeled alternative in [file.parserName>.expression].
+  /// [ctx] the parse tree
+  void enterUnaryLogicNegationExpression(UnaryLogicNegationExpressionContext ctx);
+  /// Exit a parse tree produced by the [UnaryLogicNegationExpression]
+  /// labeled alternative in [DartParser.expression].
+  /// [ctx] the parse tree
+  void exitUnaryLogicNegationExpression(UnaryLogicNegationExpressionContext ctx);
+
+  /// Enter a parse tree produced by the [UnaryMathExpression]
+  /// labeled alternative in [file.parserName>.expression].
+  /// [ctx] the parse tree
+  void enterUnaryMathExpression(UnaryMathExpressionContext ctx);
+  /// Exit a parse tree produced by the [UnaryMathExpression]
+  /// labeled alternative in [DartParser.expression].
+  /// [ctx] the parse tree
+  void exitUnaryMathExpression(UnaryMathExpressionContext ctx);
+
   /// Enter a parse tree produced by the [BoolLiteralExpression]
   /// labeled alternative in [file.parserName>.expression].
   /// [ctx] the parse tree
@@ -164,15 +173,6 @@ abstract class DartParserListener extends ParseTreeListener {
   /// labeled alternative in [DartParser.expression].
   /// [ctx] the parse tree
   void exitBoolLiteralExpression(BoolLiteralExpressionContext ctx);
-
-  /// Enter a parse tree produced by the [UnaryMathNegationExpression]
-  /// labeled alternative in [file.parserName>.expression].
-  /// [ctx] the parse tree
-  void enterUnaryMathNegationExpression(UnaryMathNegationExpressionContext ctx);
-  /// Exit a parse tree produced by the [UnaryMathNegationExpression]
-  /// labeled alternative in [DartParser.expression].
-  /// [ctx] the parse tree
-  void exitUnaryMathNegationExpression(UnaryMathNegationExpressionContext ctx);
 
   /// Enter a parse tree produced by the [ParenthesysExpression]
   /// labeled alternative in [file.parserName>.expression].
