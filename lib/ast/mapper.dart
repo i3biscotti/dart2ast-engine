@@ -247,3 +247,96 @@ extension VarReferenceExpressionConverterExtension
     );
   }
 }
+
+extension FunctionDefinitionStatementConverterExtension
+    on FunctionDefinitionStatementContext {
+  FunctionDefinitionStatement toAst(bool considerPosition) {
+    final fn = this.functionDefinition();
+
+    final type = switch (fn?.returnType) {
+      IntTypeContext _ => VariableValueType.Int,
+      DoubleTypeContext _ => VariableValueType.Double,
+      BoolTypeContext _ => VariableValueType.Boolean,
+      StringTypeContext _ => VariableValueType.String,
+      CustomTypeContext _ => VariableValueType.Reference,
+      VoidTypeContext _ => VariableValueType.Void,
+      _ => throw UnimplementedError()
+    };
+
+    final name = fn?.name?.text!;
+    final parameters =
+        (fn?.parameters() ?? []).map((e) => e.toAst(considerPosition)).toList();
+
+    final statements = (fn?.block()?.statements() ?? [])
+        .map((e) => e.toAst(considerPosition))
+        .toList();
+
+    return FunctionDefinitionStatement(
+      name!,
+      parameters,
+      type,
+      statements,
+      toPosition(considerPosition)!,
+    );
+  }
+}
+
+extension FunctionParameterConverterExtension on ParameterContext {
+  Parameter toAst(bool considerPosition) {
+    final type = switch (this.type()) {
+      IntTypeContext _ => VariableValueType.Int,
+      DoubleTypeContext _ => VariableValueType.Double,
+      BoolTypeContext _ => VariableValueType.Boolean,
+      StringTypeContext _ => VariableValueType.String,
+      CustomTypeContext _ => VariableValueType.Reference,
+      _ => throw UnimplementedError()
+    };
+
+    final name = this.ID()!.text!;
+
+    return Parameter(name, type, toPosition(considerPosition)!);
+  }
+}
+
+extension ClassDefinitionStatementConverterExtension
+    on ClassDefinitionStatementContext {
+  ClassDefinitionStatement toAst(bool considerPosition) {
+    final cls = this.classDefinition();
+
+    final name = cls?.name?.text;
+    final statements = cls?.block()?.statements() ?? [];
+
+    return ClassDefinitionStatement(
+      name!,
+      statements.map((e) => e.toAst(considerPosition)).toList(),
+      toPosition(considerPosition)!,
+    );
+  }
+}
+
+extension ConstructorDefinitionStatementConverterExtension
+    on ConstructorDefinitionStatementContext {
+  ConstructorDefinitionStatement toAst(bool considerPosition) {
+    final constructor = this.constructorDefinition();
+
+    final name = constructor?.name?.text;
+    final parameters = constructor?.constructorParameters() ?? [];
+    final statements = constructor?.block()?.statements() ?? [];
+
+    return ConstructorDefinitionStatement(
+      name!,
+      parameters.map((e) => e.toAst(considerPosition)).toList(),
+      statements.map((e) => e.toAst(considerPosition)).toList(),
+      toPosition(considerPosition)!,
+    );
+  }
+}
+
+extension ConstructorParameterConverterExtension
+    on ConstructorParameterContext {
+  ConstructorParameter toAst(bool considerPosition) {
+    final name = this.ID()!.text!;
+
+    return ConstructorParameter(name, toPosition(considerPosition)!);
+  }
+}

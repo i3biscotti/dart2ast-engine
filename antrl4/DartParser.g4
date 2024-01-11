@@ -12,21 +12,25 @@ const text = "Hello World";
 */
 
 dartFile       : line+;
-line           : statement SEMICOLON (NEWLINE|EOF);
+line           : statement (NEWLINE|EOF);
 
 statement      
-    : ( VAR | VAR NEWLINE* type | type ) NEWLINE* ID ASSIGN expression  #VarDeclarationStatement
-    | FINAL type? ID ASSIGN expression                                  #FinalDeclarationStatement
-    | CONST type? ID ASSIGN expression                                  #ConstDeclarationStatment
-    | ID ASSIGN expression                                              #AssigmentStatement
+    : ( VAR | VAR NEWLINE* type | type ) NEWLINE* ID ASSIGN expression SEMICOLON    #VarDeclarationStatement
+    | FINAL type? ID ASSIGN expression SEMICOLON                                    #FinalDeclarationStatement
+    | CONST type? ID ASSIGN expression SEMICOLON                                    #ConstDeclarationStatment
+    | ID ASSIGN expression SEMICOLON                                                #AssigmentStatement
+    | functionDefinition                                                            #FunctionDefinitionStatement
+    | constructorDefinition                                                         #ConstructorDefinitionStatement
+    | classDefinition                                                               #ClassDefinitionStatement
     ;
 
 type           
-    : INT #IntType
-    | DOUBLE #DoubleType
-    | BOOL #BoolType
-    | STRING #StringType
-    | ID #CustomType
+    : INT       #IntType
+    | DOUBLE    #DoubleType
+    | BOOL      #BoolType
+    | STRING    #StringType
+    | ID        #CustomType
+    | VOID      #VoidType
     ;
 
 expression      
@@ -51,4 +55,24 @@ expression
     | PAREN_OPEN NEWLINE* value=expression NEWLINE* PAREN_OPEN                          #ParenthesysExpression
     | ID                                                                                #VarReferenceExpression
     ;
+
+functionDefinition
+    : returnType=type name=ID PAREN_OPEN  (parameter NEWLINE* COMMA)* NEWLINE* parameter? PAREN_CLOSE NEWLINE* block;  
+
+parameter: type NEWLINE* ID;
+
+constructorDefinition
+    : name=ID NEWLINE* PAREN_OPEN NEWLINE*
+        (constructorParameter NEWLINE* COMMA NEWLINE*)* constructorParameter? NEWLINE*
+    PAREN_CLOSE NEWLINE* (block | SEMICOLON) ;
+
+constructorParameter: THIS NEWLINE* DOT NEWLINE* name=ID;
+
+block: 
+    GRAPH_OPEN NEWLINE* 
+        (statement NEWLINE* SEMICOLON)* 
+    NEWLINE* GRAPH_CLOSE;
+
+classDefinition
+    : CLASS name=ID NEWLINE* GRAPH_OPEN NEWLINE* block;
 

@@ -154,7 +154,7 @@ class VariableDeclarationStatement extends Statement {
 
 enum VariableType { variable, immutable, constant }
 
-enum VariableValueType { Int, Double, String, Boolean, Reference }
+enum VariableValueType { Int, Double, String, Boolean, Reference, Void }
 
 class AssignmentStatement extends Statement {
   final String name;
@@ -476,6 +476,171 @@ class ParenthesysExpression extends Node {
     return {
       "type": runtimeType.toString(),
       "value": value.toJson(),
+      "position": position.toJson(),
+    };
+  }
+}
+
+class FunctionDefinitionStatement extends Statement {
+  final String name;
+  final List<Parameter> parameters;
+  final VariableValueType? returnType;
+  final List<Statement> body;
+
+  FunctionDefinitionStatement(
+    this.name,
+    this.parameters,
+    this.returnType,
+    this.body,
+    super.position,
+  );
+
+  FunctionDefinitionStatement.fromJson(Map<String, dynamic> json)
+      : name = json['name'],
+        parameters = List.from(json['parameters'])
+            .map((e) => Parameter.fromJson(e))
+            .toList(),
+        returnType = switch (json['returnType']) {
+          'Int' => VariableValueType.Int,
+          'Double' => VariableValueType.Double,
+          'String' => VariableValueType.String,
+          'Boolean' => VariableValueType.Boolean,
+          'Reference' => VariableValueType.Reference,
+          'void' => VariableValueType.Void,
+          null => null,
+          _ => throw UnimplementedError(json['returnType']),
+        },
+        body =
+            List.from(json['body']).map((e) => Statement.fromJson(e)).toList(),
+        super(Position.fromJson(json['position']));
+
+  @override
+  List<Object?> get props => [name, parameters, returnType, body];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "type": runtimeType.toString(),
+      "name": name,
+      "parameters": parameters.map((e) => e.toJson()).toList(),
+      "returnType": returnType?.name,
+      "body": body.map((e) => e.toJson()).toList(),
+      "position": position.toJson(),
+    };
+  }
+}
+
+class Parameter extends Node {
+  final String name;
+  final VariableValueType? valueType;
+
+  Parameter(this.name, this.valueType, super.position);
+
+  Parameter.fromJson(Map<String, dynamic> json)
+      : name = json['name'],
+        valueType = switch (json['type']) {
+          'Int' => VariableValueType.Int,
+          'Double' => VariableValueType.Double,
+          'String' => VariableValueType.String,
+          'Boolean' => VariableValueType.Boolean,
+          'Reference' => VariableValueType.Reference,
+          _ => throw UnimplementedError(json['type']),
+        },
+        super(Position.fromJson(json['position']));
+
+  @override
+  List<Object?> get props => [name, valueType];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "type": runtimeType.toString(),
+      "name": name,
+      "valueType": valueType?.name,
+      "position": position.toJson(),
+    };
+  }
+}
+
+class ClassDefinitionStatement extends Statement {
+  final String name;
+  final List<Statement> body;
+
+  ClassDefinitionStatement(this.name, this.body, super.position);
+
+  ClassDefinitionStatement.fromJson(Map<String, dynamic> json)
+      : name = json['name'],
+        body =
+            List.from(json['body']).map((e) => Statement.fromJson(e)).toList(),
+        super(Position.fromJson(json['position']));
+
+  @override
+  List<Object?> get props => [name, body];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "type": runtimeType.toString(),
+      "name": name,
+      "body": body.map((e) => e.toJson()).toList(),
+      "position": position.toJson(),
+    };
+  }
+}
+
+class ConstructorDefinitionStatement extends Statement {
+  final String name;
+  final List<ConstructorParameter> parameters;
+  final List<Statement> body;
+
+  ConstructorDefinitionStatement(
+    this.name,
+    this.parameters,
+    this.body,
+    super.position,
+  );
+
+  ConstructorDefinitionStatement.fromJson(Map<String, dynamic> json)
+      : name = json['name'],
+        parameters = List.from(json['parameters'])
+            .map((e) => ConstructorParameter.fromJson(e))
+            .toList(),
+        body =
+            List.from(json['body']).map((e) => Statement.fromJson(e)).toList(),
+        super(Position.fromJson(json['position']));
+
+  @override
+  List<Object?> get props => [name, parameters, body];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "type": runtimeType.toString(),
+      "name": name,
+      "parameters": parameters.map((e) => e.toJson()).toList(),
+      "body": body.map((e) => e.toJson()).toList(),
+      "position": position.toJson(),
+    };
+  }
+}
+
+class ConstructorParameter extends Node {
+  final String name;
+
+  ConstructorParameter(this.name, super.position);
+
+  ConstructorParameter.fromJson(Map<String, dynamic> json)
+      : name = json['name'],
+        super(Position.fromJson(json['position']));
+
+  @override
+  List<Object?> get props => [name];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "type": runtimeType.toString(),
+      "name": name,
       "position": position.toJson(),
     };
   }

@@ -60,6 +60,30 @@ class DartParserBaseListener implements DartParserListener {
 
   /// The default implementation does nothing.
   @override
+  void enterFunctionDefinitionStatement(FunctionDefinitionStatementContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitFunctionDefinitionStatement(FunctionDefinitionStatementContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void enterConstructorDefinitionStatement(ConstructorDefinitionStatementContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitConstructorDefinitionStatement(ConstructorDefinitionStatementContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void enterClassDefinitionStatement(ClassDefinitionStatementContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitClassDefinitionStatement(ClassDefinitionStatementContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
   void enterIntType(IntTypeContext ctx) {}
 
   /// The default implementation does nothing.
@@ -97,6 +121,14 @@ class DartParserBaseListener implements DartParserListener {
   /// The default implementation does nothing.
   @override
   void exitCustomType(CustomTypeContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void enterVoidType(VoidTypeContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitVoidType(VoidTypeContext ctx) {}
 
   /// The default implementation does nothing.
   @override
@@ -177,6 +209,54 @@ class DartParserBaseListener implements DartParserListener {
   /// The default implementation does nothing.
   @override
   void exitIntLiteralExpression(IntLiteralExpressionContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void enterFunctionDefinition(FunctionDefinitionContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitFunctionDefinition(FunctionDefinitionContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void enterParameter(ParameterContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitParameter(ParameterContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void enterConstructorDefinition(ConstructorDefinitionContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitConstructorDefinition(ConstructorDefinitionContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void enterConstructorParameter(ConstructorParameterContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitConstructorParameter(ConstructorParameterContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void enterBlock(BlockContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitBlock(BlockContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void enterClassDefinition(ClassDefinitionContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitClassDefinition(ClassDefinitionContext ctx) {}
 
   /// The default implementation does nothing.
   @override

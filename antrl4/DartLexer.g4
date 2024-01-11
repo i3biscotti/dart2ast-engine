@@ -57,3 +57,15 @@ NOT                         : '!';
 
 PAREN_OPEN                  : '(';
 PAREN_CLOSE                 : ')';
+
+//TASK 7
+
+VOID                        : 'void';
+GRAPH_OPEN                  : '{';
+GRAPH_CLOSE                 : '}';
+COMMA                       : ',';
+
+//TASK 8
+CLASS                       : 'class';
+THIS                        : 'this';
+DOT                         : '.';
