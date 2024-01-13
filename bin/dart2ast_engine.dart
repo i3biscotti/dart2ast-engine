@@ -1,19 +1,17 @@
-import 'package:dart2ast_engine/dart2ast.dart';
-import 'package:antlr4/antlr4.dart';
+import 'package:dart2ast_engine/parsing/parser.dart';
 
 void main() {
-  final code = """final a = 1;
-  final b = "ddd";""";
+  final code = "class bella {}";
 
-  final input = InputStream.fromString(code);
-  final lexer = DartLexer(input);
+  final result = ParserFacade.parseFromText(code);
+  final errorsSerialized = result.errors
+      .map((e) =>
+          "[Ln ${e.position.line}, Col ${e.position.column}] ${e.message}")
+      .toList();
 
-  final tokens = CommonTokenStream(lexer);
-  final parser = DartParser(tokens);
-
-  final root = parser.dartFile();
-  print(root.text);
-  for (final child in root.lines()) {
-    print(child.text);
-  }
+  print("""
+  Errors:
+  ${errorsSerialized.join('\n')}
+  """
+      .trim());
 }
