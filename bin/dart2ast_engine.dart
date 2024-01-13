@@ -1,7 +1,13 @@
 import 'package:dart2ast_engine/parsing/parser.dart';
 
 void main() {
-  final code = "class bella {}";
+  final code = """
+  if( true){
+    final a = 1;
+  }
+  """
+      .trim();
+  ;
 
   final result = ParserFacade.parseFromText(code);
   final errorsSerialized = result.errors
