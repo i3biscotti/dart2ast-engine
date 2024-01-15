@@ -20,9 +20,8 @@ extension DartScriptConverterExtension on DartFileContext {
   ProgramFile toAst([bool considerPosition = false]) {
     final astLines = <Statement>[];
 
-    for (final line in lines()) {
-      final statement = line.statement();
-      astLines.add(statement!.toAst(considerPosition));
+    for (final statement in statements()) {
+      astLines.add(statement.toAst(considerPosition));
     }
 
     return ProgramFile(astLines, toPosition(considerPosition)!);
@@ -36,17 +35,19 @@ extension StatementConverterExtension on StatementContext {
       FinalDeclarationStatementContext st => st.toAst(considerPosition),
       ConstDeclarationStatmentContext st => st.toAst(considerPosition),
       AssigmentStatementContext st => st.toAst(considerPosition),
+      FunctionDefinitionStatementContext st => st.toAst(considerPosition),
+      ClassDefinitionStatementContext st => st.toAst(considerPosition),
       _ => throw UnimplementedError()
     };
   }
 }
 
 VariableValueType? _Antlr4ToAstValueType(TypeContext? type) => switch (type) {
-      IntTypeContext _ => VariableValueType.Int,
-      DoubleTypeContext _ => VariableValueType.Double,
-      BoolTypeContext _ => VariableValueType.Boolean,
-      StringTypeContext _ => VariableValueType.String,
-      CustomTypeContext _ => VariableValueType.Reference,
+      IntTypeContext _ => VariableValueType.INT,
+      DoubleTypeContext _ => VariableValueType.DOUBLE,
+      BoolTypeContext _ => VariableValueType.BOOLEAN,
+      StringTypeContext _ => VariableValueType.STRING,
+      CustomTypeContext type => VariableValueType(type.name!.text!),
       null => null,
       _ => throw UnimplementedError()
     };
@@ -254,12 +255,12 @@ extension FunctionDefinitionStatementConverterExtension
     final fn = this.functionDefinition();
 
     final type = switch (fn?.returnType) {
-      IntTypeContext _ => VariableValueType.Int,
-      DoubleTypeContext _ => VariableValueType.Double,
-      BoolTypeContext _ => VariableValueType.Boolean,
-      StringTypeContext _ => VariableValueType.String,
-      CustomTypeContext _ => VariableValueType.Reference,
-      VoidTypeContext _ => VariableValueType.Void,
+      IntTypeContext _ => VariableValueType.INT,
+      DoubleTypeContext _ => VariableValueType.DOUBLE,
+      BoolTypeContext _ => VariableValueType.BOOLEAN,
+      StringTypeContext _ => VariableValueType.STRING,
+      VoidTypeContext _ => VariableValueType.VOID,
+      CustomTypeContext t => VariableValueType(t.name!.text!),
       _ => throw UnimplementedError()
     };
 
@@ -281,20 +282,36 @@ extension FunctionDefinitionStatementConverterExtension
   }
 }
 
-extension FunctionParameterConverterExtension on ParameterContext {
+extension ParameterConverterExtension on ParameterContext {
   Parameter toAst(bool considerPosition) {
-    final type = switch (this.type()) {
-      IntTypeContext _ => VariableValueType.Int,
-      DoubleTypeContext _ => VariableValueType.Double,
-      BoolTypeContext _ => VariableValueType.Boolean,
-      StringTypeContext _ => VariableValueType.String,
-      CustomTypeContext _ => VariableValueType.Reference,
-      _ => throw UnimplementedError()
-    };
+    VariableValueType? valueType = null;
+    late final ParameterType paramType;
+
+    if (this.type() != null) {
+      paramType = ParameterType.TYPE;
+
+      valueType = switch (this.type()) {
+        IntTypeContext _ => VariableValueType.INT,
+        DoubleTypeContext _ => VariableValueType.DOUBLE,
+        BoolTypeContext _ => VariableValueType.BOOLEAN,
+        StringTypeContext _ => VariableValueType.STRING,
+        CustomTypeContext t => VariableValueType(t.name!.text!),
+        _ => throw UnimplementedError()
+      };
+    } else if (this.THIS() != null) {
+      paramType = ParameterType.THIS;
+    } else {
+      throw UnimplementedError();
+    }
 
     final name = this.ID()!.text!;
 
-    return Parameter(name, type, toPosition(considerPosition)!);
+    return Parameter(
+      name,
+      paramType,
+      valueType,
+      toPosition(considerPosition)!,
+    );
   }
 }
 
@@ -303,40 +320,128 @@ extension ClassDefinitionStatementConverterExtension
   ClassDefinitionStatement toAst(bool considerPosition) {
     final cls = this.classDefinition();
 
-    final name = cls?.name?.text;
-    final statements = cls?.block()?.statements() ?? [];
+    final className = cls?.name?.text;
+    final statements = (cls?.classStatements() ?? [])
+        .map((e) => e.toAst(considerPosition))
+        .toList();
+
+    final properties =
+        statements.whereType<VariableDeclarationStatement>().toList();
+    final methods =
+        statements.whereType<FunctionDefinitionStatement>().toList();
+    final constructors =
+        statements.whereType<ConstructorDefinitionStatement>().toList();
 
     return ClassDefinitionStatement(
-      name!,
-      statements.map((e) => e.toAst(considerPosition)).toList(),
+      className!,
+      properties,
+      constructors,
+      methods,
       toPosition(considerPosition)!,
     );
   }
 }
 
-extension ConstructorDefinitionStatementConverterExtension
-    on ConstructorDefinitionStatementContext {
-  ConstructorDefinitionStatement toAst(bool considerPosition) {
-    final constructor = this.constructorDefinition();
+extension ClassStatementConverterExtension on ClassStatementContext {
+  Statement toAst(bool considerPosition) {
+    return switch (this) {
+      ClassVarDeclarationStatementContext st => st.toAst(considerPosition),
+      ClassImmutableVarDeclarationStatementContext st =>
+        st.toAst(considerPosition),
+      ClassConstructorDeclarationStatementContext st =>
+        st.toAst(considerPosition),
+      ClassMethodDeclarationStatementContext st => st.toAst(considerPosition),
+      _ => throw UnimplementedError()
+    };
+  }
+}
 
-    final name = constructor?.name?.text;
-    final parameters = constructor?.constructorParameters() ?? [];
-    final statements = constructor?.block()?.statements() ?? [];
+extension ClassVarDeclarationStatementConverterExtension
+    on ClassVarDeclarationStatementContext {
+  VariableDeclarationStatement toAst(bool considerPosition) {
+    final name = this.ID()!.text!;
+    final value = this.expression()!.toAst(considerPosition);
+    final valueType = _Antlr4ToAstValueType(this.type());
+
+    return VariableDeclarationStatement(
+      VariableType.variable,
+      name,
+      valueType,
+      value,
+      toPosition(considerPosition)!,
+    );
+  }
+}
+
+extension ClassImmutableVarDeclarationStatementConverterExtension
+    on ClassImmutableVarDeclarationStatementContext {
+  VariableDeclarationStatement toAst(bool considerPosition) {
+    final name = this.ID()!.text!;
+    final value = this.expression()!.toAst(considerPosition);
+    final valueType = _Antlr4ToAstValueType(this.type());
+
+    return VariableDeclarationStatement(
+      VariableType.immutable,
+      name,
+      valueType,
+      value,
+      toPosition(considerPosition)!,
+    );
+  }
+}
+
+extension ClassConstructorDeclarationStatementConverterExtension
+    on ClassConstructorDeclarationStatementContext {
+  ConstructorDefinitionStatement toAst(bool considerPosition) {
+    final className = this.className!.text!;
+    final contructorName = this.costructorName?.text;
+
+    final parameters =
+        this.parameters().map((e) => e.toAst(considerPosition)).toList();
+
+    final statements = (this.block()?.statements() ?? [])
+        .map((e) => e.toAst(considerPosition))
+        .toList();
 
     return ConstructorDefinitionStatement(
-      name!,
-      parameters.map((e) => e.toAst(considerPosition)).toList(),
-      statements.map((e) => e.toAst(considerPosition)).toList(),
+      className,
+      contructorName,
+      parameters,
+      statements,
       toPosition(considerPosition)!,
     );
   }
 }
 
-extension ConstructorParameterConverterExtension
-    on ConstructorParameterContext {
-  ConstructorParameter toAst(bool considerPosition) {
-    final name = this.ID()!.text!;
+extension ClassMethodDeclarationStatementConverterExtension
+    on ClassMethodDeclarationStatementContext {
+  FunctionDefinitionStatement toAst(bool considerPosition) {
+    final fn = this.functionDefinition();
 
-    return ConstructorParameter(name, toPosition(considerPosition)!);
+    final type = switch (fn?.returnType) {
+      IntTypeContext _ => VariableValueType.INT,
+      DoubleTypeContext _ => VariableValueType.DOUBLE,
+      BoolTypeContext _ => VariableValueType.BOOLEAN,
+      StringTypeContext _ => VariableValueType.STRING,
+      VoidTypeContext _ => VariableValueType.VOID,
+      CustomTypeContext t => VariableValueType(t.name!.text!),
+      _ => throw UnimplementedError()
+    };
+
+    final name = fn?.name?.text!;
+    final parameters =
+        (fn?.parameters() ?? []).map((e) => e.toAst(considerPosition)).toList();
+
+    final statements = (fn?.block()?.statements() ?? [])
+        .map((e) => e.toAst(considerPosition))
+        .toList();
+
+    return FunctionDefinitionStatement(
+      name!,
+      parameters,
+      type,
+      statements,
+      toPosition(considerPosition)!,
+    );
   }
 }
