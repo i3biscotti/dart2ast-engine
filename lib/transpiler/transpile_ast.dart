@@ -1,3 +1,5 @@
+import 'package:indent/indent.dart';
+
 import '../ast.dart';
 
 extension ExpressionTranspilerExtension on Expression {
@@ -23,6 +25,7 @@ extension StatementTranspilerExtension on Statement {
     return switch (this) {
       VariableDeclarationStatement st => st.Transpile(),
       AssignmentStatement st => st.Transpile(),
+      ClassDefinitionStatement st => st.Transpile(),
       _ => throw UnimplementedError()
     };
   }
@@ -36,18 +39,11 @@ extension VariableDeclarationStatementTranspilerExtension
       VariableType.immutable => 'final',
       VariableType.constant => 'const',
     };
-    String variableValueTypeTranspiler = switch (valueType) {
-      VariableValueType.Int => 'int',
-      VariableValueType.Double => 'double',
-      VariableValueType.String => 'String',
-      VariableValueType.Boolean => 'bool',
-      VariableValueType.Reference => '',
-      null => '',
-      _ => throw UnimplementedError()
-    };
+    var variableValueTypeTranspiler = valueType?.typeName ?? '';
     String valueTranspiler = value.Transpile();
     String statement =
         '$variableTypeTranspiler $variableValueTypeTranspiler $name = $valueTranspiler;';
+
     return statement;
   }
 }
@@ -82,12 +78,7 @@ extension BinaryMathExpressionTranspilerExtension on BinaryMathExpression {
   String Transpile() {
     String leftTranspiler = left.Transpile();
     String rightTranspiler = right.Transpile();
-    String operatorTranspiler = switch (operand) {
-      MathOperand.plus => '+',
-      MathOperand.minus => '-',
-      MathOperand.times => '*',
-      MathOperand.division => '/',
-    };
+    String operatorTranspiler = operand.symbol;
     String expression = '$leftTranspiler $operatorTranspiler $rightTranspiler';
     return expression;
   }
@@ -97,17 +88,7 @@ extension BinaryLogicExpressionTranspilerExtension on BinaryLogicExpression {
   String Transpile() {
     String leftTranspiler = left.Transpile();
     String rightTranspiler = right.Transpile();
-    String operatorTranspiler = switch (operand) {
-      LogicOperand.and => '&&',
-      LogicOperand.or => '||',
-      LogicOperand.equal => '==',
-      LogicOperand.notEqual => '!=',
-      LogicOperand.not => '!',
-      LogicOperand.lessThan => '<',
-      LogicOperand.greaterThan => '>',
-      LogicOperand.lessThanOrEqual => '<=',
-      LogicOperand.greaterThanOrEqual => '>=',
-    };
+    String operatorTranspiler = operand.symbol;
     String expression = '$leftTranspiler $operatorTranspiler $rightTranspiler';
     return expression;
   }
@@ -116,11 +97,7 @@ extension BinaryLogicExpressionTranspilerExtension on BinaryLogicExpression {
 extension UnaryMathExpressionTranspilerExtension on UnaryMathExpression {
   String Transpile() {
     String valueTranspiler = value.Transpile();
-    String operatorTranspiler = switch (operand) {
-      MathOperand.minus => '-',
-      MathOperand.plus => '',
-      _ => throw UnsupportedError('${operand.symbol} is not supported'),
-    };
+    String operatorTranspiler = operand.symbol;
 
     String expression = '$operatorTranspiler$valueTranspiler';
     return expression;
@@ -130,5 +107,85 @@ extension UnaryMathExpressionTranspilerExtension on UnaryMathExpression {
 extension VariableReferenceTranspilerExtension on VarReferenceExpression {
   String Transpile() {
     return name;
+  }
+}
+
+extension FunctionDefinitionTranspilerExtension on FunctionDefinitionStatement {
+  String Transpile() {
+    String? returnTypeTranspiler = returnType?.typeName;
+    String nameTranspiler = name;
+    String parametersTranspiler =
+        parameters.map((p) => p.Transpile()).toList().join(', ');
+
+    String bodyTranspiler = body.map((e) => e.Transpile()).join('\n');
+    String functionDeclaration = """
+    $returnTypeTranspiler $nameTranspiler($parametersTranspiler) { 
+      $bodyTranspiler 
+    }
+    """
+        .unindent();
+
+    return functionDeclaration;
+  }
+}
+
+extension ParameterTranspilerExtension on Parameter {
+  String Transpile() {
+    return switch (paramType) {
+      ParameterType.SUPER => 'super.$name',
+      ParameterType.THIS => 'this.$name',
+      ParameterType.TYPE => '${valueType?.typeName} $name',
+    };
+  }
+}
+
+extension ClassDefinitionTranspilerExtension on ClassDefinitionStatement {
+  String Transpile() {
+    String nameTranspiler = name;
+    String propertiesTranspiled =
+        properties.map((e) => e.Transpile()).join('\n');
+    String constructorsTranspiled =
+        constructors.map((e) => e.Transpile()).join('\n');
+    String methodsTranspiled = methods.map((e) => e.Transpile()).join('\n');
+    String classDeclaration = """
+    class $nameTranspiler { 
+      $propertiesTranspiled
+
+      $constructorsTranspiled
+
+      $methodsTranspiled 
+    }
+    """
+        .unindent();
+
+    return classDeclaration;
+  }
+}
+
+extension ConstructorDefinitionTranspilerExtension
+    on ConstructorDefinitionStatement {
+  String Transpile() {
+    String constructorNameTranspiled = className;
+    if (constructorName != null) {
+      constructorNameTranspiled += '.$constructorName';
+    }
+
+    String parametersTranspiler =
+        parameters.map((p) => p.Transpile()).toList().join(', ');
+
+    String bodyTranspiled = ";";
+    if (body.isNotEmpty) {
+      bodyTranspiled = """{
+        ${body.map((e) => e.Transpile()).join('\n')}
+      }"""
+          .unindent();
+    }
+
+    String constructorDeclaration = """
+    $constructorNameTranspiled($parametersTranspiler) $bodyTranspiled
+    """
+        .unindent();
+
+    return constructorDeclaration;
   }
 }
