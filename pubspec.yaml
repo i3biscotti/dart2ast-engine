@@ -11,6 +11,8 @@ dependencies:
   path: ^1.8.0
   antlr4: ^4.13.1
   equatable: ^2.0.5
+  uuid: ^4.3.3
+  indent: ^2.0.0
 
 dev_dependencies:
   mocktail: ^1.0.0
