@@ -10,17 +10,14 @@ double height = 1.75;
 const text = "Hello World";
 
 */
-
-dartFile       : line+;
-line           : statement (NEWLINE|EOF);
-
-statement      
-    : ( VAR | VAR NEWLINE* type | type ) NEWLINE* ID ASSIGN expression SEMICOLON    #VarDeclarationStatement
+dartFile: statement+ EOF;
+    
+statement  
+    : ( VAR | VAR  type | type ) ID ASSIGN expression SEMICOLON                    #VarDeclarationStatement
     | FINAL type? ID ASSIGN expression SEMICOLON                                    #FinalDeclarationStatement
     | CONST type? ID ASSIGN expression SEMICOLON                                    #ConstDeclarationStatment
     | ID ASSIGN expression SEMICOLON                                                #AssigmentStatement
     | functionDefinition                                                            #FunctionDefinitionStatement
-    | constructorDefinition                                                         #ConstructorDefinitionStatement
     | classDefinition                                                               #ClassDefinitionStatement
     ;
 
@@ -29,50 +26,49 @@ type
     | DOUBLE    #DoubleType
     | BOOL      #BoolType
     | STRING    #StringType
-    | ID        #CustomType
     | VOID      #VoidType
+    | name=ID   #CustomType
     ;
 
 expression      
-    : BOOLLIT                                                                           #BoolLiteralExpression
-    | INTLIT                                                                            #IntLiteralExpression
-    | DOUBLELIT                                                                         #DoubleLiteralExpression
-    | STRINGLIT                                                                         #StringLiteralExpression
-    | left=expression NEWLINE* openand=PLUS NEWLINE* right=expression                   #BinaryMathExpression
-    | left=expression NEWLINE* openand=MINUS NEWLINE* right=expression                  #BinaryMathExpression
-    | left=expression NEWLINE* openand=TIMES NEWLINE* right=expression                  #BinaryMathExpression
-    | left=expression NEWLINE* openand=DIVISION NEWLINE* right=expression               #BinaryMathExpression
-    | left=expression NEWLINE* openand=AND NEWLINE* right=expression                    #BinaryLogicExpression
-    | left=expression NEWLINE* openand=OR NEWLINE* right=expression                     #BinaryLogicExpression
-    | left=expression NEWLINE* openand=GREATER_THAN NEWLINE* right=expression           #BinaryLogicExpression
-    | left=expression NEWLINE* openand=LOWER_THAN NEWLINE* right=expression             #BinaryLogicExpression
-    | left=expression NEWLINE* openand=GREATER_EQUAL_THAN NEWLINE* right=expression     #BinaryLogicExpression
-    | left=expression NEWLINE* openand=LOWER_EQUAL_THAN NEWLINE* right=expression       #BinaryLogicExpression
-    | left=expression NEWLINE* openand=EQUAL NEWLINE* right=expression                  #BinaryLogicExpression
-    | operand=MINUS NEWLINE* value=expression                                           #UnaryMathExpression
-    | operand=PLUS NEWLINE* value=expression                                            #UnaryMathExpression
-    | operand=NOT NEWLINE* value=expression                                             #UnaryLogicNegationExpression
-    | PAREN_OPEN NEWLINE* value=expression NEWLINE* PAREN_OPEN                          #ParenthesysExpression
-    | ID                                                                                #VarReferenceExpression
+    : BOOLLIT                                                                   #BoolLiteralExpression
+    | INTLIT                                                                    #IntLiteralExpression
+    | DOUBLELIT                                                                 #DoubleLiteralExpression
+    | STRINGLIT                                                                 #StringLiteralExpression
+    | left=expression  openand=PLUS                 right=expression            #BinaryMathExpression
+    | left=expression  openand=MINUS                right=expression            #BinaryMathExpression
+    | left=expression  openand=TIMES                right=expression            #BinaryMathExpression
+    | left=expression  openand=DIVISION             right=expression            #BinaryMathExpression
+    | left=expression  openand=AND                  right=expression            #BinaryLogicExpression
+    | left=expression  openand=OR                   right=expression            #BinaryLogicExpression
+    | left=expression  openand=GREATER_THAN         right=expression            #BinaryLogicExpression
+    | left=expression  openand=LOWER_THAN           right=expression            #BinaryLogicExpression
+    | left=expression  openand=GREATER_EQUAL_THAN   right=expression            #BinaryLogicExpression
+    | left=expression  openand=LOWER_EQUAL_THAN     right=expression            #BinaryLogicExpression
+    | left=expression  openand=EQUAL                right=expression            #BinaryLogicExpression
+    |                  operand=MINUS                value=expression            #UnaryMathExpression
+    |                  operand=PLUS                 value=expression            #UnaryMathExpression
+    |                  operand=NOT                  value=expression            #UnaryLogicNegationExpression
+    | PAREN_OPEN       value=expression             PAREN_OPEN                  #ParenthesysExpression
+    | ID                                                                        #VarReferenceExpression
+    | ID PAREN_OPEN (expression COMMA)* expression? PAREN_CLOSE                 #FunctionCallExpression
+    | ID DOT ID                                                                 #ObjectPropertyReferenceExpression
+    | ID DOT ID PAREN_OPEN (expression COMMA)* expression? PAREN_CLOSE          #ObjectMethodCallExpression
     ;
 
 functionDefinition
-    : returnType=type name=ID PAREN_OPEN  (parameter NEWLINE* COMMA)* NEWLINE* parameter? PAREN_CLOSE NEWLINE* block;  
+    : returnType=type name=ID PAREN_OPEN (parameter COMMA)* parameter? PAREN_CLOSE  block;  
 
-parameter: type NEWLINE* ID;
+parameter: (type | (THIS DOT))  ID;
 
-constructorDefinition
-    : name=ID NEWLINE* PAREN_OPEN NEWLINE*
-        (constructorParameter NEWLINE* COMMA NEWLINE*)* constructorParameter? NEWLINE*
-    PAREN_CLOSE NEWLINE* (block | SEMICOLON) ;
+block: GRAPH_OPEN statement* GRAPH_CLOSE ;
 
-constructorParameter: THIS NEWLINE* DOT NEWLINE* name=ID;
+classDefinition : CLASS name=ID GRAPH_OPEN classStatement* GRAPH_CLOSE ;
 
-block: 
-    GRAPH_OPEN NEWLINE* 
-        (statement NEWLINE* SEMICOLON)* 
-    NEWLINE* GRAPH_CLOSE;
-
-classDefinition
-    : CLASS name=ID NEWLINE* GRAPH_OPEN NEWLINE* block;
-
+classStatement
+    : type ID ASSIGN expression SEMICOLON                                                                    #ClassVarDeclarationStatement         
+    | FINAL type? ID ASSIGN expression SEMICOLON                                                             #ClassImmutableVarDeclarationStatement                     
+    | className=ID (DOT costructorName=ID)? PAREN_OPEN (parameter COMMA)* parameter? PAREN_CLOSE (block | SEMICOLON)   #ClassConstructorDeclarationStatement
+    | functionDefinition                                                                                     #ClassMethodDeclarationStatement                    
+    ;
+    

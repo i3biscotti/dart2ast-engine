@@ -10,17 +10,19 @@ const text = "Hello World";
 */
 // TASK 1
 
-NEWLINE                     : '\r\n' | '\r' | '\n' ;
-WS                          : [\t ]+ -> skip ;
+WS                          : [ \t\r\n]+ -> skip ;
 
 VAR                         : 'var';
 FINAL                       : 'final';
 CONST                       : 'const';
+CLASS                       : 'class';
+THIS                        : 'this';
 
 INT                         : 'int';
 DOUBLE                      : 'double';
 STRING                      : 'String';
 BOOL                        : 'bool';
+VOID                        : 'void';
 
 ASSIGN                      : '=';
 SEMICOLON                   : ';';
@@ -36,9 +38,6 @@ BOOLLIT                     : 'true' | 'false';
 STRINGLIT                   : UnterminatedStringLiteral '"';
 UnterminatedStringLiteral   : '"' (~["\\\r\n] | '\\' (. | EOF))* ;
 
-ID                          : [A-Za-z_][A-Za-z_0-9]*;
-
-//TASK 2
 PLUS                        : '+';
 MINUS                       : '-';
 DIVISION                    : '/';
@@ -58,14 +57,9 @@ NOT                         : '!';
 PAREN_OPEN                  : '(';
 PAREN_CLOSE                 : ')';
 
-//TASK 7
-
-VOID                        : 'void';
 GRAPH_OPEN                  : '{';
 GRAPH_CLOSE                 : '}';
 COMMA                       : ',';
-
-//TASK 8
-CLASS                       : 'class';
-THIS                        : 'this';
 DOT                         : '.';
+
+ID                          : [A-Za-z_][A-Za-z_0-9]*;
