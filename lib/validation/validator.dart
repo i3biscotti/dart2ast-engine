@@ -6,8 +6,10 @@ extension ScriptFileValidator on ProgramFile {
     final errors = <LangError>[];
     final varsByName = <String, VariableDeclarationStatement>{};
 
-    specificProcess<VariableDeclarationStatement>((node) {
-      if (varsByName.containsKey(node.name)) {
+    specificProcess<VariableDeclarationStatement>((node, scope) {
+      final varKey = '$scope/${node.name}';
+
+      if (varsByName.containsKey(varKey)) {
         errors.add(
           LangError(
             'Variable ${node.name} already declared',
@@ -15,7 +17,7 @@ extension ScriptFileValidator on ProgramFile {
           ),
         );
       } else {
-        varsByName[node.name] = node;
+        varsByName[varKey] = node;
       }
     });
 
@@ -39,15 +41,17 @@ extension ScriptFileValidator on ProgramFile {
     });
     */
 
-    specificProcess<AssignmentStatement>((node) {
-      if (!varsByName.containsKey(node.name)) {
+    specificProcess<AssignmentStatement>((node, scope) {
+      final varKey = '$scope/${node.name}';
+
+      if (!varsByName.containsKey(varKey)) {
         errors.add(
           LangError(
             'Variable ${node.name} not declared',
             node.position.start,
           ),
         );
-      } else if (node.position < varsByName[node.name]!.position) {
+      } else if (node.position < varsByName[varKey]!.position) {
         errors.add(
           LangError(
             'Variable ${node.name} not declared',
