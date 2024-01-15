@@ -20,14 +20,6 @@ class DartParserBaseListener implements DartParserListener {
 
   /// The default implementation does nothing.
   @override
-  void enterLine(LineContext ctx) {}
-
-  /// The default implementation does nothing.
-  @override
-  void exitLine(LineContext ctx) {}
-
-  /// The default implementation does nothing.
-  @override
   void enterVarDeclarationStatement(VarDeclarationStatementContext ctx) {}
 
   /// The default implementation does nothing.
@@ -65,14 +57,6 @@ class DartParserBaseListener implements DartParserListener {
   /// The default implementation does nothing.
   @override
   void exitFunctionDefinitionStatement(FunctionDefinitionStatementContext ctx) {}
-
-  /// The default implementation does nothing.
-  @override
-  void enterConstructorDefinitionStatement(ConstructorDefinitionStatementContext ctx) {}
-
-  /// The default implementation does nothing.
-  @override
-  void exitConstructorDefinitionStatement(ConstructorDefinitionStatementContext ctx) {}
 
   /// The default implementation does nothing.
   @override
@@ -116,14 +100,6 @@ class DartParserBaseListener implements DartParserListener {
 
   /// The default implementation does nothing.
   @override
-  void enterCustomType(CustomTypeContext ctx) {}
-
-  /// The default implementation does nothing.
-  @override
-  void exitCustomType(CustomTypeContext ctx) {}
-
-  /// The default implementation does nothing.
-  @override
   void enterVoidType(VoidTypeContext ctx) {}
 
   /// The default implementation does nothing.
@@ -132,11 +108,59 @@ class DartParserBaseListener implements DartParserListener {
 
   /// The default implementation does nothing.
   @override
+  void enterCustomType(CustomTypeContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitCustomType(CustomTypeContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
   void enterBinaryMathExpression(BinaryMathExpressionContext ctx) {}
 
   /// The default implementation does nothing.
   @override
   void exitBinaryMathExpression(BinaryMathExpressionContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void enterDoubleLiteralExpression(DoubleLiteralExpressionContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitDoubleLiteralExpression(DoubleLiteralExpressionContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void enterObjectPropertyReferenceExpression(ObjectPropertyReferenceExpressionContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitObjectPropertyReferenceExpression(ObjectPropertyReferenceExpressionContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void enterStringLiteralExpression(StringLiteralExpressionContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitStringLiteralExpression(StringLiteralExpressionContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void enterIntLiteralExpression(IntLiteralExpressionContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitIntLiteralExpression(IntLiteralExpressionContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void enterFunctionCallExpression(FunctionCallExpressionContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitFunctionCallExpression(FunctionCallExpressionContext ctx) {}
 
   /// The default implementation does nothing.
   @override
@@ -156,22 +180,6 @@ class DartParserBaseListener implements DartParserListener {
 
   /// The default implementation does nothing.
   @override
-  void enterDoubleLiteralExpression(DoubleLiteralExpressionContext ctx) {}
-
-  /// The default implementation does nothing.
-  @override
-  void exitDoubleLiteralExpression(DoubleLiteralExpressionContext ctx) {}
-
-  /// The default implementation does nothing.
-  @override
-  void enterStringLiteralExpression(StringLiteralExpressionContext ctx) {}
-
-  /// The default implementation does nothing.
-  @override
-  void exitStringLiteralExpression(StringLiteralExpressionContext ctx) {}
-
-  /// The default implementation does nothing.
-  @override
   void enterUnaryLogicNegationExpression(UnaryLogicNegationExpressionContext ctx) {}
 
   /// The default implementation does nothing.
@@ -185,6 +193,14 @@ class DartParserBaseListener implements DartParserListener {
   /// The default implementation does nothing.
   @override
   void exitUnaryMathExpression(UnaryMathExpressionContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void enterObjectMethodCallExpression(ObjectMethodCallExpressionContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitObjectMethodCallExpression(ObjectMethodCallExpressionContext ctx) {}
 
   /// The default implementation does nothing.
   @override
@@ -204,14 +220,6 @@ class DartParserBaseListener implements DartParserListener {
 
   /// The default implementation does nothing.
   @override
-  void enterIntLiteralExpression(IntLiteralExpressionContext ctx) {}
-
-  /// The default implementation does nothing.
-  @override
-  void exitIntLiteralExpression(IntLiteralExpressionContext ctx) {}
-
-  /// The default implementation does nothing.
-  @override
   void enterFunctionDefinition(FunctionDefinitionContext ctx) {}
 
   /// The default implementation does nothing.
@@ -228,22 +236,6 @@ class DartParserBaseListener implements DartParserListener {
 
   /// The default implementation does nothing.
   @override
-  void enterConstructorDefinition(ConstructorDefinitionContext ctx) {}
-
-  /// The default implementation does nothing.
-  @override
-  void exitConstructorDefinition(ConstructorDefinitionContext ctx) {}
-
-  /// The default implementation does nothing.
-  @override
-  void enterConstructorParameter(ConstructorParameterContext ctx) {}
-
-  /// The default implementation does nothing.
-  @override
-  void exitConstructorParameter(ConstructorParameterContext ctx) {}
-
-  /// The default implementation does nothing.
-  @override
   void enterBlock(BlockContext ctx) {}
 
   /// The default implementation does nothing.
@@ -257,6 +249,38 @@ class DartParserBaseListener implements DartParserListener {
   /// The default implementation does nothing.
   @override
   void exitClassDefinition(ClassDefinitionContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void enterClassVarDeclarationStatement(ClassVarDeclarationStatementContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitClassVarDeclarationStatement(ClassVarDeclarationStatementContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void enterClassImmutableVarDeclarationStatement(ClassImmutableVarDeclarationStatementContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitClassImmutableVarDeclarationStatement(ClassImmutableVarDeclarationStatementContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void enterClassConstructorDeclarationStatement(ClassConstructorDeclarationStatementContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitClassConstructorDeclarationStatement(ClassConstructorDeclarationStatementContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void enterClassMethodDeclarationStatement(ClassMethodDeclarationStatementContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitClassMethodDeclarationStatement(ClassMethodDeclarationStatementContext ctx) {}
 
   /// The default implementation does nothing.
   @override
