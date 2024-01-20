@@ -27,16 +27,11 @@ VOID                        : 'void';
 ASSIGN                      : '=';
 SEMICOLON                   : ';';
 
-fragment DecDigit           : '0'..'9';
-fragment DecDigitNoZero     : '1'..'9';
-fragment DecDigits          : DecDigit+;
-
 INTLIT                      : DecDigitNoZero DecDigit* | DecDigit;
 DOUBLELIT                   : DecDigit '.' DecDigits;
 BOOLLIT                     : 'true' | 'false';
 
 STRINGLIT                   : UnterminatedStringLiteral '"';
-UnterminatedStringLiteral   : '"' (~["\\\r\n] | '\\' (. | EOF))* ;
 
 PLUS                        : '+';
 MINUS                       : '-';
@@ -63,3 +58,8 @@ COMMA                       : ',';
 DOT                         : '.';
 
 ID                          : [A-Za-z_][A-Za-z_0-9]*;
+
+fragment DecDigit           : '0'..'9';
+fragment DecDigitNoZero     : '1'..'9';
+fragment DecDigits          : DecDigit+;
+UnterminatedStringLiteral   : '"' (~["\\\r\n] | '\\' (. | EOF))* ;
