@@ -34,15 +34,22 @@ extension StatementTranspilerExtension on Statement {
 extension VariableDeclarationStatementTranspilerExtension
     on VariableDeclarationStatement {
   String Transpile() {
+    String statement = '';
+
     String variableTypeTranspiler = switch (varType) {
       VariableType.variable => 'var',
       VariableType.immutable => 'final',
       VariableType.constant => 'const',
     };
-    var variableValueTypeTranspiler = valueType?.typeName ?? '';
+
+    statement += variableTypeTranspiler;
+
+    if (valueType != null) {
+      statement += ' ${valueType!.typeName}';
+    }
+
     String valueTranspiler = value.Transpile();
-    String statement =
-        '$variableTypeTranspiler $variableValueTypeTranspiler $name = $valueTranspiler;';
+    statement += ' $name = $valueTranspiler;';
 
     return statement;
   }

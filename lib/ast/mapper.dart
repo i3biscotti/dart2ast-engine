@@ -24,7 +24,7 @@ extension DartScriptConverterExtension on DartFileContext {
       astLines.add(statement.toAst(considerPosition));
     }
 
-    return ProgramFile(astLines, toPosition(considerPosition)!);
+    return ProgramFile(astLines, toPosition(considerPosition));
   }
 }
 
@@ -64,7 +64,7 @@ extension VarDeclarationStatementConverterExtension
       name,
       valueType,
       value,
-      toPosition(considerPosition)!,
+      toPosition(considerPosition),
     );
   }
 }
@@ -81,7 +81,7 @@ extension FinalDeclarationStatementConverterExtension
       name,
       valueType,
       value,
-      toPosition(considerPosition)!,
+      toPosition(considerPosition),
     );
   }
 }
@@ -98,7 +98,7 @@ extension ConstDeclarationStatementConverterExtension
       name,
       valueType,
       value,
-      toPosition(considerPosition)!,
+      toPosition(considerPosition),
     );
   }
 }
@@ -111,7 +111,7 @@ extension AssignmentStatementConverterExtension on AssigmentStatementContext {
     return AssignmentStatement(
       name,
       value,
-      toPosition(considerPosition)!,
+      toPosition(considerPosition),
     );
   }
 }
@@ -120,13 +120,13 @@ extension ExpressionSatementConverterExtension on ExpressionContext {
   Expression toAst(bool considerPosition) {
     return switch (this) {
       IntLiteralExpressionContext _ =>
-        IntLit(text, toPosition(considerPosition)!),
+        IntLit(text, toPosition(considerPosition)),
       DoubleLiteralExpressionContext _ =>
-        DecLit(text, toPosition(considerPosition)!),
+        DecLit(text, toPosition(considerPosition)),
       BoolLiteralExpressionContext _ =>
-        BoolLit(text, toPosition(considerPosition)!),
+        BoolLit(text, toPosition(considerPosition)),
       StringLiteralExpressionContext _ =>
-        StringLit(text, toPosition(considerPosition)!),
+        StringLit(text, toPosition(considerPosition)),
       BinaryMathExpressionContext _ => toAst(considerPosition),
       BinaryLogicExpressionContext _ => toAst(considerPosition),
       UnaryMathExpressionContext _ => toAst(considerPosition),
@@ -156,7 +156,7 @@ extension BinaryMathExpressionConverterExtension
       left,
       right,
       operand,
-      toPosition(considerPosition)!,
+      toPosition(considerPosition),
     );
   }
 }
@@ -184,7 +184,7 @@ extension BinaryLogicExpressionConverterExtension
       left,
       right,
       operand,
-      toPosition(considerPosition)!,
+      toPosition(considerPosition),
     );
   }
 }
@@ -202,7 +202,7 @@ extension UnaryMathExpressionConverterExtension on UnaryMathExpressionContext {
     return UnaryMathExpression(
       value,
       operand,
-      toPosition(considerPosition)!,
+      toPosition(considerPosition),
     );
   }
 }
@@ -220,7 +220,7 @@ extension UnaryLogicExpressionConverterExtension
     return UnaryLogicExpression(
       value,
       operand,
-      toPosition(considerPosition)!,
+      toPosition(considerPosition),
     );
   }
 }
@@ -232,7 +232,7 @@ extension ParenthesysExpressionConverterExtension
 
     return ParenthesysExpression(
       value,
-      toPosition(considerPosition)!,
+      toPosition(considerPosition),
     );
   }
 }
@@ -244,7 +244,7 @@ extension VarReferenceExpressionConverterExtension
 
     return VarReferenceExpression(
       name,
-      toPosition(considerPosition)!,
+      toPosition(considerPosition),
     );
   }
 }
@@ -277,7 +277,7 @@ extension FunctionDefinitionStatementConverterExtension
       parameters,
       type,
       statements,
-      toPosition(considerPosition)!,
+      toPosition(considerPosition),
     );
   }
 }
@@ -310,7 +310,7 @@ extension ParameterConverterExtension on ParameterContext {
       name,
       paramType,
       valueType,
-      toPosition(considerPosition)!,
+      toPosition(considerPosition),
     );
   }
 }
@@ -337,7 +337,7 @@ extension ClassDefinitionStatementConverterExtension
       properties,
       constructors,
       methods,
-      toPosition(considerPosition)!,
+      toPosition(considerPosition),
     );
   }
 }
@@ -368,7 +368,7 @@ extension ClassVarDeclarationStatementConverterExtension
       name,
       valueType,
       value,
-      toPosition(considerPosition)!,
+      toPosition(considerPosition),
     );
   }
 }
@@ -385,7 +385,7 @@ extension ClassImmutableVarDeclarationStatementConverterExtension
       name,
       valueType,
       value,
-      toPosition(considerPosition)!,
+      toPosition(considerPosition),
     );
   }
 }
@@ -408,7 +408,7 @@ extension ClassConstructorDeclarationStatementConverterExtension
       contructorName,
       parameters,
       statements,
-      toPosition(considerPosition)!,
+      toPosition(considerPosition),
     );
   }
 }
@@ -441,7 +441,7 @@ extension ClassMethodDeclarationStatementConverterExtension
       parameters,
       type,
       statements,
-      toPosition(considerPosition)!,
+      toPosition(considerPosition),
     );
   }
 }
