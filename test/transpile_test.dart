@@ -52,6 +52,44 @@ void main() {
           );
         },
       );
+
+     test(
+      'type_definition_statement',
+      () async {
+        final root = await _parseResource('task1/type_definition_statement');
+
+        expect(
+          root.toAst(false).Transpile(),
+          equals('int age = 16;'),        //non va bene, si aspetta 'var int age = 16;'
+        );
+      },
+     );
+     
+    test(
+      'const_definition_statement',
+      () async {
+        final root = await _parseResource('task1/const_definition_statement');
+
+        expect(
+          root.toAst(false).Transpile(),
+          equals('const bool isOld = false;'),
+        );
+      },
+    );
+
+    test(
+      'assignment_statement',
+      () async {
+        final root = await _parseResource('task1/assignment_statement');
+
+        expect(
+          root.toAst(false).Transpile(),
+          equals('pi = 3.14;'),
+        );
+      },
+    );
+
+
     },
   );
 }
