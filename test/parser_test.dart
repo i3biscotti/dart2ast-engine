@@ -25,10 +25,10 @@ Future<DartFileContext> _parseResource(String resourceName) async {
 }
 
 String getMultilineParseTree(DartFileContext root) {
-  return _getMultilineParseTree(root).join('\n') + '\n';
+  return _node2StringList(root).join('\n') + '\n';
 }
 
-List<String> _getMultilineParseTree(
+List<String> _node2StringList(
   ParserRuleContext node, [
   String identation = "",
 ]) {
@@ -37,7 +37,7 @@ List<String> _getMultilineParseTree(
   final children = node.children
           ?.map((c) => switch (c) {
                 ParserRuleContext n =>
-                  _getMultilineParseTree(n, childIdentation),
+                  _node2StringList(n, childIdentation),
                 TerminalNode n => <String>["${childIdentation}T[${n.text}]"],
                 Object o => throw UnsupportedError(
                     "Unknown ${o.runtimeType} node type",
@@ -76,9 +76,9 @@ void main() {
             |    T[;]
             |  T[<EOF>]
             """
-                .trimMargin()),
+                .trimMargin())
           );
-        },
+        }
       );
 
       test('final_definition_statement', () async {
@@ -100,9 +100,78 @@ void main() {
             |    T[;]
             |  T[<EOF>]
             """
-              .trimMargin()),
+              .trimMargin())
         );
-      });
+       }
+      );
+      
+      test('type_definition_statement', () async {
+        final rootNode = 
+            await _parseResource('task1/type_definition_statement');
+
+        expect(
+          getMultilineParseTree(rootNode),
+          equals("""
+            |Node(DartFile)
+            |  Node(VarDeclarationStatement)
+            |    Node(IntType)
+            |      T[int]
+            |    T[age]
+            |    T[=]
+            |    Node(IntLiteralExpression)
+            |      T[16]
+            |    T[;]
+            |  T[<EOF>]
+            """
+              .trimMargin())
+        );
+       }
+      );
+
+      test('const_definition_statement', () async {
+        final rootNode = 
+            await _parseResource('task1/const_definition_statement');
+        
+        expect(
+          getMultilineParseTree(rootNode),
+          equals("""
+            |Node(DartFile)
+            |  Node(ConstDeclarationStatement)
+            |    T[const]
+            |    Node(BoolType)
+            |      T[bool]
+            |    T[isOld]
+            |    T[=]
+            |    Node(BoolLiteralExpression)
+            |      T[false]
+            |    T[;]
+            |  T[<EOF>]
+            """
+              .trimMargin())
+        );
+       }
+      );
+      
+      test('assigment_statement', () async {
+        final rootNode = 
+            await _parseResource('task1/assignment_statement');
+        expect(
+          getMultilineParseTree(rootNode),
+          equals(""" 
+          |Node(DartFile)
+          |  Node(AssigmentStatement)
+          |    T[pi]
+          |    T[=]
+          |    Node(DoubleLiteralExpression)
+          |      T[3.14]
+          |    T[;]
+          |  T[<EOF>]
+          """
+            .trimMargin())
+        );
+       }
+     );
+
     },
   );
 }

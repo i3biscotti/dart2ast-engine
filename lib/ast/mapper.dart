@@ -33,7 +33,7 @@ extension StatementConverterExtension on StatementContext {
     return switch (this) {
       VarDeclarationStatementContext st => st.toAst(considerPosition),
       FinalDeclarationStatementContext st => st.toAst(considerPosition),
-      ConstDeclarationStatmentContext st => st.toAst(considerPosition),
+      ConstDeclarationStatementContext st => st.toAst(considerPosition),
       AssigmentStatementContext st => st.toAst(considerPosition),
       FunctionDefinitionStatementContext st => st.toAst(considerPosition),
       ClassDefinitionStatementContext st => st.toAst(considerPosition),
@@ -87,7 +87,7 @@ extension FinalDeclarationStatementConverterExtension
 }
 
 extension ConstDeclarationStatementConverterExtension
-    on ConstDeclarationStatmentContext {
+    on ConstDeclarationStatementContext {
   VariableDeclarationStatement toAst(bool considerPosition) {
     final name = this.ID()!.text!;
     final value = this.expression()!.toAst(considerPosition);
