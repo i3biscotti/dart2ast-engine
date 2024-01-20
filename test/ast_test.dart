@@ -77,6 +77,83 @@ void main() {
           );
         },
       );
+
+
+      test(
+        'type_definition_statement',
+        () async {
+          final root = await _parseResource('task1/type_definition_statement');
+
+          expect(
+            root.toAst(false),
+            equals(
+              ProgramFile(
+                <Statement>[
+                  VariableDeclarationStatement(
+                    VariableType.variable,
+                    'age',
+                    VariableValueType.INT,
+                    IntLit('16', null),
+                    null
+                  )
+                ],
+                null,
+              ),
+            ),
+          );
+        },
+      );
+
+
+      test(
+        'const_definition_statement',
+        () async {
+          final root = await _parseResource('task1/const_definition_statement');
+
+          expect(
+            root.toAst(false),
+            equals(
+              ProgramFile(
+                <Statement>[
+                  VariableDeclarationStatement(
+                    VariableType.constant,
+                    'isOld',
+                    VariableValueType.BOOLEAN,
+                    BoolLit('false', null),
+                    null
+                   )
+                ],
+                null,
+              ),
+            ),
+          );
+        },
+       );
+
+      
+      test(
+        'assignment_statement',
+        () async {
+          final root = await _parseResource('task1/assignment_statement');
+
+          expect(
+            root.toAst(false),
+            equals(
+              ProgramFile(
+                <Statement>[
+                  AssignmentStatement(
+                    'pi',
+                    DecLit('3.14', null),
+                    null,
+                  )
+                ],
+                null,
+              ),
+            ),
+          );
+        },
+      );
+
     },
   );
 }
