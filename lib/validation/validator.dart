@@ -13,7 +13,7 @@ extension ScriptFileValidator on ProgramFile {
         errors.add(
           LangError(
             'Variable ${node.name} already declared',
-            node.position.start,
+            node.position!.start,
           ),
         );
       } else {
@@ -48,14 +48,14 @@ extension ScriptFileValidator on ProgramFile {
         errors.add(
           LangError(
             'Variable ${node.name} not declared',
-            node.position.start,
+            node.position!.start,
           ),
         );
-      } else if (node.position < varsByName[varKey]!.position) {
+      } else if (node.position! < varsByName[varKey]!.position!) {
         errors.add(
           LangError(
             'Variable ${node.name} not declared',
-            node.position.start,
+            node.position!.start,
           ),
         );
       }

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dart2ast_engine/antlr.dart';
 import 'package:dart2ast_engine/ast/mapper.dart';
 import 'package:dart2ast_engine/ast/models.dart';
+import 'package:dart2ast_engine/dart2ast.dart';
 import 'package:dart2ast_engine/parsing.dart';
 import 'package:test/test.dart';
 
@@ -34,21 +35,8 @@ void main() {
           final root = await _parseResource('task1/var_definition_statement');
 
           expect(
-            root.toAst(false),
-            equals(
-              ProgramFile(
-                <Statement>[
-                  VariableDeclarationStatement(
-                    VariableType.variable,
-                    'name',
-                    null,
-                    StringLit('"Simone"', null),
-                    null,
-                  ),
-                ],
-                null,
-              ),
-            ),
+            root.toAst(false).Transpile(),
+            equals('var name = "Simone";'),
           );
         },
       );
@@ -59,21 +47,8 @@ void main() {
           final root = await _parseResource('task1/final_definition_statement');
 
           expect(
-            root.toAst(false),
-            equals(
-              ProgramFile(
-                <Statement>[
-                  VariableDeclarationStatement(
-                    VariableType.immutable,
-                    'height',
-                    VariableValueType.DOUBLE,
-                    DecLit('1.70', null),
-                    null,
-                  ),
-                ],
-                null,
-              ),
-            ),
+            root.toAst(false).Transpile(),
+            equals('final double height = 1.70;'),
           );
         },
       );

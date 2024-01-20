@@ -59,7 +59,7 @@ class Position extends Equatable {
 }
 
 abstract class Node extends Equatable {
-  final Position position;
+  final Position? position;
 
   Node(this.position);
 
@@ -85,7 +85,7 @@ class ProgramFile extends Node {
   Map<String, dynamic> toJson() => {
         'type': runtimeType.toString(),
         'lines': lines.map((e) => e.toJson()).toList(),
-        'position': position.toJson(),
+        'position': position?.toJson(),
       };
 }
 
@@ -149,7 +149,7 @@ class VariableDeclarationStatement extends Statement {
         'name': name,
         'valueType': valueType?.typeName,
         'value': value.toJson(),
-        'position': position.toJson(),
+        'position': position?.toJson(),
       };
 }
 
@@ -203,7 +203,7 @@ class AssignmentStatement extends Statement {
         'type': runtimeType.toString(),
         'name': name,
         'value': value.toJson(),
-        'position': position.toJson(),
+        'position': position?.toJson(),
       };
 }
 
@@ -236,7 +236,7 @@ class IntLit extends Expression {
   Map<String, dynamic> toJson() => {
         'type': runtimeType.toString(),
         'value': value,
-        'position': position.toJson(),
+        'position': position?.toJson(),
       };
 }
 
@@ -255,7 +255,7 @@ class DecLit extends Expression {
   Map<String, dynamic> toJson() => {
         'type': runtimeType.toString(),
         'value': value,
-        'position': position.toJson(),
+        'position': position?.toJson(),
       };
 }
 
@@ -274,7 +274,7 @@ class StringLit extends Expression {
   Map<String, dynamic> toJson() => {
         'type': runtimeType.toString(),
         'value': value,
-        'position': position.toJson(),
+        'position': position?.toJson(),
       };
 }
 
@@ -293,7 +293,7 @@ class BoolLit extends Expression {
   Map<String, dynamic> toJson() => {
         'type': runtimeType.toString(),
         'value': value,
-        'position': position.toJson(),
+        'position': position?.toJson(),
       };
 }
 
@@ -429,7 +429,7 @@ class UnaryMathExpression extends Expression {
       "type": runtimeType.toString(),
       "value": value.toJson(),
       "operand": operand.symbol,
-      "position": position.toJson(),
+      "position": position?.toJson(),
     };
   }
 }
@@ -457,7 +457,7 @@ class UnaryLogicExpression extends Node {
       "type": runtimeType.toString(),
       "value": value.toJson(),
       "operand": operand.symbol,
-      "position": position.toJson(),
+      "position": position?.toJson(),
     };
   }
 }
@@ -479,7 +479,7 @@ class VarReferenceExpression extends Expression {
     return {
       "type": runtimeType.toString(),
       "name": name,
-      "position": position.toJson(),
+      "position": position?.toJson(),
     };
   }
 }
@@ -501,7 +501,7 @@ class ParenthesysExpression extends Node {
     return {
       "type": runtimeType.toString(),
       "value": value.toJson(),
-      "position": position.toJson(),
+      "position": position?.toJson(),
     };
   }
 }
@@ -550,7 +550,7 @@ class FunctionDefinitionStatement extends Statement {
       "parameters": parameters.map((e) => e.toJson()).toList(),
       "returnType": returnType?.typeName,
       "body": body.map((e) => e.toJson()).toList(),
-      "position": position.toJson(),
+      "position": position?.toJson(),
     };
   }
 }
@@ -597,7 +597,7 @@ class Parameter extends Node {
       "name": name,
       "paramType": paramType.name,
       "valueType": valueType?.typeName,
-      "position": position.toJson(),
+      "position": position?.toJson(),
     };
   }
 }
@@ -643,7 +643,7 @@ class ClassDefinitionStatement extends Statement {
       "properties": properties.map((e) => e.toJson()).toList(),
       "constructors": constructors.map((e) => e.toJson()).toList(),
       "methods": methods.map((e) => e.toJson()).toList(),
-      "position": position.toJson(),
+      "position": position?.toJson(),
     };
   }
 }
@@ -683,7 +683,7 @@ class ConstructorDefinitionStatement extends Statement {
       "constructorName": constructorName,
       "parameters": parameters.map((e) => e.toJson()).toList(),
       "body": body.map((e) => e.toJson()).toList(),
-      "position": position.toJson(),
+      "position": position?.toJson(),
     };
   }
 }
