@@ -41,28 +41,60 @@ void main() {
               await lexerForResource('task1/var_definition_statement');
           expect(
             tokens(lexer),
-            equals(['VAR', 'ID', 'ASSIGN', 'STRINGLIT', 'SEMICOLON', 'EOF']),
+            equals(['VAR','ID','ASSIGN','STRINGLIT','SEMICOLON','EOF']),
           );
         },
       );
 
-      test('final_definition_statement', () async {
-        final lexer = await lexerForResource(
-          'task1/final_definition_statement',
-        );
-
+      test(
+        'final_definition_statement', 
+        () async {
+        final lexer = 
+            await lexerForResource('task1/final_definition_statement');
         expect(
             tokens(lexer),
-            equals([
-              'FINAL',
-              'DOUBLE',
-              'ID',
-              'ASSIGN',
-              'DOUBLELIT',
-              'SEMICOLON',
-              'EOF'
-            ]));
-      });
+            equals(['FINAL','DOUBLE','ID','ASSIGN','DOUBLELIT','SEMICOLON','EOF'])
+            );
+          } 
+        );
+
+      test(
+        'type_definition_statement',
+        () async {
+          final lexer = 
+              await lexerForResource('task1/type_definition_statement');
+          expect(
+            tokens(lexer),
+            equals(['INT','ID','ASSIGN','INTLIT','SEMICOLON','EOF'])
+          );
+        } 
+      );
+
+      test(
+        'const_definition_statement',
+        () async {
+          final lexer = 
+              await lexerForResource('task1/const_definition_statement');
+          expect(
+            tokens(lexer),
+            equals(['CONST','BOOL','ID','ASSIGN','BOOLLIT', 'SEMICOLON', 'EOF'])
+          );
+        } 
+      );
+
+       test(
+        'assignment_statement',
+        () async {
+          final lexer = 
+              await lexerForResource('task1/assignment_statement');
+          expect(
+            tokens(lexer),
+            equals(['ID','ASSIGN','DOUBLELIT','SEMICOLON','EOF'])
+          );
+        } 
+      );
+
     },
   );
 }
+
