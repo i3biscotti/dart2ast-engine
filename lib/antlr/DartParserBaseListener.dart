@@ -36,11 +36,11 @@ class DartParserBaseListener implements DartParserListener {
 
   /// The default implementation does nothing.
   @override
-  void enterConstDeclarationStatment(ConstDeclarationStatmentContext ctx) {}
+  void enterConstDeclarationStatement(ConstDeclarationStatementContext ctx) {}
 
   /// The default implementation does nothing.
   @override
-  void exitConstDeclarationStatment(ConstDeclarationStatmentContext ctx) {}
+  void exitConstDeclarationStatement(ConstDeclarationStatementContext ctx) {}
 
   /// The default implementation does nothing.
   @override

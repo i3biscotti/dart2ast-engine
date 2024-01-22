@@ -13,9 +13,9 @@ const text = "Hello World";
 dartFile: statement+ EOF;
     
 statement  
-    : ( VAR | VAR  type | type ) ID ASSIGN expression SEMICOLON                    #VarDeclarationStatement
+    : ( VAR | VAR  type | type ) ID ASSIGN expression SEMICOLON                     #VarDeclarationStatement
     | FINAL type? ID ASSIGN expression SEMICOLON                                    #FinalDeclarationStatement
-    | CONST type? ID ASSIGN expression SEMICOLON                                    #ConstDeclarationStatment
+    | CONST type? ID ASSIGN expression SEMICOLON                                    #ConstDeclarationStatement
     | ID ASSIGN expression SEMICOLON                                                #AssigmentStatement
     | functionDefinition                                                            #FunctionDefinitionStatement
     | classDefinition                                                               #ClassDefinitionStatement
