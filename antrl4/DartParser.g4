@@ -19,6 +19,7 @@ statement
     | ID ASSIGN expression SEMICOLON                                                #AssigmentStatement
     | functionDefinition                                                            #FunctionDefinitionStatement
     | classDefinition                                                               #ClassDefinitionStatement
+    | expression                                                                    #ExpressionDefinitionStatement
     ;
 
 type           
@@ -35,21 +36,21 @@ expression
     | INTLIT                                                                    #IntLiteralExpression
     | DOUBLELIT                                                                 #DoubleLiteralExpression
     | STRINGLIT                                                                 #StringLiteralExpression
-    | left=expression  openand=PLUS                 right=expression            #BinaryMathExpression
-    | left=expression  openand=MINUS                right=expression            #BinaryMathExpression
-    | left=expression  openand=TIMES                right=expression            #BinaryMathExpression
-    | left=expression  openand=DIVISION             right=expression            #BinaryMathExpression
-    | left=expression  openand=AND                  right=expression            #BinaryLogicExpression
-    | left=expression  openand=OR                   right=expression            #BinaryLogicExpression
-    | left=expression  openand=GREATER_THAN         right=expression            #BinaryLogicExpression
-    | left=expression  openand=LOWER_THAN           right=expression            #BinaryLogicExpression
-    | left=expression  openand=GREATER_EQUAL_THAN   right=expression            #BinaryLogicExpression
-    | left=expression  openand=LOWER_EQUAL_THAN     right=expression            #BinaryLogicExpression
-    | left=expression  openand=EQUAL                right=expression            #BinaryLogicExpression
+    | left=expression  operand=PLUS                 right=expression            #BinaryMathExpression
+    | left=expression  operand=MINUS                right=expression            #BinaryMathExpression
+    | left=expression  operand=TIMES                right=expression            #BinaryMathExpression
+    | left=expression  operand=DIVISION             right=expression            #BinaryMathExpression
+    | left=expression  operand=AND                  right=expression            #BinaryLogicExpression
+    | left=expression  operand=OR                   right=expression            #BinaryLogicExpression
+    | left=expression  operand=GREATER_THAN         right=expression            #BinaryLogicExpression
+    | left=expression  operand=LOWER_THAN           right=expression            #BinaryLogicExpression
+    | left=expression  operand=GREATER_EQUAL_THAN   right=expression            #BinaryLogicExpression
+    | left=expression  operand=LOWER_EQUAL_THAN     right=expression            #BinaryLogicExpression
+    | left=expression  operand=EQUAL                right=expression            #BinaryLogicExpression
     |                  operand=MINUS                value=expression            #UnaryMathExpression
     |                  operand=PLUS                 value=expression            #UnaryMathExpression
     |                  operand=NOT                  value=expression            #UnaryLogicNegationExpression
-    | PAREN_OPEN       value=expression             PAREN_OPEN                  #ParenthesysExpression
+    | PAREN_OPEN       value=expression             PAREN_CLOSE                 #ParenthesysExpression
     | ID                                                                        #VarReferenceExpression
     | ID PAREN_OPEN (expression COMMA)* expression? PAREN_CLOSE                 #FunctionCallExpression
     | ID DOT ID                                                                 #ObjectPropertyReferenceExpression

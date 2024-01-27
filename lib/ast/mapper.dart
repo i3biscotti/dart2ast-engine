@@ -35,6 +35,7 @@ extension StatementConverterExtension on StatementContext {
       FinalDeclarationStatementContext st => st.toAst(considerPosition),
       ConstDeclarationStatementContext st => st.toAst(considerPosition),
       AssigmentStatementContext st => st.toAst(considerPosition),
+      ExpressionDefinitionStatementContext st => st.toAst(considerPosition),
       FunctionDefinitionStatementContext st => st.toAst(considerPosition),
       ClassDefinitionStatementContext st => st.toAst(considerPosition),
       _ => throw UnimplementedError()
@@ -116,6 +117,17 @@ extension AssignmentStatementConverterExtension on AssigmentStatementContext {
   }
 }
 
+extension ExpressionDefinitionStatementConverterExtension on ExpressionDefinitionStatementContext{
+  ExpressionDefinitionStatement toAst(bool considerPosition) {
+    final value = this.expression()!.toAst(considerPosition);
+
+    return ExpressionDefinitionStatement(
+      value,
+      toPosition(considerPosition),
+    );
+  }
+}
+
 extension ExpressionSatementConverterExtension on ExpressionContext {
   Expression toAst(bool considerPosition) {
     return switch (this) {
@@ -127,12 +139,12 @@ extension ExpressionSatementConverterExtension on ExpressionContext {
         BoolLit(text, toPosition(considerPosition)),
       StringLiteralExpressionContext _ =>
         StringLit(text, toPosition(considerPosition)),
-      BinaryMathExpressionContext _ => toAst(considerPosition),
-      BinaryLogicExpressionContext _ => toAst(considerPosition),
-      UnaryMathExpressionContext _ => toAst(considerPosition),
-      UnaryLogicNegationExpressionContext _ => toAst(considerPosition),
-      ParenthesysExpressionContext _ => toAst(considerPosition),
-      VarReferenceExpressionContext _ => toAst(considerPosition),
+      BinaryMathExpressionContext e => e.toAst(considerPosition),
+      BinaryLogicExpressionContext e => e.toAst(considerPosition),
+      UnaryMathExpressionContext e => e.toAst(considerPosition),
+      UnaryLogicNegationExpressionContext e => e.toAst(considerPosition),
+      ParenthesysExpressionContext e => e.toAst(considerPosition),
+      VarReferenceExpressionContext e => e.toAst(considerPosition),
       _ => throw UnimplementedError()
     };
   }
@@ -144,7 +156,7 @@ extension BinaryMathExpressionConverterExtension
     final left = this.left!.toAst(considerPosition);
     final right = this.right!.toAst(considerPosition);
 
-    var operand = switch (this.openand?.text) {
+    var operand = switch (this.operand?.text) {
       '+' => MathOperand.plus,
       '-' => MathOperand.minus,
       '*' => MathOperand.times,
@@ -167,7 +179,7 @@ extension BinaryLogicExpressionConverterExtension
     final left = this.left!.toAst(considerPosition);
     final right = this.right!.toAst(considerPosition);
 
-    var operand = switch (this.openand?.text) {
+    var operand = switch (this.operand?.text) {
       '&&' => LogicOperand.and,
       '||' => LogicOperand.or,
       '==' => LogicOperand.equal,

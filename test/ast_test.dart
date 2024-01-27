@@ -156,4 +156,52 @@ void main() {
 
     },
   );
+
+
+group(
+    'Task 2',
+    () {
+      test('expression_definition',
+      () async {
+        final root = await _parseResource('task2/expression_definition');
+
+        expect(
+          root.toAst(false),
+          equals(
+            ProgramFile(
+              <Statement>[
+                ExpressionDefinitionStatement(
+                  BinaryMathExpression(
+                    ParenthesysExpression(
+                      BinaryMathExpression(
+                        IntLit('3', null),
+                        IntLit('4', null), 
+                        MathOperand.plus,
+                        null
+                      ), null
+                    ),
+                    ParenthesysExpression(
+                      BinaryMathExpression(
+                        IntLit('4', null),
+                        IntLit('3', null),
+                        MathOperand.minus,
+                        null
+                      ), null
+                    ),
+                    MathOperand.times,
+                    null
+                  ), null
+                ),
+              ],
+              null,
+            ),
+          ),
+        );
+      },
+     );    
+    },
+  );
+
+
+
 }

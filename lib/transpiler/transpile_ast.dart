@@ -25,6 +25,7 @@ extension StatementTranspilerExtension on Statement {
     return switch (this) {
       VariableDeclarationStatement st => st.Transpile(),
       AssignmentStatement st => st.Transpile(),
+      ExpressionDefinitionStatement st => st.Transpile(),
       ClassDefinitionStatement st => st.Transpile(),
       _ => throw UnimplementedError()
     };
@@ -60,6 +61,14 @@ extension AssignmentStatementTranspilerExtension on AssignmentStatement {
     String valueTranspiler = value.Transpile();
     String statement = '$name = $valueTranspiler;';
     return statement;
+  }
+}
+
+extension ExpressionDefinitionStatementTranspilerExtension on ExpressionDefinitionStatement {
+  String Transpile() {
+    String valueTranspiler = value.Transpile();
+    String expression = '$valueTranspiler';
+    return expression;
   }
 }
 
@@ -101,12 +110,32 @@ extension BinaryLogicExpressionTranspilerExtension on BinaryLogicExpression {
   }
 }
 
+extension UnaryLogicExpressionTranspilerExtension on UnaryLogicExpression{
+ String Transpile() {
+  String valueTranspiler = value.Transpile();
+  String operatorTranspiler = operand.symbol;
+
+  String expression = '$operatorTranspiler$valueTranspiler';
+  return expression;
+ }
+}
+
 extension UnaryMathExpressionTranspilerExtension on UnaryMathExpression {
   String Transpile() {
     String valueTranspiler = value.Transpile();
     String operatorTranspiler = operand.symbol;
 
     String expression = '$operatorTranspiler$valueTranspiler';
+    return expression;
+  }
+}
+
+extension ParenthesysExpressionTranspilerExtension on ParenthesysExpression{
+  String Transpile() {
+    String par_open = '(';
+    String valueTranspiler = value.Transpile();
+    String par_close = ')';
+    String expression = '$par_open$valueTranspiler$par_close';
     return expression;
   }
 }

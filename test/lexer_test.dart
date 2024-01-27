@@ -96,5 +96,26 @@ void main() {
 
     },
   );
+
+
+  group(
+    'Task 2',
+    () {
+
+      test(
+        'expression_definition',
+        () async {
+          final lexer = 
+          await lexerForResource('task2/expression_definition');
+          expect(
+            tokens(lexer),
+            equals(['PAREN_OPEN', 'INTLIT', 'PLUS', 'INTLIT', 'PAREN_CLOSE', 'TIMES', 'PAREN_OPEN', 'INTLIT', 'MINUS', 'INTLIT', 'PAREN_CLOSE', 'EOF'])
+          );
+        }
+      );
+    },
+  );
+
+
 }
 

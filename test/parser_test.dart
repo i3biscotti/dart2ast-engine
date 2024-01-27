@@ -171,7 +171,49 @@ void main() {
         );
        }
      );
-
     },
   );
+
+  group(
+    'Task 2',
+    () {
+      test(
+        'expression_definition', () async {
+        final rootNode = 
+        await _parseResource('task2/expression_definition');
+        expect(
+          getMultilineParseTree(rootNode),
+          equals("""
+          |Node(DartFile)
+          |  Node(ExpressionDefinitionStatement)
+          |    Node(BinaryMathExpression)
+          |      Node(ParenthesysExpression)
+          |        T[(]
+          |        Node(BinaryMathExpression)
+          |          Node(IntLiteralExpression)
+          |            T[3]
+          |          T[+]
+          |          Node(IntLiteralExpression)
+          |            T[4]
+          |        T[)]
+          |      T[*]
+          |      Node(ParenthesysExpression)
+          |        T[(]
+          |        Node(BinaryMathExpression)
+          |          Node(IntLiteralExpression)
+          |            T[4]
+          |          T[-]
+          |          Node(IntLiteralExpression)
+          |            T[3]
+          |        T[)]
+          |  T[<EOF>]
+          """
+            .trimMargin())
+        );
+       }
+      );
+    },
+  );
+
+
 }

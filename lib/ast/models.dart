@@ -207,6 +207,30 @@ class AssignmentStatement extends Statement {
       };
 }
 
+class ExpressionDefinitionStatement extends Statement {
+  final Expression value;
+
+  ExpressionDefinitionStatement(this.value, super.position);
+
+  factory ExpressionDefinitionStatement.fromJson(Map<String, dynamic> json) {
+    return ExpressionDefinitionStatement(
+    Expression.fromJson(json['value']),
+    Position.fromJson(json['position']),
+  );
+}
+
+  @override
+  List<Object?> get props => [value, position];
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'type': runtimeType.toString(),
+        'value': value.toJson(),
+        'position': position?.toJson(),
+  };
+}
+
+
 abstract class Expression extends Node {
   Expression(super.position);
 
@@ -434,7 +458,7 @@ class UnaryMathExpression extends Expression {
   }
 }
 
-class UnaryLogicExpression extends Node {
+class UnaryLogicExpression extends Expression {
   final Expression value;
   final LogicOperand operand;
 
@@ -484,7 +508,7 @@ class VarReferenceExpression extends Expression {
   }
 }
 
-class ParenthesysExpression extends Node {
+class ParenthesysExpression extends Expression {
   final Expression value;
 
   ParenthesysExpression(this.value, super.position);

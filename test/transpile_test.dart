@@ -88,8 +88,25 @@ void main() {
         );
       },
     );
-
-
     },
   );
+
+  group(
+    'Task 2',
+    () {
+      test(
+        'expression_definition',
+        () async {
+          final root = await _parseResource('task2/expression_definition');
+
+          expect(
+            root.toAst(false).Transpile(),
+            equals('(3 + 4) * (4 - 3)'),
+          );
+        },
+      );
+    },
+  );
+
+  
 }
