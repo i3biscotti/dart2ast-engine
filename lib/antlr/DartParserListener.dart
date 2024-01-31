@@ -77,6 +77,15 @@ abstract class DartParserListener extends ParseTreeListener {
   /// [ctx] the parse tree
   void exitExpressionDefinitionStatement(ExpressionDefinitionStatementContext ctx);
 
+  /// Enter a parse tree produced by the [ReturnStatement]
+  /// labeled alternative in [file.parserName>.statement].
+  /// [ctx] the parse tree
+  void enterReturnStatement(ReturnStatementContext ctx);
+  /// Exit a parse tree produced by the [ReturnStatement]
+  /// labeled alternative in [DartParser.statement].
+  /// [ctx] the parse tree
+  void exitReturnStatement(ReturnStatementContext ctx);
+
   /// Enter a parse tree produced by the [IntType]
   /// labeled alternative in [file.parserName>.type].
   /// [ctx] the parse tree

@@ -19,7 +19,8 @@ statement
     | ID ASSIGN expression SEMICOLON                                                #AssigmentStatement
     | functionDefinition                                                            #FunctionDefinitionStatement
     | classDefinition                                                               #ClassDefinitionStatement
-    | expression                                                                    #ExpressionDefinitionStatement
+    | expression SEMICOLON                                                          #ExpressionDefinitionStatement
+    | RETURN expression SEMICOLON                                                   #ReturnStatement
     ;
 
 type           

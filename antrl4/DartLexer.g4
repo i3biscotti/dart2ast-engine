@@ -57,6 +57,8 @@ GRAPH_CLOSE                 : '}';
 COMMA                       : ',';
 DOT                         : '.';
 
+RETURN                      : 'return';
+
 ID                          : [A-Za-z_][A-Za-z_0-9]*;
 
 fragment DecDigit           : '0'..'9';

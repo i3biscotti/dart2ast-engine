@@ -76,6 +76,14 @@ class DartParserBaseListener implements DartParserListener {
 
   /// The default implementation does nothing.
   @override
+  void enterReturnStatement(ReturnStatementContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitReturnStatement(ReturnStatementContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
   void enterIntType(IntTypeContext ctx) {}
 
   /// The default implementation does nothing.
