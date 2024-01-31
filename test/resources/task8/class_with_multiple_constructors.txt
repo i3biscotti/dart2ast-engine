@@ -1,3 +1,8 @@
-class MultiplePass(val a : Int, val b : Double){
-    constructor(a : Int) : this(a, 12.1)
+class MultiplePass{
+    final int a;
+    var double b;
+
+    SimpleClass(this.a, this.b);
+
+    SimpleClass.test(int a) : this(a, 12.1)
 }

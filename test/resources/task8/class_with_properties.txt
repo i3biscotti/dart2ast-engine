@@ -1,1 +1,8 @@
-class SimpleClass(val prop1 : Int, val pro2 : Boolean) {}
+class SimpleClass {
+
+    final int prop1;
+    var bool pro2;
+
+    SimpleClass(this.prop1, this.pro2);
+
+}

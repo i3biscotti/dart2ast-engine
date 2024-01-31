@@ -1,1 +1,1 @@
-class SecretWars : Marvel {}
+class SecretWars extends Marvel {}

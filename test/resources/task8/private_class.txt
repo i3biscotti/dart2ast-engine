@@ -1,1 +1,1 @@
-private class SecretWar {}
+class _SecretWar {}
