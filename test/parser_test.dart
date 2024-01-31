@@ -8,7 +8,7 @@ import 'package:test/test.dart';
 
 Future<DartFileContext> _parseResource(String resourceName) async {
   final result = await AntlrParserFacade.parseFromFile(
-    File('test/resources/$resourceName.dart'),
+    File('test/resources/$resourceName.txt'),
   );
 
   if (!result.isCorrect()) {
@@ -36,8 +36,7 @@ List<String> _node2StringList(
 
   final children = node.children
           ?.map((c) => switch (c) {
-                ParserRuleContext n =>
-                  _node2StringList(n, childIdentation),
+                ParserRuleContext n => _node2StringList(n, childIdentation),
                 TerminalNode n => <String>["${childIdentation}T[${n.text}]"],
                 Object o => throw UnsupportedError(
                     "Unknown ${o.runtimeType} node type",
@@ -57,13 +56,10 @@ void main() {
   group(
     'Task 1',
     () {
-      test(
-        'var_definition_statement',
-        () async {
-          final rootNode =
-              await _parseResource('task1/var_definition_statement');
+      test('var_definition_statement', () async {
+        final rootNode = await _parseResource('task1/var_definition_statement');
 
-          expect(
+        expect(
             getMultilineParseTree(rootNode),
             equals("""
             |Node(DartFile)
@@ -76,18 +72,16 @@ void main() {
             |    T[;]
             |  T[<EOF>]
             """
-                .trimMargin())
-          );
-        }
-      );
+                .trimMargin()));
+      });
 
       test('final_definition_statement', () async {
         final rootNode =
             await _parseResource('task1/final_definition_statement');
 
         expect(
-          getMultilineParseTree(rootNode),
-          equals("""
+            getMultilineParseTree(rootNode),
+            equals("""
             |Node(DartFile)
             |  Node(FinalDeclarationStatement)
             |    T[final]
@@ -100,18 +94,16 @@ void main() {
             |    T[;]
             |  T[<EOF>]
             """
-              .trimMargin())
-        );
-       }
-      );
-      
+                .trimMargin()));
+      });
+
       test('type_definition_statement', () async {
-        final rootNode = 
+        final rootNode =
             await _parseResource('task1/type_definition_statement');
 
         expect(
-          getMultilineParseTree(rootNode),
-          equals("""
+            getMultilineParseTree(rootNode),
+            equals("""
             |Node(DartFile)
             |  Node(VarDeclarationStatement)
             |    Node(IntType)
@@ -123,18 +115,16 @@ void main() {
             |    T[;]
             |  T[<EOF>]
             """
-              .trimMargin())
-        );
-       }
-      );
+                .trimMargin()));
+      });
 
       test('const_definition_statement', () async {
-        final rootNode = 
+        final rootNode =
             await _parseResource('task1/const_definition_statement');
-        
+
         expect(
-          getMultilineParseTree(rootNode),
-          equals("""
+            getMultilineParseTree(rootNode),
+            equals("""
             |Node(DartFile)
             |  Node(ConstDeclarationStatement)
             |    T[const]
@@ -147,17 +137,14 @@ void main() {
             |    T[;]
             |  T[<EOF>]
             """
-              .trimMargin())
-        );
-       }
-      );
-      
+                .trimMargin()));
+      });
+
       test('assigment_statement', () async {
-        final rootNode = 
-            await _parseResource('task1/assignment_statement');
+        final rootNode = await _parseResource('task1/assignment_statement');
         expect(
-          getMultilineParseTree(rootNode),
-          equals(""" 
+            getMultilineParseTree(rootNode),
+            equals(""" 
           |Node(DartFile)
           |  Node(AssigmentStatement)
           |    T[pi]
@@ -167,23 +154,19 @@ void main() {
           |    T[;]
           |  T[<EOF>]
           """
-            .trimMargin())
-        );
-       }
-     );
+                .trimMargin()));
+      });
     },
   );
 
   group(
     'Task 2',
     () {
-      test(
-        'expression_definition', () async {
-        final rootNode = 
-        await _parseResource('task2/expression_definition');
+      test('expression_definition', () async {
+        final rootNode = await _parseResource('task2/expression_definition');
         expect(
-          getMultilineParseTree(rootNode),
-          equals("""
+            getMultilineParseTree(rootNode),
+            equals("""
           |Node(DartFile)
           |  Node(ExpressionDefinitionStatement)
           |    Node(BinaryMathExpression)
@@ -208,12 +191,8 @@ void main() {
           |        T[)]
           |  T[<EOF>]
           """
-            .trimMargin())
-        );
-       }
-      );
+                .trimMargin()));
+      });
     },
   );
-
-
 }

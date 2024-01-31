@@ -1,0 +1,1 @@
+class SimpleClass(val prop1 : Int, val pro2 : Boolean) {}

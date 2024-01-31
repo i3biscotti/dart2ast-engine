@@ -1,15 +1,12 @@
 import 'dart:io';
 
-import 'package:dart2ast_engine/antlr.dart';
-import 'package:dart2ast_engine/ast/mapper.dart';
-import 'package:dart2ast_engine/ast/models.dart';
 import 'package:dart2ast_engine/dart2ast.dart';
 import 'package:dart2ast_engine/parsing.dart';
 import 'package:test/test.dart';
 
 Future<DartFileContext> _parseResource(String resourceName) async {
   final result = await AntlrParserFacade.parseFromFile(
-    File('test/resources/$resourceName.dart'),
+    File('test/resources/$resourceName.txt'),
   );
 
   if (!result.isCorrect()) {
@@ -53,41 +50,42 @@ void main() {
         },
       );
 
-     test(
-      'type_definition_statement',
-      () async {
-        final root = await _parseResource('task1/type_definition_statement');
+      test(
+        'type_definition_statement',
+        () async {
+          final root = await _parseResource('task1/type_definition_statement');
 
-        expect(
-          root.toAst(false).Transpile(),
-          equals('int age = 16;'),        //non va bene, si aspetta 'var int age = 16;'
-        );
-      },
-     );
-     
-    test(
-      'const_definition_statement',
-      () async {
-        final root = await _parseResource('task1/const_definition_statement');
+          expect(
+            root.toAst(false).Transpile(),
+            equals(
+                'int age = 16;'), //non va bene, si aspetta 'var int age = 16;'
+          );
+        },
+      );
 
-        expect(
-          root.toAst(false).Transpile(),
-          equals('const bool isOld = false;'),
-        );
-      },
-    );
+      test(
+        'const_definition_statement',
+        () async {
+          final root = await _parseResource('task1/const_definition_statement');
 
-    test(
-      'assignment_statement',
-      () async {
-        final root = await _parseResource('task1/assignment_statement');
+          expect(
+            root.toAst(false).Transpile(),
+            equals('const bool isOld = false;'),
+          );
+        },
+      );
 
-        expect(
-          root.toAst(false).Transpile(),
-          equals('pi = 3.14;'),
-        );
-      },
-    );
+      test(
+        'assignment_statement',
+        () async {
+          final root = await _parseResource('task1/assignment_statement');
+
+          expect(
+            root.toAst(false).Transpile(),
+            equals('pi = 3.14;'),
+          );
+        },
+      );
     },
   );
 
@@ -107,6 +105,4 @@ void main() {
       );
     },
   );
-
-  
 }

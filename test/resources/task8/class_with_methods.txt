@@ -1,0 +1,6 @@
+class SimpleClass(val prop1 : Int, var pro2 : Boolean) {
+    fun sum(value: Int) : Int {
+        pro2 = value <= prop1
+        return value + prop1
+    }
+}

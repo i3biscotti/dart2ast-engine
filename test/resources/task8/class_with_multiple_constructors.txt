@@ -1,0 +1,3 @@
+class MultiplePass(val a : Int, val b : Double){
+    constructor(a : Int) : this(a, 12.1)
+}

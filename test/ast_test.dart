@@ -8,7 +8,7 @@ import 'package:test/test.dart';
 
 Future<DartFileContext> _parseResource(String resourceName) async {
   final result = await AntlrParserFacade.parseFromFile(
-    File('test/resources/$resourceName.dart'),
+    File('test/resources/$resourceName.txt'),
   );
 
   if (!result.isCorrect()) {
@@ -78,7 +78,6 @@ void main() {
         },
       );
 
-
       test(
         'type_definition_statement',
         () async {
@@ -89,13 +88,8 @@ void main() {
             equals(
               ProgramFile(
                 <Statement>[
-                  VariableDeclarationStatement(
-                    VariableType.variable,
-                    'age',
-                    VariableValueType.INT,
-                    IntLit('16', null),
-                    null
-                  )
+                  VariableDeclarationStatement(VariableType.variable, 'age',
+                      VariableValueType.INT, IntLit('16', null), null)
                 ],
                 null,
               ),
@@ -103,7 +97,6 @@ void main() {
           );
         },
       );
-
 
       test(
         'const_definition_statement',
@@ -115,22 +108,16 @@ void main() {
             equals(
               ProgramFile(
                 <Statement>[
-                  VariableDeclarationStatement(
-                    VariableType.constant,
-                    'isOld',
-                    VariableValueType.BOOLEAN,
-                    BoolLit('false', null),
-                    null
-                   )
+                  VariableDeclarationStatement(VariableType.constant, 'isOld',
+                      VariableValueType.BOOLEAN, BoolLit('false', null), null)
                 ],
                 null,
               ),
             ),
           );
         },
-       );
+      );
 
-      
       test(
         'assignment_statement',
         () async {
@@ -153,55 +140,42 @@ void main() {
           );
         },
       );
-
     },
   );
 
-
-group(
+  group(
     'Task 2',
     () {
-      test('expression_definition',
-      () async {
-        final root = await _parseResource('task2/expression_definition');
+      test(
+        'expression_definition',
+        () async {
+          final root = await _parseResource('task2/expression_definition');
 
-        expect(
-          root.toAst(false),
-          equals(
-            ProgramFile(
-              <Statement>[
-                ExpressionDefinitionStatement(
-                  BinaryMathExpression(
-                    ParenthesysExpression(
+          expect(
+            root.toAst(false),
+            equals(
+              ProgramFile(
+                <Statement>[
+                  ExpressionDefinitionStatement(
                       BinaryMathExpression(
-                        IntLit('3', null),
-                        IntLit('4', null), 
-                        MathOperand.plus,
-                        null
-                      ), null
-                    ),
-                    ParenthesysExpression(
-                      BinaryMathExpression(
-                        IntLit('4', null),
-                        IntLit('3', null),
-                        MathOperand.minus,
-                        null
-                      ), null
-                    ),
-                    MathOperand.times,
-                    null
-                  ), null
-                ),
-              ],
-              null,
+                          ParenthesysExpression(
+                              BinaryMathExpression(IntLit('3', null),
+                                  IntLit('4', null), MathOperand.plus, null),
+                              null),
+                          ParenthesysExpression(
+                              BinaryMathExpression(IntLit('4', null),
+                                  IntLit('3', null), MathOperand.minus, null),
+                              null),
+                          MathOperand.times,
+                          null),
+                      null),
+                ],
+                null,
+              ),
             ),
-          ),
-        );
-      },
-     );    
+          );
+        },
+      );
     },
   );
-
-
-
 }

@@ -7,7 +7,7 @@ import 'package:test/test.dart';
 
 Future<DartLexer> lexerForResource(String resourceName) async {
   final fileInputStream =
-      await File('test/resources/$resourceName.dart').toStream();
+      await File('test/resources/$resourceName.txt').toStream();
 
   return DartLexer(fileInputStream);
 }
@@ -41,81 +41,79 @@ void main() {
               await lexerForResource('task1/var_definition_statement');
           expect(
             tokens(lexer),
-            equals(['VAR','ID','ASSIGN','STRINGLIT','SEMICOLON','EOF']),
+            equals(['VAR', 'ID', 'ASSIGN', 'STRINGLIT', 'SEMICOLON', 'EOF']),
           );
         },
       );
 
-      test(
-        'final_definition_statement', 
-        () async {
-        final lexer = 
+      test('final_definition_statement', () async {
+        final lexer =
             await lexerForResource('task1/final_definition_statement');
         expect(
             tokens(lexer),
-            equals(['FINAL','DOUBLE','ID','ASSIGN','DOUBLELIT','SEMICOLON','EOF'])
-            );
-          } 
-        );
+            equals([
+              'FINAL',
+              'DOUBLE',
+              'ID',
+              'ASSIGN',
+              'DOUBLELIT',
+              'SEMICOLON',
+              'EOF'
+            ]));
+      });
 
-      test(
-        'type_definition_statement',
-        () async {
-          final lexer = 
-              await lexerForResource('task1/type_definition_statement');
-          expect(
+      test('type_definition_statement', () async {
+        final lexer = await lexerForResource('task1/type_definition_statement');
+        expect(tokens(lexer),
+            equals(['INT', 'ID', 'ASSIGN', 'INTLIT', 'SEMICOLON', 'EOF']));
+      });
+
+      test('const_definition_statement', () async {
+        final lexer =
+            await lexerForResource('task1/const_definition_statement');
+        expect(
             tokens(lexer),
-            equals(['INT','ID','ASSIGN','INTLIT','SEMICOLON','EOF'])
-          );
-        } 
-      );
+            equals([
+              'CONST',
+              'BOOL',
+              'ID',
+              'ASSIGN',
+              'BOOLLIT',
+              'SEMICOLON',
+              'EOF'
+            ]));
+      });
 
-      test(
-        'const_definition_statement',
-        () async {
-          final lexer = 
-              await lexerForResource('task1/const_definition_statement');
-          expect(
-            tokens(lexer),
-            equals(['CONST','BOOL','ID','ASSIGN','BOOLLIT', 'SEMICOLON', 'EOF'])
-          );
-        } 
-      );
-
-       test(
-        'assignment_statement',
-        () async {
-          final lexer = 
-              await lexerForResource('task1/assignment_statement');
-          expect(
-            tokens(lexer),
-            equals(['ID','ASSIGN','DOUBLELIT','SEMICOLON','EOF'])
-          );
-        } 
-      );
-
+      test('assignment_statement', () async {
+        final lexer = await lexerForResource('task1/assignment_statement');
+        expect(tokens(lexer),
+            equals(['ID', 'ASSIGN', 'DOUBLELIT', 'SEMICOLON', 'EOF']));
+      });
     },
   );
-
 
   group(
     'Task 2',
     () {
-
-      test(
-        'expression_definition',
-        () async {
-          final lexer = 
-          await lexerForResource('task2/expression_definition');
-          expect(
+      test('expression_definition', () async {
+        final lexer = await lexerForResource('task2/expression_definition');
+        expect(
             tokens(lexer),
-            equals(['PAREN_OPEN', 'INTLIT', 'PLUS', 'INTLIT', 'PAREN_CLOSE', 'TIMES', 'PAREN_OPEN', 'INTLIT', 'MINUS', 'INTLIT', 'PAREN_CLOSE', 'EOF'])
-          );
-        }
-      );
+            equals([
+              'PAREN_OPEN',
+              'INTLIT',
+              'PLUS',
+              'INTLIT',
+              'PAREN_CLOSE',
+              'TIMES',
+              'PAREN_OPEN',
+              'INTLIT',
+              'MINUS',
+              'INTLIT',
+              'PAREN_CLOSE',
+              'EOF'
+            ]));
+      });
     },
   );
-
-
 }
-
