@@ -145,15 +145,15 @@ void main() {
         expect(
             getMultilineParseTree(rootNode),
             equals(""" 
-          |Node(DartFile)
-          |  Node(AssigmentStatement)
-          |    T[pi]
-          |    T[=]
-          |    Node(DoubleLiteralExpression)
-          |      T[3.14]
-          |    T[;]
-          |  T[<EOF>]
-          """
+            |Node(DartFile)
+            |  Node(AssigmentStatement)
+            |    T[pi]
+            |    T[=]
+            |    Node(DoubleLiteralExpression)
+            |      T[3.14]
+            |    T[;]
+            |  T[<EOF>]
+            """
                 .trimMargin()));
       });
     },

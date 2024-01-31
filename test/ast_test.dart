@@ -178,4 +178,196 @@ void main() {
       );
     },
   );
+
+  group(
+    "Task 7",
+    () {
+      test('void_function_without_params', () async {
+        final root = await _parseResource('task7/void_function_without_params');
+
+        expect(
+          root.toAst(false),
+          equals(
+            ProgramFile(
+              <Statement>[
+                FunctionDefinitionStatement(
+                  'emptyFunction',
+                  <Parameter>[],
+                  VariableValueType.VOID,
+                  <Statement>[],
+                  null,
+                ),
+              ],
+              null,
+            ),
+          ),
+        );
+      });
+
+      test('int_sum_function', () async {
+        final root = await _parseResource('task7/int_sum_function');
+
+        expect(
+          root.toAst(false),
+          equals(
+            ProgramFile(
+              <Statement>[
+                FunctionDefinitionStatement(
+                  'sum',
+                  <Parameter>[
+                    Parameter(
+                      'a',
+                      ParameterType.TYPE,
+                      VariableValueType.INT,
+                      null,
+                    ),
+                    Parameter(
+                      'b',
+                      ParameterType.TYPE,
+                      VariableValueType.INT,
+                      null,
+                    ),
+                  ],
+                  VariableValueType.INT,
+                  <Statement>[
+                    ReturnStatement(
+                      BinaryMathExpression(
+                        VarReferenceExpression('a', null),
+                        VarReferenceExpression('b', null),
+                        MathOperand.plus,
+                        null,
+                      ),
+                      null,
+                    ),
+                  ],
+                  null,
+                ),
+              ],
+              null,
+            ),
+          ),
+        );
+      });
+
+      test(
+        'call_function',
+        () async {
+          final root = await _parseResource('task7/call_function');
+          final progam = ProgramFile(
+            <Statement>[
+              FunctionDefinitionStatement(
+                "operations",
+                <Parameter>[
+                  Parameter(
+                    'a',
+                    ParameterType.TYPE,
+                    VariableValueType.INT,
+                    null,
+                  ),
+                  Parameter(
+                    'b',
+                    ParameterType.TYPE,
+                    VariableValueType.INT,
+                    null,
+                  ),
+                  Parameter(
+                    'c',
+                    ParameterType.TYPE,
+                    VariableValueType.BOOLEAN,
+                    null,
+                  ),
+                ],
+                VariableValueType.BOOLEAN,
+                <Statement>[
+                  VariableDeclarationStatement(
+                    VariableType.variable,
+                    "aIsGreaterThanB",
+                    null,
+                    BinaryLogicExpression(
+                      VarReferenceExpression('a', null),
+                      VarReferenceExpression('b', null),
+                      LogicOperand.greaterThan,
+                      null,
+                    ),
+                    null,
+                  ),
+                  VariableDeclarationStatement(
+                    VariableType.immutable,
+                    "isGreaterAndCondition",
+                    null,
+                    BinaryLogicExpression(
+                      VarReferenceExpression('aIsGreaterThanB', null),
+                      VarReferenceExpression('c', null),
+                      LogicOperand.and,
+                      null,
+                    ),
+                    null,
+                  ),
+                  ReturnStatement(
+                    VarReferenceExpression(
+                      "isGreaterAndCondition",
+                      null,
+                    ),
+                    null,
+                  )
+                ],
+                null,
+              ),
+              FunctionDefinitionStatement(
+                "main",
+                <Parameter>[],
+                VariableValueType.VOID,
+                <Statement>[
+                  VariableDeclarationStatement(
+                    VariableType.immutable,
+                    "result",
+                    null,
+                    FunctionCallExpression(
+                      "operations",
+                      <Expression>[
+                        IntLit('11', null),
+                        IntLit('12', null),
+                        BoolLit('false', null),
+                      ],
+                      null,
+                    ),
+                    null,
+                  ),
+                ],
+                null,
+              )
+            ],
+            null,
+          );
+          expect(
+            root.toAst(false),
+            equals(progam),
+          );
+        },
+      );
+    },
+  );
+
+  group(
+    "Task 9",
+    () {
+      test('object_instance', () async {
+        final root = await _parseResource('task9/object_instance');
+
+        expect(root.toAst(false), equals(null));
+      });
+
+      test('method_call', () async {
+        final root = await _parseResource('task9/method_call');
+
+        expect(root.toAst(false), equals(null));
+      });
+
+      test('property_assignment', () async {
+        final root = await _parseResource('task9/property_assignment');
+
+        expect(root.toAst(false), equals(null));
+      });
+    },
+  );
 }

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dart2ast_engine/dart2ast.dart';
 import 'package:dart2ast_engine/parsing.dart';
+import 'package:indent/indent.dart';
 import 'package:test/test.dart';
 
 Future<DartFileContext> _parseResource(String resourceName) async {
@@ -103,6 +104,58 @@ void main() {
           );
         },
       );
+    },
+  );
+
+  group(
+    "Task 7",
+    () {
+      test('void_function_without_params', () async {
+        final root = await _parseResource('task7/void_function_without_params');
+
+        expect(
+          root.toAst(false).Transpile(),
+          equals("void emptyFunction() {}"),
+        );
+      });
+
+      test('int_sum_function', () async {
+        final root = await _parseResource('task7/int_sum_function');
+
+        expect(
+          root.toAst(false).Transpile(),
+          equals(
+            """
+            |int sum(int a, int b){
+            |    return a + b;
+            |}
+            """
+                .trimMargin(),
+          ),
+        );
+      });
+
+      test('call_function', () async {
+        final root = await _parseResource('task7/call_function');
+
+        expect(
+          root.toAst(false),
+          equals(
+            """
+            |bool operations(int a, int b, bool c ){
+            |    var aIsGreaterThanB = a > b;
+            |    final isGreaterAndCondition = aIsGreaterThanB && c;
+            |
+            |    return isGreaterAndCondition;
+            |}
+            |void main(){
+            |    final result = operations(11, 12, false);
+            |}
+            """
+                .trimMargin(),
+          ),
+        );
+      });
     },
   );
 }
