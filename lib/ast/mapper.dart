@@ -37,6 +37,7 @@ extension StatementConverterExtension on StatementContext {
       AssigmentStatementContext st => st.toAst(considerPosition),
       ExpressionDefinitionStatementContext st => st.toAst(considerPosition),
       FunctionDefinitionStatementContext st => st.toAst(considerPosition),
+      ReturnStatementContext st => st.toAst(considerPosition),
       ClassDefinitionStatementContext st => st.toAst(considerPosition),
       _ => throw UnimplementedError()
     };
@@ -117,7 +118,8 @@ extension AssignmentStatementConverterExtension on AssigmentStatementContext {
   }
 }
 
-extension ExpressionDefinitionStatementConverterExtension on ExpressionDefinitionStatementContext{
+extension ExpressionDefinitionStatementConverterExtension
+    on ExpressionDefinitionStatementContext {
   ExpressionDefinitionStatement toAst(bool considerPosition) {
     final value = this.expression()!.toAst(considerPosition);
 
@@ -128,7 +130,18 @@ extension ExpressionDefinitionStatementConverterExtension on ExpressionDefinitio
   }
 }
 
-extension ExpressionSatementConverterExtension on ExpressionContext {
+extension ReturnStatementConverterExtension on ReturnStatementContext {
+  ReturnStatement toAst(bool considerPosition) {
+    final value = this.expression()!.toAst(considerPosition);
+
+    return ReturnStatement(
+      value,
+      toPosition(considerPosition),
+    );
+  }
+}
+
+extension ExpressionConverterExtension on ExpressionContext {
   Expression toAst(bool considerPosition) {
     return switch (this) {
       IntLiteralExpressionContext _ =>
@@ -145,6 +158,7 @@ extension ExpressionSatementConverterExtension on ExpressionContext {
       UnaryLogicNegationExpressionContext e => e.toAst(considerPosition),
       ParenthesysExpressionContext e => e.toAst(considerPosition),
       VarReferenceExpressionContext e => e.toAst(considerPosition),
+      FunctionCallExpressionContext e => e.toAst(considerPosition),
       _ => throw UnimplementedError()
     };
   }
@@ -256,6 +270,21 @@ extension VarReferenceExpressionConverterExtension
 
     return VarReferenceExpression(
       name,
+      toPosition(considerPosition),
+    );
+  }
+}
+
+extension FunctionCallExpressionConverterExtension
+    on FunctionCallExpressionContext {
+  FunctionCallExpression toAst(bool considerPosition) {
+    final name = this.ID()!.text!;
+    final parameters =
+        this.expressions().map((e) => e.toAst(considerPosition)).toList();
+
+    return FunctionCallExpression(
+      name,
+      parameters.toList(),
       toPosition(considerPosition),
     );
   }

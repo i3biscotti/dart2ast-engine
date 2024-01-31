@@ -1,4 +1,3 @@
-import 'package:dart2ast_engine/antlr.dart';
 import 'package:equatable/equatable.dart';
 
 class Point extends Equatable {
@@ -79,7 +78,7 @@ class ProgramFile extends Node {
   }
 
   @override
-  List<Object?> get props => [lines];
+  List<Object?> get props => [lines, position];
 
   @override
   Map<String, dynamic> toJson() => {
@@ -140,7 +139,7 @@ class VariableDeclarationStatement extends Statement {
   }
 
   @override
-  List<Object?> get props => [varType, name, valueType, value];
+  List<Object?> get props => [varType, name, valueType, value, position];
 
   @override
   Map<String, dynamic> toJson() => {
@@ -196,7 +195,7 @@ class AssignmentStatement extends Statement {
   }
 
   @override
-  List<Object?> get props => [name, value];
+  List<Object?> get props => [name, value, position];
 
   @override
   Map<String, dynamic> toJson() => {
@@ -214,10 +213,10 @@ class ExpressionDefinitionStatement extends Statement {
 
   factory ExpressionDefinitionStatement.fromJson(Map<String, dynamic> json) {
     return ExpressionDefinitionStatement(
-    Expression.fromJson(json['value']),
-    Position.fromJson(json['position']),
-  );
-}
+      Expression.fromJson(json['value']),
+      Position.fromJson(json['position']),
+    );
+  }
 
   @override
   List<Object?> get props => [value, position];
@@ -227,9 +226,31 @@ class ExpressionDefinitionStatement extends Statement {
         'type': runtimeType.toString(),
         'value': value.toJson(),
         'position': position?.toJson(),
-  };
+      };
 }
 
+class ReturnStatement extends Statement {
+  final Expression value;
+
+  ReturnStatement(this.value, super.position);
+
+  factory ReturnStatement.fromJson(Map<String, dynamic> json) {
+    return ReturnStatement(
+      Expression.fromJson(json['value']),
+      Position.fromJson(json['position']),
+    );
+  }
+
+  @override
+  List<Object?> get props => [value, position];
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'type': runtimeType.toString(),
+        'value': value.toJson(),
+        'position': position?.toJson(),
+      };
+}
 
 abstract class Expression extends Node {
   Expression(super.position);
@@ -254,7 +275,7 @@ class IntLit extends Expression {
   }
 
   @override
-  List<Object?> get props => [value];
+  List<Object?> get props => [value, position];
 
   @override
   Map<String, dynamic> toJson() => {
@@ -273,7 +294,7 @@ class DecLit extends Expression {
   }
 
   @override
-  List<Object?> get props => [value];
+  List<Object?> get props => [value, position];
 
   @override
   Map<String, dynamic> toJson() => {
@@ -292,7 +313,7 @@ class StringLit extends Expression {
   }
 
   @override
-  List<Object?> get props => [value];
+  List<Object?> get props => [value, position];
 
   @override
   Map<String, dynamic> toJson() => {
@@ -307,7 +328,7 @@ class BoolLit extends Expression {
   BoolLit(this.value, super.position);
 
   @override
-  List<Object?> get props => [value];
+  List<Object?> get props => [value, position];
 
   factory BoolLit.fromJson(Map<String, dynamic> json) {
     return BoolLit(json['value'], Position.fromJson(json['position']));
@@ -328,7 +349,7 @@ abstract class BinaryExpression extends Expression {
   BinaryExpression(this.left, this.right, super.position);
 
   @override
-  List<Object?> get props => [left, right];
+  List<Object?> get props => [left, right, position];
 }
 
 enum MathOperand {
@@ -372,7 +393,7 @@ class BinaryMathExpression extends BinaryExpression {
   }
 
   @override
-  List<Object?> get props => [left, operand, right];
+  List<Object?> get props => [left, operand, right, position];
 }
 
 enum LogicOperand {
@@ -426,7 +447,7 @@ class BinaryLogicExpression extends BinaryExpression {
   }
 
   @override
-  List<Object?> get props => [left, operand, right];
+  List<Object?> get props => [left, operand, right, position];
 }
 
 class UnaryMathExpression extends Expression {
@@ -445,7 +466,7 @@ class UnaryMathExpression extends Expression {
         super(Position.fromJson(json['position']));
 
   @override
-  List<Object?> get props => [value, operand];
+  List<Object?> get props => [value, operand, position];
 
   @override
   Map<String, dynamic> toJson() {
@@ -473,7 +494,7 @@ class UnaryLogicExpression extends Expression {
         super(Position.fromJson(json['position']));
 
   @override
-  List<Object?> get props => [value, operand];
+  List<Object?> get props => [value, operand, position];
 
   @override
   Map<String, dynamic> toJson() {
@@ -496,7 +517,7 @@ class VarReferenceExpression extends Expression {
         super(Position.fromJson(json['position']));
 
   @override
-  List<Object?> get props => [name];
+  List<Object?> get props => [name, position];
 
   @override
   Map<String, dynamic> toJson() {
@@ -518,13 +539,40 @@ class ParenthesysExpression extends Expression {
         super(Position.fromJson(json['position']));
 
   @override
-  List<Object?> get props => [value];
+  List<Object?> get props => [value, position];
 
   @override
   Map<String, dynamic> toJson() {
     return {
       "type": runtimeType.toString(),
       "value": value.toJson(),
+      "position": position?.toJson(),
+    };
+  }
+}
+
+class FunctionCallExpression extends Expression {
+  final String name;
+  final List<Expression> parameters;
+
+  FunctionCallExpression(this.name, this.parameters, super.position);
+
+  FunctionCallExpression.fromJson(Map<String, dynamic> json)
+      : name = json['name'],
+        parameters = List.from(json['parameters'])
+            .map((e) => Expression.fromJson(e))
+            .toList(),
+        super(Position.fromJson(json['position']));
+
+  @override
+  List<Object?> get props => [name, parameters, position];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "type": runtimeType.toString(),
+      "name": name,
+      "parameters": parameters.map((e) => e.toJson()).toList(),
       "position": position?.toJson(),
     };
   }
@@ -564,7 +612,7 @@ class FunctionDefinitionStatement extends Statement {
         super(Position.fromJson(json['position']));
 
   @override
-  List<Object?> get props => [name, parameters, returnType, body];
+  List<Object?> get props => [name, parameters, returnType, body, position];
 
   @override
   Map<String, dynamic> toJson() {
@@ -612,7 +660,7 @@ class Parameter extends Node {
   }
 
   @override
-  List<Object?> get props => [name, paramType, valueType];
+  List<Object?> get props => [name, paramType, valueType, position];
 
   @override
   Map<String, dynamic> toJson() {
@@ -657,7 +705,8 @@ class ClassDefinitionStatement extends Statement {
   }
 
   @override
-  List<Object?> get props => [name, properties, constructors, methods];
+  List<Object?> get props =>
+      [name, properties, constructors, methods, position];
 
   @override
   Map<String, dynamic> toJson() {
@@ -697,7 +746,8 @@ class ConstructorDefinitionStatement extends Statement {
   }
 
   @override
-  List<Object?> get props => [className, constructorName, parameters, body];
+  List<Object?> get props =>
+      [className, constructorName, parameters, body, position];
 
   @override
   Map<String, dynamic> toJson() {

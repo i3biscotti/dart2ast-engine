@@ -2,6 +2,17 @@ import 'package:indent/indent.dart';
 
 import '../ast.dart';
 
+extension NodeTranspilerExtension on Node {
+  String Transpile() {
+    return switch (this) {
+      ProgramFile df => df.Transpile(),
+      Statement st => st.Transpile(),
+      Expression ex => ex.Transpile(),
+      _ => throw UnimplementedError()
+    };
+  }
+}
+
 extension ExpressionTranspilerExtension on Expression {
   String Transpile() {
     return switch (this) {
@@ -15,6 +26,7 @@ extension ExpressionTranspilerExtension on Expression {
       UnaryMathExpression expression => expression.Transpile(),
       ParenthesysExpression expression => expression.Transpile(),
       VarReferenceExpression expression => expression.Transpile(),
+      FunctionCallExpression expression => expression.Transpile(),
       _ => throw UnimplementedError()
     };
   }
@@ -27,6 +39,8 @@ extension StatementTranspilerExtension on Statement {
       AssignmentStatement st => st.Transpile(),
       ExpressionDefinitionStatement st => st.Transpile(),
       ClassDefinitionStatement st => st.Transpile(),
+      FunctionDefinitionStatement st => st.Transpile(),
+      ReturnStatement st => st.Transpile(),
       _ => throw UnimplementedError()
     };
   }
@@ -64,7 +78,8 @@ extension AssignmentStatementTranspilerExtension on AssignmentStatement {
   }
 }
 
-extension ExpressionDefinitionStatementTranspilerExtension on ExpressionDefinitionStatement {
+extension ExpressionDefinitionStatementTranspilerExtension
+    on ExpressionDefinitionStatement {
   String Transpile() {
     String valueTranspiler = value.Transpile();
     String expression = '$valueTranspiler';
@@ -72,14 +87,21 @@ extension ExpressionDefinitionStatementTranspilerExtension on ExpressionDefiniti
   }
 }
 
-extension NodeTranspilerExtension on Node {
+extension ReturnStatementTranspilerExtension on ReturnStatement {
   String Transpile() {
-    return switch (this) {
-      ProgramFile df => df.Transpile(),
-      Statement st => st.Transpile(),
-      Expression ex => ex.Transpile(),
-      _ => throw UnimplementedError()
-    };
+    String valueTranspiler = value.Transpile();
+    String expression = 'return $valueTranspiler;';
+    return expression;
+  }
+}
+
+extension FunctionCallExpressionTranspilerExtension on FunctionCallExpression {
+  String Transpile() {
+    String nameTranspiler = name;
+    String parametersTranspiler =
+        parameters.map((p) => p.Transpile()).toList().join(', ');
+    String expression = '$nameTranspiler($parametersTranspiler)';
+    return expression;
   }
 }
 
@@ -110,14 +132,14 @@ extension BinaryLogicExpressionTranspilerExtension on BinaryLogicExpression {
   }
 }
 
-extension UnaryLogicExpressionTranspilerExtension on UnaryLogicExpression{
- String Transpile() {
-  String valueTranspiler = value.Transpile();
-  String operatorTranspiler = operand.symbol;
+extension UnaryLogicExpressionTranspilerExtension on UnaryLogicExpression {
+  String Transpile() {
+    String valueTranspiler = value.Transpile();
+    String operatorTranspiler = operand.symbol;
 
-  String expression = '$operatorTranspiler$valueTranspiler';
-  return expression;
- }
+    String expression = '$operatorTranspiler$valueTranspiler';
+    return expression;
+  }
 }
 
 extension UnaryMathExpressionTranspilerExtension on UnaryMathExpression {
@@ -130,7 +152,7 @@ extension UnaryMathExpressionTranspilerExtension on UnaryMathExpression {
   }
 }
 
-extension ParenthesysExpressionTranspilerExtension on ParenthesysExpression{
+extension ParenthesysExpressionTranspilerExtension on ParenthesysExpression {
   String Transpile() {
     String par_open = '(';
     String valueTranspiler = value.Transpile();
