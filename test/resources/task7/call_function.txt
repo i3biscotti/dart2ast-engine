@@ -1,10 +1,10 @@
 bool operations(int a, int b, bool c ){
-    var aIsGreaterThanB = a > b
-    final isGreaterAndCondition = aIsGreaterThanB && c
+    var aIsGreaterThanB = a > b;
+    final isGreaterAndCondition = aIsGreaterThanB && c;
 
-    return isGreaterAndCondition
+    return isGreaterAndCondition;
 }
 
 void main(){
-    final result = operations(11, 12, false)
+    final result = operations(11, 12, false);
 }

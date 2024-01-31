@@ -116,4 +116,135 @@ void main() {
       });
     },
   );
+
+  group(
+    "Task 7",
+    () {
+      test('void_function_without_params', () async {
+        final lexer =
+            await lexerForResource('task7/void_function_without_params');
+
+        expect(
+            tokens(lexer),
+            equals(<String>[
+              "VOID",
+              "ID",
+              "PAREN_OPEN",
+              "PAREN_CLOSE",
+              "GRAPH_OPEN",
+              "GRAPH_CLOSE",
+              "EOF"
+            ]));
+      });
+
+      test('int_sum_function', () async {
+        final lexer = await lexerForResource('task7/int_sum_function');
+
+        expect(
+            tokens(lexer),
+            equals(<String>[
+              "INT",
+              "ID",
+              "PAREN_OPEN",
+              "INT",
+              "ID",
+              "COMMA",
+              "INT",
+              "ID",
+              "PAREN_CLOSE",
+              "GRAPH_OPEN",
+              "RETURN",
+              "ID",
+              "PLUS",
+              "ID",
+              "SEMICOLON",
+              "GRAPH_CLOSE",
+              "EOF"
+            ]));
+      });
+
+      test('call_function', () async {
+        final lexer = await lexerForResource('task7/call_function');
+
+        expect(
+          tokens(lexer),
+          equals(<String>[
+            "BOOL",
+            "ID",
+            "PAREN_OPEN",
+            "INT",
+            "ID",
+            "COMMA",
+            "INT",
+            "ID",
+            "COMMA",
+            "BOOL",
+            "ID",
+            "PAREN_CLOSE",
+            "GRAPH_OPEN",
+            "VAR",
+            "ID",
+            "ASSIGN",
+            "ID",
+            "GREATER_THAN",
+            "ID",
+            "SEMICOLON",
+            "FINAL",
+            "ID",
+            "ASSIGN",
+            "ID",
+            "AND",
+            "ID",
+            "SEMICOLON",
+            "RETURN",
+            "ID",
+            "SEMICOLON",
+            "GRAPH_CLOSE",
+            "VOID",
+            "ID",
+            "PAREN_OPEN",
+            "PAREN_CLOSE",
+            "GRAPH_OPEN",
+            "FINAL",
+            "ID",
+            "ASSIGN",
+            "ID",
+            "PAREN_OPEN",
+            "INTLIT",
+            "COMMA",
+            "INTLIT",
+            "COMMA",
+            "BOOLLIT",
+            "PAREN_CLOSE",
+            "SEMICOLON",
+            "GRAPH_CLOSE",
+            "EOF"
+          ]),
+        );
+      });
+    },
+  );
+
+  group(
+    "Task 9",
+    () {
+      test('object_instance', () async {
+        final lexer = await lexerForResource('task9/method_call');
+
+        expect(tokens(lexer), <String>[]);
+      });
+
+      test('method_call', () async {
+        final lexer = await lexerForResource('task9/method_call');
+
+        expect(tokens(lexer), <String>[]);
+      });
+
+      test('property_assignment', () async {
+        final lexer = await lexerForResource('task9/property_assignment');
+
+        expect(tokens(lexer), <String>[]);
+      });
+    },
+  );
 }

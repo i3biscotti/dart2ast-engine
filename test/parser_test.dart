@@ -195,4 +195,184 @@ void main() {
       });
     },
   );
+
+  group(
+    "Task 7",
+    () {
+      test('void_function_without_params', () async {
+        final rootNode =
+            await _parseResource('task7/void_function_without_params');
+
+        expect(
+          getMultilineParseTree(rootNode),
+          equals(
+            """
+            |Node(DartFile)
+            |  Node(FunctionDefinitionStatement)
+            |    Node(FunctionDefinition)
+            |      Node(VoidType)
+            |        T[void]
+            |      T[emptyFunction]
+            |      T[(]
+            |      T[)]
+            |      Node(Block)
+            |        T[{]
+            |        T[}]
+            |  T[<EOF>]
+            """
+                .trimMargin(),
+          ),
+        );
+      });
+
+      test('int_sum_function', () async {
+        final rootNode = await _parseResource('task7/int_sum_function');
+
+        expect(
+          getMultilineParseTree(rootNode),
+          equals("""
+          |Node(DartFile)
+          |  Node(FunctionDefinitionStatement)
+          |    Node(FunctionDefinition)
+          |      Node(IntType)
+          |        T[int]
+          |      T[sum]
+          |      T[(]
+          |      Node(Parameter)
+          |        Node(IntType)
+          |          T[int]
+          |        T[a]
+          |      T[,]
+          |      Node(Parameter)
+          |        Node(IntType)
+          |          T[int]
+          |        T[b]
+          |      T[)]
+          |      Node(Block)
+          |        T[{]
+          |        Node(ReturnStatement)
+          |          T[return]
+          |          Node(BinaryMathExpression)
+          |            Node(VarReferenceExpression)
+          |              T[a]
+          |            T[+]
+          |            Node(VarReferenceExpression)
+          |              T[b]
+          |          T[;]
+          |        T[}]
+          |  T[<EOF>]
+          """
+              .trimMargin()),
+        );
+      });
+
+      test('call_function', () async {
+        final rootNode = await _parseResource('task7/call_function');
+
+        expect(
+          getMultilineParseTree(rootNode),
+          equals(
+            """
+            |Node(DartFile)
+            |  Node(FunctionDefinitionStatement)
+            |    Node(FunctionDefinition)
+            |      Node(BoolType)
+            |        T[bool]
+            |      T[operations]
+            |      T[(]
+            |      Node(Parameter)
+            |        Node(IntType)
+            |          T[int]
+            |        T[a]
+            |      T[,]
+            |      Node(Parameter)
+            |        Node(IntType)
+            |          T[int]
+            |        T[b]
+            |      T[,]
+            |      Node(Parameter)
+            |        Node(BoolType)
+            |          T[bool]
+            |        T[c]
+            |      T[)]
+            |      Node(Block)
+            |        T[{]
+            |        Node(VarDeclarationStatement)
+            |          T[var]
+            |          T[aIsGreaterThanB]
+            |          T[=]
+            |          Node(BinaryLogicExpression)
+            |            Node(VarReferenceExpression)
+            |              T[a]
+            |            T[>]
+            |            Node(VarReferenceExpression)
+            |              T[b]
+            |          T[;]
+            |        Node(FinalDeclarationStatement)
+            |          T[final]
+            |          T[isGreaterAndCondition]
+            |          T[=]
+            |          Node(BinaryLogicExpression)
+            |            Node(VarReferenceExpression)
+            |              T[aIsGreaterThanB]
+            |            T[&&]
+            |            Node(VarReferenceExpression)
+            |              T[c]
+            |          T[;]
+            |        Node(ReturnStatement)
+            |          T[return]
+            |          Node(VarReferenceExpression)
+            |            T[isGreaterAndCondition]
+            |          T[;]
+            |        T[}]
+            |  Node(FunctionDefinitionStatement)
+            |    Node(FunctionDefinition)
+            |      Node(VoidType)
+            |        T[void]
+            |      T[main]
+            |      T[(]
+            |      T[)]
+            |      Node(Block)
+            |        T[{]
+            |        Node(FinalDeclarationStatement)
+            |          T[final]
+            |          T[result]
+            |          T[=]
+            |          Node(FunctionCallExpression)
+            |            T[operations]
+            |            T[(]
+            |            Node(IntLiteralExpression)
+            |              T[11]
+            |            T[,]
+            |            Node(IntLiteralExpression)
+            |              T[12]
+            |            T[,]
+            |            Node(BoolLiteralExpression)
+            |              T[false]
+            |            T[)]
+            |          T[;]
+            |        T[}]
+            |  T[<EOF>]
+            """
+                .trimMargin(),
+          ),
+        );
+      });
+    },
+  );
+
+  group(
+    "Task 9",
+    () {
+      test('method_call', () {
+        throw UnimplementedError();
+      });
+      test('object_instance', () {
+        throw UnimplementedError();
+      });
+      test('property_assignment', () {
+        throw UnimplementedError();
+      });
+    },
+  );
 }
