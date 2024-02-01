@@ -2,45 +2,47 @@ import 'package:indent/indent.dart';
 
 import '../ast.dart';
 
+String generateIdentationSpace(int space) => "  " * space;
+
 extension NodeTranspilerExtension on Node {
-  String Transpile() {
+  String transpile() {
     return switch (this) {
-      ProgramFile df => df.Transpile(),
-      Statement st => st.Transpile(),
-      Expression ex => ex.Transpile(),
+      ProgramFile df => df.transpile(),
+      Statement st => st.transpile(),
+      Expression ex => ex.transpile(),
       _ => throw UnimplementedError()
     };
   }
 }
 
 extension ExpressionTranspilerExtension on Expression {
-  String Transpile() {
+  String transpile() {
     return switch (this) {
       IntLit intlit => intlit.value,
       DecLit declit => declit.value,
       BoolLit boollit => boollit.value,
       StringLit stringlit => stringlit.value,
-      BinaryLogicExpression expression => expression.Transpile(),
-      BinaryMathExpression expression => expression.Transpile(),
-      UnaryLogicExpression expression => expression.Transpile(),
-      UnaryMathExpression expression => expression.Transpile(),
-      ParenthesysExpression expression => expression.Transpile(),
-      VarReferenceExpression expression => expression.Transpile(),
-      FunctionCallExpression expression => expression.Transpile(),
+      BinaryLogicExpression expression => expression.transpile(),
+      BinaryMathExpression expression => expression.transpile(),
+      UnaryLogicExpression expression => expression.transpile(),
+      UnaryMathExpression expression => expression.transpile(),
+      ParenthesysExpression expression => expression.transpile(),
+      VarReferenceExpression expression => expression.transpile(),
+      FunctionCallExpression expression => expression.transpile(),
       _ => throw UnimplementedError()
     };
   }
 }
 
 extension StatementTranspilerExtension on Statement {
-  String Transpile() {
+  String transpile([int depth = 0]) {
     return switch (this) {
-      VariableDeclarationStatement st => st.Transpile(),
-      AssignmentStatement st => st.Transpile(),
-      ExpressionDefinitionStatement st => st.Transpile(),
-      ClassDefinitionStatement st => st.Transpile(),
-      FunctionDefinitionStatement st => st.Transpile(),
-      ReturnStatement st => st.Transpile(),
+      VariableDeclarationStatement st => st.transpile(depth),
+      AssignmentStatement st => st.transpile(depth),
+      ExpressionDefinitionStatement st => st.transpile(depth),
+      ClassDefinitionStatement st => st.transpile(depth),
+      FunctionDefinitionStatement st => st.transpile(depth),
+      ReturnStatement st => st.transpile(depth),
       _ => throw UnimplementedError()
     };
   }
@@ -48,7 +50,7 @@ extension StatementTranspilerExtension on Statement {
 
 extension VariableDeclarationStatementTranspilerExtension
     on VariableDeclarationStatement {
-  String Transpile() {
+  String transpile([int depth = 0]) {
     String statement = '';
 
     String variableTypeTranspiler = switch (varType) {
@@ -63,59 +65,63 @@ extension VariableDeclarationStatementTranspilerExtension
       statement += ' ${valueType!.typeName}';
     }
 
-    String valueTranspiler = value.Transpile();
-    statement += ' $name = $valueTranspiler;';
+    String valueTranspiler = value.transpile();
+    statement = generateIdentationSpace(depth) +
+        statement +
+        ' $name = $valueTranspiler;';
 
     return statement;
   }
 }
 
 extension AssignmentStatementTranspilerExtension on AssignmentStatement {
-  String Transpile() {
-    String valueTranspiler = value.Transpile();
-    String statement = '$name = $valueTranspiler;';
+  String transpile([int depth = 0]) {
+    String valueTranspiler = value.transpile();
+    String statement =
+        '${generateIdentationSpace(depth)}$name = $valueTranspiler;';
     return statement;
   }
 }
 
 extension ExpressionDefinitionStatementTranspilerExtension
     on ExpressionDefinitionStatement {
-  String Transpile() {
-    String valueTranspiler = value.Transpile();
+  String transpile([int depth = 0]) {
+    String valueTranspiler = value.transpile();
     String expression = '$valueTranspiler';
     return expression;
   }
 }
 
 extension ReturnStatementTranspilerExtension on ReturnStatement {
-  String Transpile() {
-    String valueTranspiler = value.Transpile();
-    String expression = 'return $valueTranspiler;';
+  String transpile([int depth = 0]) {
+    String valueTranspiler = value.transpile();
+    String expression =
+        '${generateIdentationSpace(depth)}return $valueTranspiler;';
     return expression;
   }
 }
 
 extension FunctionCallExpressionTranspilerExtension on FunctionCallExpression {
-  String Transpile() {
+  String transpile() {
     String nameTranspiler = name;
     String parametersTranspiler =
-        parameters.map((p) => p.Transpile()).toList().join(', ');
+        parameters.map((p) => p.transpile()).toList().join(', ');
     String expression = '$nameTranspiler($parametersTranspiler)';
     return expression;
   }
 }
 
 extension DartFileTranspilerExtension on ProgramFile {
-  String Transpile() {
-    final linesTranspiled = lines.map((l) => l.Transpile()).join('\n');
+  String transpile() {
+    final linesTranspiled = lines.map((l) => l.transpile()).join('\n');
     return linesTranspiled;
   }
 }
 
 extension BinaryMathExpressionTranspilerExtension on BinaryMathExpression {
-  String Transpile() {
-    String leftTranspiler = left.Transpile();
-    String rightTranspiler = right.Transpile();
+  String transpile() {
+    String leftTranspiler = left.transpile();
+    String rightTranspiler = right.transpile();
     String operatorTranspiler = operand.symbol;
     String expression = '$leftTranspiler $operatorTranspiler $rightTranspiler';
     return expression;
@@ -123,9 +129,9 @@ extension BinaryMathExpressionTranspilerExtension on BinaryMathExpression {
 }
 
 extension BinaryLogicExpressionTranspilerExtension on BinaryLogicExpression {
-  String Transpile() {
-    String leftTranspiler = left.Transpile();
-    String rightTranspiler = right.Transpile();
+  String transpile() {
+    String leftTranspiler = left.transpile();
+    String rightTranspiler = right.transpile();
     String operatorTranspiler = operand.symbol;
     String expression = '$leftTranspiler $operatorTranspiler $rightTranspiler';
     return expression;
@@ -133,8 +139,8 @@ extension BinaryLogicExpressionTranspilerExtension on BinaryLogicExpression {
 }
 
 extension UnaryLogicExpressionTranspilerExtension on UnaryLogicExpression {
-  String Transpile() {
-    String valueTranspiler = value.Transpile();
+  String transpile() {
+    String valueTranspiler = value.transpile();
     String operatorTranspiler = operand.symbol;
 
     String expression = '$operatorTranspiler$valueTranspiler';
@@ -143,8 +149,8 @@ extension UnaryLogicExpressionTranspilerExtension on UnaryLogicExpression {
 }
 
 extension UnaryMathExpressionTranspilerExtension on UnaryMathExpression {
-  String Transpile() {
-    String valueTranspiler = value.Transpile();
+  String transpile() {
+    String valueTranspiler = value.transpile();
     String operatorTranspiler = operand.symbol;
 
     String expression = '$operatorTranspiler$valueTranspiler';
@@ -153,9 +159,9 @@ extension UnaryMathExpressionTranspilerExtension on UnaryMathExpression {
 }
 
 extension ParenthesysExpressionTranspilerExtension on ParenthesysExpression {
-  String Transpile() {
+  String transpile() {
     String par_open = '(';
-    String valueTranspiler = value.Transpile();
+    String valueTranspiler = value.transpile();
     String par_close = ')';
     String expression = '$par_open$valueTranspiler$par_close';
     return expression;
@@ -163,32 +169,39 @@ extension ParenthesysExpressionTranspilerExtension on ParenthesysExpression {
 }
 
 extension VariableReferenceTranspilerExtension on VarReferenceExpression {
-  String Transpile() {
+  String transpile() {
     return name;
   }
 }
 
 extension FunctionDefinitionTranspilerExtension on FunctionDefinitionStatement {
-  String Transpile() {
+  String transpile([int depth = 0]) {
     String? returnTypeTranspiler = returnType?.typeName;
     String nameTranspiler = name;
     String parametersTranspiler =
-        parameters.map((p) => p.Transpile()).toList().join(', ');
+        parameters.map((p) => p.transpile()).toList().join(', ');
+    String bodyTranspiled = "{}";
 
-    String bodyTranspiler = body.map((e) => e.Transpile()).join('\n');
-    String functionDeclaration = """
-    $returnTypeTranspiler $nameTranspiler($parametersTranspiler) { 
-      $bodyTranspiler 
+    if (body.isNotEmpty) {
+      var bodyStatementsTranspiled =
+          body.map((e) => e.transpile(depth + 1)).join('\n');
+      bodyTranspiled = """
+                |{
+                |$bodyStatementsTranspiled
+                |${generateIdentationSpace(depth)}}
+                """
+          .trimMargin();
     }
-    """
-        .unindent();
+
+    final functionDeclaration =
+        "${generateIdentationSpace(depth)}$returnTypeTranspiler $nameTranspiler($parametersTranspiler) $bodyTranspiled";
 
     return functionDeclaration;
   }
 }
 
 extension ParameterTranspilerExtension on Parameter {
-  String Transpile() {
+  String transpile() {
     return switch (paramType) {
       ParameterType.SUPER => 'super.$name',
       ParameterType.THIS => 'this.$name',
@@ -198,23 +211,24 @@ extension ParameterTranspilerExtension on Parameter {
 }
 
 extension ClassDefinitionTranspilerExtension on ClassDefinitionStatement {
-  String Transpile() {
+  String transpile([int depth = 0]) {
     String nameTranspiler = name;
+
     String propertiesTranspiled =
-        properties.map((e) => e.Transpile()).join('\n');
+        properties.map((e) => e.transpile(depth + 1)).join('\n');
     String constructorsTranspiled =
-        constructors.map((e) => e.Transpile()).join('\n');
-    String methodsTranspiled = methods.map((e) => e.Transpile()).join('\n');
+        constructors.map((e) => e.transpile(depth + 1)).join('\n');
+    String methodsTranspiled =
+        methods.map((e) => e.transpile(depth + 1)).join('\n');
+
     String classDeclaration = """
-    class $nameTranspiler { 
-      $propertiesTranspiled
-
-      $constructorsTranspiled
-
-      $methodsTranspiled 
-    }
+    |${generateIdentationSpace(depth)}class $nameTranspiler { 
+    |$propertiesTranspiled
+    |$constructorsTranspiled
+    |$methodsTranspiled 
+    |${generateIdentationSpace(depth)}}
     """
-        .unindent();
+        .trimMargin();
 
     return classDeclaration;
   }
@@ -222,27 +236,28 @@ extension ClassDefinitionTranspilerExtension on ClassDefinitionStatement {
 
 extension ConstructorDefinitionTranspilerExtension
     on ConstructorDefinitionStatement {
-  String Transpile() {
+  String transpile([int depth = 0]) {
     String constructorNameTranspiled = className;
     if (constructorName != null) {
       constructorNameTranspiled += '.$constructorName';
     }
 
     String parametersTranspiler =
-        parameters.map((p) => p.Transpile()).toList().join(', ');
+        parameters.map((p) => p.transpile()).toList().join(', ');
 
     String bodyTranspiled = ";";
     if (body.isNotEmpty) {
-      bodyTranspiled = """{
-        ${body.map((e) => e.Transpile()).join('\n')}
-      }"""
+      bodyTranspiled = """
+      |{
+      |${body.map((e) => e.transpile(depth + 1)).join('\n')}
+      |${generateIdentationSpace(depth)}}"""
           .unindent();
     }
 
     String constructorDeclaration = """
-    $constructorNameTranspiled($parametersTranspiler) $bodyTranspiled
+    |${generateIdentationSpace(depth)}$constructorNameTranspiled($parametersTranspiler) $bodyTranspiled
     """
-        .unindent();
+        .trimMargin();
 
     return constructorDeclaration;
   }

@@ -36,6 +36,6 @@ void main() {
   """
         .unindent());
   } else {
-    print(result.root?.Transpile().unindent());
+    print(result.root?.transpile().unindent());
   }
 }

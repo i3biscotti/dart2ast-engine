@@ -33,7 +33,7 @@ void main() {
           final root = await _parseResource('task1/var_definition_statement');
 
           expect(
-            root.toAst(false).Transpile(),
+            root.toAst(false).transpile(),
             equals('var name = "Simone";'),
           );
         },
@@ -45,7 +45,7 @@ void main() {
           final root = await _parseResource('task1/final_definition_statement');
 
           expect(
-            root.toAst(false).Transpile(),
+            root.toAst(false).transpile(),
             equals('final double height = 1.70;'),
           );
         },
@@ -57,7 +57,7 @@ void main() {
           final root = await _parseResource('task1/type_definition_statement');
 
           expect(
-            root.toAst(false).Transpile(),
+            root.toAst(false).transpile(),
             equals(
                 'int age = 16;'), //non va bene, si aspetta 'var int age = 16;'
           );
@@ -70,7 +70,7 @@ void main() {
           final root = await _parseResource('task1/const_definition_statement');
 
           expect(
-            root.toAst(false).Transpile(),
+            root.toAst(false).transpile(),
             equals('const bool isOld = false;'),
           );
         },
@@ -82,7 +82,7 @@ void main() {
           final root = await _parseResource('task1/assignment_statement');
 
           expect(
-            root.toAst(false).Transpile(),
+            root.toAst(false).transpile(),
             equals('pi = 3.14;'),
           );
         },
@@ -99,7 +99,7 @@ void main() {
           final root = await _parseResource('task2/expression_definition');
 
           expect(
-            root.toAst(false).Transpile(),
+            root.toAst(false).transpile(),
             equals('(3 + 4) * (4 - 3)'),
           );
         },
@@ -114,7 +114,7 @@ void main() {
         final root = await _parseResource('task7/void_function_without_params');
 
         expect(
-          root.toAst(false).Transpile(),
+          root.toAst(false).transpile(),
           equals("void emptyFunction() {}"),
         );
       });
@@ -123,11 +123,11 @@ void main() {
         final root = await _parseResource('task7/int_sum_function');
 
         expect(
-          root.toAst(false).Transpile(),
+          root.toAst(false).transpile(),
           equals(
             """
-            |int sum(int a, int b){
-            |    return a + b;
+            |int sum(int a, int b) {
+            |  return a + b;
             |}
             """
                 .trimMargin(),
@@ -139,19 +139,18 @@ void main() {
         final root = await _parseResource('task7/call_function');
 
         expect(
-          root.toAst(false),
+          root.toAst(false).transpile(),
           equals(
             """
-            |bool operations(int a, int b, bool c ){
-            |    var aIsGreaterThanB = a > b;
-            |    final isGreaterAndCondition = aIsGreaterThanB && c;
+            |bool operations(int a, int b, bool c) {
+            |  var aIsGreaterThanB = a > b;
+            |  final isGreaterAndCondition = aIsGreaterThanB && c;
+            |  return isGreaterAndCondition;
+            |}
             |
-            |    return isGreaterAndCondition;
-            |}
-            |void main(){
-            |    final result = operations(11, 12, false);
-            |}
-            """
+            |void main() {
+            |  final result = operations(11, 12, false);
+            |}"""
                 .trimMargin(),
           ),
         );
