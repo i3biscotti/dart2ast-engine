@@ -389,7 +389,7 @@ extension ClassStatementConverterExtension on ClassStatementContext {
       ClassVarDeclarationStatementContext st => st.toAst(considerPosition),
       ClassImmutableVarDeclarationStatementContext st =>
         st.toAst(considerPosition),
-      ClassConstructorDeclarationStatementContext st =>
+      MainClassConstructorDeclarationStatementContext st =>
         st.toAst(considerPosition),
       ClassMethodDeclarationStatementContext st => st.toAst(considerPosition),
       _ => throw UnimplementedError()
@@ -432,10 +432,9 @@ extension ClassImmutableVarDeclarationStatementConverterExtension
 }
 
 extension ClassConstructorDeclarationStatementConverterExtension
-    on ClassConstructorDeclarationStatementContext {
+    on MainClassConstructorDeclarationStatementContext {
   ConstructorDefinitionStatement toAst(bool considerPosition) {
     final className = this.className!.text!;
-    final contructorName = this.costructorName?.text;
 
     final parameters =
         this.parameters().map((e) => e.toAst(considerPosition)).toList();
@@ -446,7 +445,30 @@ extension ClassConstructorDeclarationStatementConverterExtension
 
     return ConstructorDefinitionStatement(
       className,
-      contructorName,
+      null,
+      parameters,
+      statements,
+      toPosition(considerPosition),
+    );
+  }
+}
+
+extension NamedConstructorDeclarationStatementConverterExtension
+    on NamedClassConstructorDeclarationStatementContext {
+  ConstructorDefinitionStatement toAst(bool considerPosition) {
+    final className = this.className!.text!;
+    final constructorName = this.costructorName!.text!;
+
+    final parameters =
+        this.parameters().map((e) => e.toAst(considerPosition)).toList();
+
+    final statements = (this.block()?.statements() ?? [])
+        .map((e) => e.toAst(considerPosition))
+        .toList();
+
+    return ConstructorDefinitionStatement(
+      className,
+      constructorName,
       parameters,
       statements,
       toPosition(considerPosition),
