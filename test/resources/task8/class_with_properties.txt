@@ -1,7 +1,7 @@
 class SimpleClass {
 
     final int prop1;
-    var bool pro2;
+    bool pro2;
 
     SimpleClass(this.prop1, this.pro2);
 
