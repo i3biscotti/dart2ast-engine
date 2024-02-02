@@ -59,6 +59,9 @@ DOT                         : '.';
 
 RETURN                      : 'return';
 
+IF                          : 'if';
+ELSE                        : 'else';
+
 ID                          : [A-Za-z_][A-Za-z_0-9]*;
 
 fragment DecDigit           : '0'..'9';

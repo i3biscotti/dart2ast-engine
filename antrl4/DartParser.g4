@@ -21,6 +21,7 @@ statement
     | classDefinition                                                               #ClassDefinitionStatement
     | expression SEMICOLON                                                          #ExpressionDefinitionStatement
     | RETURN expression SEMICOLON                                                   #ReturnStatement
+    | ifDefinition                                                                  #IfStatement  
     ;
 
 type           
@@ -74,3 +75,15 @@ classStatement
     | functionDefinition                                                                                     #ClassMethodDeclarationStatement                    
     ;
     
+// task 3
+ifBlock
+    : IF PAREN_OPEN expression PAREN_CLOSE GRAPH_OPEN statement* GRAPH_CLOSE;
+ 
+elseIfBlock
+    : ELSE IF PAREN_OPEN expression PAREN_CLOSE GRAPH_OPEN statement* GRAPH_CLOSE;
+ 
+elseBlock
+    : ELSE GRAPH_OPEN statement* GRAPH_CLOSE;
+ 
+ifDefinition
+    : ifBlock elseIfBlock* elseBlock?;

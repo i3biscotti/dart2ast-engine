@@ -290,6 +290,68 @@ extension FunctionCallExpressionConverterExtension
   }
 }
 
+//task 3
+extension IfStatementConverterExtension on IfStatementContext{
+  IfStatement toAst(bool considerPosition){
+    final ifDefinition = this.ifDefinition();
+    final ifBlock = ifDefinition!.ifBlock()!.toAst(considerPosition);
+    final elseIfBlocks = ifDefinition.elseIfBlocks().map((e) => e.toAst(considerPosition)).toList();
+    final elseBlock = ifDefinition.elseBlock()?.toAst(considerPosition); 
+
+  return IfStatement(
+    ifBlock,
+    elseIfBlocks,
+    elseBlock,
+    toPosition(considerPosition),
+  );
+ }
+}
+
+extension IfBlockConverterExtension on IfBlockContext{
+  IfBlock toAst(bool considerPosition){
+    final condition = this.expression()?.toAst(considerPosition);
+    final statements = this.statements().map((e) => e.toAst(considerPosition)).toList();
+    final blockType = BlockType.ifBlock;
+
+    return IfBlock(
+      condition,
+      statements, 
+      blockType, 
+      toPosition(considerPosition),
+      );
+  }
+}
+
+extension ElseIfBlockConverterExtension on ElseIfBlockContext{
+  IfBlock toAst(bool considerPosition){
+    final condition = this.expression()?.toAst(considerPosition);
+    final statements = this.statements().map((e) => e.toAst(considerPosition)).toList();
+    final blockType = BlockType.elseIfBlock;
+
+    return IfBlock(
+      condition,
+      statements, 
+      blockType, 
+      toPosition(considerPosition),
+      );
+  }
+}
+
+extension ElseBlockConverterExtension on ElseBlockContext{
+  IfBlock toAst(bool considerPosition){
+    final condition = null;
+    final statements = this.statements().map((e) => e.toAst(considerPosition)).toList();
+    final blockType = BlockType.elseBlock;
+
+    return IfBlock(
+      condition,
+      statements, 
+      blockType, 
+      toPosition(considerPosition),
+      );
+  }
+}
+
 extension FunctionDefinitionStatementConverterExtension
     on FunctionDefinitionStatementContext {
   FunctionDefinitionStatement toAst(bool considerPosition) {

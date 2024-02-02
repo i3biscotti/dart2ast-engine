@@ -174,6 +174,10 @@ extension VariableReferenceTranspilerExtension on VarReferenceExpression {
   }
 }
 
+extension IfStatementTranspilerExtension on IfStatement{
+  //
+}
+
 extension FunctionDefinitionTranspilerExtension on FunctionDefinitionStatement {
   String transpile([int depth = 0]) {
     String? returnTypeTranspiler = returnType?.typeName;

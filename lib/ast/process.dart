@@ -58,6 +58,10 @@ extension StatementProcessExtension on Statement {
         statement.value.process(operation, scope);
         break;
 
+      case IfStatement statement:
+      //TODO:grazie simo !!!
+      break;
+
       case FunctionDefinitionStatement statement:
         var newScope = "$scope/${generateScopeId()}";
         statement.body.forEach((e) => e.process(operation, newScope));
