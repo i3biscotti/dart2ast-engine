@@ -303,14 +303,23 @@ abstract class DartParserListener extends ParseTreeListener {
   /// [ctx] the parse tree
   void exitClassImmutableVarDeclarationStatement(ClassImmutableVarDeclarationStatementContext ctx);
 
-  /// Enter a parse tree produced by the [ClassConstructorDeclarationStatement]
+  /// Enter a parse tree produced by the [MainClassConstructorDeclarationStatement]
   /// labeled alternative in [file.parserName>.classStatement].
   /// [ctx] the parse tree
-  void enterClassConstructorDeclarationStatement(ClassConstructorDeclarationStatementContext ctx);
-  /// Exit a parse tree produced by the [ClassConstructorDeclarationStatement]
+  void enterMainClassConstructorDeclarationStatement(MainClassConstructorDeclarationStatementContext ctx);
+  /// Exit a parse tree produced by the [MainClassConstructorDeclarationStatement]
   /// labeled alternative in [DartParser.classStatement].
   /// [ctx] the parse tree
-  void exitClassConstructorDeclarationStatement(ClassConstructorDeclarationStatementContext ctx);
+  void exitMainClassConstructorDeclarationStatement(MainClassConstructorDeclarationStatementContext ctx);
+
+  /// Enter a parse tree produced by the [NamedClassConstructorDeclarationStatement]
+  /// labeled alternative in [file.parserName>.classStatement].
+  /// [ctx] the parse tree
+  void enterNamedClassConstructorDeclarationStatement(NamedClassConstructorDeclarationStatementContext ctx);
+  /// Exit a parse tree produced by the [NamedClassConstructorDeclarationStatement]
+  /// labeled alternative in [DartParser.classStatement].
+  /// [ctx] the parse tree
+  void exitNamedClassConstructorDeclarationStatement(NamedClassConstructorDeclarationStatementContext ctx);
 
   /// Enter a parse tree produced by the [ClassMethodDeclarationStatement]
   /// labeled alternative in [file.parserName>.classStatement].

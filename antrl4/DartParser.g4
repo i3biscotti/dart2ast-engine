@@ -66,12 +66,20 @@ parameter: (type | (THIS DOT))  ID;
 
 block: GRAPH_OPEN statement* GRAPH_CLOSE ;
 
-classDefinition : CLASS name=ID GRAPH_OPEN classStatement* GRAPH_CLOSE ;
+classDefinition : CLASS name=ID (EXTENDS parentName=ID)? GRAPH_OPEN classStatement* GRAPH_CLOSE ;
 
 classStatement
-    : type ID ASSIGN expression SEMICOLON                                                                    #ClassVarDeclarationStatement         
-    | FINAL type? ID ASSIGN expression SEMICOLON                                                             #ClassImmutableVarDeclarationStatement                     
-    | className=ID (DOT costructorName=ID)? PAREN_OPEN (parameter COMMA)* parameter? PAREN_CLOSE (block | SEMICOLON)   #ClassConstructorDeclarationStatement
+    : type ID (ASSIGN expression)? SEMICOLON                                                                    #ClassVarDeclarationStatement         
+    | FINAL type? ID (ASSIGN expression)? SEMICOLON                                                             #ClassImmutableVarDeclarationStatement                     
+    | className=ID PAREN_OPEN (parameter COMMA)* parameter? PAREN_CLOSE (block | SEMICOLON)                  #MainClassConstructorDeclarationStatement
+    | className=ID DOT costructorName=ID PAREN_OPEN 
+            (parameter COMMA)* parameter? 
+        PAREN_CLOSE 
+        (COLONS THIS PAREN_OPEN 
+            (expression COMMA)* 
+            expression? COMMA? 
+        PAREN_CLOSE)? 
+        (block | SEMICOLON)                                                                                  #NamedClassConstructorDeclarationStatement
     | functionDefinition                                                                                     #ClassMethodDeclarationStatement                    
     ;
     

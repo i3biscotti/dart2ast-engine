@@ -362,6 +362,254 @@ void main() {
   );
 
   group(
+    "Task 8",
+    () {
+      test('empty_class', () async {
+        final rootNode = await _parseResource('task8/empty_class');
+
+        expect(
+            getMultilineParseTree(rootNode),
+            """
+            |Node(DartFile)
+            |  Node(ClassDefinitionStatement)
+            |    Node(ClassDefinition)
+            |      T[class]
+            |      T[SimpleClass]
+            |      T[{]
+            |      T[}]
+            |  T[<EOF>]
+            """
+                .trimMargin());
+      });
+
+      test('class_with_properties', () async {
+        final rootNode = await _parseResource('task8/class_with_properties');
+
+        expect(
+            getMultilineParseTree(rootNode),
+            """
+            |Node(DartFile)
+            |  Node(ClassDefinitionStatement)
+            |    Node(ClassDefinition)
+            |      T[class]
+            |      T[SimpleClass]
+            |      T[{]
+            |      Node(ClassImmutableVarDeclarationStatement)
+            |        T[final]
+            |        Node(IntType)
+            |          T[int]
+            |        T[prop1]
+            |        T[;]
+            |      Node(ClassVarDeclarationStatement)
+            |        Node(BoolType)
+            |          T[bool]
+            |        T[pro2]
+            |        T[;]
+            |      Node(MainClassConstructorDeclarationStatement)
+            |        T[SimpleClass]
+            |        T[(]
+            |        Node(Parameter)
+            |          T[this]
+            |          T[.]
+            |          T[prop1]
+            |        T[,]
+            |        Node(Parameter)
+            |          T[this]
+            |          T[.]
+            |          T[pro2]
+            |        T[)]
+            |        T[;]
+            |      T[}]
+            |  T[<EOF>]
+            """
+                .trimMargin());
+      });
+
+      test('class_with_methods', () async {
+        final rootNode = await _parseResource('task8/class_with_methods');
+
+        expect(
+          getMultilineParseTree(rootNode),
+          """
+          |Node(DartFile)
+          |  Node(ClassDefinitionStatement)
+          |    Node(ClassDefinition)
+          |      T[class]
+          |      T[SimpleClass]
+          |      T[{]
+          |      Node(ClassImmutableVarDeclarationStatement)
+          |        T[final]
+          |        Node(IntType)
+          |          T[int]
+          |        T[prop1]
+          |        T[;]
+          |      Node(ClassVarDeclarationStatement)
+          |        Node(BoolType)
+          |          T[bool]
+          |        T[pro2]
+          |        T[;]
+          |      Node(MainClassConstructorDeclarationStatement)
+          |        T[SimpleClass]
+          |        T[(]
+          |        Node(Parameter)
+          |          T[this]
+          |          T[.]
+          |          T[prop1]
+          |        T[,]
+          |        Node(Parameter)
+          |          T[this]
+          |          T[.]
+          |          T[pro2]
+          |        T[)]
+          |        T[;]
+          |      Node(ClassMethodDeclarationStatement)
+          |        Node(FunctionDefinition)
+          |          Node(IntType)
+          |            T[int]
+          |          T[sum]
+          |          T[(]
+          |          Node(Parameter)
+          |            Node(IntType)
+          |              T[int]
+          |            T[value]
+          |          T[)]
+          |          Node(Block)
+          |            T[{]
+          |            Node(AssigmentStatement)
+          |              T[pro2]
+          |              T[=]
+          |              Node(BinaryLogicExpression)
+          |                Node(VarReferenceExpression)
+          |                  T[value]
+          |                T[<=]
+          |                Node(VarReferenceExpression)
+          |                  T[prop1]
+          |              T[;]
+          |            Node(ReturnStatement)
+          |              T[return]
+          |              Node(BinaryMathExpression)
+          |                Node(VarReferenceExpression)
+          |                  T[value]
+          |                T[+]
+          |                Node(VarReferenceExpression)
+          |                  T[prop1]
+          |              T[;]
+          |            T[}]
+          |      T[}]
+          |  T[<EOF>]
+          """
+              .trimMargin(),
+        );
+      });
+
+      test('class_with_multiple_constructors', () async {
+        final rootNode =
+            await _parseResource('task8/class_with_multiple_constructors');
+
+        expect(
+          getMultilineParseTree(rootNode),
+          """
+          |Node(DartFile)
+          |  Node(ClassDefinitionStatement)
+          |    Node(ClassDefinition)
+          |      T[class]
+          |      T[MultiplePass]
+          |      T[{]
+          |      Node(ClassImmutableVarDeclarationStatement)
+          |        T[final]
+          |        Node(IntType)
+          |          T[int]
+          |        T[a]
+          |        T[;]
+          |      Node(ClassVarDeclarationStatement)
+          |        Node(DoubleType)
+          |          T[double]
+          |        T[b]
+          |        T[;]
+          |      Node(MainClassConstructorDeclarationStatement)
+          |        T[MultiplePass]
+          |        T[(]
+          |        Node(Parameter)
+          |          T[this]
+          |          T[.]
+          |          T[a]
+          |        T[,]
+          |        Node(Parameter)
+          |          T[this]
+          |          T[.]
+          |          T[b]
+          |        T[)]
+          |        T[;]
+          |      Node(NamedClassConstructorDeclarationStatement)
+          |        T[MultiplePass]
+          |        T[.]
+          |        T[test]
+          |        T[(]
+          |        Node(Parameter)
+          |          Node(IntType)
+          |            T[int]
+          |          T[a]
+          |        T[)]
+          |        T[:]
+          |        T[this]
+          |        T[(]
+          |        Node(VarReferenceExpression)
+          |          T[a]
+          |        T[,]
+          |        Node(DoubleLiteralExpression)
+          |          T[12.1]
+          |        T[)]
+          |        T[;]
+          |      T[}]
+          |  T[<EOF>]
+          """
+              .trimMargin(),
+        );
+      });
+
+      test('class_hierarchy', () async {
+        final rootNode = await _parseResource('task8/class_hierarchy');
+
+        expect(
+          getMultilineParseTree(rootNode),
+          """
+          |Node(DartFile)
+          |  Node(ClassDefinitionStatement)
+          |    Node(ClassDefinition)
+          |      T[class]
+          |      T[SecretWars]
+          |      T[extends]
+          |      T[Marvel]
+          |      T[{]
+          |      T[}]
+          |  T[<EOF>]
+          """
+              .trimMargin(),
+        );
+      });
+
+      test('private_class', () async {
+        final rootNode = await _parseResource('task8/private_class');
+
+        expect(
+          getMultilineParseTree(rootNode),
+          """
+          |Node(DartFile)
+          |  Node(ClassDefinitionStatement)
+          |    Node(ClassDefinition)
+          |      T[class]
+          |      T[_SecretWar]
+          |      T[{]
+          |      T[}]
+          |  T[<EOF>]
+          """
+              .trimMargin(),
+        );
+      });
+    },
+  );
+
+  group(
     "Task 9",
     () {
       test('method_call', () {

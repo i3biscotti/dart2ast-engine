@@ -28,7 +28,7 @@ ASSIGN                      : '=';
 SEMICOLON                   : ';';
 
 INTLIT                      : DecDigitNoZero DecDigit* | DecDigit;
-DOUBLELIT                   : DecDigit '.' DecDigits;
+DOUBLELIT                   : (DecDigitNoZero DecDigit* | DecDigit) '.' DecDigits;
 BOOLLIT                     : 'true' | 'false';
 
 STRINGLIT                   : UnterminatedStringLiteral '"';
@@ -56,8 +56,10 @@ GRAPH_OPEN                  : '{';
 GRAPH_CLOSE                 : '}';
 COMMA                       : ',';
 DOT                         : '.';
+COLONS                      : ':';
 
 RETURN                      : 'return';
+EXTENDS                     : 'extends';
 
 IF                          : 'if';
 ELSE                        : 'else';

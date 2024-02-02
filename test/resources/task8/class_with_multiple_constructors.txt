@@ -1,8 +1,8 @@
 class MultiplePass{
     final int a;
-    var double b;
+    double b;
 
-    SimpleClass(this.a, this.b);
+    MultiplePass(this.a, this.b);
 
-    SimpleClass.test(int a) : this(a, 12.1)
+    MultiplePass.test(int a) : this(a, 12.1);
 }

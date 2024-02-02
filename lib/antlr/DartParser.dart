@@ -24,8 +24,9 @@ class DartParser extends Parser {
                    TOKEN_GREATER_THAN = 25, TOKEN_LOWER_THAN = 26, TOKEN_EQUAL = 27, 
                    TOKEN_AND = 28, TOKEN_OR = 29, TOKEN_NOT = 30, TOKEN_PAREN_OPEN = 31, 
                    TOKEN_PAREN_CLOSE = 32, TOKEN_GRAPH_OPEN = 33, TOKEN_GRAPH_CLOSE = 34, 
-                   TOKEN_COMMA = 35, TOKEN_DOT = 36, TOKEN_RETURN = 37, 
-                   TOKEN_ID = 38, TOKEN_UnterminatedStringLiteral = 39;
+                   TOKEN_COMMA = 35, TOKEN_DOT = 36, TOKEN_COLONS = 37, 
+                   TOKEN_RETURN = 38, TOKEN_EXTENDS = 39, TOKEN_ID = 40, 
+                   TOKEN_UnterminatedStringLiteral = 41;
 
   @override
   final List<String> ruleNames = [
@@ -38,7 +39,7 @@ class DartParser extends Parser {
       "'double'", "'String'", "'bool'", "'void'", "'='", "';'", null, null, 
       null, null, "'+'", "'-'", "'/'", "'*'", "'%'", "'>='", "'<='", "'>'", 
       "'<'", "'=='", "'&&'", "'||'", "'!'", "'('", "')'", "'{'", "'}'", 
-      "','", "'.'", "'return'"
+      "','", "'.'", "':'", "'return'", "'extends'"
   ];
   static final List<String?> _SYMBOLIC_NAMES = [
       null, "WS", "VAR", "FINAL", "CONST", "CLASS", "THIS", "INT", "DOUBLE", 
@@ -46,7 +47,8 @@ class DartParser extends Parser {
       "BOOLLIT", "STRINGLIT", "PLUS", "MINUS", "DIVISION", "TIMES", "MODULE", 
       "GREATER_EQUAL_THAN", "LOWER_EQUAL_THAN", "GREATER_THAN", "LOWER_THAN", 
       "EQUAL", "AND", "OR", "NOT", "PAREN_OPEN", "PAREN_CLOSE", "GRAPH_OPEN", 
-      "GRAPH_CLOSE", "COMMA", "DOT", "RETURN", "ID", "UnterminatedStringLiteral"
+      "GRAPH_CLOSE", "COMMA", "DOT", "COLONS", "RETURN", "EXTENDS", "ID", 
+      "UnterminatedStringLiteral"
   ];
   static final Vocabulary VOCABULARY = VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -85,7 +87,7 @@ class DartParser extends Parser {
         state = 21; 
         errorHandler.sync(this);
         _la = tokenStream.LA(1)!;
-      } while ((((_la) & ~0x3f) == 0 && ((1 << _la) & 415539122108) != 0));
+      } while ((((_la) & ~0x3f) == 0 && ((1 << _la) & 1377611796412) != 0));
       state = 23;
       match(TOKEN_EOF);
     } on RecognitionException catch (re) {
@@ -401,7 +403,7 @@ class DartParser extends Parser {
         state = 105;
         errorHandler.sync(this);
         _la = tokenStream.LA(1)!;
-        if ((((_la) & ~0x3f) == 0 && ((1 << _la) & 278100164608) != 0)) {
+        if ((((_la) & ~0x3f) == 0 && ((1 << _la) & 1102733885440) != 0)) {
           state = 104;
           expression(0);
         }
@@ -449,7 +451,7 @@ class DartParser extends Parser {
         state = 124;
         errorHandler.sync(this);
         _la = tokenStream.LA(1)!;
-        if ((((_la) & ~0x3f) == 0 && ((1 << _la) & 278100164608) != 0)) {
+        if ((((_la) & ~0x3f) == 0 && ((1 << _la) & 1102733885440) != 0)) {
           state = 123;
           expression(0);
         }
@@ -658,7 +660,7 @@ class DartParser extends Parser {
       state = 179;
       errorHandler.sync(this);
       _la = tokenStream.LA(1)!;
-      if ((((_la) & ~0x3f) == 0 && ((1 << _la) & 274877910976) != 0)) {
+      if ((((_la) & ~0x3f) == 0 && ((1 << _la) & 1099511631808) != 0)) {
         state = 178;
         parameter();
       }
@@ -726,7 +728,7 @@ class DartParser extends Parser {
       state = 195;
       errorHandler.sync(this);
       _la = tokenStream.LA(1)!;
-      while ((((_la) & ~0x3f) == 0 && ((1 << _la) & 415539122108) != 0)) {
+      while ((((_la) & ~0x3f) == 0 && ((1 << _la) & 1377611796412) != 0)) {
         state = 192;
         statement();
         state = 197;
@@ -755,19 +757,29 @@ class DartParser extends Parser {
       match(TOKEN_CLASS);
       state = 201;
       _localctx.name = match(TOKEN_ID);
-      state = 202;
-      match(TOKEN_GRAPH_OPEN);
-      state = 206;
+      state = 204;
       errorHandler.sync(this);
       _la = tokenStream.LA(1)!;
-      while ((((_la) & ~0x3f) == 0 && ((1 << _la) & 274877910920) != 0)) {
+      if (_la == TOKEN_EXTENDS) {
+        state = 202;
+        match(TOKEN_EXTENDS);
         state = 203;
+        _localctx.parentName = match(TOKEN_ID);
+      }
+
+      state = 206;
+      match(TOKEN_GRAPH_OPEN);
+      state = 210;
+      errorHandler.sync(this);
+      _la = tokenStream.LA(1)!;
+      while ((((_la) & ~0x3f) == 0 && ((1 << _la) & 1099511631752) != 0)) {
+        state = 207;
         classStatement();
-        state = 208;
+        state = 212;
         errorHandler.sync(this);
         _la = tokenStream.LA(1)!;
       }
-      state = 209;
+      state = 213;
       match(TOKEN_GRAPH_CLOSE);
     } on RecognitionException catch (re) {
       _localctx.exception = re;
@@ -785,95 +797,97 @@ class DartParser extends Parser {
     int _la;
     try {
       int _alt;
-      state = 249;
+      state = 292;
       errorHandler.sync(this);
-      switch (interpreter!.adaptivePredict(tokenStream, 23, context)) {
+      switch (interpreter!.adaptivePredict(tokenStream, 32, context)) {
       case 1:
         _localctx = ClassVarDeclarationStatementContext(_localctx);
         enterOuterAlt(_localctx, 1);
-        state = 211;
-        type();
-        state = 212;
-        match(TOKEN_ID);
-        state = 213;
-        match(TOKEN_ASSIGN);
-        state = 214;
-        expression(0);
         state = 215;
+        type();
+        state = 216;
+        match(TOKEN_ID);
+        state = 219;
+        errorHandler.sync(this);
+        _la = tokenStream.LA(1)!;
+        if (_la == TOKEN_ASSIGN) {
+          state = 217;
+          match(TOKEN_ASSIGN);
+          state = 218;
+          expression(0);
+        }
+
+        state = 221;
         match(TOKEN_SEMICOLON);
         break;
       case 2:
         _localctx = ClassImmutableVarDeclarationStatementContext(_localctx);
         enterOuterAlt(_localctx, 2);
-        state = 217;
+        state = 223;
         match(TOKEN_FINAL);
-        state = 219;
+        state = 225;
         errorHandler.sync(this);
-        switch (interpreter!.adaptivePredict(tokenStream, 18, context)) {
+        switch (interpreter!.adaptivePredict(tokenStream, 20, context)) {
         case 1:
-          state = 218;
+          state = 224;
           type();
           break;
         }
-        state = 221;
+        state = 227;
         match(TOKEN_ID);
-        state = 222;
-        match(TOKEN_ASSIGN);
-        state = 223;
-        expression(0);
-        state = 224;
+        state = 230;
+        errorHandler.sync(this);
+        _la = tokenStream.LA(1)!;
+        if (_la == TOKEN_ASSIGN) {
+          state = 228;
+          match(TOKEN_ASSIGN);
+          state = 229;
+          expression(0);
+        }
+
+        state = 232;
         match(TOKEN_SEMICOLON);
         break;
       case 3:
-        _localctx = ClassConstructorDeclarationStatementContext(_localctx);
+        _localctx = MainClassConstructorDeclarationStatementContext(_localctx);
         enterOuterAlt(_localctx, 3);
-        state = 226;
+        state = 233;
         _localctx.className = match(TOKEN_ID);
-        state = 229;
-        errorHandler.sync(this);
-        _la = tokenStream.LA(1)!;
-        if (_la == TOKEN_DOT) {
-          state = 227;
-          match(TOKEN_DOT);
-          state = 228;
-          _localctx.costructorName = match(TOKEN_ID);
-        }
-
-        state = 231;
+        state = 234;
         match(TOKEN_PAREN_OPEN);
-        state = 237;
+        state = 240;
         errorHandler.sync(this);
-        _alt = interpreter!.adaptivePredict(tokenStream, 20, context);
+        _alt = interpreter!.adaptivePredict(tokenStream, 22, context);
         while (_alt != 2 && _alt != ATN.INVALID_ALT_NUMBER) {
           if (_alt == 1) {
-            state = 232;
+            state = 235;
             parameter();
-            state = 233;
+            state = 236;
             match(TOKEN_COMMA); 
           }
-          state = 239;
+          state = 242;
           errorHandler.sync(this);
-          _alt = interpreter!.adaptivePredict(tokenStream, 20, context);
+          _alt = interpreter!.adaptivePredict(tokenStream, 22, context);
         }
-        state = 241;
+        state = 244;
         errorHandler.sync(this);
         _la = tokenStream.LA(1)!;
-        if ((((_la) & ~0x3f) == 0 && ((1 << _la) & 274877910976) != 0)) {
-          state = 240;
+        if ((((_la) & ~0x3f) == 0 && ((1 << _la) & 1099511631808) != 0)) {
+          state = 243;
           parameter();
         }
 
-        state = 243;
-        match(TOKEN_PAREN_CLOSE);
         state = 246;
+        match(TOKEN_PAREN_CLOSE);
+        state = 249;
         errorHandler.sync(this);
         switch (tokenStream.LA(1)!) {
         case TOKEN_GRAPH_OPEN:
-          state = 244;
+          state = 247;
           block();
           break;
         case TOKEN_SEMICOLON:
-          state = 245;
+          state = 248;
           match(TOKEN_SEMICOLON);
           break;
         default:
@@ -881,9 +895,103 @@ class DartParser extends Parser {
         }
         break;
       case 4:
-        _localctx = ClassMethodDeclarationStatementContext(_localctx);
+        _localctx = NamedClassConstructorDeclarationStatementContext(_localctx);
         enterOuterAlt(_localctx, 4);
-        state = 248;
+        state = 251;
+        _localctx.className = match(TOKEN_ID);
+        state = 252;
+        match(TOKEN_DOT);
+        state = 253;
+        _localctx.costructorName = match(TOKEN_ID);
+        state = 254;
+        match(TOKEN_PAREN_OPEN);
+        state = 260;
+        errorHandler.sync(this);
+        _alt = interpreter!.adaptivePredict(tokenStream, 25, context);
+        while (_alt != 2 && _alt != ATN.INVALID_ALT_NUMBER) {
+          if (_alt == 1) {
+            state = 255;
+            parameter();
+            state = 256;
+            match(TOKEN_COMMA); 
+          }
+          state = 262;
+          errorHandler.sync(this);
+          _alt = interpreter!.adaptivePredict(tokenStream, 25, context);
+        }
+        state = 264;
+        errorHandler.sync(this);
+        _la = tokenStream.LA(1)!;
+        if ((((_la) & ~0x3f) == 0 && ((1 << _la) & 1099511631808) != 0)) {
+          state = 263;
+          parameter();
+        }
+
+        state = 266;
+        match(TOKEN_PAREN_CLOSE);
+        state = 285;
+        errorHandler.sync(this);
+        _la = tokenStream.LA(1)!;
+        if (_la == TOKEN_COLONS) {
+          state = 267;
+          match(TOKEN_COLONS);
+          state = 268;
+          match(TOKEN_THIS);
+          state = 269;
+          match(TOKEN_PAREN_OPEN);
+          state = 275;
+          errorHandler.sync(this);
+          _alt = interpreter!.adaptivePredict(tokenStream, 27, context);
+          while (_alt != 2 && _alt != ATN.INVALID_ALT_NUMBER) {
+            if (_alt == 1) {
+              state = 270;
+              expression(0);
+              state = 271;
+              match(TOKEN_COMMA); 
+            }
+            state = 277;
+            errorHandler.sync(this);
+            _alt = interpreter!.adaptivePredict(tokenStream, 27, context);
+          }
+          state = 279;
+          errorHandler.sync(this);
+          _la = tokenStream.LA(1)!;
+          if ((((_la) & ~0x3f) == 0 && ((1 << _la) & 1102733885440) != 0)) {
+            state = 278;
+            expression(0);
+          }
+
+          state = 282;
+          errorHandler.sync(this);
+          _la = tokenStream.LA(1)!;
+          if (_la == TOKEN_COMMA) {
+            state = 281;
+            match(TOKEN_COMMA);
+          }
+
+          state = 284;
+          match(TOKEN_PAREN_CLOSE);
+        }
+
+        state = 289;
+        errorHandler.sync(this);
+        switch (tokenStream.LA(1)!) {
+        case TOKEN_GRAPH_OPEN:
+          state = 287;
+          block();
+          break;
+        case TOKEN_SEMICOLON:
+          state = 288;
+          match(TOKEN_SEMICOLON);
+          break;
+        default:
+          throw NoViableAltException(this);
+        }
+        break;
+      case 5:
+        _localctx = ClassMethodDeclarationStatementContext(_localctx);
+        enterOuterAlt(_localctx, 5);
+        state = 291;
         functionDefinition();
         break;
       }
@@ -923,7 +1031,7 @@ class DartParser extends Parser {
   }
 
   static const List<int> _serializedATN = [
-      4,1,39,252,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,
+      4,1,41,295,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,
       2,7,7,7,2,8,7,8,1,0,4,0,20,8,0,11,0,12,0,21,1,0,1,0,1,1,1,1,1,1,1,
       1,3,1,30,8,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,39,8,1,1,1,1,1,1,1,1,
       1,1,1,1,1,1,1,3,1,48,8,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
@@ -936,82 +1044,99 @@ class DartParser extends Parser {
       3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,5,3,163,8,3,10,3,
       12,3,166,9,3,1,4,1,4,1,4,1,4,1,4,1,4,5,4,174,8,4,10,4,12,4,177,9,4,
       1,4,3,4,180,8,4,1,4,1,4,1,4,1,5,1,5,1,5,3,5,188,8,5,1,5,1,5,1,6,1,
-      6,5,6,194,8,6,10,6,12,6,197,9,6,1,6,1,6,1,7,1,7,1,7,1,7,5,7,205,8,
-      7,10,7,12,7,208,9,7,1,7,1,7,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,3,8,220,
-      8,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,3,8,230,8,8,1,8,1,8,1,8,1,8,5,
-      8,236,8,8,10,8,12,8,239,9,8,1,8,3,8,242,8,8,1,8,1,8,1,8,3,8,247,8,
-      8,1,8,3,8,250,8,8,1,8,0,1,6,9,0,2,4,6,8,10,12,14,16,0,0,298,0,19,1,
-      0,0,0,2,68,1,0,0,0,4,76,1,0,0,0,6,127,1,0,0,0,8,167,1,0,0,0,10,187,
-      1,0,0,0,12,191,1,0,0,0,14,200,1,0,0,0,16,249,1,0,0,0,18,20,3,2,1,0,
-      19,18,1,0,0,0,20,21,1,0,0,0,21,19,1,0,0,0,21,22,1,0,0,0,22,23,1,0,
-      0,0,23,24,5,0,0,1,24,1,1,0,0,0,25,30,5,2,0,0,26,27,5,2,0,0,27,30,3,
-      4,2,0,28,30,3,4,2,0,29,25,1,0,0,0,29,26,1,0,0,0,29,28,1,0,0,0,30,31,
-      1,0,0,0,31,32,5,38,0,0,32,33,5,12,0,0,33,34,3,6,3,0,34,35,5,13,0,0,
-      35,69,1,0,0,0,36,38,5,3,0,0,37,39,3,4,2,0,38,37,1,0,0,0,38,39,1,0,
-      0,0,39,40,1,0,0,0,40,41,5,38,0,0,41,42,5,12,0,0,42,43,3,6,3,0,43,44,
-      5,13,0,0,44,69,1,0,0,0,45,47,5,4,0,0,46,48,3,4,2,0,47,46,1,0,0,0,47,
-      48,1,0,0,0,48,49,1,0,0,0,49,50,5,38,0,0,50,51,5,12,0,0,51,52,3,6,3,
-      0,52,53,5,13,0,0,53,69,1,0,0,0,54,55,5,38,0,0,55,56,5,12,0,0,56,57,
-      3,6,3,0,57,58,5,13,0,0,58,69,1,0,0,0,59,69,3,8,4,0,60,69,3,14,7,0,
-      61,62,3,6,3,0,62,63,5,13,0,0,63,69,1,0,0,0,64,65,5,37,0,0,65,66,3,
-      6,3,0,66,67,5,13,0,0,67,69,1,0,0,0,68,29,1,0,0,0,68,36,1,0,0,0,68,
-      45,1,0,0,0,68,54,1,0,0,0,68,59,1,0,0,0,68,60,1,0,0,0,68,61,1,0,0,0,
-      68,64,1,0,0,0,69,3,1,0,0,0,70,77,5,7,0,0,71,77,5,8,0,0,72,77,5,10,
-      0,0,73,77,5,9,0,0,74,77,5,11,0,0,75,77,5,38,0,0,76,70,1,0,0,0,76,71,
-      1,0,0,0,76,72,1,0,0,0,76,73,1,0,0,0,76,74,1,0,0,0,76,75,1,0,0,0,77,
-      5,1,0,0,0,78,79,6,3,-1,0,79,128,5,16,0,0,80,128,5,14,0,0,81,128,5,
-      15,0,0,82,128,5,17,0,0,83,84,5,19,0,0,84,128,3,6,3,8,85,86,5,18,0,
-      0,86,128,3,6,3,7,87,88,5,30,0,0,88,128,3,6,3,6,89,90,5,31,0,0,90,91,
-      3,6,3,0,91,92,5,32,0,0,92,128,1,0,0,0,93,128,5,38,0,0,94,95,5,38,0,
-      0,95,101,5,31,0,0,96,97,3,6,3,0,97,98,5,35,0,0,98,100,1,0,0,0,99,96,
-      1,0,0,0,100,103,1,0,0,0,101,99,1,0,0,0,101,102,1,0,0,0,102,105,1,0,
-      0,0,103,101,1,0,0,0,104,106,3,6,3,0,105,104,1,0,0,0,105,106,1,0,0,
-      0,106,107,1,0,0,0,107,128,5,32,0,0,108,109,5,38,0,0,109,110,5,36,0,
-      0,110,128,5,38,0,0,111,112,5,38,0,0,112,113,5,36,0,0,113,114,5,38,
-      0,0,114,120,5,31,0,0,115,116,3,6,3,0,116,117,5,35,0,0,117,119,1,0,
-      0,0,118,115,1,0,0,0,119,122,1,0,0,0,120,118,1,0,0,0,120,121,1,0,0,
-      0,121,124,1,0,0,0,122,120,1,0,0,0,123,125,3,6,3,0,124,123,1,0,0,0,
-      124,125,1,0,0,0,125,126,1,0,0,0,126,128,5,32,0,0,127,78,1,0,0,0,127,
-      80,1,0,0,0,127,81,1,0,0,0,127,82,1,0,0,0,127,83,1,0,0,0,127,85,1,0,
-      0,0,127,87,1,0,0,0,127,89,1,0,0,0,127,93,1,0,0,0,127,94,1,0,0,0,127,
-      108,1,0,0,0,127,111,1,0,0,0,128,164,1,0,0,0,129,130,10,19,0,0,130,
-      131,5,18,0,0,131,163,3,6,3,20,132,133,10,18,0,0,133,134,5,19,0,0,134,
-      163,3,6,3,19,135,136,10,17,0,0,136,137,5,21,0,0,137,163,3,6,3,18,138,
-      139,10,16,0,0,139,140,5,20,0,0,140,163,3,6,3,17,141,142,10,15,0,0,
-      142,143,5,28,0,0,143,163,3,6,3,16,144,145,10,14,0,0,145,146,5,29,0,
-      0,146,163,3,6,3,15,147,148,10,13,0,0,148,149,5,25,0,0,149,163,3,6,
-      3,14,150,151,10,12,0,0,151,152,5,26,0,0,152,163,3,6,3,13,153,154,10,
-      11,0,0,154,155,5,23,0,0,155,163,3,6,3,12,156,157,10,10,0,0,157,158,
-      5,24,0,0,158,163,3,6,3,11,159,160,10,9,0,0,160,161,5,27,0,0,161,163,
-      3,6,3,10,162,129,1,0,0,0,162,132,1,0,0,0,162,135,1,0,0,0,162,138,1,
-      0,0,0,162,141,1,0,0,0,162,144,1,0,0,0,162,147,1,0,0,0,162,150,1,0,
-      0,0,162,153,1,0,0,0,162,156,1,0,0,0,162,159,1,0,0,0,163,166,1,0,0,
-      0,164,162,1,0,0,0,164,165,1,0,0,0,165,7,1,0,0,0,166,164,1,0,0,0,167,
-      168,3,4,2,0,168,169,5,38,0,0,169,175,5,31,0,0,170,171,3,10,5,0,171,
-      172,5,35,0,0,172,174,1,0,0,0,173,170,1,0,0,0,174,177,1,0,0,0,175,173,
-      1,0,0,0,175,176,1,0,0,0,176,179,1,0,0,0,177,175,1,0,0,0,178,180,3,
-      10,5,0,179,178,1,0,0,0,179,180,1,0,0,0,180,181,1,0,0,0,181,182,5,32,
-      0,0,182,183,3,12,6,0,183,9,1,0,0,0,184,188,3,4,2,0,185,186,5,6,0,0,
-      186,188,5,36,0,0,187,184,1,0,0,0,187,185,1,0,0,0,188,189,1,0,0,0,189,
-      190,5,38,0,0,190,11,1,0,0,0,191,195,5,33,0,0,192,194,3,2,1,0,193,192,
-      1,0,0,0,194,197,1,0,0,0,195,193,1,0,0,0,195,196,1,0,0,0,196,198,1,
-      0,0,0,197,195,1,0,0,0,198,199,5,34,0,0,199,13,1,0,0,0,200,201,5,5,
-      0,0,201,202,5,38,0,0,202,206,5,33,0,0,203,205,3,16,8,0,204,203,1,0,
-      0,0,205,208,1,0,0,0,206,204,1,0,0,0,206,207,1,0,0,0,207,209,1,0,0,
-      0,208,206,1,0,0,0,209,210,5,34,0,0,210,15,1,0,0,0,211,212,3,4,2,0,
-      212,213,5,38,0,0,213,214,5,12,0,0,214,215,3,6,3,0,215,216,5,13,0,0,
-      216,250,1,0,0,0,217,219,5,3,0,0,218,220,3,4,2,0,219,218,1,0,0,0,219,
-      220,1,0,0,0,220,221,1,0,0,0,221,222,5,38,0,0,222,223,5,12,0,0,223,
-      224,3,6,3,0,224,225,5,13,0,0,225,250,1,0,0,0,226,229,5,38,0,0,227,
-      228,5,36,0,0,228,230,5,38,0,0,229,227,1,0,0,0,229,230,1,0,0,0,230,
-      231,1,0,0,0,231,237,5,31,0,0,232,233,3,10,5,0,233,234,5,35,0,0,234,
-      236,1,0,0,0,235,232,1,0,0,0,236,239,1,0,0,0,237,235,1,0,0,0,237,238,
-      1,0,0,0,238,241,1,0,0,0,239,237,1,0,0,0,240,242,3,10,5,0,241,240,1,
-      0,0,0,241,242,1,0,0,0,242,243,1,0,0,0,243,246,5,32,0,0,244,247,3,12,
-      6,0,245,247,5,13,0,0,246,244,1,0,0,0,246,245,1,0,0,0,247,250,1,0,0,
-      0,248,250,3,8,4,0,249,211,1,0,0,0,249,217,1,0,0,0,249,226,1,0,0,0,
-      249,248,1,0,0,0,250,17,1,0,0,0,24,21,29,38,47,68,76,101,105,120,124,
-      127,162,164,175,179,187,195,206,219,229,237,241,246,249
+      6,5,6,194,8,6,10,6,12,6,197,9,6,1,6,1,6,1,7,1,7,1,7,1,7,3,7,205,8,
+      7,1,7,1,7,5,7,209,8,7,10,7,12,7,212,9,7,1,7,1,7,1,8,1,8,1,8,1,8,3,
+      8,220,8,8,1,8,1,8,1,8,1,8,3,8,226,8,8,1,8,1,8,1,8,3,8,231,8,8,1,8,
+      1,8,1,8,1,8,1,8,1,8,5,8,239,8,8,10,8,12,8,242,9,8,1,8,3,8,245,8,8,
+      1,8,1,8,1,8,3,8,250,8,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,5,8,259,8,8,10,
+      8,12,8,262,9,8,1,8,3,8,265,8,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,5,8,274,
+      8,8,10,8,12,8,277,9,8,1,8,3,8,280,8,8,1,8,3,8,283,8,8,1,8,3,8,286,
+      8,8,1,8,1,8,3,8,290,8,8,1,8,3,8,293,8,8,1,8,0,1,6,9,0,2,4,6,8,10,12,
+      14,16,0,0,351,0,19,1,0,0,0,2,68,1,0,0,0,4,76,1,0,0,0,6,127,1,0,0,0,
+      8,167,1,0,0,0,10,187,1,0,0,0,12,191,1,0,0,0,14,200,1,0,0,0,16,292,
+      1,0,0,0,18,20,3,2,1,0,19,18,1,0,0,0,20,21,1,0,0,0,21,19,1,0,0,0,21,
+      22,1,0,0,0,22,23,1,0,0,0,23,24,5,0,0,1,24,1,1,0,0,0,25,30,5,2,0,0,
+      26,27,5,2,0,0,27,30,3,4,2,0,28,30,3,4,2,0,29,25,1,0,0,0,29,26,1,0,
+      0,0,29,28,1,0,0,0,30,31,1,0,0,0,31,32,5,40,0,0,32,33,5,12,0,0,33,34,
+      3,6,3,0,34,35,5,13,0,0,35,69,1,0,0,0,36,38,5,3,0,0,37,39,3,4,2,0,38,
+      37,1,0,0,0,38,39,1,0,0,0,39,40,1,0,0,0,40,41,5,40,0,0,41,42,5,12,0,
+      0,42,43,3,6,3,0,43,44,5,13,0,0,44,69,1,0,0,0,45,47,5,4,0,0,46,48,3,
+      4,2,0,47,46,1,0,0,0,47,48,1,0,0,0,48,49,1,0,0,0,49,50,5,40,0,0,50,
+      51,5,12,0,0,51,52,3,6,3,0,52,53,5,13,0,0,53,69,1,0,0,0,54,55,5,40,
+      0,0,55,56,5,12,0,0,56,57,3,6,3,0,57,58,5,13,0,0,58,69,1,0,0,0,59,69,
+      3,8,4,0,60,69,3,14,7,0,61,62,3,6,3,0,62,63,5,13,0,0,63,69,1,0,0,0,
+      64,65,5,38,0,0,65,66,3,6,3,0,66,67,5,13,0,0,67,69,1,0,0,0,68,29,1,
+      0,0,0,68,36,1,0,0,0,68,45,1,0,0,0,68,54,1,0,0,0,68,59,1,0,0,0,68,60,
+      1,0,0,0,68,61,1,0,0,0,68,64,1,0,0,0,69,3,1,0,0,0,70,77,5,7,0,0,71,
+      77,5,8,0,0,72,77,5,10,0,0,73,77,5,9,0,0,74,77,5,11,0,0,75,77,5,40,
+      0,0,76,70,1,0,0,0,76,71,1,0,0,0,76,72,1,0,0,0,76,73,1,0,0,0,76,74,
+      1,0,0,0,76,75,1,0,0,0,77,5,1,0,0,0,78,79,6,3,-1,0,79,128,5,16,0,0,
+      80,128,5,14,0,0,81,128,5,15,0,0,82,128,5,17,0,0,83,84,5,19,0,0,84,
+      128,3,6,3,8,85,86,5,18,0,0,86,128,3,6,3,7,87,88,5,30,0,0,88,128,3,
+      6,3,6,89,90,5,31,0,0,90,91,3,6,3,0,91,92,5,32,0,0,92,128,1,0,0,0,93,
+      128,5,40,0,0,94,95,5,40,0,0,95,101,5,31,0,0,96,97,3,6,3,0,97,98,5,
+      35,0,0,98,100,1,0,0,0,99,96,1,0,0,0,100,103,1,0,0,0,101,99,1,0,0,0,
+      101,102,1,0,0,0,102,105,1,0,0,0,103,101,1,0,0,0,104,106,3,6,3,0,105,
+      104,1,0,0,0,105,106,1,0,0,0,106,107,1,0,0,0,107,128,5,32,0,0,108,109,
+      5,40,0,0,109,110,5,36,0,0,110,128,5,40,0,0,111,112,5,40,0,0,112,113,
+      5,36,0,0,113,114,5,40,0,0,114,120,5,31,0,0,115,116,3,6,3,0,116,117,
+      5,35,0,0,117,119,1,0,0,0,118,115,1,0,0,0,119,122,1,0,0,0,120,118,1,
+      0,0,0,120,121,1,0,0,0,121,124,1,0,0,0,122,120,1,0,0,0,123,125,3,6,
+      3,0,124,123,1,0,0,0,124,125,1,0,0,0,125,126,1,0,0,0,126,128,5,32,0,
+      0,127,78,1,0,0,0,127,80,1,0,0,0,127,81,1,0,0,0,127,82,1,0,0,0,127,
+      83,1,0,0,0,127,85,1,0,0,0,127,87,1,0,0,0,127,89,1,0,0,0,127,93,1,0,
+      0,0,127,94,1,0,0,0,127,108,1,0,0,0,127,111,1,0,0,0,128,164,1,0,0,0,
+      129,130,10,19,0,0,130,131,5,18,0,0,131,163,3,6,3,20,132,133,10,18,
+      0,0,133,134,5,19,0,0,134,163,3,6,3,19,135,136,10,17,0,0,136,137,5,
+      21,0,0,137,163,3,6,3,18,138,139,10,16,0,0,139,140,5,20,0,0,140,163,
+      3,6,3,17,141,142,10,15,0,0,142,143,5,28,0,0,143,163,3,6,3,16,144,145,
+      10,14,0,0,145,146,5,29,0,0,146,163,3,6,3,15,147,148,10,13,0,0,148,
+      149,5,25,0,0,149,163,3,6,3,14,150,151,10,12,0,0,151,152,5,26,0,0,152,
+      163,3,6,3,13,153,154,10,11,0,0,154,155,5,23,0,0,155,163,3,6,3,12,156,
+      157,10,10,0,0,157,158,5,24,0,0,158,163,3,6,3,11,159,160,10,9,0,0,160,
+      161,5,27,0,0,161,163,3,6,3,10,162,129,1,0,0,0,162,132,1,0,0,0,162,
+      135,1,0,0,0,162,138,1,0,0,0,162,141,1,0,0,0,162,144,1,0,0,0,162,147,
+      1,0,0,0,162,150,1,0,0,0,162,153,1,0,0,0,162,156,1,0,0,0,162,159,1,
+      0,0,0,163,166,1,0,0,0,164,162,1,0,0,0,164,165,1,0,0,0,165,7,1,0,0,
+      0,166,164,1,0,0,0,167,168,3,4,2,0,168,169,5,40,0,0,169,175,5,31,0,
+      0,170,171,3,10,5,0,171,172,5,35,0,0,172,174,1,0,0,0,173,170,1,0,0,
+      0,174,177,1,0,0,0,175,173,1,0,0,0,175,176,1,0,0,0,176,179,1,0,0,0,
+      177,175,1,0,0,0,178,180,3,10,5,0,179,178,1,0,0,0,179,180,1,0,0,0,180,
+      181,1,0,0,0,181,182,5,32,0,0,182,183,3,12,6,0,183,9,1,0,0,0,184,188,
+      3,4,2,0,185,186,5,6,0,0,186,188,5,36,0,0,187,184,1,0,0,0,187,185,1,
+      0,0,0,188,189,1,0,0,0,189,190,5,40,0,0,190,11,1,0,0,0,191,195,5,33,
+      0,0,192,194,3,2,1,0,193,192,1,0,0,0,194,197,1,0,0,0,195,193,1,0,0,
+      0,195,196,1,0,0,0,196,198,1,0,0,0,197,195,1,0,0,0,198,199,5,34,0,0,
+      199,13,1,0,0,0,200,201,5,5,0,0,201,204,5,40,0,0,202,203,5,39,0,0,203,
+      205,5,40,0,0,204,202,1,0,0,0,204,205,1,0,0,0,205,206,1,0,0,0,206,210,
+      5,33,0,0,207,209,3,16,8,0,208,207,1,0,0,0,209,212,1,0,0,0,210,208,
+      1,0,0,0,210,211,1,0,0,0,211,213,1,0,0,0,212,210,1,0,0,0,213,214,5,
+      34,0,0,214,15,1,0,0,0,215,216,3,4,2,0,216,219,5,40,0,0,217,218,5,12,
+      0,0,218,220,3,6,3,0,219,217,1,0,0,0,219,220,1,0,0,0,220,221,1,0,0,
+      0,221,222,5,13,0,0,222,293,1,0,0,0,223,225,5,3,0,0,224,226,3,4,2,0,
+      225,224,1,0,0,0,225,226,1,0,0,0,226,227,1,0,0,0,227,230,5,40,0,0,228,
+      229,5,12,0,0,229,231,3,6,3,0,230,228,1,0,0,0,230,231,1,0,0,0,231,232,
+      1,0,0,0,232,293,5,13,0,0,233,234,5,40,0,0,234,240,5,31,0,0,235,236,
+      3,10,5,0,236,237,5,35,0,0,237,239,1,0,0,0,238,235,1,0,0,0,239,242,
+      1,0,0,0,240,238,1,0,0,0,240,241,1,0,0,0,241,244,1,0,0,0,242,240,1,
+      0,0,0,243,245,3,10,5,0,244,243,1,0,0,0,244,245,1,0,0,0,245,246,1,0,
+      0,0,246,249,5,32,0,0,247,250,3,12,6,0,248,250,5,13,0,0,249,247,1,0,
+      0,0,249,248,1,0,0,0,250,293,1,0,0,0,251,252,5,40,0,0,252,253,5,36,
+      0,0,253,254,5,40,0,0,254,260,5,31,0,0,255,256,3,10,5,0,256,257,5,35,
+      0,0,257,259,1,0,0,0,258,255,1,0,0,0,259,262,1,0,0,0,260,258,1,0,0,
+      0,260,261,1,0,0,0,261,264,1,0,0,0,262,260,1,0,0,0,263,265,3,10,5,0,
+      264,263,1,0,0,0,264,265,1,0,0,0,265,266,1,0,0,0,266,285,5,32,0,0,267,
+      268,5,37,0,0,268,269,5,6,0,0,269,275,5,31,0,0,270,271,3,6,3,0,271,
+      272,5,35,0,0,272,274,1,0,0,0,273,270,1,0,0,0,274,277,1,0,0,0,275,273,
+      1,0,0,0,275,276,1,0,0,0,276,279,1,0,0,0,277,275,1,0,0,0,278,280,3,
+      6,3,0,279,278,1,0,0,0,279,280,1,0,0,0,280,282,1,0,0,0,281,283,5,35,
+      0,0,282,281,1,0,0,0,282,283,1,0,0,0,283,284,1,0,0,0,284,286,5,32,0,
+      0,285,267,1,0,0,0,285,286,1,0,0,0,286,289,1,0,0,0,287,290,3,12,6,0,
+      288,290,5,13,0,0,289,287,1,0,0,0,289,288,1,0,0,0,290,293,1,0,0,0,291,
+      293,3,8,4,0,292,215,1,0,0,0,292,223,1,0,0,0,292,233,1,0,0,0,292,251,
+      1,0,0,0,292,291,1,0,0,0,293,17,1,0,0,0,33,21,29,38,47,68,76,101,105,
+      120,124,127,162,164,175,179,187,195,204,210,219,225,230,240,244,249,
+      260,264,275,279,282,285,289,292
   ];
 
   static final ATN _ATN =
@@ -1130,10 +1255,13 @@ class BlockContext extends ParserRuleContext {
 
 class ClassDefinitionContext extends ParserRuleContext {
   Token? name;
+  Token? parentName;
   TerminalNode? CLASS() => getToken(DartParser.TOKEN_CLASS, 0);
   TerminalNode? GRAPH_OPEN() => getToken(DartParser.TOKEN_GRAPH_OPEN, 0);
   TerminalNode? GRAPH_CLOSE() => getToken(DartParser.TOKEN_GRAPH_CLOSE, 0);
-  TerminalNode? ID() => getToken(DartParser.TOKEN_ID, 0);
+  List<TerminalNode> IDs() => getTokens(DartParser.TOKEN_ID);
+  TerminalNode? ID(int i) => getToken(DartParser.TOKEN_ID, i);
+  TerminalNode? EXTENDS() => getToken(DartParser.TOKEN_EXTENDS, 0);
   List<ClassStatementContext> classStatements() => getRuleContexts<ClassStatementContext>();
   ClassStatementContext? classStatement(int i) => getRuleContext<ClassStatementContext>(i);
   ClassDefinitionContext([ParserRuleContext? parent, int? invokingState]) : super(parent, invokingState);
@@ -1572,7 +1700,38 @@ class ParenthesysExpressionContext extends ExpressionContext {
   void exitRule(ParseTreeListener listener) {
     if (listener is DartParserListener) listener.exitParenthesysExpression(this);
   }
-}class ClassMethodDeclarationStatementContext extends ClassStatementContext {
+}class NamedClassConstructorDeclarationStatementContext extends ClassStatementContext {
+  Token? className;
+  Token? costructorName;
+  TerminalNode? DOT() => getToken(DartParser.TOKEN_DOT, 0);
+  List<TerminalNode> PAREN_OPENs() => getTokens(DartParser.TOKEN_PAREN_OPEN);
+  TerminalNode? PAREN_OPEN(int i) => getToken(DartParser.TOKEN_PAREN_OPEN, i);
+  List<TerminalNode> PAREN_CLOSEs() => getTokens(DartParser.TOKEN_PAREN_CLOSE);
+  TerminalNode? PAREN_CLOSE(int i) => getToken(DartParser.TOKEN_PAREN_CLOSE, i);
+  List<TerminalNode> IDs() => getTokens(DartParser.TOKEN_ID);
+  TerminalNode? ID(int i) => getToken(DartParser.TOKEN_ID, i);
+  BlockContext? block() => getRuleContext<BlockContext>(0);
+  TerminalNode? SEMICOLON() => getToken(DartParser.TOKEN_SEMICOLON, 0);
+  List<ParameterContext> parameters() => getRuleContexts<ParameterContext>();
+  ParameterContext? parameter(int i) => getRuleContext<ParameterContext>(i);
+  List<TerminalNode> COMMAs() => getTokens(DartParser.TOKEN_COMMA);
+  TerminalNode? COMMA(int i) => getToken(DartParser.TOKEN_COMMA, i);
+  TerminalNode? COLONS() => getToken(DartParser.TOKEN_COLONS, 0);
+  TerminalNode? THIS() => getToken(DartParser.TOKEN_THIS, 0);
+  List<ExpressionContext> expressions() => getRuleContexts<ExpressionContext>();
+  ExpressionContext? expression(int i) => getRuleContext<ExpressionContext>(i);
+  NamedClassConstructorDeclarationStatementContext(ClassStatementContext ctx) { copyFrom(ctx); }
+  @override
+  void enterRule(ParseTreeListener listener) {
+    if (listener is DartParserListener) listener.enterNamedClassConstructorDeclarationStatement(this);
+  }
+  @override
+  void exitRule(ParseTreeListener listener) {
+    if (listener is DartParserListener) listener.exitNamedClassConstructorDeclarationStatement(this);
+  }
+}
+
+class ClassMethodDeclarationStatementContext extends ClassStatementContext {
   FunctionDefinitionContext? functionDefinition() => getRuleContext<FunctionDefinitionContext>(0);
   ClassMethodDeclarationStatementContext(ClassStatementContext ctx) { copyFrom(ctx); }
   @override
@@ -1588,9 +1747,9 @@ class ParenthesysExpressionContext extends ExpressionContext {
 class ClassVarDeclarationStatementContext extends ClassStatementContext {
   TypeContext? type() => getRuleContext<TypeContext>(0);
   TerminalNode? ID() => getToken(DartParser.TOKEN_ID, 0);
+  TerminalNode? SEMICOLON() => getToken(DartParser.TOKEN_SEMICOLON, 0);
   TerminalNode? ASSIGN() => getToken(DartParser.TOKEN_ASSIGN, 0);
   ExpressionContext? expression() => getRuleContext<ExpressionContext>(0);
-  TerminalNode? SEMICOLON() => getToken(DartParser.TOKEN_SEMICOLON, 0);
   ClassVarDeclarationStatementContext(ClassStatementContext ctx) { copyFrom(ctx); }
   @override
   void enterRule(ParseTreeListener listener) {
@@ -1605,10 +1764,10 @@ class ClassVarDeclarationStatementContext extends ClassStatementContext {
 class ClassImmutableVarDeclarationStatementContext extends ClassStatementContext {
   TerminalNode? FINAL() => getToken(DartParser.TOKEN_FINAL, 0);
   TerminalNode? ID() => getToken(DartParser.TOKEN_ID, 0);
-  TerminalNode? ASSIGN() => getToken(DartParser.TOKEN_ASSIGN, 0);
-  ExpressionContext? expression() => getRuleContext<ExpressionContext>(0);
   TerminalNode? SEMICOLON() => getToken(DartParser.TOKEN_SEMICOLON, 0);
   TypeContext? type() => getRuleContext<TypeContext>(0);
+  TerminalNode? ASSIGN() => getToken(DartParser.TOKEN_ASSIGN, 0);
+  ExpressionContext? expression() => getRuleContext<ExpressionContext>(0);
   ClassImmutableVarDeclarationStatementContext(ClassStatementContext ctx) { copyFrom(ctx); }
   @override
   void enterRule(ParseTreeListener listener) {
@@ -1620,27 +1779,24 @@ class ClassImmutableVarDeclarationStatementContext extends ClassStatementContext
   }
 }
 
-class ClassConstructorDeclarationStatementContext extends ClassStatementContext {
+class MainClassConstructorDeclarationStatementContext extends ClassStatementContext {
   Token? className;
-  Token? costructorName;
   TerminalNode? PAREN_OPEN() => getToken(DartParser.TOKEN_PAREN_OPEN, 0);
   TerminalNode? PAREN_CLOSE() => getToken(DartParser.TOKEN_PAREN_CLOSE, 0);
-  List<TerminalNode> IDs() => getTokens(DartParser.TOKEN_ID);
-  TerminalNode? ID(int i) => getToken(DartParser.TOKEN_ID, i);
+  TerminalNode? ID() => getToken(DartParser.TOKEN_ID, 0);
   BlockContext? block() => getRuleContext<BlockContext>(0);
   TerminalNode? SEMICOLON() => getToken(DartParser.TOKEN_SEMICOLON, 0);
-  TerminalNode? DOT() => getToken(DartParser.TOKEN_DOT, 0);
   List<ParameterContext> parameters() => getRuleContexts<ParameterContext>();
   ParameterContext? parameter(int i) => getRuleContext<ParameterContext>(i);
   List<TerminalNode> COMMAs() => getTokens(DartParser.TOKEN_COMMA);
   TerminalNode? COMMA(int i) => getToken(DartParser.TOKEN_COMMA, i);
-  ClassConstructorDeclarationStatementContext(ClassStatementContext ctx) { copyFrom(ctx); }
+  MainClassConstructorDeclarationStatementContext(ClassStatementContext ctx) { copyFrom(ctx); }
   @override
   void enterRule(ParseTreeListener listener) {
-    if (listener is DartParserListener) listener.enterClassConstructorDeclarationStatement(this);
+    if (listener is DartParserListener) listener.enterMainClassConstructorDeclarationStatement(this);
   }
   @override
   void exitRule(ParseTreeListener listener) {
-    if (listener is DartParserListener) listener.exitClassConstructorDeclarationStatement(this);
+    if (listener is DartParserListener) listener.exitMainClassConstructorDeclarationStatement(this);
   }
 }
