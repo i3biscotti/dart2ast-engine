@@ -111,6 +111,7 @@ void main() {
               'MINUS',
               'INTLIT',
               'PAREN_CLOSE',
+              'SEMICOLON',
               'EOF'
             ]));
       });
@@ -220,6 +221,174 @@ void main() {
             "GRAPH_CLOSE",
             "EOF"
           ]),
+        );
+      });
+    },
+  );
+
+  group(
+    "Task 8",
+    () {
+      test('empty_class', () async {
+        final lexer = await lexerForResource('task8/empty_class');
+
+        expect(
+          tokens(lexer),
+          <String>["CLASS", "ID", "GRAPH_OPEN", "GRAPH_CLOSE", "EOF"],
+        );
+      });
+
+      test('class_with_methods', () async {
+        final lexer = await lexerForResource('task8/class_with_methods');
+
+        expect(
+          tokens(lexer).toString(),
+          <String>[
+            "CLASS",
+            "ID",
+            "GRAPH_OPEN",
+            "FINAL",
+            "INT",
+            "ID",
+            "SEMICOLON",
+            "BOOL",
+            "ID",
+            "SEMICOLON",
+            "ID",
+            "PAREN_OPEN",
+            "THIS",
+            "DOT",
+            "ID",
+            "COMMA",
+            "THIS",
+            "DOT",
+            "ID",
+            "PAREN_CLOSE",
+            "SEMICOLON",
+            "INT",
+            "ID",
+            "PAREN_OPEN",
+            "INT",
+            "ID",
+            "PAREN_CLOSE",
+            "GRAPH_OPEN",
+            "ID",
+            "ASSIGN",
+            "ID",
+            "LOWER_EQUAL_THAN",
+            "ID",
+            "SEMICOLON",
+            "RETURN",
+            "ID",
+            "PLUS",
+            "ID",
+            "SEMICOLON",
+            "GRAPH_CLOSE",
+            "GRAPH_CLOSE",
+            "EOF"
+          ].toString(),
+        );
+      });
+
+      test('class_with_multiple_constructors', () async {
+        final lexer =
+            await lexerForResource('task8/class_with_multiple_constructors');
+
+        expect(
+          tokens(lexer).toString(),
+          <String>[
+            "CLASS",
+            "ID",
+            "GRAPH_OPEN",
+            "FINAL",
+            "INT",
+            "ID",
+            "SEMICOLON",
+            "DOUBLE",
+            "ID",
+            "SEMICOLON",
+            "ID",
+            "PAREN_OPEN",
+            "THIS",
+            "DOT",
+            "ID",
+            "COMMA",
+            "THIS",
+            "DOT",
+            "ID",
+            "PAREN_CLOSE",
+            "SEMICOLON",
+            "ID",
+            "DOT",
+            "ID",
+            "PAREN_OPEN",
+            "INT",
+            "ID",
+            "PAREN_CLOSE",
+            "COLONS",
+            "THIS",
+            "PAREN_OPEN",
+            "ID",
+            "COMMA",
+            "DOUBLELIT",
+            "PAREN_CLOSE",
+            "SEMICOLON",
+            "GRAPH_CLOSE",
+            "EOF"
+          ].toString(),
+        );
+      });
+
+      test('class_with_properties', () async {
+        final lexer = await lexerForResource('task8/class_with_properties');
+
+        expect(tokens(lexer), <String>[
+          "CLASS",
+          "ID",
+          "GRAPH_OPEN",
+          "FINAL",
+          "INT",
+          "ID",
+          "SEMICOLON",
+          "BOOL",
+          "ID",
+          "SEMICOLON",
+          "ID",
+          "PAREN_OPEN",
+          "THIS",
+          "DOT",
+          "ID",
+          "COMMA",
+          "THIS",
+          "DOT",
+          "ID",
+          "PAREN_CLOSE",
+          "SEMICOLON",
+          "GRAPH_CLOSE",
+          "EOF"
+        ]);
+      });
+
+      test('class_hierarchy', () async {
+        final lexer = await lexerForResource('task8/class_hierarchy');
+
+        expect(tokens(lexer), <String>[
+          "CLASS",
+          "ID",
+          "EXTENDS",
+          "ID",
+          "GRAPH_OPEN",
+          "GRAPH_CLOSE",
+          "EOF"
+        ]);
+      });
+
+      test('private_class', () async {
+        final lexer = await lexerForResource('task8/private_class');
+
+        expect(
+          tokens(lexer),
+          <String>["CLASS", "ID", "GRAPH_OPEN", "GRAPH_CLOSE", "EOF"],
         );
       });
     },
