@@ -196,6 +196,73 @@ void main() {
     },
   );
 
+
+  group(
+    "Task 3",
+    () {
+      test('if_statement', () async {
+        final rootNode = 
+           await _parseResource('task3/if_statement');
+      expect(
+        getMultilineParseTree(rootNode),
+        equals("""
+      |Node(DartFile)
+      |  Node(IfStatement)
+      |    Node(IfDefinition)
+      |      Node(IfBlock)
+      |        T[if]
+      |        T[(]
+      |        Node(BinaryLogicExpression)
+      |          Node(VarReferenceExpression)
+      |            T[voto]
+      |          T[>]
+      |          Node(IntLiteralExpression)
+      |            T[18]
+      |        T[)]
+      |        T[{]
+      |        Node(AssigmentStatement)
+      |          T[exam]
+      |          T[=]
+      |          Node(StringLiteralExpression)
+      |            T["passed"]
+      |          T[;]
+      |        T[}]
+      |      Node(ElseIfBlock)
+      |        T[else]
+      |        T[if]
+      |        T[(]
+      |        Node(BinaryLogicExpression)
+      |          Node(VarReferenceExpression)
+      |            T[voto]
+      |          T[==]
+      |          Node(IntLiteralExpression)
+      |            T[18]
+      |        T[)]
+      |        T[{]
+      |        Node(AssigmentStatement)
+      |          T[exam]
+      |          T[=]
+      |          Node(StringLiteralExpression)
+      |            T["passed"]
+      |          T[;]
+      |        T[}]
+      |      Node(ElseBlock)
+      |        T[else]
+      |        T[{]
+      |        Node(AssigmentStatement)
+      |          T[exam]
+      |          T[=]
+      |          Node(StringLiteralExpression)
+      |            T["failed"]
+      |          T[;]
+      |        T[}]
+      |  T[<EOF>]
+      """
+            .trimMargin()));
+      });
+    },
+  );
+
   group(
     "Task 7",
     () {

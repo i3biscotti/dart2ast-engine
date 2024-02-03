@@ -36,6 +36,7 @@ extension StatementConverterExtension on StatementContext {
       ConstDeclarationStatementContext st => st.toAst(considerPosition),
       AssigmentStatementContext st => st.toAst(considerPosition),
       ExpressionDefinitionStatementContext st => st.toAst(considerPosition),
+      IfStatementContext st => st.toAst(considerPosition),
       FunctionDefinitionStatementContext st => st.toAst(considerPosition),
       ReturnStatementContext st => st.toAst(considerPosition),
       ClassDefinitionStatementContext st => st.toAst(considerPosition),

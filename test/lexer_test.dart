@@ -119,6 +119,52 @@ void main() {
   );
 
   group(
+    'Task 3',
+    () {
+      test('if_statement', () async {
+        final lexer = await lexerForResource('task3/if_statement');
+        expect(
+          tokens(lexer),
+          equals([
+            'IF',
+            'PAREN_OPEN',
+            'ID',
+            'GREATER_THAN',
+            'INTLIT',
+            'PAREN_CLOSE',
+            'GRAPH_OPEN',
+            'ID',
+            'ASSIGN',
+            'STRINGLIT',
+            'SEMICOLON',
+            'GRAPH_CLOSE',
+            'ELSE',
+            'IF',
+            'PAREN_OPEN',
+            'ID',
+            'EQUAL',
+            'INTLIT',
+            'PAREN_CLOSE',
+            'GRAPH_OPEN',
+            'ID',
+            'ASSIGN',
+            'STRINGLIT',
+            'SEMICOLON',
+            'GRAPH_CLOSE',
+            'ELSE',
+            'GRAPH_OPEN',
+            'ID',
+            'ASSIGN',
+            'STRINGLIT',
+            'SEMICOLON',
+            'GRAPH_CLOSE',
+            'EOF'
+          ]));
+      });
+    },
+  );
+
+  group(
     "Task 7",
     () {
       test('void_function_without_params', () async {
