@@ -37,6 +37,7 @@ extension StatementConverterExtension on StatementContext {
       AssigmentStatementContext st => st.toAst(considerPosition),
       ExpressionDefinitionStatementContext st => st.toAst(considerPosition),
       IfStatementContext st => st.toAst(considerPosition),
+      WhileStatementContext st => st.toAst(considerPosition),
       FunctionDefinitionStatementContext st => st.toAst(considerPosition),
       ReturnStatementContext st => st.toAst(considerPosition),
       ClassDefinitionStatementContext st => st.toAst(considerPosition),
@@ -350,6 +351,20 @@ extension ElseBlockConverterExtension on ElseBlockContext{
       blockType, 
       toPosition(considerPosition),
       );
+  }
+}
+
+extension WhileStatementConverterExtension on WhileStatementContext{
+  WhileStatement toAst(bool considerPosition){
+    final whileDefinition = this.whileDefinition();
+    final condition = whileDefinition!.expression()?.toAst(considerPosition);
+    final statements = whileDefinition.block()!.statements().map((e) => e.toAst(considerPosition)).toList();
+
+    return WhileStatement(
+      condition,
+      statements,
+      toPosition(considerPosition),
+    );
   }
 }
 

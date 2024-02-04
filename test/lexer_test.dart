@@ -165,6 +165,55 @@ void main() {
   );
 
   group(
+    "Task 4",
+    () {
+      test('while_statement', () async {
+        final lexer = 
+        await lexerForResource('task4/while_statement');
+
+      expect(
+        tokens(lexer),
+        equals(<String>[
+          'VAR',
+          'INT',
+          'ID',
+          'ASSIGN',
+          'INTLIT',
+          'SEMICOLON',
+          'WHILE',
+          'PAREN_OPEN',
+          'ID',
+          'PAREN_CLOSE',
+          'GRAPH_OPEN',
+          'IF',
+          'PAREN_OPEN',
+          'ID',
+          'LOWER_THAN',
+          'INTLIT',
+          'PAREN_CLOSE',
+          'GRAPH_OPEN',
+          'ID',
+          'ASSIGN',
+          'ID',
+          'PLUS',
+          'INTLIT',
+          'SEMICOLON',
+          'GRAPH_CLOSE',
+          'ELSE',
+          'GRAPH_OPEN',
+          'ID',
+          'ASSIGN',
+          'BOOLLIT',
+          'SEMICOLON',
+          'GRAPH_CLOSE',
+          'GRAPH_CLOSE',
+          'EOF'
+        ]));
+      });
+    },
+  );
+
+  group(
     "Task 7",
     () {
       test('void_function_without_params', () async {

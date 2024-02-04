@@ -263,6 +263,79 @@ void main() {
     },
   );
 
+
+  group(
+    "Task 4",
+    () {
+      test('while_statement', () async {
+        final rootNode = 
+            await _parseResource('task4/while_statement');
+        
+        expect(
+          getMultilineParseTree(rootNode),
+          equals(
+            """
+            |Node(DartFile)
+            |  Node(VarDeclarationStatement)
+            |    T[var]
+            |    Node(IntType)
+            |      T[int]
+            |    T[i]
+            |    T[=]
+            |    Node(IntLiteralExpression)
+            |      T[1]
+            |    T[;]
+            |  Node(WhileStatement)
+            |    Node(WhileDefinition)
+            |      T[while]
+            |      T[(]
+            |      Node(VarReferenceExpression)
+            |        T[condition]
+            |      T[)]
+            |      Node(Block)
+            |        T[{]
+            |        Node(IfStatement)
+            |          Node(IfDefinition)
+            |            Node(IfBlock)
+            |              T[if]
+            |              T[(]
+            |              Node(BinaryLogicExpression)
+            |                Node(VarReferenceExpression)
+            |                  T[i]
+            |                T[<]
+            |                Node(IntLiteralExpression)
+            |                  T[17]
+            |              T[)]
+            |              T[{]
+            |              Node(AssigmentStatement)
+            |                T[i]
+            |                T[=]
+            |                Node(BinaryMathExpression)
+            |                  Node(VarReferenceExpression)
+            |                    T[i]
+            |                  T[+]
+            |                  Node(IntLiteralExpression)
+            |                    T[1]
+            |                T[;]
+            |              T[}]
+            |            Node(ElseBlock)
+            |              T[else]
+            |              T[{]
+            |              Node(AssigmentStatement)
+            |                T[condition]
+            |                T[=]
+            |                Node(BoolLiteralExpression)
+            |                  T[true]
+            |                T[;]
+            |              T[}]
+            |        T[}]
+            |  T[<EOF>]
+            """ .trimMargin()));
+      });
+    },
+  );
+
+
   group(
     "Task 7",
     () {

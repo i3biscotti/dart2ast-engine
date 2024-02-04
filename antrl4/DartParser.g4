@@ -21,7 +21,8 @@ statement
     | classDefinition                                                               #ClassDefinitionStatement
     | expression SEMICOLON                                                          #ExpressionDefinitionStatement
     | RETURN expression SEMICOLON                                                   #ReturnStatement
-    | ifDefinition                                                                  #IfStatement  
+    | ifDefinition                                                                  #IfStatement
+    | whileDefinition                                                               #WhileStatement 
     ;
 
 type           
@@ -95,3 +96,14 @@ elseBlock
  
 ifDefinition
     : ifBlock elseIfBlock* elseBlock?;
+
+// task 4
+whileDefinition
+    : WHILE PAREN_OPEN expression PAREN_CLOSE block;
+
+
+/*
+while (pippo == "pippa"){
+
+}
+ */

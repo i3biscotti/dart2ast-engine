@@ -648,7 +648,33 @@ class IfBlock extends Node{
       "position": position?.toJson(),
     };
   }
+}
 
+//task 4
+class WhileStatement extends Statement{
+  final Expression? condition;
+  final List<Statement> statements;
+
+  WhileStatement(this.condition, this.statements, super.position);
+  
+  WhileStatement.fromJson(Map<String, dynamic> json): this(
+    json["condition"] != null ? Expression.fromJson(json["condition"]) : null,
+    List.from(json["statements"]).map((e) => Statement.fromJson(e)).toList(),
+    Position.fromJson(json["position"])
+  );
+
+  @override
+  List<Object?> get props => [condition, statements, position];
+  
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "type": runtimeType.toString(),
+      "condition": condition?.toJson(),
+      "statements": statements.map((e) => e.toJson()),
+      "position": position?.toJson(),
+    };
+  }
 }
 
 class FunctionDefinitionStatement extends Statement {

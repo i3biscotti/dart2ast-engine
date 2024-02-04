@@ -244,6 +244,72 @@ void main() {
   );
 
   group(
+    "Task 4",
+    () {
+      test('while_statement', () async {
+        final root = await _parseResource('task4/while_statement');
+
+        expect(
+          root.toAst(false),
+          equals(
+           ProgramFile(
+            <Statement>[
+              VariableDeclarationStatement(
+                    VariableType.variable,
+                    'i',
+                    VariableValueType.INT,
+                    IntLit('1', null),
+                    null,
+                  ),
+              WhileStatement(
+                VarReferenceExpression('condition', null),
+                <Statement>[
+                  IfStatement(
+                    IfBlock(
+                      BinaryLogicExpression(
+                        VarReferenceExpression('i', null),
+                        IntLit('17', null),
+                        LogicOperand.lessThan, 
+                        null,
+                      ),
+                    <Statement>[
+                      AssignmentStatement(
+                        'i',
+                         BinaryMathExpression(
+                           VarReferenceExpression('i', null),
+                           IntLit('1', null),
+                           MathOperand.plus, 
+                         null,
+                         ),
+                        null),
+                    ],
+                    BlockType.ifBlock,
+                    null),
+                    <IfBlock>[],
+                      IfBlock(
+                        null,
+                        <Statement>[
+                           AssignmentStatement(
+                             'condition',
+                             BoolLit('true', null),
+                           null),
+                        ],
+                      BlockType.elseBlock,
+                      null),
+                  null),
+                ],
+              null),
+            ],
+            null,
+           ),
+          ),
+        );
+      },
+     );
+    },
+  );
+
+  group(
     "Task 7",
     () {
       test('void_function_without_params', () async {

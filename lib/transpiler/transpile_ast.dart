@@ -41,6 +41,7 @@ extension StatementTranspilerExtension on Statement {
       AssignmentStatement st => st.transpile(depth),
       ExpressionDefinitionStatement st => st.transpile(depth),
       IfStatement st => st.transpile(depth),
+      WhileStatement st => st.transpile(depth),
       ClassDefinitionStatement st => st.transpile(depth),
       FunctionDefinitionStatement st => st.transpile(depth),
       ReturnStatement st => st.transpile(depth),
@@ -195,23 +196,35 @@ extension IfBlockTranspilerExtension on IfBlock{
      String ifblockstatement = """
                                |if ($conditionTranspiled) {
                                |$statementsTranspiled
-                               |}
+                               |${generateIdentationSpace(depth)}}
                                """ .trimMargin();
      String elseifblockstatement = """
-                                   |else if ($conditionTranspiled) {
+                                   |${generateIdentationSpace(depth)}else if ($conditionTranspiled) {
                                    |$statementsTranspiled
-                                   |}
+                                   |${generateIdentationSpace(depth)}}
                                    """ .trimMargin();
      String elsestatement = """
-                            |else {
+                            |${generateIdentationSpace(depth)}else {
                             |$statementsTranspiled
-                            |}
+                            |${generateIdentationSpace(depth)}}
                             """ .trimMargin();
      return switch(blockType){
       BlockType.ifBlock => ifblockstatement,
       BlockType.elseIfBlock => elseifblockstatement,
       BlockType.elseBlock => elsestatement,
      } ;   
+  }
+}
+
+extension WhileStatementTranspilerExtension on WhileStatement{
+  String transpile([int depth = 0]){
+    String? conditionTranspiled = condition?.transpile();
+    String statementsTranspiled = statements.map((s) => s.transpile(depth+1)).join('\n');
+    String whilestatement = """
+                            |while ($conditionTranspiled) {
+                            |${generateIdentationSpace(depth+1)}$statementsTranspiled}
+                            """  .trimMargin();
+    return whilestatement;
   }
 }
 

@@ -64,6 +64,9 @@ EXTENDS                     : 'extends';
 IF                          : 'if';
 ELSE                        : 'else';
 
+//task4
+WHILE                       : 'while';
+
 ID                          : [A-Za-z_][A-Za-z_0-9]*;
 
 fragment DecDigit           : '0'..'9';
