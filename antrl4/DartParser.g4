@@ -13,17 +13,25 @@ const text = "Hello World";
 dartFile: statement+ EOF;
     
 statement  
-    : ( VAR | VAR  type | type ) ID ASSIGN expression SEMICOLON                     #VarDeclarationStatement
+    : varDeclaration SEMICOLON                                                      #VarDeclarationStatement
     | FINAL type? ID ASSIGN expression SEMICOLON                                    #FinalDeclarationStatement
     | CONST type? ID ASSIGN expression SEMICOLON                                    #ConstDeclarationStatement
-    | ID ASSIGN expression SEMICOLON                                                #AssigmentStatement
+    | assigment SEMICOLON                                                           #AssigmentStatement
     | functionDefinition                                                            #FunctionDefinitionStatement
     | classDefinition                                                               #ClassDefinitionStatement
     | expression SEMICOLON                                                          #ExpressionDefinitionStatement
     | RETURN expression SEMICOLON                                                   #ReturnStatement
     | ifDefinition                                                                  #IfStatement
-    | whileDefinition                                                               #WhileStatement 
+    | whileDefinition                                                               #WhileStatement
+    | forDefinition                                                                 #ForStatement
     ;
+
+varDeclaration
+    : ( VAR | VAR  type | type ) ID ASSIGN expression;
+assigment
+    : ID ASSIGN expression;
+
+
 
 type           
     : INT       #IntType
@@ -31,6 +39,7 @@ type
     | BOOL      #BoolType
     | STRING    #StringType
     | VOID      #VoidType
+    | LIST      #ListType
     | name=ID   #CustomType
     ;
 
@@ -39,6 +48,7 @@ expression
     | INTLIT                                                                    #IntLiteralExpression
     | DOUBLELIT                                                                 #DoubleLiteralExpression
     | STRINGLIT                                                                 #StringLiteralExpression
+    | SQUARE_OPEN (expression COMMA?)* SQUARE_CLOSE                             #ListLiteralExpression 
     | left=expression  operand=PLUS                 right=expression            #BinaryMathExpression
     | left=expression  operand=MINUS                right=expression            #BinaryMathExpression
     | left=expression  operand=TIMES                right=expression            #BinaryMathExpression
@@ -53,6 +63,8 @@ expression
     |                  operand=MINUS                value=expression            #UnaryMathExpression
     |                  operand=PLUS                 value=expression            #UnaryMathExpression
     |                  operand=NOT                  value=expression            #UnaryLogicNegationExpression
+    | PLUS PLUS ID                                                              #IncrementExpression
+    | MINUS MINUS ID                                                            #DecrementExpression
     | PAREN_OPEN       value=expression             PAREN_CLOSE                 #ParenthesysExpression
     | ID                                                                        #VarReferenceExpression
     | ID PAREN_OPEN (expression COMMA)* expression? PAREN_CLOSE                 #FunctionCallExpression
@@ -102,8 +114,24 @@ whileDefinition
     : WHILE PAREN_OPEN expression PAREN_CLOSE block;
 
 
-/*
-while (pippo == "pippa"){
+// task 5
 
-}
- */
+initializationForExpression           //extends Expression
+    : varDeclaration | assigment;
+
+itemDefinition                        //extends Node
+    : (VAR | type) ID;
+
+forCondition
+    : PAREN_OPEN initializationForExpression SEMICOLON expression SEMICOLON expression PAREN_CLOSE          #StandardForCondition
+    | PAREN_OPEN itemDefinition IN expression                                                               #ForEachCondition
+    ;
+
+forDefinition
+    : FOR PAREN_OPEN forCondition PAREN_CLOSE block;
+
+/* 
+for(int i = 0; i < 3; i++){  }
+final list = [1,2,3,4,5];
+for(int i in list){  }
+*/

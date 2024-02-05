@@ -335,6 +335,90 @@ void main() {
     },
   );
 
+  group(
+    "Task 5",
+    () {
+      test('for_statement', () async {
+        final rootNode = 
+        await _parseResource('task5/for_statement');
+
+        expect(
+          getMultilineParseTree(rootNode),
+          equals(
+            """ 
+            |Node(DartFile)
+            |  Node(VarDeclarationStatement)
+            |    T[var]
+            |    T[a]
+            |    T[=]
+            |    Node(IntLiteralExpression)
+            |      T[0]
+            |    T[;]
+            |  Node(ForStatement)
+            |    Node(ForDefinition)
+            |      T[(]
+            |      Node(VarDeclarationStatement)
+            |        T[var]
+            |        T[i]
+            |        T[=]
+            |        Node(IntLiteralExpression)
+            |          T[0]
+            |        T[;]
+            |       Node(BinaryLogicExpression)
+            |         T[i]
+            |         T[<]
+            |         Node(IntLiteralExpression)
+            |           T[3]
+            |         Node(IncrementExpression)
+            |           T[i]
+            |           T[+]
+            |           T[+]
+            |       Node(AssignmentStatement)
+            |         T[a]
+            |         T[=]
+            |         Node(BinaryMathExpression)
+            |           T[a]
+            |           T[+]
+            |           Node(IntLietralExpression)
+            |             T[1]
+            |     Node(VarDeclarationStatement)
+            |       T[final]
+            |       T[list]
+            |       T[=]
+            |       Node(ListExpression)
+            |         T[1]
+            |         T[2]
+            |         T[;]
+            |     Node(VarDeclarationStatement)
+            |       T[var]
+            |       T[b]
+            |       T[=]
+            |       Node(IntLiteralExpression)
+            |         T[0]
+            |       T[;]
+            |     Node(ForStatement)
+            |       Node(ForDefinition)
+            |         T[(]
+            |         Node(VarReferenceStatement)
+            |           T[int]
+            |           T[i]
+            |         Node()
+            |           T[list]
+            |      Node(AssignmentStatement)
+            |         T[b]
+            |         T[=]
+            |         Node(BinaryMathExpression)
+            |           T[b]
+            |           T[+]
+            |           Node(IntLietralExpression)
+            |             T[1]
+            |           T[;]
+            |         T[}]
+            |     T[<EOF>]
+            """ .trimMargin()));
+      });
+    },
+  );
 
   group(
     "Task 7",
