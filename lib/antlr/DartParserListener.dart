@@ -329,4 +329,11 @@ abstract class DartParserListener extends ParseTreeListener {
   /// labeled alternative in [DartParser.classStatement].
   /// [ctx] the parse tree
   void exitClassMethodDeclarationStatement(ClassMethodDeclarationStatementContext ctx);
+
+  /// Enter a parse tree produced by [DartParser.thisConstructorCall].
+  /// [ctx] the parse tree
+  void enterThisConstructorCall(ThisConstructorCallContext ctx);
+  /// Exit a parse tree produced by [DartParser.thisConstructorCall].
+  /// [ctx] the parse tree
+  void exitThisConstructorCall(ThisConstructorCallContext ctx);
 }

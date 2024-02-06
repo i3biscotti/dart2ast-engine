@@ -308,6 +308,14 @@ class DartParserBaseListener implements DartParserListener {
 
   /// The default implementation does nothing.
   @override
+  void enterThisConstructorCall(ThisConstructorCallContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitThisConstructorCall(ThisConstructorCallContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
   void enterEveryRule(ParserRuleContext ctx) {}
 
   /// The default implementation does nothing.
