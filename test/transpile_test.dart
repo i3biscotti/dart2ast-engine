@@ -155,6 +155,83 @@ void main() {
           ),
         );
       });
+
+      group(
+        "Task 8",
+        () {
+          test('empty_class', () async {
+            final rootNode = await _parseResource('task8/empty_class');
+
+            expect(rootNode.toAst(false).transpile(), "class SimpleClass {}");
+          });
+
+          test('class_with_properties', () async {
+            final rootNode =
+                await _parseResource('task8/class_with_properties');
+
+            expect(
+                rootNode.toAst(false).transpile(),
+                """
+                |class SimpleClass {
+                |  final int prop1;
+                |  bool pro2;
+                |  SimpleClass(this.prop1, this.pro2);
+                |}"""
+                    .trimMargin());
+          });
+
+          test('class_with_methods', () async {
+            final rootNode = await _parseResource('task8/class_with_methods');
+
+            expect(
+              rootNode.toAst(false).transpile(),
+              """
+              |class SimpleClass {
+              |  final int prop1;
+              |  bool pro2;
+              |  SimpleClass(this.prop1, this.pro2);
+              |  int sum(int value) {
+              |    pro2 = value <= prop1;
+              |    return value + prop1;
+              |  }
+              |}"""
+                  .trimMargin(),
+            );
+          });
+
+          test('class_with_multiple_constructors', () async {
+            final rootNode =
+                await _parseResource('task8/class_with_multiple_constructors');
+
+            expect(
+              rootNode.toAst(false).transpile(),
+              """
+              |class MultiplePass {
+              |  final int a;
+              |  double b;
+              |  MultiplePass(this.a, this.b);
+              |  MultiplePass.test(int a) : this(a, 12.1);
+              |}"""
+                  .trimMargin(),
+            );
+          });
+
+          test('class_hierarchy', () async {
+            final rootNode = await _parseResource('task8/class_hierarchy');
+
+            expect(
+              rootNode.toAst(false).transpile(),
+              "class SecretWars extends Marvel {}",
+            );
+          });
+
+          test('private_class', () async {
+            final rootNode = await _parseResource('task8/private_class');
+
+            expect(rootNode.toAst(false).transpile(), "class _SecretWar {}");
+          });
+        },
+      );
     },
   );
 }

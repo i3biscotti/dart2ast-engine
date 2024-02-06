@@ -551,14 +551,15 @@ void main() {
           |          T[a]
           |        T[)]
           |        T[:]
-          |        T[this]
-          |        T[(]
-          |        Node(VarReferenceExpression)
-          |          T[a]
-          |        T[,]
-          |        Node(DoubleLiteralExpression)
-          |          T[12.1]
-          |        T[)]
+          |        Node(ThisConstructorCall)
+          |          T[this]
+          |          T[(]
+          |          Node(VarReferenceExpression)
+          |            T[a]
+          |          T[,]
+          |          Node(DoubleLiteralExpression)
+          |            T[12.1]
+          |          T[)]
           |        T[;]
           |      T[}]
           |  T[<EOF>]
