@@ -40,6 +40,8 @@ extension StatementTranspilerExtension on Statement {
       VariableDeclarationStatement st => st.transpile(depth),
       AssignmentStatement st => st.transpile(depth),
       ExpressionDefinitionStatement st => st.transpile(depth),
+      IfStatement st => st.transpile(depth),
+      WhileStatement st => st.transpile(depth),
       ClassDefinitionStatement st => st.transpile(depth),
       FunctionDefinitionStatement st => st.transpile(depth),
       ReturnStatement st => st.transpile(depth),
@@ -179,6 +181,59 @@ extension VariableReferenceTranspilerExtension on VarReferenceExpression {
     return name;
   }
 }
+
+
+//task 3
+extension IfStatementTranspilerExtension on IfStatement{
+  String transpile([int depth = 0]) {
+    String ifBlockTranspiler = ifBlock.transpile(depth);
+    String elseIfBlocksTranspiler = elseIfBlocks.map((b) => b.transpile(depth)).toList().join(', ');
+    String? elseBlockTranspiler = elseBlock?.transpile(depth);
+    String statement = '$ifBlockTranspiler$elseIfBlocksTranspiler$elseBlockTranspiler';
+    return statement;
+  }
+}
+
+extension IfBlockTranspilerExtension on IfBlock{
+  String transpile([int depth = 0]) {
+     String? conditionTranspiled = condition?.transpile();
+     String statementsTranspiled = statements.map((s) => s.transpile(depth+1)).join('\n');
+
+     String ifblockstatement = """
+                               |if ($conditionTranspiled) {
+                               |$statementsTranspiled
+                               |${generateIdentationSpace(depth)}}
+                               """ .trimMargin();
+     String elseifblockstatement = """
+                                   |${generateIdentationSpace(depth)}else if ($conditionTranspiled) {
+                                   |$statementsTranspiled
+                                   |${generateIdentationSpace(depth)}}
+                                   """ .trimMargin();
+     String elsestatement = """
+                            |${generateIdentationSpace(depth)}else {
+                            |$statementsTranspiled
+                            |${generateIdentationSpace(depth)}}
+                            """ .trimMargin();
+     return switch(blockType){
+      BlockType.ifBlock => ifblockstatement,
+      BlockType.elseIfBlock => elseifblockstatement,
+      BlockType.elseBlock => elsestatement,
+     } ;   
+  }
+}
+
+extension WhileStatementTranspilerExtension on WhileStatement{
+  String transpile([int depth = 0]){
+    String? conditionTranspiled = condition?.transpile();
+    String statementsTranspiled = statements.map((s) => s.transpile(depth+1)).join('\n');
+    String whilestatement = """
+                            |while ($conditionTranspiled) {
+                            |${generateIdentationSpace(depth+1)}$statementsTranspiled}
+                            """  .trimMargin();
+    return whilestatement;
+  }
+}
+
 
 extension FunctionDefinitionTranspilerExtension on FunctionDefinitionStatement {
   String transpile([int depth = 0]) {

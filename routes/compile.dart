@@ -8,7 +8,7 @@ Future<Response> onRequest(RequestContext context) async {
   final astDeserialized = jsonDecode(astText);
   final ast = ProgramFile.fromJson(astDeserialized);
 
-  final code = ast.Transpile();
+  final code = ast.transpile();
 
   return Response(body: code);
 }

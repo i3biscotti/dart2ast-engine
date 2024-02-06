@@ -36,6 +36,8 @@ extension StatementConverterExtension on StatementContext {
       ConstDeclarationStatementContext st => st.toAst(considerPosition),
       AssigmentStatementContext st => st.toAst(considerPosition),
       ExpressionDefinitionStatementContext st => st.toAst(considerPosition),
+      IfStatementContext st => st.toAst(considerPosition),
+      WhileStatementContext st => st.toAst(considerPosition),
       FunctionDefinitionStatementContext st => st.toAst(considerPosition),
       ReturnStatementContext st => st.toAst(considerPosition),
       ClassDefinitionStatementContext st => st.toAst(considerPosition),
@@ -295,6 +297,82 @@ extension FunctionCallExpressionConverterExtension
     return FunctionCallExpression(
       name,
       parameters.toList(),
+      toPosition(considerPosition),
+    );
+  }
+}
+
+//task 3
+extension IfStatementConverterExtension on IfStatementContext{
+  IfStatement toAst(bool considerPosition){
+    final ifDefinition = this.ifDefinition();
+    final ifBlock = ifDefinition!.ifBlock()!.toAst(considerPosition);
+    final elseIfBlocks = ifDefinition.elseIfBlocks().map((e) => e.toAst(considerPosition)).toList();
+    final elseBlock = ifDefinition.elseBlock()?.toAst(considerPosition); 
+
+  return IfStatement(
+    ifBlock,
+    elseIfBlocks,
+    elseBlock,
+    toPosition(considerPosition),
+  );
+ }
+}
+
+extension IfBlockConverterExtension on IfBlockContext{
+  IfBlock toAst(bool considerPosition){
+    final condition = this.expression()?.toAst(considerPosition);
+    final statements = this.statements().map((e) => e.toAst(considerPosition)).toList();
+    final blockType = BlockType.ifBlock;
+
+    return IfBlock(
+      condition,
+      statements, 
+      blockType, 
+      toPosition(considerPosition),
+      );
+  }
+}
+
+extension ElseIfBlockConverterExtension on ElseIfBlockContext{
+  IfBlock toAst(bool considerPosition){
+    final condition = this.expression()?.toAst(considerPosition);
+    final statements = this.statements().map((e) => e.toAst(considerPosition)).toList();
+    final blockType = BlockType.elseIfBlock;
+
+    return IfBlock(
+      condition,
+      statements, 
+      blockType, 
+      toPosition(considerPosition),
+      );
+  }
+}
+
+extension ElseBlockConverterExtension on ElseBlockContext{
+  IfBlock toAst(bool considerPosition){
+    final condition = null;
+    final statements = this.statements().map((e) => e.toAst(considerPosition)).toList();
+    final blockType = BlockType.elseBlock;
+
+    return IfBlock(
+      condition,
+      statements, 
+      blockType, 
+      toPosition(considerPosition),
+      );
+  }
+}
+
+extension WhileStatementConverterExtension on WhileStatementContext{
+  WhileStatement toAst(bool considerPosition){
+    final whileDefinition = this.whileDefinition();
+    final condition = whileDefinition!.expression()?.toAst(considerPosition);
+    final statements = whileDefinition.block()!.statements().map((e) => e.toAst(considerPosition)).toList();
+
+    return WhileStatement(
+      condition,
+      statements,
       toPosition(considerPosition),
     );
   }

@@ -108,6 +108,62 @@ void main() {
   );
 
   group(
+    'Task 3',
+    () {
+      test(
+        'if_statement',
+        () async {
+          final root = await _parseResource('task3/if_statement');
+
+          expect(
+            root.toAst(false).transpile(),
+            equals(
+              """
+              |if (voto > 18) {
+              |  exam = "passed";
+              |}
+              |else if (voto == 18) {
+              |  exam = "passed";
+              |}
+              |else {
+              |  exam = "failed";
+              |}
+              """ .trimMargin(),
+          ),
+         );
+        }
+      );
+    },
+  );
+
+  group(
+    "Task 4",
+    () {
+      test('while_statement', () async {
+        final root = await _parseResource('task4/while_statement');
+
+        expect(
+          root.toAst(false).transpile(),
+          equals(
+            """
+            |var int i = 1;
+            |while (condition) {
+            |  if (i < 17) {
+            |    i = i + 1;
+            |  }
+            |  else {
+            |    condition = true;
+            |  }
+            |}
+            """ .trimMargin(),
+          ),
+        );
+      }
+     );
+    },
+  );
+
+  group(
     "Task 7",
     () {
       test('void_function_without_params', () async {

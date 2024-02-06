@@ -1,3 +1,4 @@
+import 'package:dart2ast_engine/dart2ast.dart';
 import 'package:equatable/equatable.dart';
 
 class Point extends Equatable {
@@ -580,6 +581,104 @@ class FunctionCallExpression extends Expression {
   }
 }
 
+
+class IfStatement extends Statement{
+  final IfBlock ifBlock;
+  final List<IfBlock> elseIfBlocks;
+  final IfBlock? elseBlock;
+
+  IfStatement(
+    this.ifBlock,
+    this.elseIfBlocks,
+    this.elseBlock,
+    super.position,
+  );
+
+  IfStatement.fromJson(Map<String,dynamic> json)
+     : ifBlock = IfBlock.fromJson(json ['ifBlock']),
+       elseIfBlocks = List.from(json['elseifBlocks']).map((e) => IfBlock.fromJson(e)).toList(),
+       elseBlock = (json['elseBlock']) != null ? IfBlock.fromJson(json['elseBlock']) : null,
+       super(Position.fromJson(json['position']));
+  
+  @override
+  List<Object?> get props => [ifBlock, elseIfBlocks, elseBlock, position];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "type": runtimeType.toString(),
+      "ifBlock": ifBlock.toJson(),
+      "elseifBlocks": elseIfBlocks.map((e) => e.toJson()).toList(),
+      "elseBlock": elseBlock?.toJson(),
+      "position": position?.toJson(),
+    };
+
+  }
+}
+
+enum BlockType {ifBlock, elseIfBlock, elseBlock}
+
+class IfBlock extends Node{
+  final Expression? condition;
+  final List<Statement> statements;
+  final BlockType blockType;
+
+  IfBlock(this.condition, this.statements, this.blockType, super.position);
+
+  IfBlock.fromJson(Map<String, dynamic> json): this(
+    json["condition"] != null ? Expression.fromJson(json["condition"]) : null,
+    List.from(json["statements"]).map((e) => Statement.fromJson(e)).toList(),
+    switch(json['blockType']) {
+      "ifBlock" => BlockType.ifBlock,
+      "elseIfBLock" => BlockType.elseIfBlock,
+      "elseBlock" => BlockType.elseBlock,
+      _ => throw UnimplementedError(json["blockType"]),
+    },
+    Position.fromJson(json["position"])
+  );
+
+  @override
+  List<Object?> get props => [condition, statements, blockType, position];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "type": runtimeType.toString(),
+      "condition": condition?.toJson(),
+      "statements": statements.map((e) => e.toJson()),
+      "blockType": blockType.name,
+      "position": position?.toJson(),
+    };
+  }
+}
+
+//task 4
+class WhileStatement extends Statement{
+  final Expression? condition;
+  final List<Statement> statements;
+
+  WhileStatement(this.condition, this.statements, super.position);
+  
+  WhileStatement.fromJson(Map<String, dynamic> json): this(
+    json["condition"] != null ? Expression.fromJson(json["condition"]) : null,
+    List.from(json["statements"]).map((e) => Statement.fromJson(e)).toList(),
+    Position.fromJson(json["position"])
+  );
+
+  @override
+  List<Object?> get props => [condition, statements, position];
+  
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "type": runtimeType.toString(),
+      "condition": condition?.toJson(),
+      "statements": statements.map((e) => e.toJson()),
+      "position": position?.toJson(),
+    };
+  }
+}
+
 class FunctionDefinitionStatement extends Statement {
   final String name;
   final List<Parameter> parameters;
@@ -593,6 +692,7 @@ class FunctionDefinitionStatement extends Statement {
     this.body,
     super.position,
   );
+
 
   FunctionDefinitionStatement.fromJson(Map<String, dynamic> json)
       : name = json['name'],

@@ -1,0 +1,9 @@
+var int i = 1;
+while (condition) {
+    if (i < 17) {
+        i = i + 1;
+    }
+    else {
+        condition = true;
+    }
+}

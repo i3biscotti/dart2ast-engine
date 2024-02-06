@@ -23,6 +23,7 @@ DOUBLE                      : 'double';
 STRING                      : 'String';
 BOOL                        : 'bool';
 VOID                        : 'void';
+LIST                        : 'List';
 
 ASSIGN                      : '=';
 SEMICOLON                   : ';';
@@ -52,6 +53,9 @@ NOT                         : '!';
 PAREN_OPEN                  : '(';
 PAREN_CLOSE                 : ')';
 
+SQUARE_OPEN                 : '[';
+SQUARE_CLOSE                : ']';
+
 GRAPH_OPEN                  : '{';
 GRAPH_CLOSE                 : '}';
 COMMA                       : ',';
@@ -60,6 +64,16 @@ COLONS                      : ':';
 
 RETURN                      : 'return';
 EXTENDS                     : 'extends';
+
+IF                          : 'if';
+ELSE                        : 'else';
+
+
+WHILE                       : 'while';
+
+//task 5
+FOR                         : 'for';
+IN                          : 'in';
 
 ID                          : [A-Za-z_][A-Za-z_0-9]*;
 

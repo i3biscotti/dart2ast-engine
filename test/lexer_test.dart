@@ -119,6 +119,187 @@ void main() {
   );
 
   group(
+    'Task 3',
+    () {
+      test('if_statement', () async {
+        final lexer = await lexerForResource('task3/if_statement');
+        expect(
+          tokens(lexer),
+          equals([
+            'IF',
+            'PAREN_OPEN',
+            'ID',
+            'GREATER_THAN',
+            'INTLIT',
+            'PAREN_CLOSE',
+            'GRAPH_OPEN',
+            'ID',
+            'ASSIGN',
+            'STRINGLIT',
+            'SEMICOLON',
+            'GRAPH_CLOSE',
+            'ELSE',
+            'IF',
+            'PAREN_OPEN',
+            'ID',
+            'EQUAL',
+            'INTLIT',
+            'PAREN_CLOSE',
+            'GRAPH_OPEN',
+            'ID',
+            'ASSIGN',
+            'STRINGLIT',
+            'SEMICOLON',
+            'GRAPH_CLOSE',
+            'ELSE',
+            'GRAPH_OPEN',
+            'ID',
+            'ASSIGN',
+            'STRINGLIT',
+            'SEMICOLON',
+            'GRAPH_CLOSE',
+            'EOF'
+          ]));
+      });
+    },
+  );
+
+  group(
+    "Task 4",
+    () {
+      test('while_statement', () async {
+        final lexer = 
+        await lexerForResource('task4/while_statement');
+
+      expect(
+        tokens(lexer),
+        equals(<String>[
+          'VAR',
+          'INT',
+          'ID',
+          'ASSIGN',
+          'INTLIT',
+          'SEMICOLON',
+          'WHILE',
+          'PAREN_OPEN',
+          'ID',
+          'PAREN_CLOSE',
+          'GRAPH_OPEN',
+          'IF',
+          'PAREN_OPEN',
+          'ID',
+          'LOWER_THAN',
+          'INTLIT',
+          'PAREN_CLOSE',
+          'GRAPH_OPEN',
+          'ID',
+          'ASSIGN',
+          'ID',
+          'PLUS',
+          'INTLIT',
+          'SEMICOLON',
+          'GRAPH_CLOSE',
+          'ELSE',
+          'GRAPH_OPEN',
+          'ID',
+          'ASSIGN',
+          'BOOLLIT',
+          'SEMICOLON',
+          'GRAPH_CLOSE',
+          'GRAPH_CLOSE',
+          'EOF'
+        ]));
+      });
+    },
+  );
+
+  group(
+    "Task 5",
+    () {
+      test('for_statement', () async {
+        final lexer = 
+           await lexerForResource('task5/for_statement');
+
+        expect(
+          tokens(lexer),
+          equals(<String>[
+            'VAR',
+            'ID',
+            'ASSIGN',
+            'INTLIT',
+            'SEMICOLON',
+            'FOR',
+            'PAREN_OPEN',
+            'INT',
+            'ID',
+            'ASSIGN',
+            'INTLIT',
+            'SEMICOLON',
+            'ID',
+            'LOWER_THAN',
+            'INTLIT',
+            'SEMICOLON',
+            'ID',
+            'PLUS',
+            'PLUS',
+            'PAREN_CLOSE',
+            'GRAPH_OPEN',
+            'ID',
+            'ASSIGN',
+            'ID',
+            'PLUS',
+            'INTLIT',
+            'SEMICOLON',
+            'GRAPH_CLOSE',
+            'EOF'
+          ]));
+      });
+
+      test('for_each_statement', () async {
+        final lexer = 
+           await lexerForResource('task5/for_each_statement');
+
+        expect(
+          tokens(lexer),
+          equals(<String>[
+            'FINAL',
+            'ID',
+            'ASSIGN',
+            'SQUARE_OPEN',
+            'INTLIT',
+            'COMMA',
+            'INTLIT',
+            'SQUARE_CLOSE',
+            'SEMICOLON',
+            'VAR',
+            'ID',
+            'ASSIGN',
+            'INTLIT',
+            'SEMICOLON',
+            'FOR',
+            'PAREN_OPEN',
+            'INT',
+            'ID',
+            'IN',
+            'ID',
+            'PAREN_CLOSE',
+            'GRAPH_OPEN',
+            'ID',
+            'ASSIGN',
+            'ID',
+            'PLUS',
+            'INTLIT',
+            'SEMICOLON',
+            'GRAPH_CLOSE',
+            'EOF'
+          ]));
+      });
+    },
+  );
+
+
+
+  group(
     "Task 7",
     () {
       test('void_function_without_params', () async {
