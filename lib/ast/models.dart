@@ -130,6 +130,7 @@ class VariableDeclarationStatement extends Statement {
         'Double' => VariableValueType.DOUBLE,
         'String' => VariableValueType.STRING,
         'Boolean' => VariableValueType.BOOLEAN,
+        'List' => VariableValueType.LIST,
         String type => VariableValueType(type),
         null => null,
         _ => throw UnimplementedError(json['valueType']),
@@ -166,6 +167,7 @@ class VariableValueType extends Equatable {
       'double' => VariableValueType.DOUBLE,
       'String' => VariableValueType.STRING,
       'bool' => VariableValueType.BOOLEAN,
+      'List' => VariableValueType.LIST,
       'void' => VariableValueType.VOID,
       String type => VariableValueType(type),
     };
@@ -175,6 +177,7 @@ class VariableValueType extends Equatable {
   static VariableValueType get DOUBLE => VariableValueType('double');
   static VariableValueType get STRING => VariableValueType('String');
   static VariableValueType get BOOLEAN => VariableValueType('bool');
+  static VariableValueType get LIST => VariableValueType('List');
   static VariableValueType get VOID => VariableValueType('void');
 
   @override
@@ -508,6 +511,52 @@ class UnaryLogicExpression extends Expression {
   }
 }
 
+
+class IncrementExpression extends Expression{
+ final String name;
+
+ IncrementExpression(this.name, super.position);
+
+ IncrementExpression.fromJson(Map<String, dynamic> json)
+  : name = json['name'],
+  super(Position.fromJson(json['position']));
+  
+  @override
+  List<Object?> get props => [name, position];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "type": runtimeType.toString(),
+      "name": name,
+      "position": position?.toJson(),
+    };
+  }
+}
+
+class DecrementExpression extends Expression{
+ final String name;
+
+ DecrementExpression(this.name, super.position);
+
+ DecrementExpression.fromJson(Map<String, dynamic> json)
+  : name = json['name'],
+  super(Position.fromJson(json['position']));
+  
+  @override
+  List<Object?> get props => [name, position];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "type": runtimeType.toString(),
+      "name": name,
+      "position": position?.toJson(),
+    };
+  }
+}
+
+
 class VarReferenceExpression extends Expression {
   final String name;
 
@@ -676,6 +725,179 @@ class WhileStatement extends Statement{
     };
   }
 }
+
+//task 5 
+
+abstract class InitializzationForExpression extends Expression{
+   InitializzationForExpression(super.position);
+}
+
+class VarDeclaration extends InitializzationForExpression{
+
+}
+
+class Assigment extends InitializzationForExpression{
+
+}
+
+class ItemDefinition extends Node {
+  final VariableType varType;
+  final String name;
+  final VariableValueType? valueType;
+
+  ItemDefinition(
+    this.varType,
+    this.name,
+    this.valueType,
+    super.position,
+  );
+
+  factory ItemDefinition.fromJson(Map<String, dynamic> json) {
+    return ItemDefinition(
+      switch (json['varType']) {
+        'variable' => VariableType.variable,
+        'immutable' => VariableType.immutable,
+        'constant' => VariableType.constant,
+        _ => throw UnimplementedError(),
+      },
+      json['name'],
+      switch (json['valueType']) {
+        'Int' => VariableValueType.INT,
+        'Double' => VariableValueType.DOUBLE,
+        'String' => VariableValueType.STRING,
+        'Boolean' => VariableValueType.BOOLEAN,
+        'List' => VariableValueType.LIST,
+        String type => VariableValueType(type),
+        null => null,
+        _ => throw UnimplementedError(json['valueType']),
+      },
+      Position.fromJson(json['position']),
+    );
+  }
+
+  @override
+  List<Object?> get props => [varType, name, valueType, position];
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'type': runtimeType.toString(),
+        'varType': varType.name,
+        'name': name,
+        'valueType': valueType?.typeName,
+        'position': position?.toJson(),
+      };
+}
+
+class ForStatement extends Statement{
+  final ForCondition forCondition;
+  final Block block;
+
+  ForStatement(this.forCondition, this.block, super.position);
+
+  ForStatement.fromJson(Map<String, dynamic> json): this(
+    ForCondition.fromJson(json['forCodition']),
+    Block.fromJson(json['block']),
+    Position.fromJson(json["position"])
+  );
+  
+  @override
+  List<Object?> get props => [forCondition, block, position];
+  
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "type": runtimeType.toString(),
+      "forCondition": forCondition.toJson(),
+      "block": block.toJson(),
+      "position": position?.toJson(),
+    };
+  }
+}
+
+class Block extends Node{
+  final List<Statement> statements;
+  
+  Block(this.statements, super.position);
+
+  Block.fromJson(Map<String, dynamic> json): this(
+    List.from(json["statements"]).map((e) => Statement.fromJson(e)).toList(),
+    Position.fromJson(json["position"])
+  );
+
+  @override
+  List<Object?> get props => [statements, position];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "type": runtimeType.toString(),
+      "statements": statements.map((e) => e.toJson()),
+      "position": position?.toJson(),
+    };
+  }
+}
+
+
+abstract class ForCondition extends Node{
+  ForCondition(super.position);
+}
+
+class StandardForCondition extends ForCondition{
+  final InitializzationForExpression ife;
+  final Expression e1;
+  final Expression e2;
+
+  StandardForCondition(this.ife, this.e1, this.e2, super.position);
+
+  StandardForCondition.fromJson(Map<String, dynamic> json): this(
+    InitializzationForExpression.fromJson(json['ife']),
+    Expression.fromJson(json['e1']),
+    Expression.fromJson(json['e2']),
+    Position.fromJson(json["position"])
+  );
+  
+  @override
+  List<Object?> get props => [ife, e1, e2, position];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "type": runtimeType.toString(),
+      "ife": ife.toJson(),
+      "e1": e1.toJson(),  
+      "e2": e2.toJson(), 
+      "position": position?.toJson(),
+    };
+  }
+}
+
+class ForEachCondition extends ForCondition{
+  final ItemDefinition itemDefinition;
+  final Expression expression;
+
+  ForEachCondition(this.itemDefinition, this.expression, super.position);
+
+  ForEachCondition.fromJson(Map<String, dynamic> json): this(
+    ItemDefinition.fromJson(json['itemDefinition']),
+    Expression.fromJson(json['expression']),
+    Position.fromJson(json["position"])
+  );
+  
+  @override
+  List<Object?> get props => [itemDefinition, expression, position];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "type": runtimeType.toString(),
+      "itemDefinition": itemDefinition.toJson(),
+      "expression": expression.toJson(),      
+      "position": position?.toJson(),
+    };
+  }
+}
+
+
 
 class FunctionDefinitionStatement extends Statement {
   final String name;

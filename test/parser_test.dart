@@ -337,84 +337,124 @@ void main() {
 
   group(
     "Task 5",
-    () {
+    () { 
       test('for_statement', () async {
-        final rootNode = 
-        await _parseResource('task5/for_statement');
+        final rootNode = await _parseResource('task5/for_statement');
+        
+        expect(
+          getMultilineParseTree(rootNode),
+            equals(""" 
+            |Node(DartFile)
+            |  Node(VarDeclarationStatement)
+            |    Node(VarDeclaration)
+            |      T[var]
+            |      T[a]
+            |      T[=]
+            |      Node(IntLiteralExpression)
+            |        T[0]
+            |    T[;]
+            |  Node(ForStatement)
+            |    Node(ForDefinition)
+            |      T[for]
+            |      T[(]
+            |      Node(StandardForCondition)
+            |        Node(InitializationForExpression)
+            |          Node(VarDeclaration)
+            |            Node(IntType)
+            |              T[int]
+            |            T[i]
+            |            T[=]
+            |            Node(IntLiteralExpression)
+            |              T[0]
+            |        T[;]
+            |        Node(BinaryLogicExpression)
+            |          Node(VarReferenceExpression)
+            |            T[i]
+            |          T[<]
+            |          Node(IntLiteralExpression)
+            |            T[3]
+            |        T[;]
+            |        Node(IncrementExpression)
+            |          T[i]
+            |          T[+]
+            |          T[+]
+            |      T[)]
+            |      Node(Block)
+            |        T[{]
+            |        Node(AssigmentStatement)
+            |          Node(Assigment)
+            |            T[a]
+            |            T[=]
+            |            Node(BinaryMathExpression)
+            |              Node(VarReferenceExpression)
+            |                T[a]
+            |              T[+]
+            |              Node(IntLiteralExpression)
+            |                T[1]
+            |          T[;]
+            |        T[}]
+            |  T[<EOF>]
+            """  
+                 .trimMargin()));
+      });    
+
+      test('for_each_statement', () async {
+        final rootNode = await _parseResource('task5/for_each_statement');
 
         expect(
           getMultilineParseTree(rootNode),
           equals(
-            """ 
+            """       
             |Node(DartFile)
-            |  Node(VarDeclarationStatement)
-            |    T[var]
-            |    T[a]
+            |  Node(FinalDeclarationStatement)
+            |    T[final]
+            |    T[list]
             |    T[=]
-            |    Node(IntLiteralExpression)
-            |      T[0]
+            |    Node(ListLiteralExpression)
+            |      T[[]
+            |      Node(IntLiteralExpression)
+            |        T[1]
+            |      T[,]
+            |      Node(IntLiteralExpression)
+            |        T[2]
+            |      T[]]
+            |    T[;]
+            |  Node(VarDeclarationStatement)
+            |    Node(VarDeclaration)
+            |      T[var]
+            |      T[b]
+            |      T[=]
+            |      Node(IntLiteralExpression)
+            |        T[0]
             |    T[;]
             |  Node(ForStatement)
             |    Node(ForDefinition)
+            |      T[for]
             |      T[(]
-            |      Node(VarDeclarationStatement)
-            |        T[var]
-            |        T[i]
-            |        T[=]
-            |        Node(IntLiteralExpression)
-            |          T[0]
-            |        T[;]
-            |       Node(BinaryLogicExpression)
-            |         T[i]
-            |         T[<]
-            |         Node(IntLiteralExpression)
-            |           T[3]
-            |         Node(IncrementExpression)
-            |           T[i]
-            |           T[+]
-            |           T[+]
-            |       Node(AssignmentStatement)
-            |         T[a]
-            |         T[=]
-            |         Node(BinaryMathExpression)
-            |           T[a]
-            |           T[+]
-            |           Node(IntLietralExpression)
-            |             T[1]
-            |     Node(VarDeclarationStatement)
-            |       T[final]
-            |       T[list]
-            |       T[=]
-            |       Node(ListExpression)
-            |         T[1]
-            |         T[2]
-            |         T[;]
-            |     Node(VarDeclarationStatement)
-            |       T[var]
-            |       T[b]
-            |       T[=]
-            |       Node(IntLiteralExpression)
-            |         T[0]
-            |       T[;]
-            |     Node(ForStatement)
-            |       Node(ForDefinition)
-            |         T[(]
-            |         Node(VarReferenceStatement)
-            |           T[int]
-            |           T[i]
-            |         Node()
-            |           T[list]
-            |      Node(AssignmentStatement)
-            |         T[b]
-            |         T[=]
-            |         Node(BinaryMathExpression)
-            |           T[b]
-            |           T[+]
-            |           Node(IntLietralExpression)
-            |             T[1]
-            |           T[;]
-            |         T[}]
-            |     T[<EOF>]
+            |      Node(ForEachCondition)
+            |        Node(ItemDefinition)
+            |          Node(IntType)
+            |            T[int]
+            |          T[i]
+            |        T[in]
+            |        Node(VarReferenceExpression)
+            |          T[list]
+            |      T[)]
+            |      Node(Block)
+            |        T[{]
+            |        Node(AssigmentStatement)
+            |          Node(Assigment)
+            |            T[b]
+            |            T[=]
+            |            Node(BinaryMathExpression)
+            |              Node(VarReferenceExpression)
+            |                T[b]
+            |              T[+]
+            |              Node(IntLiteralExpression)
+            |                T[1]
+            |          T[;]
+            |        T[}]
+            |  T[<EOF>]
             """ .trimMargin()));
       });
     },

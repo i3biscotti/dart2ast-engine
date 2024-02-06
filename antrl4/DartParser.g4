@@ -28,7 +28,7 @@ statement
 
 varDeclaration
     : ( VAR | VAR  type | type ) ID ASSIGN expression;
-assigment
+assigment                    //assigNment
     : ID ASSIGN expression;
 
 
@@ -63,8 +63,8 @@ expression
     |                  operand=MINUS                value=expression            #UnaryMathExpression
     |                  operand=PLUS                 value=expression            #UnaryMathExpression
     |                  operand=NOT                  value=expression            #UnaryLogicNegationExpression
-    | PLUS PLUS ID                                                              #IncrementExpression
-    | MINUS MINUS ID                                                            #DecrementExpression
+    | ID PLUS PLUS                                                              #IncrementExpression
+    | ID MINUS MINUS                                                            #DecrementExpression
     | PAREN_OPEN       value=expression             PAREN_CLOSE                 #ParenthesysExpression
     | ID                                                                        #VarReferenceExpression
     | ID PAREN_OPEN (expression COMMA)* expression? PAREN_CLOSE                 #FunctionCallExpression
@@ -84,7 +84,7 @@ classDefinition : CLASS name=ID (EXTENDS parentName=ID)? GRAPH_OPEN classStateme
 classStatement
     : type ID (ASSIGN expression)? SEMICOLON                                                                    #ClassVarDeclarationStatement         
     | FINAL type? ID (ASSIGN expression)? SEMICOLON                                                             #ClassImmutableVarDeclarationStatement                     
-    | className=ID PAREN_OPEN (parameter COMMA)* parameter? PAREN_CLOSE (block | SEMICOLON)                  #MainClassConstructorDeclarationStatement
+    | className=ID PAREN_OPEN (parameter COMMA)* parameter? PAREN_CLOSE (block | SEMICOLON)                     #MainClassConstructorDeclarationStatement
     | className=ID DOT costructorName=ID PAREN_OPEN 
             (parameter COMMA)* parameter? 
         PAREN_CLOSE 
@@ -123,8 +123,8 @@ itemDefinition                        //extends Node
     : (VAR | type) ID;
 
 forCondition
-    : PAREN_OPEN initializationForExpression SEMICOLON expression SEMICOLON expression PAREN_CLOSE          #StandardForCondition
-    | PAREN_OPEN itemDefinition IN expression                                                               #ForEachCondition
+    : initializationForExpression SEMICOLON expression SEMICOLON expression          #StandardForCondition
+    | itemDefinition IN expression                                                   #ForEachCondition
     ;
 
 forDefinition
