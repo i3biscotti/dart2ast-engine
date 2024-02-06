@@ -86,6 +86,47 @@ abstract class DartParserListener extends ParseTreeListener {
   /// [ctx] the parse tree
   void exitReturnStatement(ReturnStatementContext ctx);
 
+  /// Enter a parse tree produced by the [IfStatement]
+  /// labeled alternative in [file.parserName>.statement].
+  /// [ctx] the parse tree
+  void enterIfStatement(IfStatementContext ctx);
+  /// Exit a parse tree produced by the [IfStatement]
+  /// labeled alternative in [DartParser.statement].
+  /// [ctx] the parse tree
+  void exitIfStatement(IfStatementContext ctx);
+
+  /// Enter a parse tree produced by the [WhileStatement]
+  /// labeled alternative in [file.parserName>.statement].
+  /// [ctx] the parse tree
+  void enterWhileStatement(WhileStatementContext ctx);
+  /// Exit a parse tree produced by the [WhileStatement]
+  /// labeled alternative in [DartParser.statement].
+  /// [ctx] the parse tree
+  void exitWhileStatement(WhileStatementContext ctx);
+
+  /// Enter a parse tree produced by the [ForStatement]
+  /// labeled alternative in [file.parserName>.statement].
+  /// [ctx] the parse tree
+  void enterForStatement(ForStatementContext ctx);
+  /// Exit a parse tree produced by the [ForStatement]
+  /// labeled alternative in [DartParser.statement].
+  /// [ctx] the parse tree
+  void exitForStatement(ForStatementContext ctx);
+
+  /// Enter a parse tree produced by [DartParser.varDeclaration].
+  /// [ctx] the parse tree
+  void enterVarDeclaration(VarDeclarationContext ctx);
+  /// Exit a parse tree produced by [DartParser.varDeclaration].
+  /// [ctx] the parse tree
+  void exitVarDeclaration(VarDeclarationContext ctx);
+
+  /// Enter a parse tree produced by [DartParser.assigment].
+  /// [ctx] the parse tree
+  void enterAssigment(AssigmentContext ctx);
+  /// Exit a parse tree produced by [DartParser.assigment].
+  /// [ctx] the parse tree
+  void exitAssigment(AssigmentContext ctx);
+
   /// Enter a parse tree produced by the [IntType]
   /// labeled alternative in [file.parserName>.type].
   /// [ctx] the parse tree
@@ -131,6 +172,15 @@ abstract class DartParserListener extends ParseTreeListener {
   /// [ctx] the parse tree
   void exitVoidType(VoidTypeContext ctx);
 
+  /// Enter a parse tree produced by the [ListType]
+  /// labeled alternative in [file.parserName>.type].
+  /// [ctx] the parse tree
+  void enterListType(ListTypeContext ctx);
+  /// Exit a parse tree produced by the [ListType]
+  /// labeled alternative in [DartParser.type].
+  /// [ctx] the parse tree
+  void exitListType(ListTypeContext ctx);
+
   /// Enter a parse tree produced by the [CustomType]
   /// labeled alternative in [file.parserName>.type].
   /// [ctx] the parse tree
@@ -148,6 +198,15 @@ abstract class DartParserListener extends ParseTreeListener {
   /// labeled alternative in [DartParser.expression].
   /// [ctx] the parse tree
   void exitBinaryMathExpression(BinaryMathExpressionContext ctx);
+
+  /// Enter a parse tree produced by the [DecrementExpression]
+  /// labeled alternative in [file.parserName>.expression].
+  /// [ctx] the parse tree
+  void enterDecrementExpression(DecrementExpressionContext ctx);
+  /// Exit a parse tree produced by the [DecrementExpression]
+  /// labeled alternative in [DartParser.expression].
+  /// [ctx] the parse tree
+  void exitDecrementExpression(DecrementExpressionContext ctx);
 
   /// Enter a parse tree produced by the [DoubleLiteralExpression]
   /// labeled alternative in [file.parserName>.expression].
@@ -175,6 +234,15 @@ abstract class DartParserListener extends ParseTreeListener {
   /// labeled alternative in [DartParser.expression].
   /// [ctx] the parse tree
   void exitStringLiteralExpression(StringLiteralExpressionContext ctx);
+
+  /// Enter a parse tree produced by the [ListLiteralExpression]
+  /// labeled alternative in [file.parserName>.expression].
+  /// [ctx] the parse tree
+  void enterListLiteralExpression(ListLiteralExpressionContext ctx);
+  /// Exit a parse tree produced by the [ListLiteralExpression]
+  /// labeled alternative in [DartParser.expression].
+  /// [ctx] the parse tree
+  void exitListLiteralExpression(ListLiteralExpressionContext ctx);
 
   /// Enter a parse tree produced by the [IntLiteralExpression]
   /// labeled alternative in [file.parserName>.expression].
@@ -229,6 +297,15 @@ abstract class DartParserListener extends ParseTreeListener {
   /// labeled alternative in [DartParser.expression].
   /// [ctx] the parse tree
   void exitUnaryMathExpression(UnaryMathExpressionContext ctx);
+
+  /// Enter a parse tree produced by the [IncrementExpression]
+  /// labeled alternative in [file.parserName>.expression].
+  /// [ctx] the parse tree
+  void enterIncrementExpression(IncrementExpressionContext ctx);
+  /// Exit a parse tree produced by the [IncrementExpression]
+  /// labeled alternative in [DartParser.expression].
+  /// [ctx] the parse tree
+  void exitIncrementExpression(IncrementExpressionContext ctx);
 
   /// Enter a parse tree produced by the [ObjectMethodCallExpression]
   /// labeled alternative in [file.parserName>.expression].
@@ -336,4 +413,78 @@ abstract class DartParserListener extends ParseTreeListener {
   /// Exit a parse tree produced by [DartParser.thisConstructorCall].
   /// [ctx] the parse tree
   void exitThisConstructorCall(ThisConstructorCallContext ctx);
+
+  /// Enter a parse tree produced by [DartParser.ifBlock].
+  /// [ctx] the parse tree
+  void enterIfBlock(IfBlockContext ctx);
+  /// Exit a parse tree produced by [DartParser.ifBlock].
+  /// [ctx] the parse tree
+  void exitIfBlock(IfBlockContext ctx);
+
+  /// Enter a parse tree produced by [DartParser.elseIfBlock].
+  /// [ctx] the parse tree
+  void enterElseIfBlock(ElseIfBlockContext ctx);
+  /// Exit a parse tree produced by [DartParser.elseIfBlock].
+  /// [ctx] the parse tree
+  void exitElseIfBlock(ElseIfBlockContext ctx);
+
+  /// Enter a parse tree produced by [DartParser.elseBlock].
+  /// [ctx] the parse tree
+  void enterElseBlock(ElseBlockContext ctx);
+  /// Exit a parse tree produced by [DartParser.elseBlock].
+  /// [ctx] the parse tree
+  void exitElseBlock(ElseBlockContext ctx);
+
+  /// Enter a parse tree produced by [DartParser.ifDefinition].
+  /// [ctx] the parse tree
+  void enterIfDefinition(IfDefinitionContext ctx);
+  /// Exit a parse tree produced by [DartParser.ifDefinition].
+  /// [ctx] the parse tree
+  void exitIfDefinition(IfDefinitionContext ctx);
+
+  /// Enter a parse tree produced by [DartParser.whileDefinition].
+  /// [ctx] the parse tree
+  void enterWhileDefinition(WhileDefinitionContext ctx);
+  /// Exit a parse tree produced by [DartParser.whileDefinition].
+  /// [ctx] the parse tree
+  void exitWhileDefinition(WhileDefinitionContext ctx);
+
+  /// Enter a parse tree produced by [DartParser.initializationForExpression].
+  /// [ctx] the parse tree
+  void enterInitializationForExpression(InitializationForExpressionContext ctx);
+  /// Exit a parse tree produced by [DartParser.initializationForExpression].
+  /// [ctx] the parse tree
+  void exitInitializationForExpression(InitializationForExpressionContext ctx);
+
+  /// Enter a parse tree produced by [DartParser.itemDefinition].
+  /// [ctx] the parse tree
+  void enterItemDefinition(ItemDefinitionContext ctx);
+  /// Exit a parse tree produced by [DartParser.itemDefinition].
+  /// [ctx] the parse tree
+  void exitItemDefinition(ItemDefinitionContext ctx);
+
+  /// Enter a parse tree produced by the [StandardForCondition]
+  /// labeled alternative in [file.parserName>.forCondition].
+  /// [ctx] the parse tree
+  void enterStandardForCondition(StandardForConditionContext ctx);
+  /// Exit a parse tree produced by the [StandardForCondition]
+  /// labeled alternative in [DartParser.forCondition].
+  /// [ctx] the parse tree
+  void exitStandardForCondition(StandardForConditionContext ctx);
+
+  /// Enter a parse tree produced by the [ForEachCondition]
+  /// labeled alternative in [file.parserName>.forCondition].
+  /// [ctx] the parse tree
+  void enterForEachCondition(ForEachConditionContext ctx);
+  /// Exit a parse tree produced by the [ForEachCondition]
+  /// labeled alternative in [DartParser.forCondition].
+  /// [ctx] the parse tree
+  void exitForEachCondition(ForEachConditionContext ctx);
+
+  /// Enter a parse tree produced by [DartParser.forDefinition].
+  /// [ctx] the parse tree
+  void enterForDefinition(ForDefinitionContext ctx);
+  /// Exit a parse tree produced by [DartParser.forDefinition].
+  /// [ctx] the parse tree
+  void exitForDefinition(ForDefinitionContext ctx);
 }

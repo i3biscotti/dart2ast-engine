@@ -84,6 +84,46 @@ class DartParserBaseListener implements DartParserListener {
 
   /// The default implementation does nothing.
   @override
+  void enterIfStatement(IfStatementContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitIfStatement(IfStatementContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void enterWhileStatement(WhileStatementContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitWhileStatement(WhileStatementContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void enterForStatement(ForStatementContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitForStatement(ForStatementContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void enterVarDeclaration(VarDeclarationContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitVarDeclaration(VarDeclarationContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void enterAssigment(AssigmentContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitAssigment(AssigmentContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
   void enterIntType(IntTypeContext ctx) {}
 
   /// The default implementation does nothing.
@@ -124,6 +164,14 @@ class DartParserBaseListener implements DartParserListener {
 
   /// The default implementation does nothing.
   @override
+  void enterListType(ListTypeContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitListType(ListTypeContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
   void enterCustomType(CustomTypeContext ctx) {}
 
   /// The default implementation does nothing.
@@ -137,6 +185,14 @@ class DartParserBaseListener implements DartParserListener {
   /// The default implementation does nothing.
   @override
   void exitBinaryMathExpression(BinaryMathExpressionContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void enterDecrementExpression(DecrementExpressionContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitDecrementExpression(DecrementExpressionContext ctx) {}
 
   /// The default implementation does nothing.
   @override
@@ -161,6 +217,14 @@ class DartParserBaseListener implements DartParserListener {
   /// The default implementation does nothing.
   @override
   void exitStringLiteralExpression(StringLiteralExpressionContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void enterListLiteralExpression(ListLiteralExpressionContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitListLiteralExpression(ListLiteralExpressionContext ctx) {}
 
   /// The default implementation does nothing.
   @override
@@ -209,6 +273,14 @@ class DartParserBaseListener implements DartParserListener {
   /// The default implementation does nothing.
   @override
   void exitUnaryMathExpression(UnaryMathExpressionContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void enterIncrementExpression(IncrementExpressionContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitIncrementExpression(IncrementExpressionContext ctx) {}
 
   /// The default implementation does nothing.
   @override
@@ -313,6 +385,86 @@ class DartParserBaseListener implements DartParserListener {
   /// The default implementation does nothing.
   @override
   void exitThisConstructorCall(ThisConstructorCallContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void enterIfBlock(IfBlockContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitIfBlock(IfBlockContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void enterElseIfBlock(ElseIfBlockContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitElseIfBlock(ElseIfBlockContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void enterElseBlock(ElseBlockContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitElseBlock(ElseBlockContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void enterIfDefinition(IfDefinitionContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitIfDefinition(IfDefinitionContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void enterWhileDefinition(WhileDefinitionContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitWhileDefinition(WhileDefinitionContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void enterInitializationForExpression(InitializationForExpressionContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitInitializationForExpression(InitializationForExpressionContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void enterItemDefinition(ItemDefinitionContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitItemDefinition(ItemDefinitionContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void enterStandardForCondition(StandardForConditionContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitStandardForCondition(StandardForConditionContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void enterForEachCondition(ForEachConditionContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitForEachCondition(ForEachConditionContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void enterForDefinition(ForDefinitionContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitForDefinition(ForDefinitionContext ctx) {}
 
   /// The default implementation does nothing.
   @override
