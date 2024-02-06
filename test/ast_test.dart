@@ -88,8 +88,13 @@ void main() {
             equals(
               ProgramFile(
                 <Statement>[
-                  VariableDeclarationStatement(VariableType.variable, 'age',
-                      VariableValueType.INT, IntLit('16', null), null)
+                  VariableDeclarationStatement(
+                    VariableType.type,
+                    'age',
+                    VariableValueType.INT,
+                    IntLit('16', null),
+                    null,
+                  )
                 ],
                 null,
               ),
@@ -179,133 +184,128 @@ void main() {
     },
   );
 
-
   group(
     "Task 3",
     () {
-      test('if_statement', () async {
-        final root = await _parseResource('task3/if_statement');
-        
-        expect(
-          root.toAst(false),
-          equals(
-            ProgramFile(
-              <Statement>[
-                IfStatement(
-                  IfBlock(
-                    BinaryLogicExpression(
-                      VarReferenceExpression('voto', null),
-                      IntLit('18', null),
-                      LogicOperand.greaterThan, 
-                      null),
-                    <Statement>[
-                    AssignmentStatement(
-                      'exam',
-                      StringLit('"passed"', null),
-                      null),
-                    ],
-                    BlockType.ifBlock,
-                    null),
-                  <IfBlock>[
-                    IfBlock(
-                      BinaryLogicExpression(
-                        VarReferenceExpression('voto', null),
-                        IntLit('18', null),
-                        LogicOperand.equal,
-                        null),
-                      <Statement>[
-                      AssignmentStatement(
-                        'exam',
-                        StringLit('"passed"', null),
-                        null),
+      test(
+        'if_statement',
+        () async {
+          final root = await _parseResource('task3/if_statement');
+
+          expect(
+            root.toAst(false),
+            equals(
+              ProgramFile(
+                <Statement>[
+                  IfStatement(
+                      IfBlock(
+                          BinaryLogicExpression(
+                              VarReferenceExpression('voto', null),
+                              IntLit('18', null),
+                              LogicOperand.greaterThan,
+                              null),
+                          <Statement>[
+                            AssignmentStatement(
+                                'exam', StringLit('"passed"', null), null),
+                          ],
+                          BlockType.ifBlock,
+                          null),
+                      <IfBlock>[
+                        IfBlock(
+                            BinaryLogicExpression(
+                                VarReferenceExpression('voto', null),
+                                IntLit('18', null),
+                                LogicOperand.equal,
+                                null),
+                            <Statement>[
+                              AssignmentStatement(
+                                  'exam', StringLit('"passed"', null), null),
+                            ],
+                            BlockType.elseIfBlock,
+                            null),
                       ],
-                      BlockType.elseIfBlock,
+                      IfBlock(
+                          null,
+                          <Statement>[
+                            AssignmentStatement(
+                                'exam', StringLit('"failed"', null), null),
+                          ],
+                          BlockType.elseBlock,
+                          null),
                       null),
-                  ],
-                  IfBlock(
-                    null,
-                    <Statement>[
-                    AssignmentStatement(
-                      'exam',
-                      StringLit('"failed"', null),
-                      null),
-                    ],
-                    BlockType.elseBlock,
-                  null),
-                null),
-              ],
-              null,
+                ],
+                null,
+              ),
             ),
-          ),
-        );
-      },
-     );
+          );
+        },
+      );
     },
   );
 
   group(
     "Task 4",
     () {
-      test('while_statement', () async {
-        final root = await _parseResource('task4/while_statement');
+      test(
+        'while_statement',
+        () async {
+          final root = await _parseResource('task4/while_statement');
 
-        expect(
-          root.toAst(false),
-          equals(
-           ProgramFile(
-            <Statement>[
-              VariableDeclarationStatement(
+          expect(
+            root.toAst(false),
+            equals(
+              ProgramFile(
+                <Statement>[
+                  VariableDeclarationStatement(
                     VariableType.variable,
                     'i',
                     VariableValueType.INT,
                     IntLit('1', null),
                     null,
                   ),
-              WhileStatement(
-                VarReferenceExpression('condition', null),
-                <Statement>[
-                  IfStatement(
-                    IfBlock(
-                      BinaryLogicExpression(
-                        VarReferenceExpression('i', null),
-                        IntLit('17', null),
-                        LogicOperand.lessThan, 
-                        null,
-                      ),
-                    <Statement>[
-                      AssignmentStatement(
-                        'i',
-                         BinaryMathExpression(
-                           VarReferenceExpression('i', null),
-                           IntLit('1', null),
-                           MathOperand.plus, 
-                         null,
-                         ),
-                        null),
-                    ],
-                    BlockType.ifBlock,
-                    null),
-                    <IfBlock>[],
-                      IfBlock(
-                        null,
-                        <Statement>[
-                           AssignmentStatement(
-                             'condition',
-                             BoolLit('true', null),
-                           null),
-                        ],
-                      BlockType.elseBlock,
+                  WhileStatement(
+                      VarReferenceExpression('condition', null),
+                      <Statement>[
+                        IfStatement(
+                            IfBlock(
+                                BinaryLogicExpression(
+                                  VarReferenceExpression('i', null),
+                                  IntLit('17', null),
+                                  LogicOperand.lessThan,
+                                  null,
+                                ),
+                                <Statement>[
+                                  AssignmentStatement(
+                                      'i',
+                                      BinaryMathExpression(
+                                        VarReferenceExpression('i', null),
+                                        IntLit('1', null),
+                                        MathOperand.plus,
+                                        null,
+                                      ),
+                                      null),
+                                ],
+                                BlockType.ifBlock,
+                                null),
+                            <IfBlock>[],
+                            IfBlock(
+                                null,
+                                <Statement>[
+                                  AssignmentStatement(
+                                      'condition', BoolLit('true', null), null),
+                                ],
+                                BlockType.elseBlock,
+                                null),
+                            null),
+                      ],
                       null),
-                  null),
                 ],
-              null),
-            ],
-            null,
-           ),
-          ),
-        );
-      },
-     );
+                null,
+              ),
+            ),
+          );
+        },
+      );
     },
   );
 
@@ -475,6 +475,281 @@ void main() {
           );
         },
       );
+    },
+  );
+
+  group(
+    "Task 8",
+    () {
+      test('empty_class', () async {
+        final rootNode = await _parseResource('task8/empty_class');
+
+        expect(
+          rootNode.toAst(false),
+          ProgramFile(
+            <Statement>[
+              ClassDefinitionStatement(
+                EncapsulationType.public,
+                'SimpleClass',
+                null,
+                <VariableDeclarationStatement>[],
+                <ConstructorDefinitionStatement>[],
+                <FunctionDefinitionStatement>[],
+                null,
+              )
+            ],
+            null,
+          ),
+        );
+      });
+
+      test(
+        'class_with_methods',
+        () async {
+          final rootNode = await _parseResource('task8/class_with_methods');
+
+          expect(
+            rootNode.toAst(false),
+            ProgramFile(
+              <Statement>[
+                ClassDefinitionStatement(
+                  EncapsulationType.public,
+                  'SimpleClass',
+                  null,
+                  <VariableDeclarationStatement>[
+                    VariableDeclarationStatement(
+                      VariableType.immutable,
+                      'prop1',
+                      VariableValueType.INT,
+                      null,
+                      null,
+                    ),
+                    VariableDeclarationStatement(
+                      VariableType.type,
+                      'pro2',
+                      VariableValueType.BOOLEAN,
+                      null,
+                      null,
+                    ),
+                  ],
+                  <ConstructorDefinitionStatement>[
+                    ConstructorDefinitionStatement(
+                      "SimpleClass",
+                      null,
+                      <Parameter>[
+                        Parameter("prop1", ParameterType.THIS, null, null),
+                        Parameter("pro2", ParameterType.THIS, null, null)
+                      ],
+                      null,
+                      <Statement>[],
+                      null,
+                    ),
+                  ],
+                  <FunctionDefinitionStatement>[
+                    FunctionDefinitionStatement(
+                      'sum',
+                      <Parameter>[
+                        Parameter(
+                          "value",
+                          ParameterType.TYPE,
+                          VariableValueType.INT,
+                          null,
+                        ),
+                      ],
+                      VariableValueType.INT,
+                      <Statement>[
+                        AssignmentStatement(
+                          'pro2',
+                          BinaryLogicExpression(
+                            VarReferenceExpression('value', null),
+                            VarReferenceExpression('prop1', null),
+                            LogicOperand.lessThanOrEqual,
+                            null,
+                          ),
+                          null,
+                        ),
+                        ReturnStatement(
+                          BinaryMathExpression(
+                            VarReferenceExpression('value', null),
+                            VarReferenceExpression('prop1', null),
+                            MathOperand.plus,
+                            null,
+                          ),
+                          null,
+                        ),
+                      ],
+                      null,
+                    ),
+                  ],
+                  null,
+                )
+              ],
+              null,
+            ),
+          );
+        },
+      );
+
+      test('class_with_multiple_constructors', () async {
+        final rootNode =
+            await _parseResource('task8/class_with_multiple_constructors');
+
+        expect(
+          rootNode.toAst(false),
+          ProgramFile(
+            <Statement>[
+              ClassDefinitionStatement(
+                EncapsulationType.public,
+                'MultiplePass',
+                null,
+                <VariableDeclarationStatement>[
+                  VariableDeclarationStatement(
+                    VariableType.immutable,
+                    'a',
+                    VariableValueType.INT,
+                    null,
+                    null,
+                  ),
+                  VariableDeclarationStatement(
+                    VariableType.type,
+                    'b',
+                    VariableValueType.DOUBLE,
+                    null,
+                    null,
+                  ),
+                ],
+                <ConstructorDefinitionStatement>[
+                  ConstructorDefinitionStatement(
+                    "MultiplePass",
+                    null,
+                    <Parameter>[
+                      Parameter("a", ParameterType.THIS, null, null),
+                      Parameter("b", ParameterType.THIS, null, null)
+                    ],
+                    null,
+                    <Statement>[],
+                    null,
+                  ),
+                  ConstructorDefinitionStatement(
+                    "MultiplePass",
+                    "test",
+                    <Parameter>[
+                      Parameter(
+                        "a",
+                        ParameterType.TYPE,
+                        VariableValueType.INT,
+                        null,
+                      ),
+                    ],
+                    <Expression>[
+                      VarReferenceExpression("a", null),
+                      DecLit("12.1", null)
+                    ],
+                    <Statement>[],
+                    null,
+                  ),
+                ],
+                <FunctionDefinitionStatement>[],
+                null,
+              )
+            ],
+            null,
+          ),
+        );
+      });
+
+      test('class_with_properties', () async {
+        final rootNode = await _parseResource('task8/class_with_properties');
+
+        expect(
+          rootNode.toAst(false),
+          ProgramFile(
+            <Statement>[
+              ClassDefinitionStatement(
+                EncapsulationType.public,
+                'SimpleClass',
+                null,
+                <VariableDeclarationStatement>[
+                  VariableDeclarationStatement(
+                    VariableType.immutable,
+                    'prop1',
+                    VariableValueType.INT,
+                    null,
+                    null,
+                  ),
+                  VariableDeclarationStatement(
+                    VariableType.type,
+                    'pro2',
+                    VariableValueType.BOOLEAN,
+                    null,
+                    null,
+                  ),
+                ],
+                <ConstructorDefinitionStatement>[
+                  ConstructorDefinitionStatement(
+                    "SimpleClass",
+                    null,
+                    <Parameter>[
+                      Parameter("prop1", ParameterType.THIS, null, null),
+                      Parameter("pro2", ParameterType.THIS, null, null)
+                    ],
+                    null,
+                    <Statement>[],
+                    null,
+                  ),
+                ],
+                <FunctionDefinitionStatement>[],
+                null,
+              )
+            ],
+            null,
+          ),
+        );
+      });
+
+      test('class_hierarchy', () async {
+        final rootNode = await _parseResource('task8/class_hierarchy');
+
+        expect(
+          rootNode.toAst(false),
+          ProgramFile(
+            <Statement>[
+              ClassDefinitionStatement(
+                EncapsulationType.public,
+                'SecretWars',
+                'Marvel',
+                <VariableDeclarationStatement>[],
+                <ConstructorDefinitionStatement>[],
+                <FunctionDefinitionStatement>[],
+                null,
+              )
+            ],
+            null,
+          ),
+        );
+      });
+
+      test('private_class', () async {
+        final rootNode = await _parseResource('task8/private_class');
+
+        expect(
+          rootNode.toAst(false),
+          ProgramFile(
+            <Statement>[
+              ClassDefinitionStatement(
+                EncapsulationType.private,
+                'SecretWar',
+                null,
+                <VariableDeclarationStatement>[],
+                <ConstructorDefinitionStatement>[],
+                <FunctionDefinitionStatement>[],
+                null,
+              )
+            ],
+            null,
+          ),
+        );
+      });
     },
   );
 

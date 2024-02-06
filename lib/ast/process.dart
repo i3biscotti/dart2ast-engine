@@ -47,7 +47,7 @@ extension StatementProcessExtension on Statement {
 
     switch (this) {
       case VariableDeclarationStatement statement:
-        statement.value.process(operation, scope);
+        statement.value?.process(operation, scope);
         break;
 
       case AssignmentStatement statement:
