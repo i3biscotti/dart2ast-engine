@@ -105,7 +105,7 @@ class VariableDeclarationStatement extends Statement {
   final VariableType varType;
   final String name;
   final VariableValueType? valueType;
-  final Expression value;
+  final Expression? value;
 
   VariableDeclarationStatement(
     this.varType,
@@ -117,22 +117,9 @@ class VariableDeclarationStatement extends Statement {
 
   factory VariableDeclarationStatement.fromJson(Map<String, dynamic> json) {
     return VariableDeclarationStatement(
-      switch (json['varType']) {
-        'variable' => VariableType.variable,
-        'immutable' => VariableType.immutable,
-        'constant' => VariableType.constant,
-        _ => throw UnimplementedError(),
-      },
+      VariableType.fromName(json['varType']),
       json['name'],
-      switch (json['valueType']) {
-        'Int' => VariableValueType.INT,
-        'Double' => VariableValueType.DOUBLE,
-        'String' => VariableValueType.STRING,
-        'Boolean' => VariableValueType.BOOLEAN,
-        String type => VariableValueType(type),
-        null => null,
-        _ => throw UnimplementedError(json['valueType']),
-      },
+      VariableValueType.fromName(json['valueType']),
       Expression.fromJson(json['value']),
       Position.fromJson(json['position']),
     );
@@ -147,12 +134,27 @@ class VariableDeclarationStatement extends Statement {
         'varType': varType.name,
         'name': name,
         'valueType': valueType?.typeName,
-        'value': value.toJson(),
+        'value': value?.toJson(),
         'position': position?.toJson(),
       };
 }
 
-enum VariableType { variable, immutable, constant }
+enum VariableType {
+  type,
+  variable,
+  immutable,
+  constant;
+
+  static VariableType fromName(String name) {
+    return switch (name) {
+      'type' => VariableType.type,
+      'variable' => VariableType.variable,
+      'immutable' => VariableType.immutable,
+      'constant' => VariableType.constant,
+      _ => throw UnimplementedError(),
+    };
+  }
+}
 
 class VariableValueType extends Equatable {
   final String typeName;
@@ -597,16 +599,7 @@ class FunctionDefinitionStatement extends Statement {
         parameters = List.from(json['parameters'])
             .map((e) => Parameter.fromJson(e))
             .toList(),
-        returnType = switch (json['returnType']) {
-          'Int' => VariableValueType.INT,
-          'Double' => VariableValueType.DOUBLE,
-          'String' => VariableValueType.STRING,
-          'Boolean' => VariableValueType.BOOLEAN,
-          'void' => VariableValueType.VOID,
-          String type => VariableValueType(type),
-          null => null,
-          _ => throw UnimplementedError(json['returnType']),
-        },
+        returnType = VariableValueType.fromName(json['returnType']),
         body =
             List.from(json['body']).map((e) => Statement.fromJson(e)).toList(),
         super(Position.fromJson(json['position']));
@@ -645,16 +638,7 @@ class Parameter extends Node {
         'type' => ParameterType.TYPE,
         _ => throw UnimplementedError(),
       },
-      switch (json['valueType']) {
-        'Int' => VariableValueType.INT,
-        'Double' => VariableValueType.DOUBLE,
-        'String' => VariableValueType.STRING,
-        'Boolean' => VariableValueType.BOOLEAN,
-        'void' => VariableValueType.VOID,
-        String type => VariableValueType(type),
-        null => null,
-        _ => throw UnimplementedError(json['valueType']),
-      },
+      VariableValueType.fromName(json['valueType']),
       Position.fromJson(json['position']),
     );
   }
@@ -674,14 +658,20 @@ class Parameter extends Node {
   }
 }
 
+enum EncapsulationType { public, private }
+
 class ClassDefinitionStatement extends Statement {
+  final EncapsulationType encapsulationType;
   final String name;
+  final String? parentName;
   final List<VariableDeclarationStatement> properties;
   final List<ConstructorDefinitionStatement> constructors;
   final List<FunctionDefinitionStatement> methods;
 
   ClassDefinitionStatement(
+    this.encapsulationType,
     this.name,
+    this.parentName,
     this.properties,
     this.constructors,
     this.methods,
@@ -690,7 +680,13 @@ class ClassDefinitionStatement extends Statement {
 
   factory ClassDefinitionStatement.fromJson(Map<String, dynamic> json) {
     return ClassDefinitionStatement(
+      switch (json['encapsulationType']) {
+        "public" => EncapsulationType.public,
+        "private" => EncapsulationType.private,
+        _ => throw UnimplementedError(),
+      },
       json['name'],
+      json['parentName'],
       List.from(json['properties'])
           .map((e) => VariableDeclarationStatement.fromJson(e))
           .toList(),
@@ -705,14 +701,23 @@ class ClassDefinitionStatement extends Statement {
   }
 
   @override
-  List<Object?> get props =>
-      [name, properties, constructors, methods, position];
+  List<Object?> get props => [
+        encapsulationType,
+        name,
+        parentName,
+        properties,
+        constructors,
+        methods,
+        position,
+      ];
 
   @override
   Map<String, dynamic> toJson() {
     return {
       "type": runtimeType.toString(),
+      "encapsulationType": encapsulationType.name,
       "name": name,
+      "parentName": parentName,
       "properties": properties.map((e) => e.toJson()).toList(),
       "constructors": constructors.map((e) => e.toJson()).toList(),
       "methods": methods.map((e) => e.toJson()).toList(),
@@ -725,12 +730,14 @@ class ConstructorDefinitionStatement extends Statement {
   final String className;
   final String? constructorName;
   final List<Parameter> parameters;
+  final List<Expression>? thisConstructorParameters;
   final List<Statement> body;
 
   ConstructorDefinitionStatement(
     this.className,
     this.constructorName,
     this.parameters,
+    this.thisConstructorParameters,
     this.body,
     super.position,
   );
@@ -740,14 +747,23 @@ class ConstructorDefinitionStatement extends Statement {
       json['className'],
       json['constructorName'],
       List.from(json['parameters']).map((e) => Parameter.fromJson(e)).toList(),
+      List.from(json['thisConstructorParameters'])
+          .map((e) => Expression.fromJson(e))
+          .toList(),
       List.from(json['body']).map((e) => Statement.fromJson(e)).toList(),
       Position.fromJson(json['position']),
     );
   }
 
   @override
-  List<Object?> get props =>
-      [className, constructorName, parameters, body, position];
+  List<Object?> get props => [
+        className,
+        constructorName,
+        parameters,
+        thisConstructorParameters,
+        body,
+        position,
+      ];
 
   @override
   Map<String, dynamic> toJson() {
@@ -756,6 +772,8 @@ class ConstructorDefinitionStatement extends Statement {
       "className": className,
       "constructorName": constructorName,
       "parameters": parameters.map((e) => e.toJson()).toList(),
+      "thisConstructorParameters":
+          thisConstructorParameters?.map((e) => e.toJson()).toList(),
       "body": body.map((e) => e.toJson()).toList(),
       "position": position?.toJson(),
     };

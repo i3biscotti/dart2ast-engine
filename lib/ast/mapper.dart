@@ -57,12 +57,22 @@ VariableValueType? _Antlr4ToAstValueType(TypeContext? type) => switch (type) {
 extension VarDeclarationStatementConverterExtension
     on VarDeclarationStatementContext {
   VariableDeclarationStatement toAst(bool considerPosition) {
+    late final VariableType varType;
+
+    if (this.VAR() != null) {
+      varType = VariableType.variable;
+    } else if (type() != null) {
+      varType = VariableType.type;
+    } else {
+      throw UnimplementedError();
+    }
+
     final name = this.ID()!.text!;
     final value = this.expression()!.toAst(considerPosition);
     final valueType = _Antlr4ToAstValueType(this.type());
 
     return VariableDeclarationStatement(
-      VariableType.variable,
+      varType,
       name,
       valueType,
       value,
@@ -361,7 +371,17 @@ extension ClassDefinitionStatementConverterExtension
   ClassDefinitionStatement toAst(bool considerPosition) {
     final cls = this.classDefinition();
 
-    final className = cls?.name?.text;
+    var className = cls?.name?.text;
+    late final EncapsulationType encapsulationType;
+
+    if (className!.startsWith('_')) {
+      encapsulationType = EncapsulationType.private;
+      className = className.substring(1);
+    } else {
+      encapsulationType = EncapsulationType.public;
+    }
+
+    final parentClassName = cls?.parentName?.text;
     final statements = (cls?.classStatements() ?? [])
         .map((e) => e.toAst(considerPosition))
         .toList();
@@ -374,7 +394,9 @@ extension ClassDefinitionStatementConverterExtension
         statements.whereType<ConstructorDefinitionStatement>().toList();
 
     return ClassDefinitionStatement(
-      className!,
+      encapsulationType,
+      className,
+      parentClassName,
       properties,
       constructors,
       methods,
@@ -391,6 +413,8 @@ extension ClassStatementConverterExtension on ClassStatementContext {
         st.toAst(considerPosition),
       MainClassConstructorDeclarationStatementContext st =>
         st.toAst(considerPosition),
+      NamedClassConstructorDeclarationStatementContext st =>
+        st.toAst(considerPosition),
       ClassMethodDeclarationStatementContext st => st.toAst(considerPosition),
       _ => throw UnimplementedError()
     };
@@ -401,11 +425,11 @@ extension ClassVarDeclarationStatementConverterExtension
     on ClassVarDeclarationStatementContext {
   VariableDeclarationStatement toAst(bool considerPosition) {
     final name = this.ID()!.text!;
-    final value = this.expression()!.toAst(considerPosition);
+    final value = this.expression()?.toAst(considerPosition);
     final valueType = _Antlr4ToAstValueType(this.type());
 
     return VariableDeclarationStatement(
-      VariableType.variable,
+      VariableType.type,
       name,
       valueType,
       value,
@@ -418,7 +442,7 @@ extension ClassImmutableVarDeclarationStatementConverterExtension
     on ClassImmutableVarDeclarationStatementContext {
   VariableDeclarationStatement toAst(bool considerPosition) {
     final name = this.ID()!.text!;
-    final value = this.expression()!.toAst(considerPosition);
+    final value = this.expression()?.toAst(considerPosition);
     final valueType = _Antlr4ToAstValueType(this.type());
 
     return VariableDeclarationStatement(
@@ -447,6 +471,7 @@ extension ClassConstructorDeclarationStatementConverterExtension
       className,
       null,
       parameters,
+      null,
       statements,
       toPosition(considerPosition),
     );
@@ -466,10 +491,22 @@ extension NamedConstructorDeclarationStatementConverterExtension
         .map((e) => e.toAst(considerPosition))
         .toList();
 
+    List<Expression>? thisConmstructorParams = null;
+
+    if (thisConstructorCall() != null) {
+      final thisConstuctor = this.thisConstructorCall()!;
+
+      thisConmstructorParams = thisConstuctor
+          .expressions()
+          .map((e) => e.toAst(considerPosition))
+          .toList();
+    }
+
     return ConstructorDefinitionStatement(
       className,
       constructorName,
       parameters,
+      thisConmstructorParams,
       statements,
       toPosition(considerPosition),
     );

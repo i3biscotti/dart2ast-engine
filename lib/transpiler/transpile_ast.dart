@@ -51,24 +51,30 @@ extension StatementTranspilerExtension on Statement {
 extension VariableDeclarationStatementTranspilerExtension
     on VariableDeclarationStatement {
   String transpile([int depth = 0]) {
-    String statement = '';
+    var statement = generateIdentationSpace(depth);
 
-    String variableTypeTranspiler = switch (varType) {
-      VariableType.variable => 'var',
-      VariableType.immutable => 'final',
-      VariableType.constant => 'const',
-    };
+    if (varType != VariableType.type) {
+      String variableTypeTranspiled = switch (varType) {
+        VariableType.variable => 'var',
+        VariableType.immutable => 'final',
+        VariableType.constant => 'const',
+        _ => throw UnimplementedError()
+      };
 
-    statement += variableTypeTranspiler;
-
-    if (valueType != null) {
-      statement += ' ${valueType!.typeName}';
+      statement += variableTypeTranspiled + " ";
     }
 
-    String valueTranspiler = value.transpile();
-    statement = generateIdentationSpace(depth) +
-        statement +
-        ' $name = $valueTranspiler;';
+    if (valueType != null) {
+      statement += '${valueType!.typeName} ';
+    }
+
+    statement += "$name";
+
+    if (value != null) {
+      statement += ' = ${value!.transpile()};';
+    } else {
+      statement += ';';
+    }
 
     return statement;
   }
@@ -212,23 +218,46 @@ extension ParameterTranspilerExtension on Parameter {
 
 extension ClassDefinitionTranspilerExtension on ClassDefinitionStatement {
   String transpile([int depth = 0]) {
-    String nameTranspiler = name;
+    String className = name;
 
-    String propertiesTranspiled =
-        properties.map((e) => e.transpile(depth + 1)).join('\n');
-    String constructorsTranspiled =
-        constructors.map((e) => e.transpile(depth + 1)).join('\n');
-    String methodsTranspiled =
-        methods.map((e) => e.transpile(depth + 1)).join('\n');
+    if (encapsulationType == EncapsulationType.private) {
+      className = '_$name';
+    }
 
-    String classDeclaration = """
-    |${generateIdentationSpace(depth)}class $nameTranspiler { 
-    |$propertiesTranspiled
-    |$constructorsTranspiled
-    |$methodsTranspiled 
-    |${generateIdentationSpace(depth)}}
-    """
-        .trimMargin();
+    String classSign = "class $className";
+
+    if (parentName != null && parentName!.isNotEmpty) {
+      classSign += " extends $parentName";
+    }
+
+    String classBody = "";
+
+    if (properties.isNotEmpty) {
+      String propertiesTranspiled =
+          properties.map((e) => e.transpile(depth + 1)).join('\n');
+      classBody += propertiesTranspiled + "\n";
+    }
+
+    if (constructors.isNotEmpty) {
+      String constructorsTranspiled =
+          constructors.map((e) => e.transpile(depth + 1)).join('\n');
+      classBody += constructorsTranspiled + "\n";
+    }
+
+    if (methods.isNotEmpty) {
+      String methodsTranspiled =
+          methods.map((e) => e.transpile(depth + 1)).join('\n');
+      classBody += methodsTranspiled;
+    }
+
+    if (classBody.isEmpty) {
+      classBody = "{}";
+    } else {
+      classBody = "{\n$classBody${generateIdentationSpace(depth)}}\n";
+    }
+
+    final classDeclaration =
+        "${generateIdentationSpace(depth)}$classSign $classBody";
 
     return classDeclaration;
   }
@@ -245,19 +274,29 @@ extension ConstructorDefinitionTranspilerExtension
     String parametersTranspiler =
         parameters.map((p) => p.transpile()).toList().join(', ');
 
+    var thisConstructor = "";
+
+    if (thisConstructorParameters != null) {
+      thisConstructor =
+          this.thisConstructorParameters!.map((e) => e.transpile()).join(', ');
+      thisConstructor = ' : this($thisConstructor)';
+    }
+
     String bodyTranspiled = ";";
     if (body.isNotEmpty) {
       bodyTranspiled = """
-      |{
+      | {
       |${body.map((e) => e.transpile(depth + 1)).join('\n')}
       |${generateIdentationSpace(depth)}}"""
-          .unindent();
+          .trimMargin();
     }
 
-    String constructorDeclaration = """
-    |${generateIdentationSpace(depth)}$constructorNameTranspiled($parametersTranspiler) $bodyTranspiled
-    """
-        .trimMargin();
+    String constructorDeclaration = generateIdentationSpace(depth) +
+        constructorNameTranspiled +
+        "($parametersTranspiler)" +
+        thisConstructor +
+        bodyTranspiled;
+    ;
 
     return constructorDeclaration;
   }
