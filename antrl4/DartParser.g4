@@ -63,8 +63,10 @@ expression
     |                  operand=MINUS                value=expression            #UnaryMathExpression
     |                  operand=PLUS                 value=expression            #UnaryMathExpression
     |                  operand=NOT                  value=expression            #UnaryLogicNegationExpression
-    | ID PLUS PLUS                                                              #IncrementExpression
-    | ID MINUS MINUS                                                            #DecrementExpression
+    | PLUS PLUS ID                                                              #PreIncrementExpression
+    | ID PLUS PLUS                                                              #PostIncrementExpression
+    | MINUS MINUS ID                                                            #PreDecrementExpression
+    | ID MINUS MINUS                                                            #PostDecrementExpression
     | PAREN_OPEN       value=expression             PAREN_CLOSE                 #ParenthesysExpression
     | ID                                                                        #VarReferenceExpression
     | ID PAREN_OPEN (expression COMMA)* expression? PAREN_CLOSE                 #FunctionCallExpression

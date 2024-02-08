@@ -15,6 +15,10 @@ extension ExpressionConverterExtension on ExpressionContext {
       BinaryLogicExpressionContext e => e.toAst(considerPosition),
       UnaryMathExpressionContext e => e.toAst(considerPosition),
       UnaryLogicNegationExpressionContext e => e.toAst(considerPosition),
+      PreIncrementExpressionContext e => e.toAst(considerPosition),
+      PostIncrementExpressionContext e => e.toAst(considerPosition),
+      PreDecrementExpressionContext e => e.toAst(considerPosition),
+      PostDecrementExpressionContext e => e.toAst(considerPosition),
       ParenthesysExpressionContext e => e.toAst(considerPosition),
       VarReferenceExpressionContext e => e.toAst(considerPosition),
       FunctionCallExpressionContext e => e.toAst(considerPosition),
@@ -110,6 +114,51 @@ extension UnaryLogicExpressionConverterExtension
     );
   }
 }
+
+extension PreIncrementExpressionConverterExtension on PreIncrementExpressionContext{
+   PreIncrementExpression toAst(bool considerPosition){
+      final name = this.ID()!.text!;
+
+      return PreIncrementExpression(
+      name,
+      toPosition(considerPosition),
+    );
+   }
+}
+
+extension PostIncrementExpressionConverterExtension on PostIncrementExpressionContext{
+  PostIncrementExpression toAst(bool considerPosition){
+      final name = this.ID()!.text!;
+
+      return PostIncrementExpression(
+      name,
+      toPosition(considerPosition),
+    );
+  }
+}
+
+extension PreDecrementExpressionConverterExtension on PreDecrementExpressionContext{
+  PreDecrementExpression toAst(bool considerPosition){
+      final name = this.ID()!.text!;
+
+      return PreDecrementExpression(
+      name,
+      toPosition(considerPosition),
+    );
+  }
+}
+
+extension PostDecrementExpressionConverterExtension on PostDecrementExpressionContext{
+  PostDecrementExpression toAst(bool considerPosition){
+      final name = this.ID()!.text!;
+
+      return PostDecrementExpression(
+      name,
+      toPosition(considerPosition),
+    );
+  }
+}
+
 
 extension ParenthesysExpressionConverterExtension
     on ParenthesysExpressionContext {

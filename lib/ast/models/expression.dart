@@ -255,12 +255,13 @@ class UnaryLogicExpression extends Expression {
   }
 }
 
-class IncrementExpression extends Expression {
-  final String name;
 
-  IncrementExpression(this.name, super.position);
+class PreIncrementExpression extends Expression{
+ final String name;
 
-  IncrementExpression.fromJson(Map<String, dynamic> json)
+  PreIncrementExpression(this.name, super.position);
+
+  PreIncrementExpression.fromJson(Map<String, dynamic> json)
       : name = json['name'],
         super(Position.fromJson(json['position']));
 
@@ -277,12 +278,59 @@ class IncrementExpression extends Expression {
   }
 }
 
-class DecrementExpression extends Expression {
+
+class PostIncrementExpression extends Expression {
   final String name;
 
-  DecrementExpression(this.name, super.position);
+  PostIncrementExpression(this.name, super.position);
 
-  DecrementExpression.fromJson(Map<String, dynamic> json)
+  PostIncrementExpression.fromJson(Map<String, dynamic> json)
+      : name = json['name'],
+        super(Position.fromJson(json['position']));
+
+  @override
+  List<Object?> get props => [name, position];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "type": runtimeType.toString(),
+      "name": name,
+      "position": position?.toJson(),
+    };
+  }
+}
+
+
+class PreDecrementExpression extends Expression{
+  final String name;
+
+  PreDecrementExpression(this.name, super.position);
+
+  PreDecrementExpression.fromJson(Map<String, dynamic> json)
+      : name = json['name'],
+        super(Position.fromJson(json['position']));
+
+  @override
+  List<Object?> get props => [name, position];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "type": runtimeType.toString(),
+      "name": name,
+      "position": position?.toJson(),
+    };
+  }
+}
+
+
+class PostDecrementExpression extends Expression {
+  final String name;
+
+  PostDecrementExpression(this.name, super.position);
+
+  PostDecrementExpression.fromJson(Map<String, dynamic> json)
       : name = json['name'],
         super(Position.fromJson(json['position']));
 

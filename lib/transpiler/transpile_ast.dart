@@ -26,6 +26,10 @@ extension ExpressionTranspilerExtension on Expression {
       BinaryMathExpression e => e.transpile(),
       UnaryLogicExpression e => e.transpile(),
       UnaryMathExpression e => e.transpile(),
+      PreIncrementExpression e => e.transpile(),
+      PostIncrementExpression e => e.transpile(),
+      PreDecrementExpression e => e.transpile(),
+      PostDecrementExpression e => e.transpile(),
       ParenthesysExpression e => e.transpile(),
       VarReferenceExpression e => e.transpile(),
       FunctionCallExpression e => e.transpile(),
@@ -164,6 +168,34 @@ extension UnaryMathExpressionTranspilerExtension on UnaryMathExpression {
     String operatorTranspiler = operand.symbol;
 
     String expression = '$operatorTranspiler$valueTranspiler';
+    return expression;
+  }
+}
+
+extension PreIncrementExpressionTranspilerExtension on PreIncrementExpression {
+  String transpile() {
+    String expression = '++$name';
+    return expression;
+  }
+}
+
+extension PostIncrementExpressionTranspilerExtension on PostIncrementExpression {
+  String transpile() {
+    String expression = '$name++';
+    return expression;
+  }
+}
+
+extension PreDecrementExpressionTranspilerExtension on PreDecrementExpression {
+  String transpile() {
+    String expression = '--$name';
+    return expression;
+  }
+}
+
+extension PostDecrementExpressionTranspilerExtension on PostDecrementExpression {
+  String transpile() {
+    String expression = '$name--';
     return expression;
   }
 }
