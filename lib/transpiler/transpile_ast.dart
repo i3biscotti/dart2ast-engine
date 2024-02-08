@@ -18,17 +18,18 @@ extension NodeTranspilerExtension on Node {
 extension ExpressionTranspilerExtension on Expression {
   String transpile() {
     return switch (this) {
-      IntLit intlit => intlit.value,
-      DecLit declit => declit.value,
-      BoolLit boollit => boollit.value,
-      StringLit stringlit => stringlit.value,
-      BinaryLogicExpression expression => expression.transpile(),
-      BinaryMathExpression expression => expression.transpile(),
-      UnaryLogicExpression expression => expression.transpile(),
-      UnaryMathExpression expression => expression.transpile(),
-      ParenthesysExpression expression => expression.transpile(),
-      VarReferenceExpression expression => expression.transpile(),
-      FunctionCallExpression expression => expression.transpile(),
+      IntLit e => e.value,
+      DecLit e => e.value,
+      BoolLit e => e.value,
+      StringLit e => e.value,
+      BinaryLogicExpression e => e.transpile(),
+      BinaryMathExpression e => e.transpile(),
+      UnaryLogicExpression e => e.transpile(),
+      UnaryMathExpression e => e.transpile(),
+      ParenthesysExpression e => e.transpile(),
+      VarReferenceExpression e => e.transpile(),
+      FunctionCallExpression e => e.transpile(),
+      ObjectMethodCallExpression e => e.transpile(),
       _ => throw UnimplementedError()
     };
   }
@@ -45,6 +46,7 @@ extension StatementTranspilerExtension on Statement {
       ClassDefinitionStatement st => st.transpile(depth),
       FunctionDefinitionStatement st => st.transpile(depth),
       ReturnStatement st => st.transpile(depth),
+      ObjectPropertyAssignmentStatement st => st.transpile(depth),
       _ => throw UnimplementedError()
     };
   }
@@ -95,7 +97,7 @@ extension ExpressionDefinitionStatementTranspilerExtension
     on ExpressionDefinitionStatement {
   String transpile([int depth = 0]) {
     String valueTranspiler = value.transpile();
-    String expression = '$valueTranspiler';
+    String expression = '$valueTranspiler;';
     return expression;
   }
 }
@@ -182,58 +184,64 @@ extension VariableReferenceTranspilerExtension on VarReferenceExpression {
   }
 }
 
-
 //task 3
-extension IfStatementTranspilerExtension on IfStatement{
+extension IfStatementTranspilerExtension on IfStatement {
   String transpile([int depth = 0]) {
     String ifBlockTranspiler = ifBlock.transpile(depth);
-    String elseIfBlocksTranspiler = elseIfBlocks.map((b) => b.transpile(depth)).toList().join(', ');
+    String elseIfBlocksTranspiler =
+        elseIfBlocks.map((b) => b.transpile(depth)).toList().join(', ');
     String? elseBlockTranspiler = elseBlock?.transpile(depth);
-    String statement = '$ifBlockTranspiler$elseIfBlocksTranspiler$elseBlockTranspiler';
+    String statement =
+        '$ifBlockTranspiler$elseIfBlocksTranspiler$elseBlockTranspiler';
     return statement;
   }
 }
 
-extension IfBlockTranspilerExtension on IfBlock{
+extension IfBlockTranspilerExtension on IfBlock {
   String transpile([int depth = 0]) {
-     String? conditionTranspiled = condition?.transpile();
-     String statementsTranspiled = statements.map((s) => s.transpile(depth+1)).join('\n');
+    String? conditionTranspiled = condition?.transpile();
+    String statementsTranspiled =
+        statements.map((s) => s.transpile(depth + 1)).join('\n');
 
-     String ifblockstatement = """
+    String ifblockstatement = """
                                |if ($conditionTranspiled) {
                                |$statementsTranspiled
                                |${generateIdentationSpace(depth)}}
-                               """ .trimMargin();
-     String elseifblockstatement = """
+                               """
+        .trimMargin();
+    String elseifblockstatement = """
                                    |${generateIdentationSpace(depth)}else if ($conditionTranspiled) {
                                    |$statementsTranspiled
                                    |${generateIdentationSpace(depth)}}
-                                   """ .trimMargin();
-     String elsestatement = """
+                                   """
+        .trimMargin();
+    String elsestatement = """
                             |${generateIdentationSpace(depth)}else {
                             |$statementsTranspiled
                             |${generateIdentationSpace(depth)}}
-                            """ .trimMargin();
-     return switch(blockType){
+                            """
+        .trimMargin();
+    return switch (blockType) {
       BlockType.ifBlock => ifblockstatement,
       BlockType.elseIfBlock => elseifblockstatement,
       BlockType.elseBlock => elsestatement,
-     } ;   
+    };
   }
 }
 
-extension WhileStatementTranspilerExtension on WhileStatement{
-  String transpile([int depth = 0]){
+extension WhileStatementTranspilerExtension on WhileStatement {
+  String transpile([int depth = 0]) {
     String? conditionTranspiled = condition?.transpile();
-    String statementsTranspiled = statements.map((s) => s.transpile(depth+1)).join('\n');
+    String statementsTranspiled =
+        statements.map((s) => s.transpile(depth + 1)).join('\n');
     String whilestatement = """
                             |while ($conditionTranspiled) {
-                            |${generateIdentationSpace(depth+1)}$statementsTranspiled}
-                            """  .trimMargin();
+                            |${generateIdentationSpace(depth + 1)}$statementsTranspiled}
+                            """
+        .trimMargin();
     return whilestatement;
   }
 }
-
 
 extension FunctionDefinitionTranspilerExtension on FunctionDefinitionStatement {
   String transpile([int depth = 0]) {
@@ -354,5 +362,32 @@ extension ConstructorDefinitionTranspilerExtension
     ;
 
     return constructorDeclaration;
+  }
+}
+
+extension ObjectMethodCallExpressionTranspilerExtension
+    on ObjectMethodCallExpression {
+  String transpile() {
+    String objectNameTranspiler = objectName;
+    String methodNameTranspiler = methodName;
+    String parametersTranspiler =
+        parameters.map((p) => p.transpile()).toList().join(', ');
+    String expression =
+        '$objectNameTranspiler.$methodNameTranspiler($parametersTranspiler)';
+    return expression;
+  }
+}
+
+extension ObjectPropertyReferenceTranspilerExtension
+    on ObjectPropertyAssignmentStatement {
+  String transpile([int depth = 0]) {
+    String objectNameTranspiler = objectName;
+    String propertyNameTranspiler = propertyName;
+    String value = this.value.transpile();
+
+    String statement = generateIdentationSpace(depth) +
+        '$objectNameTranspiler.$propertyNameTranspiler = $value;';
+
+    return statement;
   }
 }
