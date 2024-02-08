@@ -197,7 +197,7 @@ void main() {
             equals(
               ProgramFile(
                 <Statement>[
-                  IfStatement(
+                  IfDefinitionStatement(
                       IfBlock(
                           BinaryLogicExpression(
                               VarReferenceExpression('voto', null),
@@ -263,10 +263,10 @@ void main() {
                     IntLit('1', null),
                     null,
                   ),
-                  WhileStatement(
+                  WhileDefinitionStatement(
                       VarReferenceExpression('condition', null),
                       <Statement>[
-                        IfStatement(
+                        IfDefinitionStatement(
                             IfBlock(
                                 BinaryLogicExpression(
                                   VarReferenceExpression('i', null),

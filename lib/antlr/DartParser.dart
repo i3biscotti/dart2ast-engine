@@ -225,19 +225,19 @@ class DartParser extends Parser {
         match(TOKEN_SEMICOLON);
         break;
       case 10:
-        _localctx = IfStatementContext(_localctx);
+        _localctx = IfDefinitionStatementContext(_localctx);
         enterOuterAlt(_localctx, 10);
         state = 89;
         ifDefinition();
         break;
       case 11:
-        _localctx = WhileStatementContext(_localctx);
+        _localctx = WhileDefinitionStatementContext(_localctx);
         enterOuterAlt(_localctx, 11);
         state = 90;
         whileDefinition();
         break;
       case 12:
-        _localctx = ForStatementContext(_localctx);
+        _localctx = ForDefinitionStatementContext(_localctx);
         enterOuterAlt(_localctx, 12);
         state = 91;
         forDefinition();
@@ -1983,19 +1983,6 @@ class VarDeclarationStatementContext extends StatementContext {
   }
 }
 
-class IfStatementContext extends StatementContext {
-  IfDefinitionContext? ifDefinition() => getRuleContext<IfDefinitionContext>(0);
-  IfStatementContext(StatementContext ctx) { copyFrom(ctx); }
-  @override
-  void enterRule(ParseTreeListener listener) {
-    if (listener is DartParserListener) listener.enterIfStatement(this);
-  }
-  @override
-  void exitRule(ParseTreeListener listener) {
-    if (listener is DartParserListener) listener.exitIfStatement(this);
-  }
-}
-
 class FunctionDefinitionStatementContext extends StatementContext {
   FunctionDefinitionContext? functionDefinition() => getRuleContext<FunctionDefinitionContext>(0);
   FunctionDefinitionStatementContext(StatementContext ctx) { copyFrom(ctx); }
@@ -2075,6 +2062,32 @@ class ExpressionDefinitionStatementContext extends StatementContext {
   }
 }
 
+class IfDefinitionStatementContext extends StatementContext {
+  IfDefinitionContext? ifDefinition() => getRuleContext<IfDefinitionContext>(0);
+  IfDefinitionStatementContext(StatementContext ctx) { copyFrom(ctx); }
+  @override
+  void enterRule(ParseTreeListener listener) {
+    if (listener is DartParserListener) listener.enterIfDefinitionStatement(this);
+  }
+  @override
+  void exitRule(ParseTreeListener listener) {
+    if (listener is DartParserListener) listener.exitIfDefinitionStatement(this);
+  }
+}
+
+class ForDefinitionStatementContext extends StatementContext {
+  ForDefinitionContext? forDefinition() => getRuleContext<ForDefinitionContext>(0);
+  ForDefinitionStatementContext(StatementContext ctx) { copyFrom(ctx); }
+  @override
+  void enterRule(ParseTreeListener listener) {
+    if (listener is DartParserListener) listener.enterForDefinitionStatement(this);
+  }
+  @override
+  void exitRule(ParseTreeListener listener) {
+    if (listener is DartParserListener) listener.exitForDefinitionStatement(this);
+  }
+}
+
 class ReturnStatementContext extends StatementContext {
   TerminalNode? RETURN() => getToken(DartParser.TOKEN_RETURN, 0);
   ExpressionContext? expression() => getRuleContext<ExpressionContext>(0);
@@ -2090,29 +2103,16 @@ class ReturnStatementContext extends StatementContext {
   }
 }
 
-class WhileStatementContext extends StatementContext {
+class WhileDefinitionStatementContext extends StatementContext {
   WhileDefinitionContext? whileDefinition() => getRuleContext<WhileDefinitionContext>(0);
-  WhileStatementContext(StatementContext ctx) { copyFrom(ctx); }
+  WhileDefinitionStatementContext(StatementContext ctx) { copyFrom(ctx); }
   @override
   void enterRule(ParseTreeListener listener) {
-    if (listener is DartParserListener) listener.enterWhileStatement(this);
+    if (listener is DartParserListener) listener.enterWhileDefinitionStatement(this);
   }
   @override
   void exitRule(ParseTreeListener listener) {
-    if (listener is DartParserListener) listener.exitWhileStatement(this);
-  }
-}
-
-class ForStatementContext extends StatementContext {
-  ForDefinitionContext? forDefinition() => getRuleContext<ForDefinitionContext>(0);
-  ForStatementContext(StatementContext ctx) { copyFrom(ctx); }
-  @override
-  void enterRule(ParseTreeListener listener) {
-    if (listener is DartParserListener) listener.enterForStatement(this);
-  }
-  @override
-  void exitRule(ParseTreeListener listener) {
-    if (listener is DartParserListener) listener.exitForStatement(this);
+    if (listener is DartParserListener) listener.exitWhileDefinitionStatement(this);
   }
 }
 

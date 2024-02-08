@@ -22,9 +22,9 @@ statement
     | classDefinition                                                               #ClassDefinitionStatement
     | expression SEMICOLON                                                          #ExpressionDefinitionStatement
     | RETURN expression SEMICOLON                                                   #ReturnStatement
-    | ifDefinition                                                                  #IfStatement
-    | whileDefinition                                                               #WhileStatement
-    | forDefinition                                                                 #ForStatement
+    | ifDefinition                                                                  #IfDefinitionStatement
+    | whileDefinition                                                               #WhileDefinitionStatement
+    | forDefinition                                                                 #ForDefinitionStatement
     ;
 
 varDeclaration

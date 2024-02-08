@@ -41,8 +41,8 @@ extension StatementTranspilerExtension on Statement {
       VariableDeclarationStatement st => st.transpile(depth),
       AssignmentStatement st => st.transpile(depth),
       ExpressionDefinitionStatement st => st.transpile(depth),
-      IfStatement st => st.transpile(depth),
-      WhileStatement st => st.transpile(depth),
+      IfDefinitionStatement st => st.transpile(depth),
+      WhileDefinitionStatement st => st.transpile(depth),
       ClassDefinitionStatement st => st.transpile(depth),
       FunctionDefinitionStatement st => st.transpile(depth),
       ReturnStatement st => st.transpile(depth),
@@ -185,7 +185,7 @@ extension VariableReferenceTranspilerExtension on VarReferenceExpression {
 }
 
 //task 3
-extension IfStatementTranspilerExtension on IfStatement {
+extension IfStatementTranspilerExtension on IfDefinitionStatement {
   String transpile([int depth = 0]) {
     String ifBlockTranspiler = ifBlock.transpile(depth);
     String elseIfBlocksTranspiler =
@@ -229,7 +229,7 @@ extension IfBlockTranspilerExtension on IfBlock {
   }
 }
 
-extension WhileStatementTranspilerExtension on WhileStatement {
+extension WhileStatementTranspilerExtension on WhileDefinitionStatement {
   String transpile([int depth = 0]) {
     String? conditionTranspiled = condition?.transpile();
     String statementsTranspiled =

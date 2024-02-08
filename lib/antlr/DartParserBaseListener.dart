@@ -92,27 +92,27 @@ class DartParserBaseListener implements DartParserListener {
 
   /// The default implementation does nothing.
   @override
-  void enterIfStatement(IfStatementContext ctx) {}
+  void enterIfDefinitionStatement(IfDefinitionStatementContext ctx) {}
 
   /// The default implementation does nothing.
   @override
-  void exitIfStatement(IfStatementContext ctx) {}
+  void exitIfDefinitionStatement(IfDefinitionStatementContext ctx) {}
 
   /// The default implementation does nothing.
   @override
-  void enterWhileStatement(WhileStatementContext ctx) {}
+  void enterWhileDefinitionStatement(WhileDefinitionStatementContext ctx) {}
 
   /// The default implementation does nothing.
   @override
-  void exitWhileStatement(WhileStatementContext ctx) {}
+  void exitWhileDefinitionStatement(WhileDefinitionStatementContext ctx) {}
 
   /// The default implementation does nothing.
   @override
-  void enterForStatement(ForStatementContext ctx) {}
+  void enterForDefinitionStatement(ForDefinitionStatementContext ctx) {}
 
   /// The default implementation does nothing.
   @override
-  void exitForStatement(ForStatementContext ctx) {}
+  void exitForDefinitionStatement(ForDefinitionStatementContext ctx) {}
 
   /// The default implementation does nothing.
   @override

@@ -169,19 +169,19 @@ class ReturnStatement extends Statement {
       };
 }
 
-class IfStatement extends Statement {
+class IfDefinitionStatement extends Statement {
   final IfBlock ifBlock;
   final List<IfBlock> elseIfBlocks;
   final IfBlock? elseBlock;
 
-  IfStatement(
+  IfDefinitionStatement(
     this.ifBlock,
     this.elseIfBlocks,
     this.elseBlock,
     super.position,
   );
 
-  IfStatement.fromJson(Map<String, dynamic> json)
+  IfDefinitionStatement.fromJson(Map<String, dynamic> json)
       : ifBlock = IfBlock.fromJson(json['ifBlock']),
         elseIfBlocks = List.from(json['elseifBlocks'])
             .map((e) => IfBlock.fromJson(e))
@@ -247,13 +247,13 @@ class IfBlock extends Node {
 }
 
 //task 4
-class WhileStatement extends Statement {
+class WhileDefinitionStatement extends Statement {
   final Expression? condition;
   final List<Statement> statements;
 
-  WhileStatement(this.condition, this.statements, super.position);
+  WhileDefinitionStatement(this.condition, this.statements, super.position);
 
-  WhileStatement.fromJson(Map<String, dynamic> json)
+  WhileDefinitionStatement.fromJson(Map<String, dynamic> json)
       : this(
             json["condition"] != null
                 ? Expression.fromJson(json["condition"])
@@ -414,13 +414,13 @@ class ItemDefinition extends Node {
       };
 }
 
-class ForStatement extends Statement {
+class ForDefinitionStatement extends Statement {
   final ForCondition forCondition;
   final List<Statement> statements;
 
-  ForStatement(this.forCondition, this.statements, super.position);
+  ForDefinitionStatement(this.forCondition, this.statements, super.position);
 
-  ForStatement.fromJson(Map<String, dynamic> json)
+  ForDefinitionStatement.fromJson(Map<String, dynamic> json)
       : this(
           ForCondition.fromJson(json['forCodition']),
           List.from(json['statements'] ?? [])

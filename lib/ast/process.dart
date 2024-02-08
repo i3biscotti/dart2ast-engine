@@ -58,13 +58,13 @@ extension StatementProcessExtension on Statement {
         statement.value.process(operation, scope);
         break;
 
-      case IfStatement statement:
-      //TODO:grazie simo !!!
-      break;
+      case IfDefinitionStatement statement:
+        //TODO:grazie simo !!!
+        break;
 
-      case WhileStatement statement:
-      //TODO:simo grazie anche di questo!!!
-      break;
+      case WhileDefinitionStatement statement:
+        //TODO:simo grazie anche di questo!!!
+        break;
 
       case FunctionDefinitionStatement statement:
         var newScope = "$scope/${generateScopeId()}";

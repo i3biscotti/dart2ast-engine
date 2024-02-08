@@ -210,7 +210,7 @@ void main() {
             getMultilineParseTree(rootNode),
             equals("""
       |Node(DartFile)
-      |  Node(IfStatement)
+      |  Node(IfDefinitionStatement)
       |    Node(IfDefinition)
       |      Node(IfBlock)
       |        T[if]
@@ -292,7 +292,7 @@ void main() {
             |      Node(IntLiteralExpression)
             |        T[1]
             |    T[;]
-            |  Node(WhileStatement)
+            |  Node(WhileDefinitionStatement)
             |    Node(WhileDefinition)
             |      T[while]
             |      T[(]
@@ -301,7 +301,7 @@ void main() {
             |      T[)]
             |      Node(Block)
             |        T[{]
-            |        Node(IfStatement)
+            |        Node(IfDefinitionStatement)
             |          Node(IfDefinition)
             |            Node(IfBlock)
             |              T[if]
@@ -365,7 +365,7 @@ void main() {
             |      Node(IntLiteralExpression)
             |        T[0]
             |    T[;]
-            |  Node(ForStatement)
+            |  Node(ForDefinitionStatement)
             |    Node(ForDefinition)
             |      T[for]
             |      T[(]
@@ -439,7 +439,7 @@ void main() {
             |      Node(IntLiteralExpression)
             |        T[0]
             |    T[;]
-            |  Node(ForStatement)
+            |  Node(ForDefinitionStatement)
             |    Node(ForDefinition)
             |      T[for]
             |      T[(]

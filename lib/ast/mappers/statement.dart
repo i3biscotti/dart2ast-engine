@@ -8,8 +8,8 @@ extension StatementConverterExtension on StatementContext {
       ConstDeclarationStatementContext st => st.toAst(considerPosition),
       AssignmentStatementContext st => st.toAst(considerPosition),
       ExpressionDefinitionStatementContext st => st.toAst(considerPosition),
-      IfStatementContext st => st.toAst(considerPosition),
-      WhileStatementContext st => st.toAst(considerPosition),
+      IfDefinitionStatementContext st => st.toAst(considerPosition),
+      WhileDefinitionStatementContext st => st.toAst(considerPosition),
       FunctionDefinitionStatementContext st => st.toAst(considerPosition),
       ReturnStatementContext st => st.toAst(considerPosition),
       ClassDefinitionStatementContext st => st.toAst(considerPosition),
@@ -128,8 +128,8 @@ extension ReturnStatementConverterExtension on ReturnStatementContext {
 }
 
 //task 3
-extension IfStatementConverterExtension on IfStatementContext {
-  IfStatement toAst(bool considerPosition) {
+extension IfStatementConverterExtension on IfDefinitionStatementContext {
+  IfDefinitionStatement toAst(bool considerPosition) {
     final ifDefinition = this.ifDefinition();
     final ifBlock = ifDefinition!.ifBlock()!.toAst(considerPosition);
     final elseIfBlocks = ifDefinition
@@ -138,7 +138,7 @@ extension IfStatementConverterExtension on IfStatementContext {
         .toList();
     final elseBlock = ifDefinition.elseBlock()?.toAst(considerPosition);
 
-    return IfStatement(
+    return IfDefinitionStatement(
       ifBlock,
       elseIfBlocks,
       elseBlock,
@@ -204,8 +204,8 @@ extension ElseBlockConverterExtension on ElseBlockContext {
   }
 }
 
-extension WhileStatementConverterExtension on WhileStatementContext {
-  WhileStatement toAst(bool considerPosition) {
+extension WhileStatementConverterExtension on WhileDefinitionStatementContext {
+  WhileDefinitionStatement toAst(bool considerPosition) {
     final whileDefinition = this.whileDefinition();
     final condition = whileDefinition!.expression()?.toAst(considerPosition);
     final statements = whileDefinition
@@ -214,7 +214,7 @@ extension WhileStatementConverterExtension on WhileStatementContext {
         .map((e) => e.toAst(considerPosition))
         .toList();
 
-    return WhileStatement(
+    return WhileDefinitionStatement(
       condition,
       statements,
       toPosition(considerPosition),

@@ -95,32 +95,32 @@ abstract class DartParserListener extends ParseTreeListener {
   /// [ctx] the parse tree
   void exitReturnStatement(ReturnStatementContext ctx);
 
-  /// Enter a parse tree produced by the [IfStatement]
+  /// Enter a parse tree produced by the [IfDefinitionStatement]
   /// labeled alternative in [file.parserName>.statement].
   /// [ctx] the parse tree
-  void enterIfStatement(IfStatementContext ctx);
-  /// Exit a parse tree produced by the [IfStatement]
+  void enterIfDefinitionStatement(IfDefinitionStatementContext ctx);
+  /// Exit a parse tree produced by the [IfDefinitionStatement]
   /// labeled alternative in [DartParser.statement].
   /// [ctx] the parse tree
-  void exitIfStatement(IfStatementContext ctx);
+  void exitIfDefinitionStatement(IfDefinitionStatementContext ctx);
 
-  /// Enter a parse tree produced by the [WhileStatement]
+  /// Enter a parse tree produced by the [WhileDefinitionStatement]
   /// labeled alternative in [file.parserName>.statement].
   /// [ctx] the parse tree
-  void enterWhileStatement(WhileStatementContext ctx);
-  /// Exit a parse tree produced by the [WhileStatement]
+  void enterWhileDefinitionStatement(WhileDefinitionStatementContext ctx);
+  /// Exit a parse tree produced by the [WhileDefinitionStatement]
   /// labeled alternative in [DartParser.statement].
   /// [ctx] the parse tree
-  void exitWhileStatement(WhileStatementContext ctx);
+  void exitWhileDefinitionStatement(WhileDefinitionStatementContext ctx);
 
-  /// Enter a parse tree produced by the [ForStatement]
+  /// Enter a parse tree produced by the [ForDefinitionStatement]
   /// labeled alternative in [file.parserName>.statement].
   /// [ctx] the parse tree
-  void enterForStatement(ForStatementContext ctx);
-  /// Exit a parse tree produced by the [ForStatement]
+  void enterForDefinitionStatement(ForDefinitionStatementContext ctx);
+  /// Exit a parse tree produced by the [ForDefinitionStatement]
   /// labeled alternative in [DartParser.statement].
   /// [ctx] the parse tree
-  void exitForStatement(ForStatementContext ctx);
+  void exitForDefinitionStatement(ForDefinitionStatementContext ctx);
 
   /// Enter a parse tree produced by [DartParser.varDeclaration].
   /// [ctx] the parse tree
