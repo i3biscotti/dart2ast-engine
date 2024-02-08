@@ -1,1 +1,1 @@
-final element = ClassToInstance()
+final element = ClassToInstance();

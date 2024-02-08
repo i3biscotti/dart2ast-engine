@@ -6,8 +6,9 @@ import 'package:dart2ast_engine/parsing/models.dart';
 import 'package:test/test.dart';
 
 Future<DartLexer> lexerForResource(String resourceName) async {
-  final fileInputStream =
-      await File('test/resources/$resourceName.txt').toStream();
+  final fileInputStream = await File(
+    'test/resources/$resourceName.txt',
+  ).toStream();
 
   return DartLexer(fileInputStream);
 }
@@ -124,42 +125,42 @@ void main() {
       test('if_statement', () async {
         final lexer = await lexerForResource('task3/if_statement');
         expect(
-          tokens(lexer),
-          equals([
-            'IF',
-            'PAREN_OPEN',
-            'ID',
-            'GREATER_THAN',
-            'INTLIT',
-            'PAREN_CLOSE',
-            'GRAPH_OPEN',
-            'ID',
-            'ASSIGN',
-            'STRINGLIT',
-            'SEMICOLON',
-            'GRAPH_CLOSE',
-            'ELSE',
-            'IF',
-            'PAREN_OPEN',
-            'ID',
-            'EQUAL',
-            'INTLIT',
-            'PAREN_CLOSE',
-            'GRAPH_OPEN',
-            'ID',
-            'ASSIGN',
-            'STRINGLIT',
-            'SEMICOLON',
-            'GRAPH_CLOSE',
-            'ELSE',
-            'GRAPH_OPEN',
-            'ID',
-            'ASSIGN',
-            'STRINGLIT',
-            'SEMICOLON',
-            'GRAPH_CLOSE',
-            'EOF'
-          ]));
+            tokens(lexer),
+            equals([
+              'IF',
+              'PAREN_OPEN',
+              'ID',
+              'GREATER_THAN',
+              'INTLIT',
+              'PAREN_CLOSE',
+              'GRAPH_OPEN',
+              'ID',
+              'ASSIGN',
+              'STRINGLIT',
+              'SEMICOLON',
+              'GRAPH_CLOSE',
+              'ELSE',
+              'IF',
+              'PAREN_OPEN',
+              'ID',
+              'EQUAL',
+              'INTLIT',
+              'PAREN_CLOSE',
+              'GRAPH_OPEN',
+              'ID',
+              'ASSIGN',
+              'STRINGLIT',
+              'SEMICOLON',
+              'GRAPH_CLOSE',
+              'ELSE',
+              'GRAPH_OPEN',
+              'ID',
+              'ASSIGN',
+              'STRINGLIT',
+              'SEMICOLON',
+              'GRAPH_CLOSE',
+              'EOF'
+            ]));
       });
     },
   );
@@ -168,47 +169,46 @@ void main() {
     "Task 4",
     () {
       test('while_statement', () async {
-        final lexer = 
-        await lexerForResource('task4/while_statement');
+        final lexer = await lexerForResource('task4/while_statement');
 
-      expect(
-        tokens(lexer),
-        equals(<String>[
-          'VAR',
-          'INT',
-          'ID',
-          'ASSIGN',
-          'INTLIT',
-          'SEMICOLON',
-          'WHILE',
-          'PAREN_OPEN',
-          'ID',
-          'PAREN_CLOSE',
-          'GRAPH_OPEN',
-          'IF',
-          'PAREN_OPEN',
-          'ID',
-          'LOWER_THAN',
-          'INTLIT',
-          'PAREN_CLOSE',
-          'GRAPH_OPEN',
-          'ID',
-          'ASSIGN',
-          'ID',
-          'PLUS',
-          'INTLIT',
-          'SEMICOLON',
-          'GRAPH_CLOSE',
-          'ELSE',
-          'GRAPH_OPEN',
-          'ID',
-          'ASSIGN',
-          'BOOLLIT',
-          'SEMICOLON',
-          'GRAPH_CLOSE',
-          'GRAPH_CLOSE',
-          'EOF'
-        ]));
+        expect(
+            tokens(lexer),
+            equals(<String>[
+              'VAR',
+              'INT',
+              'ID',
+              'ASSIGN',
+              'INTLIT',
+              'SEMICOLON',
+              'WHILE',
+              'PAREN_OPEN',
+              'ID',
+              'PAREN_CLOSE',
+              'GRAPH_OPEN',
+              'IF',
+              'PAREN_OPEN',
+              'ID',
+              'LOWER_THAN',
+              'INTLIT',
+              'PAREN_CLOSE',
+              'GRAPH_OPEN',
+              'ID',
+              'ASSIGN',
+              'ID',
+              'PLUS',
+              'INTLIT',
+              'SEMICOLON',
+              'GRAPH_CLOSE',
+              'ELSE',
+              'GRAPH_OPEN',
+              'ID',
+              'ASSIGN',
+              'BOOLLIT',
+              'SEMICOLON',
+              'GRAPH_CLOSE',
+              'GRAPH_CLOSE',
+              'EOF'
+            ]));
       });
     },
   );
@@ -217,87 +217,83 @@ void main() {
     "Task 5",
     () {
       test('for_statement', () async {
-        final lexer = 
-           await lexerForResource('task5/for_statement');
+        final lexer = await lexerForResource('task5/for_statement');
 
         expect(
-          tokens(lexer),
-          equals(<String>[
-            'VAR',
-            'ID',
-            'ASSIGN',
-            'INTLIT',
-            'SEMICOLON',
-            'FOR',
-            'PAREN_OPEN',
-            'INT',
-            'ID',
-            'ASSIGN',
-            'INTLIT',
-            'SEMICOLON',
-            'ID',
-            'LOWER_THAN',
-            'INTLIT',
-            'SEMICOLON',
-            'ID',
-            'PLUS',
-            'PLUS',
-            'PAREN_CLOSE',
-            'GRAPH_OPEN',
-            'ID',
-            'ASSIGN',
-            'ID',
-            'PLUS',
-            'INTLIT',
-            'SEMICOLON',
-            'GRAPH_CLOSE',
-            'EOF'
-          ]));
+            tokens(lexer),
+            equals(<String>[
+              'VAR',
+              'ID',
+              'ASSIGN',
+              'INTLIT',
+              'SEMICOLON',
+              'FOR',
+              'PAREN_OPEN',
+              'INT',
+              'ID',
+              'ASSIGN',
+              'INTLIT',
+              'SEMICOLON',
+              'ID',
+              'LOWER_THAN',
+              'INTLIT',
+              'SEMICOLON',
+              'ID',
+              'PLUS',
+              'PLUS',
+              'PAREN_CLOSE',
+              'GRAPH_OPEN',
+              'ID',
+              'ASSIGN',
+              'ID',
+              'PLUS',
+              'INTLIT',
+              'SEMICOLON',
+              'GRAPH_CLOSE',
+              'EOF'
+            ]));
       });
 
       test('for_each_statement', () async {
-        final lexer = 
-           await lexerForResource('task5/for_each_statement');
+        final lexer = await lexerForResource('task5/for_each_statement');
 
         expect(
-          tokens(lexer),
-          equals(<String>[
-            'FINAL',
-            'ID',
-            'ASSIGN',
-            'SQUARE_OPEN',
-            'INTLIT',
-            'COMMA',
-            'INTLIT',
-            'SQUARE_CLOSE',
-            'SEMICOLON',
-            'VAR',
-            'ID',
-            'ASSIGN',
-            'INTLIT',
-            'SEMICOLON',
-            'FOR',
-            'PAREN_OPEN',
-            'INT',
-            'ID',
-            'IN',
-            'ID',
-            'PAREN_CLOSE',
-            'GRAPH_OPEN',
-            'ID',
-            'ASSIGN',
-            'ID',
-            'PLUS',
-            'INTLIT',
-            'SEMICOLON',
-            'GRAPH_CLOSE',
-            'EOF'
-          ]));
+            tokens(lexer),
+            equals(<String>[
+              'FINAL',
+              'ID',
+              'ASSIGN',
+              'SQUARE_OPEN',
+              'INTLIT',
+              'COMMA',
+              'INTLIT',
+              'SQUARE_CLOSE',
+              'SEMICOLON',
+              'VAR',
+              'ID',
+              'ASSIGN',
+              'INTLIT',
+              'SEMICOLON',
+              'FOR',
+              'PAREN_OPEN',
+              'INT',
+              'ID',
+              'IN',
+              'ID',
+              'PAREN_CLOSE',
+              'GRAPH_OPEN',
+              'ID',
+              'ASSIGN',
+              'ID',
+              'PLUS',
+              'INTLIT',
+              'SEMICOLON',
+              'GRAPH_CLOSE',
+              'EOF'
+            ]));
       });
     },
   );
-
-
 
   group(
     "Task 7",
@@ -579,21 +575,46 @@ void main() {
     "Task 9",
     () {
       test('object_instance', () async {
-        final lexer = await lexerForResource('task9/method_call');
+        final lexer = await lexerForResource('task9/object_instance');
 
-        expect(tokens(lexer), <String>[]);
+        expect(tokens(lexer), <String>[
+          "FINAL",
+          "ID",
+          "ASSIGN",
+          "ID",
+          "PAREN_OPEN",
+          "PAREN_CLOSE",
+          "SEMICOLON",
+          "EOF"
+        ]);
       });
 
       test('method_call', () async {
         final lexer = await lexerForResource('task9/method_call');
 
-        expect(tokens(lexer), <String>[]);
+        expect(tokens(lexer), <String>[
+          "ID",
+          "DOT",
+          "ID",
+          "PAREN_OPEN",
+          "PAREN_CLOSE",
+          "SEMICOLON",
+          "EOF",
+        ]);
       });
 
       test('property_assignment', () async {
         final lexer = await lexerForResource('task9/property_assignment');
 
-        expect(tokens(lexer), <String>[]);
+        expect(tokens(lexer), <String>[
+          "ID",
+          "DOT",
+          "ID",
+          "ASSIGN",
+          "STRINGLIT",
+          "SEMICOLON",
+          "EOF",
+        ]);
       });
     },
   );

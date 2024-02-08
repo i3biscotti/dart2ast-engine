@@ -759,19 +759,72 @@ void main() {
       test('object_instance', () async {
         final root = await _parseResource('task9/object_instance');
 
-        expect(root.toAst(false), equals(null));
+        expect(
+          root.toAst(false),
+          equals(
+            ProgramFile(
+              <Statement>[
+                VariableDeclarationStatement(
+                  VariableType.immutable,
+                  "element",
+                  null,
+                  FunctionCallExpression(
+                    "ClassToInstance",
+                    <Expression>[],
+                    null,
+                  ),
+                  null,
+                )
+              ],
+              null,
+            ),
+          ),
+        );
       });
 
       test('method_call', () async {
         final root = await _parseResource('task9/method_call');
 
-        expect(root.toAst(false), equals(null));
+        expect(
+          root.toAst(false),
+          equals(
+            ProgramFile(
+              <Statement>[
+                ExpressionDefinitionStatement(
+                  ObjectMethodCallExpression(
+                    "element",
+                    "execute",
+                    <Expression>[],
+                    null,
+                  ),
+                  null,
+                )
+              ],
+              null,
+            ),
+          ),
+        );
       });
 
       test('property_assignment', () async {
         final root = await _parseResource('task9/property_assignment');
 
-        expect(root.toAst(false), equals(null));
+        expect(
+          root.toAst(false),
+          equals(
+            ProgramFile(
+              <Statement>[
+                ObjectPropertyAssignmentStatement(
+                  "element",
+                  "name",
+                  StringLit('"Pacco"', null),
+                  null,
+                ),
+              ],
+              null,
+            ),
+          ),
+        );
       });
     },
   );

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:antlr4/antlr4.dart';
 import 'package:dart2ast_engine/antlr.dart';
@@ -64,11 +65,12 @@ void main() {
             equals("""
             |Node(DartFile)
             |  Node(VarDeclarationStatement)
-            |    T[var]
-            |    T[name]
-            |    T[=]
-            |    Node(StringLiteralExpression)
-            |      T["Simone"]
+            |    Node(VarDeclaration)
+            |      T[var]
+            |      T[name]
+            |      T[=]
+            |      Node(StringLiteralExpression)
+            |        T["Simone"]
             |    T[;]
             |  T[<EOF>]
             """
@@ -106,12 +108,13 @@ void main() {
             equals("""
             |Node(DartFile)
             |  Node(VarDeclarationStatement)
-            |    Node(IntType)
-            |      T[int]
-            |    T[age]
-            |    T[=]
-            |    Node(IntLiteralExpression)
-            |      T[16]
+            |    Node(VarDeclaration)
+            |      Node(IntType)
+            |        T[int]
+            |      T[age]
+            |      T[=]
+            |      Node(IntLiteralExpression)
+            |        T[16]
             |    T[;]
             |  T[<EOF>]
             """
@@ -140,17 +143,18 @@ void main() {
                 .trimMargin()));
       });
 
-      test('assigment_statement', () async {
+      test('Assignment_statement', () async {
         final rootNode = await _parseResource('task1/assignment_statement');
         expect(
             getMultilineParseTree(rootNode),
             equals(""" 
             |Node(DartFile)
-            |  Node(AssigmentStatement)
-            |    T[pi]
-            |    T[=]
-            |    Node(DoubleLiteralExpression)
-            |      T[3.14]
+            |  Node(AssignmentStatement)
+            |    Node(Assignment)
+            |      T[pi]
+            |      T[=]
+            |      Node(DoubleLiteralExpression)
+            |        T[3.14]
             |    T[;]
             |  T[<EOF>]
             """
@@ -189,6 +193,7 @@ void main() {
           |          Node(IntLiteralExpression)
           |            T[3]
           |        T[)]
+          |    T[;]
           |  T[<EOF>]
           """
                 .trimMargin()));
@@ -196,16 +201,14 @@ void main() {
     },
   );
 
-
   group(
     "Task 3",
     () {
       test('if_statement', () async {
-        final rootNode = 
-           await _parseResource('task3/if_statement');
-      expect(
-        getMultilineParseTree(rootNode),
-        equals("""
+        final rootNode = await _parseResource('task3/if_statement');
+        expect(
+            getMultilineParseTree(rootNode),
+            equals("""
       |Node(DartFile)
       |  Node(IfStatement)
       |    Node(IfDefinition)
@@ -219,14 +222,16 @@ void main() {
       |          Node(IntLiteralExpression)
       |            T[18]
       |        T[)]
-      |        T[{]
-      |        Node(AssigmentStatement)
-      |          T[exam]
-      |          T[=]
-      |          Node(StringLiteralExpression)
-      |            T["passed"]
-      |          T[;]
-      |        T[}]
+      |        Node(Block)
+      |          T[{]
+      |          Node(AssignmentStatement)
+      |            Node(Assignment)
+      |              T[exam]
+      |              T[=]
+      |              Node(StringLiteralExpression)
+      |                T["passed"]
+      |            T[;]
+      |          T[}]
       |      Node(ElseIfBlock)
       |        T[else]
       |        T[if]
@@ -238,52 +243,54 @@ void main() {
       |          Node(IntLiteralExpression)
       |            T[18]
       |        T[)]
-      |        T[{]
-      |        Node(AssigmentStatement)
-      |          T[exam]
-      |          T[=]
-      |          Node(StringLiteralExpression)
-      |            T["passed"]
-      |          T[;]
-      |        T[}]
+      |        Node(Block)
+      |          T[{]
+      |          Node(AssignmentStatement)
+      |            Node(Assignment)
+      |              T[exam]
+      |              T[=]
+      |              Node(StringLiteralExpression)
+      |                T["passed"]
+      |            T[;]
+      |          T[}]
       |      Node(ElseBlock)
       |        T[else]
-      |        T[{]
-      |        Node(AssigmentStatement)
-      |          T[exam]
-      |          T[=]
-      |          Node(StringLiteralExpression)
-      |            T["failed"]
-      |          T[;]
-      |        T[}]
+      |        Node(Block)
+      |          T[{]
+      |          Node(AssignmentStatement)
+      |            Node(Assignment)
+      |              T[exam]
+      |              T[=]
+      |              Node(StringLiteralExpression)
+      |                T["failed"]
+      |            T[;]
+      |          T[}]
       |  T[<EOF>]
       """
-            .trimMargin()));
+                .trimMargin()));
       });
     },
   );
-
 
   group(
     "Task 4",
     () {
       test('while_statement', () async {
-        final rootNode = 
-            await _parseResource('task4/while_statement');
-        
+        final rootNode = await _parseResource('task4/while_statement');
+
         expect(
-          getMultilineParseTree(rootNode),
-          equals(
-            """
+            getMultilineParseTree(rootNode),
+            equals("""
             |Node(DartFile)
             |  Node(VarDeclarationStatement)
-            |    T[var]
-            |    Node(IntType)
-            |      T[int]
-            |    T[i]
-            |    T[=]
-            |    Node(IntLiteralExpression)
-            |      T[1]
+            |    Node(VarDeclaration)
+            |      T[var]
+            |      Node(IntType)
+            |        T[int]
+            |      T[i]
+            |      T[=]
+            |      Node(IntLiteralExpression)
+            |        T[1]
             |    T[;]
             |  Node(WhileStatement)
             |    Node(WhileDefinition)
@@ -306,43 +313,48 @@ void main() {
             |                Node(IntLiteralExpression)
             |                  T[17]
             |              T[)]
-            |              T[{]
-            |              Node(AssigmentStatement)
-            |                T[i]
-            |                T[=]
-            |                Node(BinaryMathExpression)
-            |                  Node(VarReferenceExpression)
+            |              Node(Block)
+            |                T[{]
+            |                Node(AssignmentStatement)
+            |                  Node(Assignment)
             |                    T[i]
-            |                  T[+]
-            |                  Node(IntLiteralExpression)
-            |                    T[1]
-            |                T[;]
-            |              T[}]
+            |                    T[=]
+            |                    Node(BinaryMathExpression)
+            |                      Node(VarReferenceExpression)
+            |                        T[i]
+            |                      T[+]
+            |                      Node(IntLiteralExpression)
+            |                        T[1]
+            |                  T[;]
+            |                T[}]
             |            Node(ElseBlock)
             |              T[else]
-            |              T[{]
-            |              Node(AssigmentStatement)
-            |                T[condition]
-            |                T[=]
-            |                Node(BoolLiteralExpression)
-            |                  T[true]
-            |                T[;]
-            |              T[}]
+            |              Node(Block)
+            |                T[{]
+            |                Node(AssignmentStatement)
+            |                  Node(Assignment)
+            |                    T[condition]
+            |                    T[=]
+            |                    Node(BoolLiteralExpression)
+            |                      T[true]
+            |                  T[;]
+            |                T[}]
             |        T[}]
             |  T[<EOF>]
-            """ .trimMargin()));
+            """
+                .trimMargin()));
       });
     },
   );
 
   group(
     "Task 5",
-    () { 
+    () {
       test('for_statement', () async {
         final rootNode = await _parseResource('task5/for_statement');
-        
+
         expect(
-          getMultilineParseTree(rootNode),
+            getMultilineParseTree(rootNode),
             equals(""" 
             |Node(DartFile)
             |  Node(VarDeclarationStatement)
@@ -358,7 +370,7 @@ void main() {
             |      T[for]
             |      T[(]
             |      Node(StandardForCondition)
-            |        Node(InitializationForExpression)
+            |        Node(ForInitOrIncrementStatement)
             |          Node(VarDeclaration)
             |            Node(IntType)
             |              T[int]
@@ -374,15 +386,16 @@ void main() {
             |          Node(IntLiteralExpression)
             |            T[3]
             |        T[;]
-            |        Node(IncrementExpression)
-            |          T[i]
-            |          T[+]
-            |          T[+]
+            |        Node(ForInitOrIncrementStatement)
+            |          Node(IncrementExpression)
+            |            T[i]
+            |            T[+]
+            |            T[+]
             |      T[)]
             |      Node(Block)
             |        T[{]
-            |        Node(AssigmentStatement)
-            |          Node(Assigment)
+            |        Node(AssignmentStatement)
+            |          Node(Assignment)
             |            T[a]
             |            T[=]
             |            Node(BinaryMathExpression)
@@ -394,17 +407,16 @@ void main() {
             |          T[;]
             |        T[}]
             |  T[<EOF>]
-            """  
-                 .trimMargin()));
-      });    
+            """
+                .trimMargin()));
+      });
 
       test('for_each_statement', () async {
         final rootNode = await _parseResource('task5/for_each_statement');
 
         expect(
-          getMultilineParseTree(rootNode),
-          equals(
-            """       
+            getMultilineParseTree(rootNode),
+            equals("""       
             |Node(DartFile)
             |  Node(FinalDeclarationStatement)
             |    T[final]
@@ -442,8 +454,8 @@ void main() {
             |      T[)]
             |      Node(Block)
             |        T[{]
-            |        Node(AssigmentStatement)
-            |          Node(Assigment)
+            |        Node(AssignmentStatement)
+            |          Node(Assignment)
             |            T[b]
             |            T[=]
             |            Node(BinaryMathExpression)
@@ -455,7 +467,8 @@ void main() {
             |          T[;]
             |        T[}]
             |  T[<EOF>]
-            """ .trimMargin()));
+            """
+                .trimMargin()));
       });
     },
   );
@@ -562,15 +575,16 @@ void main() {
             |      Node(Block)
             |        T[{]
             |        Node(VarDeclarationStatement)
-            |          T[var]
-            |          T[aIsGreaterThanB]
-            |          T[=]
-            |          Node(BinaryLogicExpression)
-            |            Node(VarReferenceExpression)
-            |              T[a]
-            |            T[>]
-            |            Node(VarReferenceExpression)
-            |              T[b]
+            |          Node(VarDeclaration)
+            |            T[var]
+            |            T[aIsGreaterThanB]
+            |            T[=]
+            |            Node(BinaryLogicExpression)
+            |              Node(VarReferenceExpression)
+            |                T[a]
+            |              T[>]
+            |              Node(VarReferenceExpression)
+            |                T[b]
             |          T[;]
             |        Node(FinalDeclarationStatement)
             |          T[final]
@@ -739,15 +753,16 @@ void main() {
           |          T[)]
           |          Node(Block)
           |            T[{]
-          |            Node(AssigmentStatement)
-          |              T[pro2]
-          |              T[=]
-          |              Node(BinaryLogicExpression)
-          |                Node(VarReferenceExpression)
-          |                  T[value]
-          |                T[<=]
-          |                Node(VarReferenceExpression)
-          |                  T[prop1]
+          |            Node(AssignmentStatement)
+          |              Node(Assignment)
+          |                T[pro2]
+          |                T[=]
+          |                Node(BinaryLogicExpression)
+          |                  Node(VarReferenceExpression)
+          |                    T[value]
+          |                  T[<=]
+          |                  Node(VarReferenceExpression)
+          |                    T[prop1]
           |              T[;]
           |            Node(ReturnStatement)
           |              T[return]
@@ -877,14 +892,68 @@ void main() {
   group(
     "Task 9",
     () {
-      test('method_call', () {
-        throw UnimplementedError();
+      test('object_instance', () async {
+        final rootNode = await _parseResource('task9/object_instance');
+
+        expect(
+          getMultilineParseTree(rootNode),
+          """
+          |Node(DartFile)
+          |  Node(FinalDeclarationStatement)
+          |    T[final]
+          |    T[element]
+          |    T[=]
+          |    Node(FunctionCallExpression)
+          |      T[ClassToInstance]
+          |      T[(]
+          |      T[)]
+          |    T[;]
+          |  T[<EOF>]
+          """
+              .trimMargin(),
+        );
       });
-      test('object_instance', () {
-        throw UnimplementedError();
+
+      test('method_call', () async {
+        final rootNode = await _parseResource('task9/method_call');
+
+        expect(
+          getMultilineParseTree(rootNode),
+          """
+          |Node(DartFile)
+          |  Node(ExpressionDefinitionStatement)
+          |    Node(ObjectMethodCallExpression)
+          |      T[element]
+          |      T[.]
+          |      T[execute]
+          |      T[(]
+          |      T[)]
+          |    T[;]
+          |  T[<EOF>]
+          """
+              .trimMargin(),
+        );
       });
-      test('property_assignment', () {
-        throw UnimplementedError();
+
+      test('property_assignment', () async {
+        final rootNode = await _parseResource('task9/property_assignment');
+
+        expect(
+          getMultilineParseTree(rootNode),
+          """
+          |Node(DartFile)
+          |  Node(ObjectPropertyAssignmentStatement)
+          |    T[element]
+          |    T[.]
+          |    T[name]
+          |    T[=]
+          |    Node(StringLiteralExpression)
+          |      T["Pacco"]
+          |    T[;]
+          |  T[<EOF>]
+          """
+              .trimMargin(),
+        );
       });
     },
   );
