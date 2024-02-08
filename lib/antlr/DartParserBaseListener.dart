@@ -44,11 +44,19 @@ class DartParserBaseListener implements DartParserListener {
 
   /// The default implementation does nothing.
   @override
-  void enterAssigmentStatement(AssigmentStatementContext ctx) {}
+  void enterAssignmentStatement(AssignmentStatementContext ctx) {}
 
   /// The default implementation does nothing.
   @override
-  void exitAssigmentStatement(AssigmentStatementContext ctx) {}
+  void exitAssignmentStatement(AssignmentStatementContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void enterObjectPropertyAssignmentStatement(ObjectPropertyAssignmentStatementContext ctx) {}
+
+  /// The default implementation does nothing.
+  @override
+  void exitObjectPropertyAssignmentStatement(ObjectPropertyAssignmentStatementContext ctx) {}
 
   /// The default implementation does nothing.
   @override
@@ -116,11 +124,11 @@ class DartParserBaseListener implements DartParserListener {
 
   /// The default implementation does nothing.
   @override
-  void enterAssigment(AssigmentContext ctx) {}
+  void enterAssignment(AssignmentContext ctx) {}
 
   /// The default implementation does nothing.
   @override
-  void exitAssigment(AssigmentContext ctx) {}
+  void exitAssignment(AssignmentContext ctx) {}
 
   /// The default implementation does nothing.
   @override
@@ -428,11 +436,11 @@ class DartParserBaseListener implements DartParserListener {
 
   /// The default implementation does nothing.
   @override
-  void enterInitializationForExpression(InitializationForExpressionContext ctx) {}
+  void enterForInitOrIncrementStatement(ForInitOrIncrementStatementContext ctx) {}
 
   /// The default implementation does nothing.
   @override
-  void exitInitializationForExpression(InitializationForExpressionContext ctx) {}
+  void exitForInitOrIncrementStatement(ForInitOrIncrementStatementContext ctx) {}
 
   /// The default implementation does nothing.
   @override

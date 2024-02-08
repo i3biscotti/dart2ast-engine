@@ -16,7 +16,8 @@ statement
     : varDeclaration SEMICOLON                                                      #VarDeclarationStatement
     | FINAL type? ID ASSIGN expression SEMICOLON                                    #FinalDeclarationStatement
     | CONST type? ID ASSIGN expression SEMICOLON                                    #ConstDeclarationStatement
-    | assigment SEMICOLON                                                           #AssigmentStatement
+    | assignment SEMICOLON                                                          #AssignmentStatement
+    | objectName=ID DOT propertyName=ID ASSIGN expression SEMICOLON                 #ObjectPropertyAssignmentStatement
     | functionDefinition                                                            #FunctionDefinitionStatement
     | classDefinition                                                               #ClassDefinitionStatement
     | expression SEMICOLON                                                          #ExpressionDefinitionStatement
@@ -28,10 +29,9 @@ statement
 
 varDeclaration
     : ( VAR | VAR  type | type ) ID ASSIGN expression;
-assigment                    //assigNment
+
+assignment                    //assignment
     : ID ASSIGN expression;
-
-
 
 type           
     : INT       #IntType
@@ -69,7 +69,7 @@ expression
     | ID                                                                        #VarReferenceExpression
     | ID PAREN_OPEN (expression COMMA)* expression? PAREN_CLOSE                 #FunctionCallExpression
     | ID DOT ID                                                                 #ObjectPropertyReferenceExpression
-    | ID DOT ID PAREN_OPEN (expression COMMA)* expression? PAREN_CLOSE          #ObjectMethodCallExpression
+    | objectName=ID DOT methodName=ID PAREN_OPEN (expression COMMA)* expression? PAREN_CLOSE          #ObjectMethodCallExpression
     ;
 
 functionDefinition
@@ -92,13 +92,13 @@ classStatement
 thisConstructorCall: THIS PAREN_OPEN (expression COMMA)* (expression COMMA?)? PAREN_CLOSE;// task 3
 
 ifBlock
-    : IF PAREN_OPEN expression PAREN_CLOSE GRAPH_OPEN statement* GRAPH_CLOSE;
+    : IF PAREN_OPEN expression PAREN_CLOSE block;
  
 elseIfBlock
-    : ELSE IF PAREN_OPEN expression PAREN_CLOSE GRAPH_OPEN statement* GRAPH_CLOSE;
+    : ELSE IF PAREN_OPEN expression PAREN_CLOSE block;
  
 elseBlock
-    : ELSE GRAPH_OPEN statement* GRAPH_CLOSE;
+    : ELSE block;
  
 ifDefinition
     : ifBlock elseIfBlock* elseBlock?;
@@ -110,15 +110,15 @@ whileDefinition
 
 // task 5
 
-initializationForExpression           //extends Expression
-    : varDeclaration | assigment;
+forInitOrIncrementStatement           //extends Statement
+    : varDeclaration | assignment | expression;
 
 itemDefinition                        //extends Node
     : (VAR | type) ID;
 
 forCondition
-    : initializationForExpression SEMICOLON expression SEMICOLON expression          #StandardForCondition
-    | itemDefinition IN expression                                                   #ForEachCondition
+    : forInitOrIncrementStatement SEMICOLON expression SEMICOLON forInitOrIncrementStatement    #StandardForCondition
+    | itemDefinition IN expression                                                              #ForEachCondition
     ;
 
 forDefinition
