@@ -9,6 +9,7 @@ abstract class Expression extends Node {
       'DecLit' => DecLit.fromJson(json),
       'StringLit' => StringLit.fromJson(json),
       'BoolLit' => BoolLit.fromJson(json),
+      'ListLit' => ListLiteralExpression.fromJson(json),
       _ => throw UnimplementedError(),
     };
   }
@@ -88,6 +89,26 @@ class BoolLit extends Expression {
         'value': value,
         'position': position?.toJson(),
       };
+}
+
+class ListLiteralExpression extends Expression {
+  final List value;
+  ListLiteralExpression(this.value, super.position);
+
+  ListLiteralExpression.fromJson(Map<String, dynamic> json)
+    : value = List.from(json['value']).map((e) => Expression.fromJson(e)).toList(),
+      super(Position.fromJson(json['position']));
+  
+  @override
+  List<Object?> get props => [value, position];
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'type': runtimeType.toString(),
+        'value': value.map((e) => e.toJson()).toList(),
+        'position': position?.toJson(),
+      };
+
 }
 
 abstract class BinaryExpression extends Expression {

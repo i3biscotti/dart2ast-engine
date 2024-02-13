@@ -30,7 +30,7 @@ statement
 varDeclaration
     : ( VAR | VAR  type | type ) ID ASSIGN expression;
 
-assignment                    //assignment
+assignment                   
     : ID ASSIGN expression;
 
 type           
@@ -48,7 +48,7 @@ expression
     | INTLIT                                                                    #IntLiteralExpression
     | DOUBLELIT                                                                 #DoubleLiteralExpression
     | STRINGLIT                                                                 #StringLiteralExpression
-    | SQUARE_OPEN (expression COMMA?)* SQUARE_CLOSE                             #ListLiteralExpression 
+    | SQUARE_OPEN (expression COMMA?)* SQUARE_CLOSE                             #ListLiteralExpression           
     | left=expression  operand=PLUS                 right=expression            #BinaryMathExpression
     | left=expression  operand=MINUS                right=expression            #BinaryMathExpression
     | left=expression  operand=TIMES                right=expression            #BinaryMathExpression
@@ -113,21 +113,20 @@ whileDefinition
 // task 5
 
 forInitOrIncrementStatement           //extends Statement
-    : varDeclaration | assignment | expression;
+    : varDeclaration                                         #VarDeclarationForStatement
+    | assignment                                             #AssignmentForStatement
+    | expression                                             #ExpressionForStatement
+    ;
+
 
 itemDefinition                        //extends Node
-    : (VAR | type) ID;
+    : (VAR | type) name=ID;                                       
 
 forCondition
-    : forInitOrIncrementStatement SEMICOLON expression SEMICOLON forInitOrIncrementStatement    #StandardForCondition
-    | itemDefinition IN expression                                                              #ForEachCondition
+    : initStatement=forInitOrIncrementStatement SEMICOLON expression SEMICOLON incrementStatament=forInitOrIncrementStatement    #StandardForCondition
+    | itemDefinition IN expression                                                                                               #ForEachCondition
     ;
 
 forDefinition
     : FOR PAREN_OPEN forCondition PAREN_CLOSE block;
 
-/* 
-for(int i = 0; i < 3; i++){  }
-final list = [1,2,3,4,5];
-for(int i in list){  }
-*/

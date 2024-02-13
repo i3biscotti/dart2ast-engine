@@ -295,11 +295,13 @@ abstract class ForInitOrIncrementStatement extends Statement {
 class VarDeclarationForStatement extends ForInitOrIncrementStatement {
   final VariableType? varType;
   final String name;
+  final VariableValueType? valueType;
   final Expression value;
 
   VarDeclarationForStatement(
     this.varType,
     this.name,
+    this.valueType,
     this.value,
     super.position,
   );
@@ -308,13 +310,14 @@ class VarDeclarationForStatement extends ForInitOrIncrementStatement {
     return VarDeclarationForStatement(
       VariableType.fromName(json['varType']),
       json['name'],
+      VariableValueType.fromName(json['valueType']),
       Expression.fromJson(json['value']),
       Position.fromJson(json['position']),
     );
   }
 
   @override
-  List<Object?> get props => [varType, name, value, position];
+  List<Object?> get props => [varType, name, valueType, value, position];
 
   @override
   Map<String, dynamic> toJson() {
@@ -322,6 +325,7 @@ class VarDeclarationForStatement extends ForInitOrIncrementStatement {
       "type": runtimeType.toString(),
       "varType": varType?.name,
       "name": name,
+      'valueType': valueType?.typeName,
       "value": value.toJson(),
       "position": position?.toJson(),
     };
