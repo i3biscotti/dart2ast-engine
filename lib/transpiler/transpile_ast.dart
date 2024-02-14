@@ -22,6 +22,7 @@ extension ExpressionTranspilerExtension on Expression {
       DecLit e => e.value,
       BoolLit e => e.value,
       StringLit e => e.value,
+      ListLiteralExpression e => e.transpile(),
       BinaryLogicExpression e => e.transpile(),
       BinaryMathExpression e => e.transpile(),
       UnaryLogicExpression e => e.transpile(),
@@ -47,6 +48,8 @@ extension StatementTranspilerExtension on Statement {
       ExpressionDefinitionStatement st => st.transpile(depth),
       IfDefinitionStatement st => st.transpile(depth),
       WhileDefinitionStatement st => st.transpile(depth),
+      ForDefinitionStatement st => st.transpile(depth),
+      ExpressionForStatement st => st.value.transpile(),
       ClassDefinitionStatement st => st.transpile(depth),
       FunctionDefinitionStatement st => st.transpile(depth),
       ReturnStatement st => st.transpile(depth),
@@ -129,6 +132,14 @@ extension DartFileTranspilerExtension on ProgramFile {
   String transpile() {
     final linesTranspiled = lines.map((l) => l.transpile()).join('\n');
     return linesTranspiled;
+  }
+}
+
+extension ListLiteralExpressionTranspilerExtension on ListLiteralExpression {
+  String transpile() {
+    String expessionTranspiled = value.map((e) => e.value).toList().join(',');
+    String listliteralexp = '[$expessionTranspiled]';
+    return listliteralexp;
   }
 }
 
@@ -216,7 +227,7 @@ extension VariableReferenceTranspilerExtension on VarReferenceExpression {
   }
 }
 
-//task 3
+
 extension IfStatementTranspilerExtension on IfDefinitionStatement {
   String transpile([int depth = 0]) {
     String ifBlockTranspiler = ifBlock.transpile(depth);
@@ -272,6 +283,121 @@ extension WhileStatementTranspilerExtension on WhileDefinitionStatement {
                             """
         .trimMargin();
     return whilestatement;
+  }
+}
+
+// task 5
+
+extension ForInitOrIncrementStatementTranspilerExtension on ForInitOrIncrementStatement {
+  String transpile() {
+    return switch (this) {
+      VarDeclarationForStatement st => st.transpile(),
+      AssignmentForStatement st => st.transpile(),
+      ExpressionForStatement st => st.transpile(),
+      _ => throw UnimplementedError()
+    };
+  }
+}
+
+extension VarDeclarationForStatementTranspilerExtension on VarDeclarationForStatement {
+  String transpile() {
+    var statement = '';
+
+    if (varType != VariableType.type) {
+      String variableTypeTranspiled = switch (varType) {
+        VariableType.variable => 'var',
+        VariableType.immutable => 'final',
+        VariableType.constant => 'const',
+        _ => throw UnimplementedError()
+      };
+
+      statement += variableTypeTranspiled + " ";
+    }
+
+    if (valueType != null) {
+      statement += '${valueType!.typeName} ';
+    }
+
+    statement += "$name";
+    statement += ' = ${value.transpile()}';
+    return statement;
+  }
+}
+
+extension AssigmentForStatementTranspilerExtension on AssignmentForStatement {
+  String transpile() {
+    String valueTranspiled = value.transpile();
+    String statement =
+        '$name = $valueTranspiled';
+    return statement;
+  }
+}
+
+extension ExpressionForStatementTranspilerExtension on ExpressionForStatement {
+  String transpile() {
+    String valueTranspiled = value.transpile();
+    String expression = '$valueTranspiled';
+    return expression;
+  }
+}
+
+extension ItemDefinitionTranspileExtension on ItemDefinition { 
+  String transpile() {
+      String varTypeTranspiled = switch (varType) {
+        VariableType.variable => 'var',
+        VariableType.immutable => 'final',
+        VariableType.constant => 'const',
+        VariableType.type => valueType!.typeName,
+        _ => throw UnimplementedError()
+      };
+    String itemdef = '$varTypeTranspiled $name';
+    
+    return itemdef;
+  }
+}
+
+extension ForDefinitionStatementTranspilerExtension on ForDefinitionStatement {
+  String transpile([int depth = 0]) {
+    String forConditionTranspiled = forCondition.transpile();
+    String statementsTranspiled =
+        statements.map((s) => s.transpile(depth + 1)).join('\n');
+    String forstatement = """
+                          |for ($forConditionTranspiled) {
+                          |${generateIdentationSpace(depth + 1)}$statementsTranspiled
+                          |}
+                           """
+        .trimMargin();
+    return forstatement;
+  }
+}
+
+extension ForConditionTranspilerExtension on ForCondition {
+  String transpile() {
+    return switch (this) {
+      StandardForCondition e => e.transpile(),
+      ForEachCondition e => e.transpile(),
+      _ => throw UnimplementedError()
+    };
+  }
+}
+
+extension StandardForConditionTranspilerExtension on StandardForCondition {
+  String transpile() {
+    String initStatement = this.initStatement.transpile();
+    String controlExpression = this.controlExpression.transpile();
+    String incrementStatement = this.incrementStatement.transpile();
+    String stdforcond = '$initStatement; $controlExpression; $incrementStatement';
+    return stdforcond;
+  }
+}
+
+extension ForEachConditionTranspilerExtension on ForEachCondition {
+  String transpile() {
+    String item = itemDefinition.transpile();
+    String expression = this.expression.transpile();
+    String fecond = '$item in $expression';
+    return fecond;
+
   }
 }
 

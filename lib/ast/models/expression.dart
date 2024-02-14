@@ -82,6 +82,27 @@ class BoolLit extends Expression {
       };
 }
 
+class ListLiteralExpression extends Expression {
+  final List value;
+  ListLiteralExpression(this.value, super.position);
+
+  ListLiteralExpression.fromJson(Map<String, dynamic> json)
+      : value = List.from(json['value'])
+            .map((e) => Expression.fromJson(e))
+            .toList(),
+        super(Position.fromJson(json['position']));
+
+  @override
+  List<Object?> get props => [value, position];
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'type': runtimeType.toString(),
+        'value': value.map((e) => e.toJson()).toList(),
+        'position': position?.toJson(),
+      };
+}
+
 abstract class BinaryExpression extends Expression {
   final Expression left;
   final Expression right;

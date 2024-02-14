@@ -353,7 +353,7 @@ void main() {
             |      T[for]
             |      T[(]
             |      Node(StandardForCondition)
-            |        Node(ForInitOrIncrementStatement)
+            |        Node(VarDeclarationForStatement)
             |          Node(VarDeclaration)
             |            Node(IntType)
             |              T[int]
@@ -369,8 +369,8 @@ void main() {
             |          Node(IntLiteralExpression)
             |            T[3]
             |        T[;]
-            |        Node(ForInitOrIncrementStatement)
-            |          Node(IncrementExpression)
+            |        Node(ExpressionForStatement)
+            |          Node(PostIncrementExpression)
             |            T[i]
             |            T[+]
             |            T[+]

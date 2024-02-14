@@ -11,6 +11,7 @@ extension ExpressionConverterExtension on ExpressionContext {
         BoolLit(text, toPosition(considerPosition)),
       StringLiteralExpressionContext _ =>
         StringLit(text, toPosition(considerPosition)),
+      ListLiteralExpressionContext e => e.toAst(considerPosition),
       BinaryMathExpressionContext e => e.toAst(considerPosition),
       BinaryLogicExpressionContext e => e.toAst(considerPosition),
       UnaryMathExpressionContext e => e.toAst(considerPosition),
@@ -26,6 +27,18 @@ extension ExpressionConverterExtension on ExpressionContext {
       _ => throw UnimplementedError()
     };
   }
+}
+
+extension ListLiteralExpressionConverterExtension 
+    on ListLiteralExpressionContext {
+   ListLiteralExpression toAst(bool considerPosition) {
+    final listExpression = this.expressions().map((e) => e.toAst(considerPosition)).toList();
+
+    return ListLiteralExpression(
+      listExpression, 
+      toPosition(considerPosition,)
+    );
+   }
 }
 
 extension BinaryMathExpressionConverterExtension
