@@ -115,50 +115,53 @@ extension UnaryLogicExpressionConverterExtension
   }
 }
 
-extension PreIncrementExpressionConverterExtension on PreIncrementExpressionContext{
-   PreIncrementExpression toAst(bool considerPosition){
-      final name = this.ID()!.text!;
+extension PreIncrementExpressionConverterExtension
+    on PreIncrementExpressionContext {
+  PreIncrementExpression toAst(bool considerPosition) {
+    final name = this.ID()!.text!;
 
-      return PreIncrementExpression(
-      name,
-      toPosition(considerPosition),
-    );
-   }
-}
-
-extension PostIncrementExpressionConverterExtension on PostIncrementExpressionContext{
-  PostIncrementExpression toAst(bool considerPosition){
-      final name = this.ID()!.text!;
-
-      return PostIncrementExpression(
+    return PreIncrementExpression(
       name,
       toPosition(considerPosition),
     );
   }
 }
 
-extension PreDecrementExpressionConverterExtension on PreDecrementExpressionContext{
-  PreDecrementExpression toAst(bool considerPosition){
-      final name = this.ID()!.text!;
+extension PostIncrementExpressionConverterExtension
+    on PostIncrementExpressionContext {
+  PostIncrementExpression toAst(bool considerPosition) {
+    final name = this.ID()!.text!;
 
-      return PreDecrementExpression(
+    return PostIncrementExpression(
       name,
       toPosition(considerPosition),
     );
   }
 }
 
-extension PostDecrementExpressionConverterExtension on PostDecrementExpressionContext{
-  PostDecrementExpression toAst(bool considerPosition){
-      final name = this.ID()!.text!;
+extension PreDecrementExpressionConverterExtension
+    on PreDecrementExpressionContext {
+  PreDecrementExpression toAst(bool considerPosition) {
+    final name = this.ID()!.text!;
 
-      return PostDecrementExpression(
+    return PreDecrementExpression(
       name,
       toPosition(considerPosition),
     );
   }
 }
 
+extension PostDecrementExpressionConverterExtension
+    on PostDecrementExpressionContext {
+  PostDecrementExpression toAst(bool considerPosition) {
+    final name = this.ID()!.text!;
+
+    return PostDecrementExpression(
+      name,
+      toPosition(considerPosition),
+    );
+  }
+}
 
 extension ParenthesysExpressionConverterExtension
     on ParenthesysExpressionContext {
