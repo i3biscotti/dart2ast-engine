@@ -1,17 +1,8 @@
+import 'package:dart2ast_engine/ast/deserialization.dart';
 import 'package:dart2ast_engine/dart2ast.dart';
-import 'package:equatable/equatable.dart';
 
 abstract class Statement extends Node {
   Statement(super.position);
-
-  factory Statement.fromJson(Map<String, dynamic> json) {
-    return switch (json['type']) {
-      'VariableDeclarationStatement' =>
-        VariableDeclarationStatement.fromJson(json),
-      'AssignmentStatement' => AssignmentStatement.fromJson(json),
-      _ => throw UnimplementedError(),
-    };
-  }
 }
 
 class VariableDeclarationStatement extends Statement {
@@ -33,8 +24,8 @@ class VariableDeclarationStatement extends Statement {
       VariableType.fromName(json['varType']),
       json['name'],
       VariableValueType.fromName(json['valueType']),
-      Expression.fromJson(json['value']),
-      Position.fromJson(json['position']),
+      deserializeToAst<Expression>(json['value']),
+      deserializeToAst<Position>(json['position']),
     );
   }
 
@@ -69,7 +60,7 @@ enum VariableType {
   }
 }
 
-class VariableValueType extends Equatable {
+class VariableValueType extends AstObject {
   final String typeName;
 
   VariableValueType(this.typeName);
@@ -106,8 +97,8 @@ class AssignmentStatement extends Statement {
   factory AssignmentStatement.fromJson(Map<String, dynamic> json) {
     return AssignmentStatement(
       json['name'],
-      Expression.fromJson(json['value']),
-      Position.fromJson(json['position']),
+      deserializeToAst<Expression>(json['value']),
+      deserializeToAst<Position>(json['position']),
     );
   }
 
@@ -130,8 +121,8 @@ class ExpressionDefinitionStatement extends Statement {
 
   factory ExpressionDefinitionStatement.fromJson(Map<String, dynamic> json) {
     return ExpressionDefinitionStatement(
-      Expression.fromJson(json['value']),
-      Position.fromJson(json['position']),
+      deserializeToAst<Expression>(json['value']),
+      deserializeToAst<Position>(json['position']),
     );
   }
 
@@ -153,8 +144,8 @@ class ReturnStatement extends Statement {
 
   factory ReturnStatement.fromJson(Map<String, dynamic> json) {
     return ReturnStatement(
-      Expression.fromJson(json['value']),
-      Position.fromJson(json['position']),
+      deserializeToAst<Expression>(json['value']),
+      deserializeToAst<Position>(json['position']),
     );
   }
 
@@ -182,14 +173,14 @@ class IfDefinitionStatement extends Statement {
   );
 
   IfDefinitionStatement.fromJson(Map<String, dynamic> json)
-      : ifBlock = IfBlock.fromJson(json['ifBlock']),
+      : ifBlock = deserializeToAst<IfBlock>(json['ifBlock']),
         elseIfBlocks = List.from(json['elseifBlocks'])
-            .map((e) => IfBlock.fromJson(e))
+            .map((e) => deserializeToAst<IfBlock>(e))
             .toList(),
         elseBlock = (json['elseBlock']) != null
-            ? IfBlock.fromJson(json['elseBlock'])
+            ? deserializeToAst<IfBlock>(json['elseBlock'])
             : null,
-        super(Position.fromJson(json['position']));
+        super(deserializeToAst<Position>(json['position']));
 
   @override
   List<Object?> get props => [ifBlock, elseIfBlocks, elseBlock, position];
@@ -218,10 +209,10 @@ class IfBlock extends Node {
   IfBlock.fromJson(Map<String, dynamic> json)
       : this(
             json["condition"] != null
-                ? Expression.fromJson(json["condition"])
+                ? deserializeToAst<Expression>(json["condition"])
                 : null,
             List.from(json["statements"])
-                .map((e) => Statement.fromJson(e))
+                .map((e) => deserializeToAst<Statement>(e))
                 .toList(),
             switch (json['blockType']) {
               "ifBlock" => BlockType.ifBlock,
@@ -229,7 +220,7 @@ class IfBlock extends Node {
               "elseBlock" => BlockType.elseBlock,
               _ => throw UnimplementedError(json["blockType"]),
             },
-            Position.fromJson(json["position"]));
+            deserializeToAst<Position>(json["position"]));
 
   @override
   List<Object?> get props => [condition, statements, blockType, position];
@@ -256,12 +247,12 @@ class WhileDefinitionStatement extends Statement {
   WhileDefinitionStatement.fromJson(Map<String, dynamic> json)
       : this(
             json["condition"] != null
-                ? Expression.fromJson(json["condition"])
+                ? deserializeToAst<Expression>(json["condition"])
                 : null,
             List.from(json["statements"])
-                .map((e) => Statement.fromJson(e))
+                .map((e) => deserializeToAst<Statement>(e))
                 .toList(),
-            Position.fromJson(json["position"]));
+            deserializeToAst<Position>(json["position"]));
 
   @override
   List<Object?> get props => [condition, statements, position];
@@ -284,9 +275,12 @@ abstract class ForInitOrIncrementStatement extends Statement {
 
   factory ForInitOrIncrementStatement.fromJson(Map<String, dynamic> json) {
     return switch (json['type']) {
-      'VarDeclarationForStatement' => VarDeclarationForStatement.fromJson(json),
-      'AssignmentForStatement' => AssignmentForStatement.fromJson(json),
-      'ExpressionForStatement' => ExpressionForStatement.fromJson(json),
+      'VarDeclarationForStatement' =>
+        deserializeToAst<VarDeclarationForStatement>(json),
+      'AssignmentForStatement' =>
+        deserializeToAst<AssignmentForStatement>(json),
+      'ExpressionForStatement' =>
+        deserializeToAst<ExpressionForStatement>(json),
       _ => throw UnimplementedError(),
     };
   }
@@ -308,8 +302,8 @@ class VarDeclarationForStatement extends ForInitOrIncrementStatement {
     return VarDeclarationForStatement(
       VariableType.fromName(json['varType']),
       json['name'],
-      Expression.fromJson(json['value']),
-      Position.fromJson(json['position']),
+      deserializeToAst<Expression>(json['value']),
+      deserializeToAst<Position>(json['position']),
     );
   }
 
@@ -337,8 +331,8 @@ class AssignmentForStatement extends ForInitOrIncrementStatement {
   factory AssignmentForStatement.fromJson(Map<String, dynamic> json) {
     return AssignmentForStatement(
       json['name'],
-      Expression.fromJson(json['value']),
-      Position.fromJson(json['position']),
+      deserializeToAst<Expression>(json['value']),
+      deserializeToAst<Position>(json['position']),
     );
   }
 
@@ -362,8 +356,8 @@ class ExpressionForStatement extends ForInitOrIncrementStatement {
 
   factory ExpressionForStatement.fromJson(Map<String, dynamic> json) {
     return ExpressionForStatement(
-      Expression.fromJson(json['value']),
-      Position.fromJson(json['position']),
+      deserializeToAst<Expression>(json['value']),
+      deserializeToAst<Position>(json['position']),
     );
   }
 
@@ -397,7 +391,7 @@ class ItemDefinition extends Node {
       VariableType.fromName(json['varType']),
       json['name'],
       VariableValueType.fromName(json['valueType']),
-      Position.fromJson(json['position']),
+      deserializeToAst<Position>(json['position']),
     );
   }
 
@@ -422,11 +416,11 @@ class ForDefinitionStatement extends Statement {
 
   ForDefinitionStatement.fromJson(Map<String, dynamic> json)
       : this(
-          ForCondition.fromJson(json['forCodition']),
+          deserializeToAst<ForCondition>(json['forCodition']),
           List.from(json['statements'] ?? [])
-              .map((e) => Statement.fromJson(e))
+              .map((e) => deserializeToAst<Statement>(e))
               .toList(),
-          Position.fromJson(json["position"]),
+          deserializeToAst<Position>(json["position"]),
         );
 
   @override
@@ -448,8 +442,8 @@ abstract class ForCondition extends Node {
 
   factory ForCondition.fromJson(Map<String, dynamic> json) {
     return switch (json['type']) {
-      'StandardForCondition' => StandardForCondition.fromJson(json),
-      'ForEachCondition' => ForEachCondition.fromJson(json),
+      'StandardForCondition' => deserializeToAst<StandardForCondition>(json),
+      'ForEachCondition' => deserializeToAst<ForEachCondition>(json),
       _ => throw UnimplementedError(),
     };
   }
@@ -469,10 +463,10 @@ class StandardForCondition extends ForCondition {
 
   StandardForCondition.fromJson(Map<String, dynamic> json)
       : this(
-            ForInitOrIncrementStatement.fromJson(json['ife']),
-            Expression.fromJson(json['e1']),
-            ForInitOrIncrementStatement.fromJson(json['e2']),
-            Position.fromJson(json["position"]));
+            deserializeToAst<ForInitOrIncrementStatement>(json['ife']),
+            deserializeToAst<Expression>(json['e1']),
+            deserializeToAst<ForInitOrIncrementStatement>(json['e2']),
+            deserializeToAst<Position>(json["position"]));
 
   @override
   List<Object?> get props => [
@@ -502,9 +496,9 @@ class ForEachCondition extends ForCondition {
 
   ForEachCondition.fromJson(Map<String, dynamic> json)
       : this(
-            ItemDefinition.fromJson(json['itemDefinition']),
-            Expression.fromJson(json['expression']),
-            Position.fromJson(json["position"]));
+            deserializeToAst<ItemDefinition>(json['itemDefinition']),
+            deserializeToAst<Expression>(json['expression']),
+            deserializeToAst<Position>(json["position"]));
 
   @override
   List<Object?> get props => [itemDefinition, expression, position];
@@ -537,12 +531,13 @@ class FunctionDefinitionStatement extends Statement {
   FunctionDefinitionStatement.fromJson(Map<String, dynamic> json)
       : name = json['name'],
         parameters = List.from(json['parameters'])
-            .map((e) => Parameter.fromJson(e))
+            .map((e) => deserializeToAst<Parameter>(e))
             .toList(),
-        returnType = VariableValueType.fromName(json['returnType']),
-        body =
-            List.from(json['body']).map((e) => Statement.fromJson(e)).toList(),
-        super(Position.fromJson(json['position']));
+        returnType = VariableValueType.fromName(json['returnType']['typeName']),
+        body = List.from(json['body'])
+            .map((e) => deserializeToAst<Statement>(e))
+            .toList(),
+        super(deserializeToAst<Position>(json['position']));
 
   @override
   List<Object?> get props => [name, parameters, returnType, body, position];
@@ -572,14 +567,14 @@ class Parameter extends Node {
   factory Parameter.fromJson(Map<String, dynamic> json) {
     return Parameter(
       json['name'],
-      switch (json['paramType']) {
-        'this' => ParameterType.THIS,
-        'super' => ParameterType.SUPER,
-        'type' => ParameterType.TYPE,
+      switch (json['paramType']['enumValue']) {
+        'THIS' => ParameterType.THIS,
+        'SUPER' => ParameterType.SUPER,
+        'TYPE' => ParameterType.TYPE,
         _ => throw UnimplementedError(),
       },
-      VariableValueType.fromName(json['valueType']),
-      Position.fromJson(json['position']),
+      VariableValueType.fromName(json['valueType']['typeName']),
+      deserializeToAst<Position>(json['position']),
     );
   }
 
@@ -628,15 +623,15 @@ class ClassDefinitionStatement extends Statement {
       json['name'],
       json['parentName'],
       List.from(json['properties'])
-          .map((e) => VariableDeclarationStatement.fromJson(e))
+          .map((e) => deserializeToAst<VariableDeclarationStatement>(e))
           .toList(),
       List.from(json['constructors'])
-          .map((e) => ConstructorDefinitionStatement.fromJson(e))
+          .map((e) => deserializeToAst<ConstructorDefinitionStatement>(e))
           .toList(),
       List.from(json['methods'])
-          .map((e) => FunctionDefinitionStatement.fromJson(e))
+          .map((e) => deserializeToAst<FunctionDefinitionStatement>(e))
           .toList(),
-      Position.fromJson(json['position']),
+      deserializeToAst<Position>(json['position']),
     );
   }
 
@@ -686,12 +681,16 @@ class ConstructorDefinitionStatement extends Statement {
     return ConstructorDefinitionStatement(
       json['className'],
       json['constructorName'],
-      List.from(json['parameters']).map((e) => Parameter.fromJson(e)).toList(),
-      List.from(json['thisConstructorParameters'])
-          .map((e) => Expression.fromJson(e))
+      List.from(json['parameters'])
+          .map((e) => deserializeToAst<Parameter>(e))
           .toList(),
-      List.from(json['body']).map((e) => Statement.fromJson(e)).toList(),
-      Position.fromJson(json['position']),
+      List.from(json['thisConstructorParameters'])
+          .map((e) => deserializeToAst<Expression>(e))
+          .toList(),
+      List.from(json['body'])
+          .map((e) => deserializeToAst<Statement>(e))
+          .toList(),
+      deserializeToAst<Position>(json['position']),
     );
   }
 
@@ -735,8 +734,8 @@ class ObjectPropertyAssignmentStatement extends Statement {
   ObjectPropertyAssignmentStatement.fromJson(Map<String, dynamic> json)
       : objectName = json['objectName'],
         propertyName = json['propertyName'],
-        value = Expression.fromJson(json['value']),
-        super(Position.fromJson(json['position']));
+        value = deserializeToAst<Expression>(json['value']),
+        super(deserializeToAst<Position>(json['position']));
 
   @override
   List<Object?> get props => [objectName, propertyName, value, position];

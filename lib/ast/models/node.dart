@@ -1,7 +1,9 @@
 import 'package:dart2ast_engine/dart2ast.dart';
 import 'package:equatable/equatable.dart';
 
-class Point extends Equatable {
+abstract class AstObject extends Equatable {}
+
+class Point extends AstObject {
   final int line;
   final int column;
 
@@ -16,7 +18,7 @@ class Point extends Equatable {
       };
 }
 
-class Position extends Equatable {
+class Position extends AstObject {
   final Point start;
   final Point end;
 
@@ -58,7 +60,7 @@ class Position extends Equatable {
       };
 }
 
-abstract class Node extends Equatable {
+abstract class Node extends AstObject {
   final Position? position;
 
   Node(this.position);
@@ -73,8 +75,10 @@ class ProgramFile extends Node {
 
   factory ProgramFile.fromJson(Map<String, dynamic> json) {
     return ProgramFile(
-      (json['lines'] as List).map((e) => Statement.fromJson(e)).toList(),
-      Position.fromJson(json['position']),
+      List<Map<String, dynamic>>.from(json['lines'])
+          .map((e) => deserializeToAst<Statement>(e))
+          .toList(),
+      deserializeToAst<Position>(json['position']),
     );
   }
 
