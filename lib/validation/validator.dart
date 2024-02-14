@@ -1,5 +1,4 @@
-import 'package:dart2ast_engine/ast.dart';
-import 'package:dart2ast_engine/parsing/models.dart';
+import 'package:dart2ast_engine/dart2ast.dart';
 
 extension ScriptFileValidator on ProgramFile {
   List<LangError> validate() {
