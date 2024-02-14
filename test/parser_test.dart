@@ -7,23 +7,7 @@ import 'package:dart2ast_engine/parsing/antlr_parser.dart';
 import 'package:indent/indent.dart';
 import 'package:test/test.dart';
 
-Future<DartFileContext> _parseResource(String resourceName) async {
-  final result = await AntlrParserFacade.parseFromFile(
-    File('test/resources/$resourceName.txt'),
-  );
-
-  if (!result.isCorrect()) {
-    throw Exception(
-      result.errors.map((e) {
-        return "[Ln ${e.position.line}, Col ${e.position.line}]${e.message}";
-      }).join('\n'),
-    );
-  } else if (result.root == null) {
-    throw Exception("DartFileContext is not null");
-  }
-
-  return result.root!;
-}
+import 'helpers.dart';
 
 String getMultilineParseTree(DartFileContext root) {
   return _node2StringList(root).join('\n') + '\n';
@@ -58,7 +42,7 @@ void main() {
     'Task 1',
     () {
       test('var_definition_statement', () async {
-        final rootNode = await _parseResource('task1/var_definition_statement');
+        final rootNode = await parseResource('task1/var_definition_statement');
 
         expect(
             getMultilineParseTree(rootNode),
@@ -79,7 +63,7 @@ void main() {
 
       test('final_definition_statement', () async {
         final rootNode =
-            await _parseResource('task1/final_definition_statement');
+            await parseResource('task1/final_definition_statement');
 
         expect(
             getMultilineParseTree(rootNode),
@@ -100,8 +84,7 @@ void main() {
       });
 
       test('type_definition_statement', () async {
-        final rootNode =
-            await _parseResource('task1/type_definition_statement');
+        final rootNode = await parseResource('task1/type_definition_statement');
 
         expect(
             getMultilineParseTree(rootNode),
@@ -123,7 +106,7 @@ void main() {
 
       test('const_definition_statement', () async {
         final rootNode =
-            await _parseResource('task1/const_definition_statement');
+            await parseResource('task1/const_definition_statement');
 
         expect(
             getMultilineParseTree(rootNode),
@@ -144,7 +127,7 @@ void main() {
       });
 
       test('Assignment_statement', () async {
-        final rootNode = await _parseResource('task1/assignment_statement');
+        final rootNode = await parseResource('task1/assignment_statement');
         expect(
             getMultilineParseTree(rootNode),
             equals(""" 
@@ -167,7 +150,7 @@ void main() {
     'Task 2',
     () {
       test('expression_definition', () async {
-        final rootNode = await _parseResource('task2/expression_definition');
+        final rootNode = await parseResource('task2/expression_definition');
         expect(
             getMultilineParseTree(rootNode),
             equals("""
@@ -205,7 +188,7 @@ void main() {
     "Task 3",
     () {
       test('if_statement', () async {
-        final rootNode = await _parseResource('task3/if_statement');
+        final rootNode = await parseResource('task3/if_statement');
         expect(
             getMultilineParseTree(rootNode),
             equals("""
@@ -276,7 +259,7 @@ void main() {
     "Task 4",
     () {
       test('while_statement', () async {
-        final rootNode = await _parseResource('task4/while_statement');
+        final rootNode = await parseResource('task4/while_statement');
 
         expect(
             getMultilineParseTree(rootNode),
@@ -351,7 +334,7 @@ void main() {
     "Task 5",
     () {
       test('for_statement', () async {
-        final rootNode = await _parseResource('task5/for_statement');
+        final rootNode = await parseResource('task5/for_statement');
 
         expect(
             getMultilineParseTree(rootNode),
@@ -412,7 +395,7 @@ void main() {
       });
 
       test('for_each_statement', () async {
-        final rootNode = await _parseResource('task5/for_each_statement');
+        final rootNode = await parseResource('task5/for_each_statement');
 
         expect(
             getMultilineParseTree(rootNode),
@@ -478,7 +461,7 @@ void main() {
     () {
       test('void_function_without_params', () async {
         final rootNode =
-            await _parseResource('task7/void_function_without_params');
+            await parseResource('task7/void_function_without_params');
 
         expect(
           getMultilineParseTree(rootNode),
@@ -503,7 +486,7 @@ void main() {
       });
 
       test('int_sum_function', () async {
-        final rootNode = await _parseResource('task7/int_sum_function');
+        final rootNode = await parseResource('task7/int_sum_function');
 
         expect(
           getMultilineParseTree(rootNode),
@@ -544,7 +527,7 @@ void main() {
       });
 
       test('call_function', () async {
-        final rootNode = await _parseResource('task7/call_function');
+        final rootNode = await parseResource('task7/call_function');
 
         expect(
           getMultilineParseTree(rootNode),
@@ -643,7 +626,7 @@ void main() {
     "Task 8",
     () {
       test('empty_class', () async {
-        final rootNode = await _parseResource('task8/empty_class');
+        final rootNode = await parseResource('task8/empty_class');
 
         expect(
             getMultilineParseTree(rootNode),
@@ -661,7 +644,7 @@ void main() {
       });
 
       test('class_with_properties', () async {
-        final rootNode = await _parseResource('task8/class_with_properties');
+        final rootNode = await parseResource('task8/class_with_properties');
 
         expect(
             getMultilineParseTree(rootNode),
@@ -704,7 +687,7 @@ void main() {
       });
 
       test('class_with_methods', () async {
-        final rootNode = await _parseResource('task8/class_with_methods');
+        final rootNode = await parseResource('task8/class_with_methods');
 
         expect(
           getMultilineParseTree(rootNode),
@@ -783,7 +766,7 @@ void main() {
 
       test('class_with_multiple_constructors', () async {
         final rootNode =
-            await _parseResource('task8/class_with_multiple_constructors');
+            await parseResource('task8/class_with_multiple_constructors');
 
         expect(
           getMultilineParseTree(rootNode),
@@ -848,7 +831,7 @@ void main() {
       });
 
       test('class_hierarchy', () async {
-        final rootNode = await _parseResource('task8/class_hierarchy');
+        final rootNode = await parseResource('task8/class_hierarchy');
 
         expect(
           getMultilineParseTree(rootNode),
@@ -869,7 +852,7 @@ void main() {
       });
 
       test('private_class', () async {
-        final rootNode = await _parseResource('task8/private_class');
+        final rootNode = await parseResource('task8/private_class');
 
         expect(
           getMultilineParseTree(rootNode),
@@ -893,7 +876,7 @@ void main() {
     "Task 9",
     () {
       test('object_instance', () async {
-        final rootNode = await _parseResource('task9/object_instance');
+        final rootNode = await parseResource('task9/object_instance');
 
         expect(
           getMultilineParseTree(rootNode),
@@ -915,7 +898,7 @@ void main() {
       });
 
       test('method_call', () async {
-        final rootNode = await _parseResource('task9/method_call');
+        final rootNode = await parseResource('task9/method_call');
 
         expect(
           getMultilineParseTree(rootNode),
@@ -936,7 +919,7 @@ void main() {
       });
 
       test('property_assignment', () async {
-        final rootNode = await _parseResource('task9/property_assignment');
+        final rootNode = await parseResource('task9/property_assignment');
 
         expect(
           getMultilineParseTree(rootNode),

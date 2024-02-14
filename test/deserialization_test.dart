@@ -1,4 +1,4 @@
-import 'package:dart2ast_engine/dart2ast.dart';
+import 'package:dart2ast_engine/ast/models.dart';
 import 'package:test/test.dart';
 
 import 'helpers.dart';
@@ -10,9 +10,7 @@ void main() {
       test(
         'var_definition_statement',
         () async {
-          final root = await parseResource2Ast(
-            'task1/var_definition_statement',
-          );
+          final root = parseJsonResource('task1/var_definition_statement');
 
           expect(
             root,
@@ -37,8 +35,7 @@ void main() {
       test(
         'final_definition_statement',
         () async {
-          final root =
-              await parseResource2Ast('task1/final_definition_statement');
+          final root = parseJsonResource('task1/final_definition_statement');
 
           expect(
             root,
@@ -63,8 +60,7 @@ void main() {
       test(
         'type_definition_statement',
         () async {
-          final root =
-              await parseResource2Ast('task1/type_definition_statement');
+          final root = parseJsonResource('task1/type_definition_statement');
 
           expect(
             root,
@@ -89,8 +85,7 @@ void main() {
       test(
         'const_definition_statement',
         () async {
-          final root =
-              await parseResource2Ast('task1/const_definition_statement');
+          final root = parseJsonResource('task1/const_definition_statement');
 
           expect(
             root,
@@ -110,7 +105,7 @@ void main() {
       test(
         'assignment_statement',
         () async {
-          final root = await parseResource2Ast('task1/assignment_statement');
+          final root = parseJsonResource('task1/assignment_statement');
 
           expect(
             root,
@@ -138,7 +133,7 @@ void main() {
       test(
         'expression_definition',
         () async {
-          final root = await parseResource2Ast('task2/expression_definition');
+          final root = parseJsonResource('task2/expression_definition');
 
           expect(
             root,
@@ -174,7 +169,7 @@ void main() {
       test(
         'if_statement',
         () async {
-          final root = await parseResource2Ast('task3/if_statement');
+          final root = parseJsonResource('task3/if_statement');
 
           expect(
             root,
@@ -233,7 +228,7 @@ void main() {
       test(
         'while_statement',
         () async {
-          final root = await parseResource2Ast('task4/while_statement');
+          final root = parseJsonResource('task4/while_statement');
 
           expect(
             root,
@@ -297,8 +292,7 @@ void main() {
     "Task 7",
     () {
       test('void_function_without_params', () async {
-        final root =
-            await parseResource2Ast('task7/void_function_without_params');
+        final root = parseJsonResource('task7/void_function_without_params');
 
         expect(
           root,
@@ -320,7 +314,7 @@ void main() {
       });
 
       test('int_sum_function', () async {
-        final root = await parseResource2Ast('task7/int_sum_function');
+        final root = parseJsonResource('task7/int_sum_function');
 
         expect(
           root,
@@ -367,7 +361,7 @@ void main() {
       test(
         'call_function',
         () async {
-          final root = await parseResource2Ast('task7/call_function');
+          final root = parseJsonResource('task7/call_function');
           final progam = ProgramFile(
             <Statement>[
               FunctionDefinitionStatement(
@@ -467,7 +461,7 @@ void main() {
     "Task 8",
     () {
       test('empty_class', () async {
-        final rootNode = await parseResource2Ast('task8/empty_class');
+        final rootNode = parseJsonResource('task8/empty_class');
 
         expect(
           rootNode,
@@ -491,7 +485,7 @@ void main() {
       test(
         'class_with_methods',
         () async {
-          final rootNode = await parseResource2Ast('task8/class_with_methods');
+          final rootNode = parseJsonResource('task8/class_with_methods');
 
           expect(
             rootNode,
@@ -577,7 +571,7 @@ void main() {
 
       test('class_with_multiple_constructors', () async {
         final rootNode =
-            await parseResource2Ast('task8/class_with_multiple_constructors');
+            parseJsonResource('task8/class_with_multiple_constructors');
 
         expect(
           rootNode,
@@ -644,7 +638,7 @@ void main() {
       });
 
       test('class_with_properties', () async {
-        final rootNode = await parseResource2Ast('task8/class_with_properties');
+        final rootNode = parseJsonResource('task8/class_with_properties');
 
         expect(
           rootNode,
@@ -693,7 +687,7 @@ void main() {
       });
 
       test('class_hierarchy', () async {
-        final rootNode = await parseResource2Ast('task8/class_hierarchy');
+        final rootNode = parseJsonResource('task8/class_hierarchy');
 
         expect(
           rootNode,
@@ -715,7 +709,7 @@ void main() {
       });
 
       test('private_class', () async {
-        final rootNode = await parseResource2Ast('task8/private_class');
+        final rootNode = parseJsonResource('task8/private_class');
 
         expect(
           rootNode,
@@ -742,7 +736,7 @@ void main() {
     "Task 9",
     () {
       test('object_instance', () async {
-        final root = await parseResource2Ast('task9/object_instance');
+        final root = parseJsonResource('task9/object_instance');
 
         expect(
           root,
@@ -768,7 +762,7 @@ void main() {
       });
 
       test('method_call', () async {
-        final root = await parseResource2Ast('task9/method_call');
+        final root = parseJsonResource('task9/method_call');
 
         expect(
           root,
@@ -792,7 +786,7 @@ void main() {
       });
 
       test('property_assignment', () async {
-        final root = await parseResource2Ast('task9/property_assignment');
+        final root = parseJsonResource('task9/property_assignment');
 
         expect(
           root,
