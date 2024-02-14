@@ -5,3 +5,4 @@ export 'transpiler.dart';
 export 'validation.dart';
 export 'ast.dart';
 export 'parsing.dart';
+export 'helpers.dart';

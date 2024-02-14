@@ -65,20 +65,17 @@ extension StatementProcessExtension on Statement {
         break;
 
       case FunctionDefinitionStatement statement:
-        var newScope = "$scope/${generateScopeId()}";
-        statement.body.forEach((e) => e.process(operation, newScope));
+        statement.body.forEach((e) => e.process(operation, scope));
         break;
 
       case ClassDefinitionStatement statement:
-        var newScope = "$scope/${generateScopeId()}";
-        statement.methods.forEach((e) => e.process(operation, newScope));
-        statement.properties.forEach((e) => e.process(operation, newScope));
-        statement.constructors.forEach((e) => e.process(operation, newScope));
+        statement.methods.forEach((e) => e.process(operation, scope));
+        statement.properties.forEach((e) => e.process(operation, scope));
+        statement.constructors.forEach((e) => e.process(operation, scope));
         break;
 
       case ConstructorDefinitionStatement statement:
-        var newScope = "$scope/${generateScopeId()}";
-        statement.body.forEach((e) => e.process(operation, newScope));
+        statement.body.forEach((e) => e.process(operation, scope));
         break;
 
       default:
@@ -94,44 +91,11 @@ extension VariableDeclarationStatementExtension
 
     final sign = VariableSign(
       name,
-      valueType ?? _extractType(value!, scope),
+      valueType ?? extractType(scope, value!),
       varType == VariableType.variable || varType == VariableType.type,
     );
 
     scope.declaredVariables[name] = sign;
-  }
-
-  VariableValueType _extractType(Expression e, ScopeContext context) =>
-      switch (e) {
-        IntLit _ => VariableValueType.INT,
-        DecLit _ => VariableValueType.DOUBLE,
-        BoolLit _ => VariableValueType.BOOLEAN,
-        StringLit _ => VariableValueType.STRING,
-        BinaryExpression bin => _extractType(bin.left, context),
-        UnaryLogicExpression _ => VariableValueType.BOOLEAN,
-        UnaryMathExpression un => _extractType(un.value, context),
-        ParenthesysExpression un => _extractType(un.value, context),
-        VarReferenceExpression ref =>
-          context.read<VariableSign>(ref.name)!.type,
-        FunctionCallExpression call =>
-          _extractFunctionReturnOrClassType(call, context),
-        _ => throw UnsupportedError('Unknown expression type')
-      };
-
-  VariableValueType _extractFunctionReturnOrClassType(
-    FunctionCallExpression e,
-    ScopeContext context,
-  ) {
-    final classFound = context.read<ClassSign>(e.name);
-    final functionFound = context.read<FunctionSign>(e.name);
-
-    if (classFound != null) {
-      return VariableValueType(e.name);
-    } else if (functionFound != null) {
-      return functionFound.returnType;
-    } else {
-      throw UnsupportedError('Unknown expression type');
-    }
   }
 }
 

@@ -24,6 +24,7 @@ extension ExpressionConverterExtension on ExpressionContext {
       VarReferenceExpressionContext e => e.toAst(considerPosition),
       FunctionCallExpressionContext e => e.toAst(considerPosition),
       ObjectMethodCallExpressionContext e => e.toAst(considerPosition),
+      ObjectPropertyReferenceExpressionContext e => e.toAst(considerPosition),
       _ => throw UnimplementedError()
     };
   }
@@ -36,10 +37,9 @@ extension ListLiteralExpressionConverterExtension
         this.expressions().map((e) => e.toAst(considerPosition)).toList();
 
     return ListLiteralExpression(
-        listExpression,
-        toPosition(
-          considerPosition,
-        ));
+      listExpression,
+      toPosition(considerPosition),
+    );
   }
 }
 
@@ -230,6 +230,20 @@ extension ObjectMethodCallExpressionConverterExtension
       objectName,
       methodName,
       parameters.toList(),
+      toPosition(considerPosition),
+    );
+  }
+}
+
+extension ObjectPropertyReferenceExpressionConverterExtension
+    on ObjectPropertyReferenceExpressionContext {
+  ObjectPropertyReferenceExpression toAst(bool considerPosition) {
+    final objectName = this.objectName!.text!;
+    final methodName = this.methodName!.text!;
+
+    return ObjectPropertyReferenceExpression(
+      objectName,
+      methodName,
       toPosition(considerPosition),
     );
   }

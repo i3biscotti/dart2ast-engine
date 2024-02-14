@@ -570,11 +570,11 @@ class DartParser extends Parser {
         context = _localctx;
         _prevctx = _localctx;
         state = 170;
-        match(TOKEN_ID);
+        _localctx.objectName = match(TOKEN_ID);
         state = 171;
         match(TOKEN_DOT);
         state = 172;
-        match(TOKEN_ID);
+        _localctx.methodName = match(TOKEN_ID);
         break;
       case 17:
         _localctx = ObjectMethodCallExpressionContext(_localctx);
@@ -2010,9 +2010,11 @@ class DoubleLiteralExpressionContext extends ExpressionContext {
 }
 
 class ObjectPropertyReferenceExpressionContext extends ExpressionContext {
+  Token? objectName;
+  Token? methodName;
+  TerminalNode? DOT() => getToken(DartParser.TOKEN_DOT, 0);
   List<TerminalNode> IDs() => getTokens(DartParser.TOKEN_ID);
   TerminalNode? ID(int i) => getToken(DartParser.TOKEN_ID, i);
-  TerminalNode? DOT() => getToken(DartParser.TOKEN_DOT, 0);
   ObjectPropertyReferenceExpressionContext(ExpressionContext ctx) { copyFrom(ctx); }
 }
 

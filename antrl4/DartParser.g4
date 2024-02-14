@@ -44,33 +44,33 @@ type
     ;
 
 expression      
-    : BOOLLIT                                                                   #BoolLiteralExpression
-    | INTLIT                                                                    #IntLiteralExpression
-    | DOUBLELIT                                                                 #DoubleLiteralExpression
-    | STRINGLIT                                                                 #StringLiteralExpression
-    | SQUARE_OPEN (expression COMMA?)* SQUARE_CLOSE                             #ListLiteralExpression           
-    | left=expression  operand=PLUS                 right=expression            #BinaryMathExpression
-    | left=expression  operand=MINUS                right=expression            #BinaryMathExpression
-    | left=expression  operand=TIMES                right=expression            #BinaryMathExpression
-    | left=expression  operand=DIVISION             right=expression            #BinaryMathExpression
-    | left=expression  operand=AND                  right=expression            #BinaryLogicExpression
-    | left=expression  operand=OR                   right=expression            #BinaryLogicExpression
-    | left=expression  operand=GREATER_THAN         right=expression            #BinaryLogicExpression
-    | left=expression  operand=LOWER_THAN           right=expression            #BinaryLogicExpression
-    | left=expression  operand=GREATER_EQUAL_THAN   right=expression            #BinaryLogicExpression
-    | left=expression  operand=LOWER_EQUAL_THAN     right=expression            #BinaryLogicExpression
-    | left=expression  operand=EQUAL                right=expression            #BinaryLogicExpression
-    |                  operand=MINUS                value=expression            #UnaryMathExpression
-    |                  operand=PLUS                 value=expression            #UnaryMathExpression
-    |                  operand=NOT                  value=expression            #UnaryLogicNegationExpression
-    | PLUS PLUS ID                                                              #PreIncrementExpression
-    | ID PLUS PLUS                                                              #PostIncrementExpression
-    | MINUS MINUS ID                                                            #PreDecrementExpression
-    | ID MINUS MINUS                                                            #PostDecrementExpression
-    | PAREN_OPEN       value=expression             PAREN_CLOSE                 #ParenthesysExpression
-    | ID                                                                        #VarReferenceExpression
-    | ID PAREN_OPEN (expression COMMA)* expression? PAREN_CLOSE                 #FunctionCallExpression
-    | ID DOT ID                                                                 #ObjectPropertyReferenceExpression
+    : BOOLLIT                                                                                         #BoolLiteralExpression
+    | INTLIT                                                                                          #IntLiteralExpression
+    | DOUBLELIT                                                                                       #DoubleLiteralExpression
+    | STRINGLIT                                                                                       #StringLiteralExpression
+    | SQUARE_OPEN (expression COMMA?)* SQUARE_CLOSE                                                   #ListLiteralExpression           
+    | left=expression  operand=PLUS                 right=expression                                  #BinaryMathExpression
+    | left=expression  operand=MINUS                right=expression                                  #BinaryMathExpression
+    | left=expression  operand=TIMES                right=expression                                  #BinaryMathExpression
+    | left=expression  operand=DIVISION             right=expression                                  #BinaryMathExpression
+    | left=expression  operand=AND                  right=expression                                  #BinaryLogicExpression
+    | left=expression  operand=OR                   right=expression                                  #BinaryLogicExpression
+    | left=expression  operand=GREATER_THAN         right=expression                                  #BinaryLogicExpression
+    | left=expression  operand=LOWER_THAN           right=expression                                  #BinaryLogicExpression
+    | left=expression  operand=GREATER_EQUAL_THAN   right=expression                                  #BinaryLogicExpression
+    | left=expression  operand=LOWER_EQUAL_THAN     right=expression                                  #BinaryLogicExpression
+    | left=expression  operand=EQUAL                right=expression                                  #BinaryLogicExpression
+    |                  operand=MINUS                value=expression                                  #UnaryMathExpression
+    |                  operand=PLUS                 value=expression                                  #UnaryMathExpression
+    |                  operand=NOT                  value=expression                                  #UnaryLogicNegationExpression
+    | PLUS PLUS ID                                                                                    #PreIncrementExpression
+    | ID PLUS PLUS                                                                                    #PostIncrementExpression
+    | MINUS MINUS ID                                                                                  #PreDecrementExpression
+    | ID MINUS MINUS                                                                                  #PostDecrementExpression
+    | PAREN_OPEN       value=expression             PAREN_CLOSE                                       #ParenthesysExpression
+    | ID                                                                                              #VarReferenceExpression
+    | ID PAREN_OPEN (expression COMMA)* expression? PAREN_CLOSE                                       #FunctionCallExpression
+    | objectName=ID DOT methodName=ID                                                                 #ObjectPropertyReferenceExpression
     | objectName=ID DOT methodName=ID PAREN_OPEN (expression COMMA)* expression? PAREN_CLOSE          #ObjectMethodCallExpression
     ;
 

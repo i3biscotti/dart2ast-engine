@@ -428,6 +428,40 @@ class FunctionCallExpression extends Expression {
   }
 }
 
+class ObjectPropertyReferenceExpression extends Expression {
+  final String objectName;
+  final String propertyName;
+
+  ObjectPropertyReferenceExpression(
+    this.objectName,
+    this.propertyName,
+    super.position,
+  );
+
+  factory ObjectPropertyReferenceExpression.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    return ObjectPropertyReferenceExpression(
+      json['objectName'],
+      json['propertyName'],
+      deserializeToAst<Position>(json['position']),
+    );
+  }
+
+  @override
+  List<Object?> get props => [objectName, propertyName, position];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "type": runtimeType.toString(),
+      "objectName": objectName,
+      "propertyName": propertyName,
+      "position": position?.toJson(),
+    };
+  }
+}
+
 class ObjectMethodCallExpression extends Expression {
   final String objectName;
   final String methodName;
