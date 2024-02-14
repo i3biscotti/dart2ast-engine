@@ -294,109 +294,103 @@ void main() {
     },
   );
 
-  group( 
+  group(
     "Task 5",
     () {
-      test('for_statement', () async {
-        final root = await _parseResource('task5/for_statement');
+      test(
+        'for_statement',
+        () async {
+          final root = await parseResource('task5/for_statement');
 
-        expect(
-          root.toAst(false),
-          equals(
-            ProgramFile(
-              <Statement>[
-                VariableDeclarationStatement(
+          expect(
+            root.toAst(false),
+            equals(
+              ProgramFile(
+                <Statement>[
+                  VariableDeclarationStatement(
                     VariableType.variable,
                     'a',
                     null,
                     IntLit('0', null),
                     null,
                   ),
-                ForDefinitionStatement(
-                  StandardForCondition(
-                    VarDeclarationForStatement(
-                      VariableType.type,
-                      'i',
-                      VariableValueType.INT,
-                      IntLit('0', null),
-                      null,
-                    ),
-                    BinaryLogicExpression(
-                      VarReferenceExpression('i', null),
-                      IntLit('3', null),
-                      LogicOperand.lessThan,
-                    null),
-                    ExpressionForStatement(
-                      PostIncrementExpression('i', null),
-                    null),
-                  null),
-                  <Statement>[
-                    AssignmentStatement(
-                      'a',
-                      BinaryMathExpression(
-                        VarReferenceExpression('a', null),
-                        IntLit('1', null),
-                        MathOperand.plus,
+                  ForDefinitionStatement(
+                      StandardForCondition(
+                          VarDeclarationForStatement(
+                            VariableType.type,
+                            'i',
+                            VariableValueType.INT,
+                            IntLit('0', null),
+                            null,
+                          ),
+                          BinaryLogicExpression(
+                              VarReferenceExpression('i', null),
+                              IntLit('3', null),
+                              LogicOperand.lessThan,
+                              null),
+                          ExpressionForStatement(
+                              PostIncrementExpression('i', null), null),
+                          null),
+                      <Statement>[
+                        AssignmentStatement(
+                            'a',
+                            BinaryMathExpression(
+                                VarReferenceExpression('a', null),
+                                IntLit('1', null),
+                                MathOperand.plus,
+                                null),
+                            null)
+                      ],
                       null),
-                    null)
-                  ],
-                null),
-              ],
-              null,
-             ),
-           ),
-         );
+                ],
+                null,
+              ),
+            ),
+          );
         },
       );
 
-      test('for_each_statement', () async {
-        final root = await _parseResource('task5/for_each_statement');
+      test(
+        'for_each_statement',
+        () async {
+          final root = await parseResource('task5/for_each_statement');
 
-        expect(
-          root.toAst(false),
-          equals(
-            ProgramFile(       
-              <Statement>[
-                VariableDeclarationStatement(
-                  VariableType.immutable,
-                  'list',
-                  null,
-                  ListLiteralExpression(
-                    [IntLit('1', null),
-                    IntLit('2', null)],
-                    null),
-                null),
-                VariableDeclarationStatement(
-                  VariableType.variable,
-                  'b',
-                  null,
-                  IntLit('0', null),
-                null),
-                ForDefinitionStatement(
-                  ForEachCondition(
-                    ItemDefinition(
-                      VariableType.type,
-                      'i',
-                      VariableValueType.INT,
-                    null),
-                    VarReferenceExpression('list', null),
-                    null),
-                  <Statement>[
-                    AssignmentStatement(
-                      'b',
-                      BinaryMathExpression(
-                        VarReferenceExpression('b', null),
-                        IntLit('1', null),
-                        MathOperand.plus,
+          expect(
+            root.toAst(false),
+            equals(
+              ProgramFile(
+                <Statement>[
+                  VariableDeclarationStatement(
+                      VariableType.immutable,
+                      'list',
+                      null,
+                      ListLiteralExpression(
+                          [IntLit('1', null), IntLit('2', null)], null),
                       null),
-                    null),
-                  ],
-                null),
-              ],
-              null,
-             ),
-           ),
-         );
+                  VariableDeclarationStatement(VariableType.variable, 'b', null,
+                      IntLit('0', null), null),
+                  ForDefinitionStatement(
+                      ForEachCondition(
+                          ItemDefinition(VariableType.type, 'i',
+                              VariableValueType.INT, null),
+                          VarReferenceExpression('list', null),
+                          null),
+                      <Statement>[
+                        AssignmentStatement(
+                            'b',
+                            BinaryMathExpression(
+                                VarReferenceExpression('b', null),
+                                IntLit('1', null),
+                                MathOperand.plus,
+                                null),
+                            null),
+                      ],
+                      null),
+                ],
+                null,
+              ),
+            ),
+          );
         },
       );
     },

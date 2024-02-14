@@ -88,7 +88,7 @@ class ListLiteralExpression extends Expression {
 
   ListLiteralExpression.fromJson(Map<String, dynamic> json)
       : value = List.from(json['value'])
-            .map((e) => Expression.fromJson(e))
+            .map((e) => deserializeToAst<Position>(e))
             .toList(),
         super(Position.fromJson(json['position']));
 

@@ -29,16 +29,18 @@ extension ExpressionConverterExtension on ExpressionContext {
   }
 }
 
-extension ListLiteralExpressionConverterExtension 
+extension ListLiteralExpressionConverterExtension
     on ListLiteralExpressionContext {
-   ListLiteralExpression toAst(bool considerPosition) {
-    final listExpression = this.expressions().map((e) => e.toAst(considerPosition)).toList();
+  ListLiteralExpression toAst(bool considerPosition) {
+    final listExpression =
+        this.expressions().map((e) => e.toAst(considerPosition)).toList();
 
     return ListLiteralExpression(
-      listExpression, 
-      toPosition(considerPosition,)
-    );
-   }
+        listExpression,
+        toPosition(
+          considerPosition,
+        ));
+  }
 }
 
 extension BinaryMathExpressionConverterExtension
