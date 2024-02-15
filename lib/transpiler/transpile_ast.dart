@@ -31,6 +31,8 @@ extension ExpressionTranspilerExtension on Expression {
       PostIncrementExpression e => e.transpile(),
       PreDecrementExpression e => e.transpile(),
       PostDecrementExpression e => e.transpile(),
+      InputExpression e => e.transpile(),
+      OutputExpression e => e.transpile(),
       ParenthesysExpression e => e.transpile(),
       VarReferenceExpression e => e.transpile(),
       FunctionCallExpression e => e.transpile(),
@@ -210,6 +212,26 @@ extension PostDecrementExpressionTranspilerExtension on PostDecrementExpression 
     return expression;
   }
 }
+
+extension InputExpressionTranspilerExtension on InputExpression {
+  String transpile() {
+    String par_open = '(';
+    String par_close = ')';
+    String expression = 'stdin.readLineSync$par_open$par_close';
+    return expression;
+  }
+}
+
+extension OutputExpressionTranspilerEsxtension on OutputExpression {
+  String transpile() {
+    String par_open = '(';
+    String valueTranspiler = value.transpile();
+    String par_close = ')';
+    String expression = 'print$par_open$valueTranspiler$par_close';
+    return expression;
+  }
+}
+
 
 extension ParenthesysExpressionTranspilerExtension on ParenthesysExpression {
   String transpile() {

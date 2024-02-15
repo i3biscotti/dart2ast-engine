@@ -357,6 +357,47 @@ class PostDecrementExpression extends Expression {
   }
 }
 
+class InputExpression extends Expression {
+
+  InputExpression(super.position);
+
+  InputExpression.fromJson(Map<String, dynamic> json)
+     : super(deserializeToAst<Position>(json['position']));
+  
+  @override
+  List<Object?> get props => [position];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "type": runtimeType.toString(),
+      "position": position?.toJson(),
+    };
+  }
+}
+
+class OutputExpression extends Expression {
+  final Expression value;
+
+  OutputExpression(this.value, super.position);
+
+  OutputExpression.fromJson(Map<String, dynamic> json)
+      : value = deserializeToAst<Expression>(json['value']),
+        super(deserializeToAst<Position>(json['position']));
+
+  @override
+  List<Object?> get props => [value, position];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "type": runtimeType.toString(),
+      "value": value.toJson(),
+      "position": position?.toJson(),
+    };
+  }
+}
+
 class VarReferenceExpression extends Expression {
   final String name;
 

@@ -67,6 +67,8 @@ expression
     | ID PLUS PLUS                                                                                    #PostIncrementExpression
     | MINUS MINUS ID                                                                                  #PreDecrementExpression
     | ID MINUS MINUS                                                                                  #PostDecrementExpression
+    | STDIN DOT READLINESYNC PAREN_OPEN PAREN_CLOSE                                                   #InputExpression
+    | PRINT PAREN_OPEN value=expression PAREN_CLOSE                                                   #OutputExpression
     | PAREN_OPEN       value=expression             PAREN_CLOSE                                       #ParenthesysExpression
     | ID                                                                                              #VarReferenceExpression
     | ID PAREN_OPEN (expression COMMA)* expression? PAREN_CLOSE                                       #FunctionCallExpression

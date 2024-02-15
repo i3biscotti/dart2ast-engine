@@ -187,6 +187,32 @@ void main() {
   );
 
   group(
+    "Task 6",
+    () {
+      test('input_expression', () async {
+        final root =
+         await parseResource2Ast('task6/input_expression');
+
+       expect(
+        root.transpile(),
+        equals("final input = stdin.readLineSync();")
+       );
+      });
+
+      test('output_expression', () async {
+        final root =
+         await parseResource2Ast('task6/output_expression');
+
+       expect(
+        root.transpile(),
+        equals("print(input);")
+       );
+      });
+
+    },
+  );
+
+  group(
     "Task 7",
     () {
       test('void_function_without_params', () async {

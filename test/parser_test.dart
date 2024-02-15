@@ -457,6 +457,60 @@ void main() {
   );
 
   group(
+    "Task 6",
+    () {
+      test('input_expression', () async {
+        final rootNode =
+            await parseResource('task6/input_expression');
+        
+        expect(
+          getMultilineParseTree(rootNode),
+          equals(
+            """
+            |Node(DartFile)
+            |  Node(FinalDeclarationStatement)
+            |    T[final]
+            |    T[input]
+            |    T[=]
+            |    Node(InputExpression)
+            |      T[stdin]
+            |      T[.]
+            |      T[readLineSync]
+            |      T[(]
+            |      T[)]
+            |    T[;]
+            |  T[<EOF>]
+            """
+               .trimMargin(),
+          ));
+      });
+
+      test('output_expression', () async {
+        final rootNode = 
+           await parseResource('task6/output_expression');
+
+        expect(
+          getMultilineParseTree(rootNode),
+          equals(
+            """
+            |Node(DartFile)
+            |  Node(ExpressionDefinitionStatement)
+            |    Node(OutputExpression)
+            |      T[print]
+            |      T[(]
+            |      Node(VarReferenceExpression)
+            |        T[input]
+            |      T[)]
+            |    T[;]
+            |  T[<EOF>]
+            """
+               .trimMargin(),
+          ));
+      });
+    },
+  );
+
+  group(
     "Task 7",
     () {
       test('void_function_without_params', () async {

@@ -1,15 +1,5 @@
 lexer grammar DartLexer;
 
-/* 
-
-var name = "Simone"; 
-final int age = 16;
-double height = 1.75; 
-const text = "Hello World";
-
-*/
-// TASK 1
-
 WS                          : [ \t\r\n]+ -> skip ;
 
 VAR                         : 'var';
@@ -71,9 +61,13 @@ ELSE                        : 'else';
 
 WHILE                       : 'while';
 
-//task 5
 FOR                         : 'for';
 IN                          : 'in';
+
+// task 6
+STDIN                       : 'stdin';
+READLINESYNC                : 'readLineSync';
+PRINT                       : 'print';
 
 ID                          : [A-Za-z_][A-Za-z_0-9]*;
 

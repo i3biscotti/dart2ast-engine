@@ -20,6 +20,8 @@ extension ExpressionConverterExtension on ExpressionContext {
       PostIncrementExpressionContext e => e.toAst(considerPosition),
       PreDecrementExpressionContext e => e.toAst(considerPosition),
       PostDecrementExpressionContext e => e.toAst(considerPosition),
+      InputExpressionContext e => e.toAst(considerPosition),
+      OutputExpressionContext e => e.toAst(considerPosition),
       ParenthesysExpressionContext e => e.toAst(considerPosition),
       VarReferenceExpressionContext e => e.toAst(considerPosition),
       FunctionCallExpressionContext e => e.toAst(considerPosition),
@@ -177,6 +179,29 @@ extension PostDecrementExpressionConverterExtension
     );
   }
 }
+
+extension InputExpressionConverterExtension
+   on InputExpressionContext {
+  InputExpression toAst(bool considerPosition) {
+
+    return InputExpression(
+      toPosition(considerPosition,)
+    );
+  }
+}
+
+extension OutputExpressionConverterExtension
+   on OutputExpressionContext {
+  OutputExpression toAst(bool considerPosition) {
+    final value = this.value!.toAst(considerPosition);
+
+    return OutputExpression(
+      value,
+      toPosition(considerPosition),
+    );
+  }
+}
+
 
 extension ParenthesysExpressionConverterExtension
     on ParenthesysExpressionContext {

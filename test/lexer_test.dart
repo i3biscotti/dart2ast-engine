@@ -296,6 +296,48 @@ void main() {
   );
 
   group(
+    "Task 6",
+    () {
+      test('input_expression', () async {
+        final lexer =
+           await lexerForResource('task6/input_expression');
+
+        expect(
+            tokens(lexer),
+            equals(<String>[
+              "FINAL",
+              "ID",
+              "ASSIGN",
+              "STDIN",
+              "DOT",
+              "READLINESYNC",
+              "PAREN_OPEN",
+              "PAREN_CLOSE",
+              "SEMICOLON",
+              "EOF"
+            ]));
+      });
+
+      test('output_expression', () async {
+        final lexer =
+           await lexerForResource('task6/output_expression');
+        
+        expect(
+            tokens(lexer),
+            equals(<String>[
+              "PRINT",
+              "PAREN_OPEN",
+              "ID",
+              "PAREN_CLOSE",
+              "SEMICOLON",
+              "EOF"
+            ]));
+      });
+    },
+  );
+
+
+  group(
     "Task 7",
     () {
       test('void_function_without_params', () async {

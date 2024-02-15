@@ -397,6 +397,60 @@ void main() {
   );
 
   group(
+    "Task 6",
+    () {
+     test('input_expression', () async {
+       final root = 
+          await parseResource2Ast('task6/input_expression');
+
+       expect(
+        root,
+        equals(
+          ProgramFile(
+            <Statement>[
+              VariableDeclarationStatement(
+                    VariableType.immutable,
+                    'input',
+                    null,
+                    InputExpression(
+                      null
+                    ),
+                    null,
+                  ),
+               ],
+               null,
+              ),
+            ),
+          );
+        },
+      );
+
+      test('output_expression', () async {
+        final root =
+           await parseResource2Ast('task6/output_expression');
+        
+        expect(
+          root, 
+          equals(
+            ProgramFile(
+              <Statement>[
+                ExpressionDefinitionStatement(
+                  OutputExpression(
+                    VarReferenceExpression('input', null),
+                    null),
+                  null,
+                  ),
+                ],
+                null,
+              ),
+            ),
+          );
+        },
+      );
+    },
+  );
+
+  group(
     "Task 7",
     () {
       test('void_function_without_params', () async {
