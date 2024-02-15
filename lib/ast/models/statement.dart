@@ -82,6 +82,7 @@ class VariableValueType extends AstObject {
   static VariableValueType get STRING => VariableValueType('String');
   static VariableValueType get BOOLEAN => VariableValueType('bool');
   static VariableValueType get LIST => VariableValueType('List');
+  static VariableValueType get DYNAMIC => VariableValueType('dynamic');
   static VariableValueType get VOID => VariableValueType('void');
 
   @override
