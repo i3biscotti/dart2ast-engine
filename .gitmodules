@@ -1,0 +1,3 @@
+[submodule "dart2kotlin_protocol"]
+	path = dart2kotlin_protocol
+	url = git@github.com:i3biscotti/dart2kotlin_protocol.git
