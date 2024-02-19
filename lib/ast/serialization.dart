@@ -48,12 +48,6 @@ dynamic serializeAst(Object node) {
     },
   );
 
-  final valueNames = reflection.type.declarations.values
-      .map((e) => e.simpleName.toString())
-      .join(', ');
-
-  // print("${reflection.type.simpleName}($valueNames)");
-
   var objectDict = {
     'type': MirrorSystem.getName(reflection.type.simpleName),
     ...Map.fromEntries(properties),

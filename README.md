@@ -1,19 +1,11 @@
 # Dart2Ast Engine
 
-This engine is served by [Dart Frog HTTP Framework](https://dartfrog.vgv.dev/)
- 
-For start server you must install dart_frog_cli with pub
-
 ```shell
-# 📦 Install the dart_frog cli from pub.dev
-dart pub global activate dart_frog_cli
+protoc -I=dart2kotlin_protocol/protocol --dart_out=lib/ast/protocol dart2kotlin_protocol/protocol/request.proto
+protoc -I=dart2kotlin_protocol/protocol --dart_out=lib/ast/protocol dart2kotlin_protocol/protocol/response.proto
+protoc -I=dart2kotlin_protocol/protocol --dart_out=lib/ast/protocol dart2kotlin_protocol/protocol/base.proto
+protoc -I=dart2kotlin_protocol/protocol --dart_out=lib/ast/protocol dart2kotlin_protocol/protocol/position.proto
+protoc -I=dart2kotlin_protocol/protocol --dart_out=lib/ast/protocol dart2kotlin_protocol/protocol/expressions.proto
+protoc -I=dart2kotlin_protocol/protocol --dart_out=lib/ast/protocol dart2kotlin_protocol/protocol/statements.proto 
+protoc -I=D:\proto3\include\google\protobuf --dart_out=lib/ast/protocol/google/protobuf D:\proto3\include\google\protobuf\any.proto
 ```
-
-You can run the server using this command
-
-```shell
-# 🏁 Start the dev server
-dart_frog dev
-```
-
-The api respect [API Specification](api/api-specification.yaml)

@@ -1,10 +1,9 @@
 {
     "antlr4.generation": {
- 
-        "mode": "external",
+        "mode": "internal",
         "language": "Dart",
-        "listeners": true,
+        "listeners": false,
         "visitors": false,
         "outputDir": "../lib/antlr"
-    }
+    },
 }

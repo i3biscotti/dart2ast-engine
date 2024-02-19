@@ -1,4 +1,3 @@
-import 'package:dart2ast_engine/ast/deserialization.dart';
 import 'package:dart2ast_engine/dart2ast.dart';
 
 abstract class Statement extends Node {
