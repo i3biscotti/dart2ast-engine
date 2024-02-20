@@ -29,12 +29,12 @@ final $typed_data.Uint8List astRequestDescriptor = $convert.base64Decode(
 const TranspileRequest$json = {
   '1': 'TranspileRequest',
   '2': [
-    {'1': 'program', '3': 1, '4': 1, '5': 11, '6': '.ProgramFile', '10': 'program'},
+    {'1': 'program', '3': 1, '4': 1, '5': 11, '6': '.protocol.ProgramFile', '10': 'program'},
   ],
 };
 
 /// Descriptor for `TranspileRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List transpileRequestDescriptor = $convert.base64Decode(
-    'ChBUcmFuc3BpbGVSZXF1ZXN0EiYKB3Byb2dyYW0YASABKAsyDC5Qcm9ncmFtRmlsZVIHcHJvZ3'
-    'JhbQ==');
+    'ChBUcmFuc3BpbGVSZXF1ZXN0Ei8KB3Byb2dyYW0YASABKAsyFS5wcm90b2NvbC5Qcm9ncmFtRm'
+    'lsZVIHcHJvZ3JhbQ==');
 

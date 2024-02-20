@@ -17,15 +17,15 @@ import 'dart:typed_data' as $typed_data;
 const Position$json = {
   '1': 'Position',
   '2': [
-    {'1': 'start', '3': 1, '4': 1, '5': 11, '6': '.Point', '10': 'start'},
-    {'1': 'end', '3': 2, '4': 1, '5': 11, '6': '.Point', '10': 'end'},
+    {'1': 'start', '3': 1, '4': 1, '5': 11, '6': '.protocol.Point', '10': 'start'},
+    {'1': 'end', '3': 2, '4': 1, '5': 11, '6': '.protocol.Point', '10': 'end'},
   ],
 };
 
 /// Descriptor for `Position`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List positionDescriptor = $convert.base64Decode(
-    'CghQb3NpdGlvbhIcCgVzdGFydBgBIAEoCzIGLlBvaW50UgVzdGFydBIYCgNlbmQYAiABKAsyBi'
-    '5Qb2ludFIDZW5k');
+    'CghQb3NpdGlvbhIlCgVzdGFydBgBIAEoCzIPLnByb3RvY29sLlBvaW50UgVzdGFydBIhCgNlbm'
+    'QYAiABKAsyDy5wcm90b2NvbC5Qb2ludFIDZW5k');
 
 @$core.Deprecated('Use pointDescriptor instead')
 const Point$json = {

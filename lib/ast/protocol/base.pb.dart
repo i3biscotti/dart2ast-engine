@@ -53,7 +53,7 @@ class AstObject extends $pb.GeneratedMessage {
     3 : AstObject_Type.node,
     0 : AstObject_Type.notSet
   };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AstObject', createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AstObject', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
     ..oo(0, [1, 2, 3])
     ..aOM<$0.Position>(1, _omitFieldNames ? '' : 'position', subBuilder: $0.Position.create)
     ..aOM<$0.Point>(2, _omitFieldNames ? '' : 'point', subBuilder: $0.Point.create)
@@ -123,6 +123,10 @@ enum Node_Subtype {
   expression, 
   statement, 
   programFile, 
+  ifBlock, 
+  forCondition, 
+  itemDefinition, 
+  parameter, 
   notSet
 }
 
@@ -132,6 +136,10 @@ class Node extends $pb.GeneratedMessage {
     $1.Expression? expression,
     $2.Statement? statement,
     ProgramFile? programFile,
+    $2.IfBlock? ifBlock,
+    $2.ForCondition? forCondition,
+    $2.ItemDefinition? itemDefinition,
+    $2.Parameter? parameter,
   }) {
     final $result = create();
     if (expression != null) {
@@ -143,6 +151,18 @@ class Node extends $pb.GeneratedMessage {
     if (programFile != null) {
       $result.programFile = programFile;
     }
+    if (ifBlock != null) {
+      $result.ifBlock = ifBlock;
+    }
+    if (forCondition != null) {
+      $result.forCondition = forCondition;
+    }
+    if (itemDefinition != null) {
+      $result.itemDefinition = itemDefinition;
+    }
+    if (parameter != null) {
+      $result.parameter = parameter;
+    }
     return $result;
   }
   Node._() : super();
@@ -153,13 +173,21 @@ class Node extends $pb.GeneratedMessage {
     1 : Node_Subtype.expression,
     2 : Node_Subtype.statement,
     3 : Node_Subtype.programFile,
+    4 : Node_Subtype.ifBlock,
+    5 : Node_Subtype.forCondition,
+    6 : Node_Subtype.itemDefinition,
+    7 : Node_Subtype.parameter,
     0 : Node_Subtype.notSet
   };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Node', createEmptyInstance: create)
-    ..oo(0, [1, 2, 3])
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Node', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
+    ..oo(0, [1, 2, 3, 4, 5, 6, 7])
     ..aOM<$1.Expression>(1, _omitFieldNames ? '' : 'expression', subBuilder: $1.Expression.create)
     ..aOM<$2.Statement>(2, _omitFieldNames ? '' : 'statement', subBuilder: $2.Statement.create)
     ..aOM<ProgramFile>(3, _omitFieldNames ? '' : 'programFile', protoName: 'programFile', subBuilder: ProgramFile.create)
+    ..aOM<$2.IfBlock>(4, _omitFieldNames ? '' : 'ifBlock', protoName: 'ifBlock', subBuilder: $2.IfBlock.create)
+    ..aOM<$2.ForCondition>(5, _omitFieldNames ? '' : 'forCondition', protoName: 'forCondition', subBuilder: $2.ForCondition.create)
+    ..aOM<$2.ItemDefinition>(6, _omitFieldNames ? '' : 'itemDefinition', protoName: 'itemDefinition', subBuilder: $2.ItemDefinition.create)
+    ..aOM<$2.Parameter>(7, _omitFieldNames ? '' : 'parameter', subBuilder: $2.Parameter.create)
     ..hasRequiredFields = false
   ;
 
@@ -219,6 +247,50 @@ class Node extends $pb.GeneratedMessage {
   void clearProgramFile() => clearField(3);
   @$pb.TagNumber(3)
   ProgramFile ensureProgramFile() => $_ensure(2);
+
+  @$pb.TagNumber(4)
+  $2.IfBlock get ifBlock => $_getN(3);
+  @$pb.TagNumber(4)
+  set ifBlock($2.IfBlock v) { setField(4, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasIfBlock() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearIfBlock() => clearField(4);
+  @$pb.TagNumber(4)
+  $2.IfBlock ensureIfBlock() => $_ensure(3);
+
+  @$pb.TagNumber(5)
+  $2.ForCondition get forCondition => $_getN(4);
+  @$pb.TagNumber(5)
+  set forCondition($2.ForCondition v) { setField(5, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasForCondition() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearForCondition() => clearField(5);
+  @$pb.TagNumber(5)
+  $2.ForCondition ensureForCondition() => $_ensure(4);
+
+  @$pb.TagNumber(6)
+  $2.ItemDefinition get itemDefinition => $_getN(5);
+  @$pb.TagNumber(6)
+  set itemDefinition($2.ItemDefinition v) { setField(6, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasItemDefinition() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearItemDefinition() => clearField(6);
+  @$pb.TagNumber(6)
+  $2.ItemDefinition ensureItemDefinition() => $_ensure(5);
+
+  @$pb.TagNumber(7)
+  $2.Parameter get parameter => $_getN(6);
+  @$pb.TagNumber(7)
+  set parameter($2.Parameter v) { setField(7, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasParameter() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearParameter() => clearField(7);
+  @$pb.TagNumber(7)
+  $2.Parameter ensureParameter() => $_ensure(6);
 }
 
 class ProgramFile extends $pb.GeneratedMessage {
@@ -239,7 +311,7 @@ class ProgramFile extends $pb.GeneratedMessage {
   factory ProgramFile.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ProgramFile.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ProgramFile', createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ProgramFile', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
     ..pc<$2.Statement>(1, _omitFieldNames ? '' : 'lines', $pb.PbFieldType.PM, subBuilder: $2.Statement.create)
     ..aOM<$0.Position>(2, _omitFieldNames ? '' : 'position', subBuilder: $0.Position.create)
     ..hasRequiredFields = false

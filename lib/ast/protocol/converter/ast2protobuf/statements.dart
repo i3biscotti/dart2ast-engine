@@ -4,10 +4,10 @@ import 'package:dart2ast_engine/ast/protocol/converter/ast2protobuf.dart';
 
 extension AssignmentStatement2Protobuf on ast.AssignmentStatement {
   protocol.AssignmentStatement toProtobuf() {
-
-    return protocol.AssignmentStatement()
-      ..name = name
-      ..value = convertExpressionToProtobuf(value)
-      ..position = this.position!.toProtobuf();
+    return protocol.AssignmentStatement(
+      name: name,
+      value: convertExpressionToProtobuf(value),
+      position: position?.toProtobuf(),
+    );
   }
 }

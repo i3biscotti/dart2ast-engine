@@ -12,9 +12,7 @@ extension Position2Protobuf on ast.Position {
 
 extension Point2Protobuf on ast.Point {
   protocol.Point toProtobuf() {
-    return protocol.Point()
-      ..line = line
-      ..column = column;
+    return protocol.Point(line: line, column: column);
   }
 }
 
@@ -22,8 +20,9 @@ extension ProgramFile2Protobuf on ast.ProgramFile {
   protocol.ProgramFile toProtobuf() {
     final lines = [...this.lines.map(convertStatementToProtobuf)];
 
-    return protocol.ProgramFile()
-      ..lines.addAll(lines)
-      ..position = this.position!.toProtobuf();
+    return protocol.ProgramFile(
+      lines: lines,
+      position: position?.toProtobuf(),
+    );
   }
 }

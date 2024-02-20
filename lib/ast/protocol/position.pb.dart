@@ -31,7 +31,7 @@ class Position extends $pb.GeneratedMessage {
   factory Position.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory Position.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Position', createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Position', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
     ..aOM<Point>(1, _omitFieldNames ? '' : 'start', subBuilder: Point.create)
     ..aOM<Point>(2, _omitFieldNames ? '' : 'end', subBuilder: Point.create)
     ..hasRequiredFields = false
@@ -99,7 +99,7 @@ class Point extends $pb.GeneratedMessage {
   factory Point.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory Point.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Point', createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Point', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
     ..a<$core.int>(1, _omitFieldNames ? '' : 'line', $pb.PbFieldType.O3)
     ..a<$core.int>(2, _omitFieldNames ? '' : 'column', $pb.PbFieldType.O3)
     ..hasRequiredFields = false

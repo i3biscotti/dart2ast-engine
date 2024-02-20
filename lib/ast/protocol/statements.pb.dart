@@ -33,7 +33,7 @@ class VariableValueType extends $pb.GeneratedMessage {
   factory VariableValueType.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory VariableValueType.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'VariableValueType', createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'VariableValueType', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'name')
     ..hasRequiredFields = false
   ;
@@ -140,7 +140,7 @@ class Statement extends $pb.GeneratedMessage {
     9 : Statement_Stmt.forDefinitionStatement,
     0 : Statement_Stmt.notSet
   };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Statement', createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Statement', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
     ..oo(0, [1, 2, 3, 4, 5, 6, 7, 8, 9])
     ..aOM<AssignmentStatement>(1, _omitFieldNames ? '' : 'assignmentStatement', protoName: 'assignmentStatement', subBuilder: AssignmentStatement.create)
     ..aOM<ClassDefinitionStatement>(2, _omitFieldNames ? '' : 'classDefinitionStatement', protoName: 'classDefinitionStatement', subBuilder: ClassDefinitionStatement.create)
@@ -300,7 +300,7 @@ class AssignmentStatement extends $pb.GeneratedMessage {
   factory AssignmentStatement.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory AssignmentStatement.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AssignmentStatement', createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AssignmentStatement', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'name')
     ..aOM<$0.Expression>(2, _omitFieldNames ? '' : 'value', subBuilder: $0.Expression.create)
     ..aOM<$1.Position>(3, _omitFieldNames ? '' : 'position', subBuilder: $1.Position.create)
@@ -402,7 +402,7 @@ class ClassDefinitionStatement extends $pb.GeneratedMessage {
   factory ClassDefinitionStatement.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ClassDefinitionStatement.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ClassDefinitionStatement', createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ClassDefinitionStatement', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
     ..e<EncapsulationType>(1, _omitFieldNames ? '' : 'encapsulation', $pb.PbFieldType.OE, defaultOrMaker: EncapsulationType.PUBLIC, valueOf: EncapsulationType.valueOf, enumValues: EncapsulationType.values)
     ..aOS(2, _omitFieldNames ? '' : 'name')
     ..aOS(3, _omitFieldNames ? '' : 'parentName', protoName: 'parentName')
@@ -520,7 +520,7 @@ class PropertyDeclaration extends $pb.GeneratedMessage {
   factory PropertyDeclaration.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory PropertyDeclaration.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'PropertyDeclaration', createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'PropertyDeclaration', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
     ..e<VariableType>(1, _omitFieldNames ? '' : 'varType', $pb.PbFieldType.OE, protoName: 'varType', defaultOrMaker: VariableType.VARIABLE, valueOf: VariableType.valueOf, enumValues: VariableType.values)
     ..aOS(2, _omitFieldNames ? '' : 'name')
     ..aOM<VariableValueType>(3, _omitFieldNames ? '' : 'valueType', protoName: 'valueType', subBuilder: VariableValueType.create)
@@ -620,7 +620,7 @@ class FunctionDefinitionStatement extends $pb.GeneratedMessage {
   factory FunctionDefinitionStatement.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory FunctionDefinitionStatement.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'FunctionDefinitionStatement', createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'FunctionDefinitionStatement', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'name')
     ..pc<Parameter>(2, _omitFieldNames ? '' : 'parameters', $pb.PbFieldType.PM, subBuilder: Parameter.create)
     ..aOM<VariableValueType>(3, _omitFieldNames ? '' : 'returnType', protoName: 'returnType', subBuilder: VariableValueType.create)
@@ -722,7 +722,7 @@ class ConstructorDefinitionStatement extends $pb.GeneratedMessage {
   factory ConstructorDefinitionStatement.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ConstructorDefinitionStatement.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ConstructorDefinitionStatement', createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ConstructorDefinitionStatement', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'className', protoName: 'className')
     ..aOS(2, _omitFieldNames ? '' : 'constructorName', protoName: 'constructorName')
     ..pc<Parameter>(3, _omitFieldNames ? '' : 'parameters', $pb.PbFieldType.PM, subBuilder: Parameter.create)
@@ -814,7 +814,7 @@ class ThisConstructorDefinition extends $pb.GeneratedMessage {
   factory ThisConstructorDefinition.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ThisConstructorDefinition.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ThisConstructorDefinition', createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ThisConstructorDefinition', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
     ..pc<$0.Expression>(1, _omitFieldNames ? '' : 'parameters', $pb.PbFieldType.PM, subBuilder: $0.Expression.create)
     ..hasRequiredFields = false
   ;
@@ -866,7 +866,7 @@ class Parameter extends $pb.GeneratedMessage {
   factory Parameter.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory Parameter.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Parameter', createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Parameter', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'name')
     ..e<ParameterType>(2, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: ParameterType.TYPE, valueOf: ParameterType.valueOf, enumValues: ParameterType.values)
     ..aOM<VariableValueType>(3, _omitFieldNames ? '' : 'valueType', protoName: 'valueType', subBuilder: VariableValueType.create)
@@ -942,7 +942,7 @@ class ExpressionDefinitionStatement extends $pb.GeneratedMessage {
   factory ExpressionDefinitionStatement.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ExpressionDefinitionStatement.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ExpressionDefinitionStatement', createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ExpressionDefinitionStatement', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
     ..aOM<$0.Expression>(1, _omitFieldNames ? '' : 'value', subBuilder: $0.Expression.create)
     ..aOM<$1.Position>(2, _omitFieldNames ? '' : 'position', subBuilder: $1.Position.create)
     ..hasRequiredFields = false
@@ -1018,7 +1018,7 @@ class IfDefinitionStatement extends $pb.GeneratedMessage {
   factory IfDefinitionStatement.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory IfDefinitionStatement.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'IfDefinitionStatement', createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'IfDefinitionStatement', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
     ..aOM<IfBlock>(1, _omitFieldNames ? '' : 'ifBlock', protoName: 'ifBlock', subBuilder: IfBlock.create)
     ..pc<IfBlock>(2, _omitFieldNames ? '' : 'elseIfBlocks', $pb.PbFieldType.PM, protoName: 'elseIfBlocks', subBuilder: IfBlock.create)
     ..aOM<IfBlock>(3, _omitFieldNames ? '' : 'elseBlock', protoName: 'elseBlock', subBuilder: IfBlock.create)
@@ -1110,7 +1110,7 @@ class IfBlock extends $pb.GeneratedMessage {
   factory IfBlock.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory IfBlock.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'IfBlock', createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'IfBlock', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
     ..aOM<$0.Expression>(1, _omitFieldNames ? '' : 'condition', subBuilder: $0.Expression.create)
     ..pc<Statement>(2, _omitFieldNames ? '' : 'statements', $pb.PbFieldType.PM, subBuilder: Statement.create)
     ..e<BlockType>(3, _omitFieldNames ? '' : 'blockType', $pb.PbFieldType.OE, protoName: 'blockType', defaultOrMaker: BlockType.IF_BLOCK, valueOf: BlockType.valueOf, enumValues: BlockType.values)
@@ -1196,7 +1196,7 @@ class WhileDefinitionStatement extends $pb.GeneratedMessage {
   factory WhileDefinitionStatement.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory WhileDefinitionStatement.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'WhileDefinitionStatement', createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'WhileDefinitionStatement', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
     ..aOM<$0.Expression>(1, _omitFieldNames ? '' : 'condition', subBuilder: $0.Expression.create)
     ..pc<Statement>(2, _omitFieldNames ? '' : 'statements', $pb.PbFieldType.PM, subBuilder: Statement.create)
     ..aOM<$1.Position>(3, _omitFieldNames ? '' : 'position', subBuilder: $1.Position.create)
@@ -1285,7 +1285,7 @@ class ForInitOrIncrementStatement extends $pb.GeneratedMessage {
     3 : ForInitOrIncrementStatement_InitOrIncrement.expressionForStatement,
     0 : ForInitOrIncrementStatement_InitOrIncrement.notSet
   };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ForInitOrIncrementStatement', createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ForInitOrIncrementStatement', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
     ..oo(0, [1, 2, 3])
     ..aOM<VarDeclarationForStatement>(1, _omitFieldNames ? '' : 'varDeclarationForStatement', protoName: 'varDeclarationForStatement', subBuilder: VarDeclarationForStatement.create)
     ..aOM<AssignmentForStatement>(2, _omitFieldNames ? '' : 'assignmentForStatement', protoName: 'assignmentForStatement', subBuilder: AssignmentForStatement.create)
@@ -1381,7 +1381,7 @@ class VarDeclarationForStatement extends $pb.GeneratedMessage {
   factory VarDeclarationForStatement.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory VarDeclarationForStatement.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'VarDeclarationForStatement', createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'VarDeclarationForStatement', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
     ..e<VariableType>(1, _omitFieldNames ? '' : 'varType', $pb.PbFieldType.OE, protoName: 'varType', defaultOrMaker: VariableType.VARIABLE, valueOf: VariableType.valueOf, enumValues: VariableType.values)
     ..aOS(2, _omitFieldNames ? '' : 'name')
     ..aOM<VariableValueType>(3, _omitFieldNames ? '' : 'valueType', protoName: 'valueType', subBuilder: VariableValueType.create)
@@ -1485,7 +1485,7 @@ class AssignmentForStatement extends $pb.GeneratedMessage {
   factory AssignmentForStatement.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory AssignmentForStatement.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AssignmentForStatement', createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AssignmentForStatement', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'name')
     ..aOM<$0.Expression>(2, _omitFieldNames ? '' : 'value', subBuilder: $0.Expression.create)
     ..aOM<$1.Position>(3, _omitFieldNames ? '' : 'position', subBuilder: $1.Position.create)
@@ -1563,7 +1563,7 @@ class ExpressionForStatement extends $pb.GeneratedMessage {
   factory ExpressionForStatement.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ExpressionForStatement.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ExpressionForStatement', createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ExpressionForStatement', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
     ..aOM<$0.Expression>(1, _omitFieldNames ? '' : 'value', subBuilder: $0.Expression.create)
     ..aOM<$1.Position>(2, _omitFieldNames ? '' : 'position', subBuilder: $1.Position.create)
     ..hasRequiredFields = false
@@ -1635,7 +1635,7 @@ class ForDefinitionStatement extends $pb.GeneratedMessage {
   factory ForDefinitionStatement.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ForDefinitionStatement.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ForDefinitionStatement', createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ForDefinitionStatement', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
     ..aOM<ForCondition>(1, _omitFieldNames ? '' : 'forCondition', protoName: 'forCondition', subBuilder: ForCondition.create)
     ..pc<Statement>(2, _omitFieldNames ? '' : 'statements', $pb.PbFieldType.PM, subBuilder: Statement.create)
     ..aOM<$1.Position>(3, _omitFieldNames ? '' : 'position', subBuilder: $1.Position.create)
@@ -1718,7 +1718,7 @@ class ForCondition extends $pb.GeneratedMessage {
     2 : ForCondition_Condition.forEachCondition,
     0 : ForCondition_Condition.notSet
   };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ForCondition', createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ForCondition', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
     ..oo(0, [1, 2])
     ..aOM<StandardForCondition>(1, _omitFieldNames ? '' : 'standardForCondition', protoName: 'standardForCondition', subBuilder: StandardForCondition.create)
     ..aOM<ForEachCondition>(2, _omitFieldNames ? '' : 'forEachCondition', protoName: 'forEachCondition', subBuilder: ForEachCondition.create)
@@ -1798,7 +1798,7 @@ class StandardForCondition extends $pb.GeneratedMessage {
   factory StandardForCondition.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory StandardForCondition.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'StandardForCondition', createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'StandardForCondition', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
     ..aOM<ForInitOrIncrementStatement>(1, _omitFieldNames ? '' : 'initStatement', protoName: 'initStatement', subBuilder: ForInitOrIncrementStatement.create)
     ..aOM<$0.Expression>(2, _omitFieldNames ? '' : 'controlExpression', protoName: 'controlExpression', subBuilder: $0.Expression.create)
     ..aOM<ForInitOrIncrementStatement>(3, _omitFieldNames ? '' : 'incrementStatement', protoName: 'incrementStatement', subBuilder: ForInitOrIncrementStatement.create)
@@ -1894,7 +1894,7 @@ class ForEachCondition extends $pb.GeneratedMessage {
   factory ForEachCondition.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ForEachCondition.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ForEachCondition', createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ForEachCondition', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
     ..aOM<ItemDefinition>(1, _omitFieldNames ? '' : 'itemDefinition', protoName: 'itemDefinition', subBuilder: ItemDefinition.create)
     ..aOM<$0.Expression>(2, _omitFieldNames ? '' : 'expression', subBuilder: $0.Expression.create)
     ..aOM<$1.Position>(3, _omitFieldNames ? '' : 'position', subBuilder: $1.Position.create)
@@ -1982,7 +1982,7 @@ class ItemDefinition extends $pb.GeneratedMessage {
   factory ItemDefinition.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ItemDefinition.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ItemDefinition', createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ItemDefinition', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
     ..e<VariableType>(1, _omitFieldNames ? '' : 'varType', $pb.PbFieldType.OE, protoName: 'varType', defaultOrMaker: VariableType.VARIABLE, valueOf: VariableType.valueOf, enumValues: VariableType.values)
     ..aOS(2, _omitFieldNames ? '' : 'name')
     ..aOM<VariableValueType>(3, _omitFieldNames ? '' : 'valueType', protoName: 'valueType', subBuilder: VariableValueType.create)
@@ -2078,7 +2078,7 @@ class ObjectPropertyAssignmentStatement extends $pb.GeneratedMessage {
   factory ObjectPropertyAssignmentStatement.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ObjectPropertyAssignmentStatement.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ObjectPropertyAssignmentStatement', createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ObjectPropertyAssignmentStatement', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'objectName', protoName: 'objectName')
     ..aOS(2, _omitFieldNames ? '' : 'propertyName', protoName: 'propertyName')
     ..aOM<$0.Expression>(3, _omitFieldNames ? '' : 'value', subBuilder: $0.Expression.create)
@@ -2166,7 +2166,7 @@ class ReturnStatement extends $pb.GeneratedMessage {
   factory ReturnStatement.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ReturnStatement.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ReturnStatement', createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ReturnStatement', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
     ..aOM<$0.Expression>(1, _omitFieldNames ? '' : 'value', subBuilder: $0.Expression.create)
     ..aOM<$1.Position>(2, _omitFieldNames ? '' : 'position', subBuilder: $1.Position.create)
     ..hasRequiredFields = false
@@ -2246,7 +2246,7 @@ class VariableDeclarationStatement extends $pb.GeneratedMessage {
   factory VariableDeclarationStatement.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory VariableDeclarationStatement.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'VariableDeclarationStatement', createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'VariableDeclarationStatement', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
     ..e<VariableType>(1, _omitFieldNames ? '' : 'varType', $pb.PbFieldType.OE, protoName: 'varType', defaultOrMaker: VariableType.VARIABLE, valueOf: VariableType.valueOf, enumValues: VariableType.values)
     ..aOS(2, _omitFieldNames ? '' : 'name')
     ..aOM<VariableValueType>(3, _omitFieldNames ? '' : 'valueType', protoName: 'valueType', subBuilder: VariableValueType.create)

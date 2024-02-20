@@ -34,7 +34,7 @@ class AstResponse extends $pb.GeneratedMessage {
   factory AstResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory AstResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AstResponse', createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AstResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
     ..aOM<$0.ProgramFile>(1, _omitFieldNames ? '' : 'program', subBuilder: $0.ProgramFile.create)
     ..pc<LanguageError>(2, _omitFieldNames ? '' : 'errors', $pb.PbFieldType.PM, subBuilder: LanguageError.create)
     ..hasRequiredFields = false
@@ -94,7 +94,7 @@ class LanguageError extends $pb.GeneratedMessage {
   factory LanguageError.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory LanguageError.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'LanguageError', createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'LanguageError', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'message')
     ..aOM<$1.Point>(2, _omitFieldNames ? '' : 'position', subBuilder: $1.Point.create)
     ..hasRequiredFields = false
@@ -160,7 +160,7 @@ class TranspileResponse extends $pb.GeneratedMessage {
   factory TranspileResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory TranspileResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'TranspileResponse', createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'TranspileResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'code')
     ..pc<LanguageError>(2, _omitFieldNames ? '' : 'errors', $pb.PbFieldType.PM, subBuilder: LanguageError.create)
     ..hasRequiredFields = false
