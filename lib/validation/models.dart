@@ -25,9 +25,13 @@ export 'models/validation_errors/expression_mismatch_error.dart';
 
 // classes
 export 'models/validation_errors/class_already_declared_error.dart';
+export 'models/validation_errors/class_method_not_defined_error.dart';
+export 'models/validation_errors/class_property_not_defined_error.dart';
 
 // functions
 export 'models/validation_errors/function_already_defined_error.dart';
 export 'models/validation_errors/function_missing_return_error.dart';
 export 'models/validation_errors/function_return_type_mismatch_error.dart';
 export 'models/validation_errors/function_sign_mismatch_error.dart';
+export 'models/validation_errors/function_not_defined_error.dart';
+export 'models/validation_errors/function_return_not_allowed_error.dart';
