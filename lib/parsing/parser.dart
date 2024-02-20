@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:antlr4/antlr4.dart';
 import 'package:dart2ast_engine/dart2ast.dart';
-import 'package:dart2ast_engine/parsing.dart';
 
 final class ParserFacade {
   static ParsingResult parseFromText(String text) => parse(text.toStream());

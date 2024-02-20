@@ -5,26 +5,16 @@ class FunctionReturnTypeMismatchError extends ValidationError {
   final String expectedType;
   final String actualType;
 
-  FunctionReturnTypeMismatchError._(
+  FunctionReturnTypeMismatchError(
     this.functionName,
     this.expectedType,
     this.actualType,
-    super.message,
     super.position,
   );
 
-  factory FunctionReturnTypeMismatchError(
-    String functionName,
-    String expectedType,
-    String actualType,
-    Point position,
-  ) {
-    return FunctionReturnTypeMismatchError._(
-      functionName,
-      expectedType,
-      actualType,
-      '$functionName returns $actualType but expected $expectedType',
-      position,
-    );
-  }
+  String get message =>
+      'Function $functionName has return type $actualType, but expected $expectedType';
+
+  @override
+  List<Object?> get props => [functionName, expectedType, actualType, ...super.props];
 }

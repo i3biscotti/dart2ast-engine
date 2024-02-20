@@ -370,8 +370,8 @@ extension ItemDefinitionTranspileExtension on ItemDefinition {
         VariableType.immutable => 'final',
         VariableType.constant => 'const',
         VariableType.type => valueType!.typeName,
-        _ => throw UnimplementedError()
       };
+
     String itemdef = '$varTypeTranspiled $name';
     
     return itemdef;

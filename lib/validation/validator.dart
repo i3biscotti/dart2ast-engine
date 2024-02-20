@@ -3,61 +3,78 @@ import 'package:dart2ast_engine/dart2ast.dart';
 extension ScriptFileValidator on ProgramFile {
   List<LangError> validate() {
     final errors = <LangError>[];
-    final varsByName = <String, VariableDeclarationStatement>{};
+
+    errors.addAll(_getVariableErrors());
+
+    return errors;
+  }
+
+  List<ValidationError> _getVariableErrors() {
+    final errors = <ValidationError>[];
 
     specificProcess<VariableDeclarationStatement>((node, scope) {
-      final varKey = '$scope/${node.name}';
+      if (scope.read<VariableSign>(node.name) != null) {
+        errors.add(VarAlreadyDeclaredError(node.name, node.position!.start));
+      }
 
-      if (varsByName.containsKey(varKey)) {
-        errors.add(
-          LangError(
-            'Variable ${node.name} already declared',
-            node.position!.start,
-          ),
-        );
+      if (node.value != null) {
+        final expressionType = extractType(scope, node.value!);
+
+        if (node.valueType != null && expressionType != node.valueType) {
+          errors.add(
+            VarTypeMismatchError(
+              node.name,
+              node.valueType!.typeName,
+              expressionType.typeName,
+              node.value!.position!.start,
+            ),
+          );
+        }
       } else {
-        varsByName[varKey] = node;
+        errors.add(VarValueNotAssigned(node.name, node.position!.start));
       }
     });
 
-    /*
-    specificProcess<VarReference>((node) {
-      if (!varsByName.containsKey(node.varName)) {
+    specificProcess<VarReferenceExpression>((node, scope) {
+      if (scope.read<VariableSign>(node.name) == null) {
         errors.add(
-          LangError(
-            'Variable ${node.varName} not declared',
-            node.position!.start,
-          ),
-        );
-      } else if (node.position! < varsByName[node.varName]!.position!) {
-        errors.add(
-          LangError(
-            'Variable ${node.varName} not declared',
-            node.position!.start,
-          ),
+          VarNotDeclaredError(node.name, node.position!.start),
         );
       }
     });
-    */
 
     specificProcess<AssignmentStatement>((node, scope) {
-      final varKey = '$scope/${node.name}';
+      final varSign = scope.read<VariableSign>(node.name);
+      final expressionType = extractType(scope, node.value);
 
-      if (!varsByName.containsKey(varKey)) {
+      if (varSign == null) {
+        errors.add(VarNotDeclaredError(node.name, node.position!.start));
+
+        return;
+      }
+
+      if (!varSign.isMutable) {
+        errors.add(VarImmutableError(node.name, node.position!.start));
+      } else if (varSign.type != expressionType) {
         errors.add(
-          LangError(
-            'Variable ${node.name} not declared',
-            node.position!.start,
-          ),
-        );
-      } else if (node.position! < varsByName[varKey]!.position!) {
-        errors.add(
-          LangError(
-            'Variable ${node.name} not declared',
-            node.position!.start,
+          VarTypeMismatchError(
+            node.name,
+            varSign.type.typeName,
+            expressionType.typeName,
+            node.value.position!.start,
           ),
         );
       }
+    });
+
+    return errors;
+  }
+
+  List<ValidationError> _getClassErrors() {
+    final errors = <ValidationError>[];
+
+    specificProcess<ClassDefinitionStatement>((node, scope) {
+     
     });
 
     return errors;

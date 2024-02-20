@@ -30,19 +30,30 @@ class ParsingResult with EquatableMixin {
   List<Object?> get props => [root, errors];
 }
 
-class LangError with EquatableMixin {
-  final String message;
+abstract class LangError with EquatableMixin {
   final Point position;
 
-  LangError(this.message, this.position);
+  LangError(this.position);
+
+  Map<String, dynamic> toJson() => {
+        "position": position.toJson(),
+      };
+
+  String get message;
+
+  @override
+  List<Object?> get props => [position];
+}
+
+class AntlrError extends LangError {
+  final String message;
+
+  AntlrError(this.message, super.position);
 
   Map<String, dynamic> toJson() => {
         "message": message,
         "position": position.toJson(),
       };
-
-  @override
-  List<Object?> get props => [message, position];
 }
 
 class GrammarErrorListener implements ErrorListener {

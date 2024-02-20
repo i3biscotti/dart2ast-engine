@@ -1,10 +1,7 @@
-
 import 'dart:io';
 
 import 'package:antlr4/antlr4.dart';
-import 'package:dart2ast_engine/antlr.dart';
-
-import 'models.dart';
+import 'package:dart2ast_engine/dart2ast.dart';
 
 final class AntlrParserFacade {
   static AntlrParsingResult parseFromText(String text) =>
@@ -17,7 +14,7 @@ final class AntlrParserFacade {
     final lexicalAndSyntasticErrors = <LangError>[];
     final listener = GrammarErrorListener(
       onError: (msg, point) => lexicalAndSyntasticErrors.add(
-        LangError(msg, point),
+        AntlrError(msg, point),
       ),
     );
 

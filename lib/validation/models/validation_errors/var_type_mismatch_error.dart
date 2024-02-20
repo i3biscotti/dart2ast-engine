@@ -3,30 +3,18 @@ import 'package:dart2ast_engine/dart2ast.dart';
 class VarTypeMismatchError extends ValidationError {
   final String varName;
   final String currentType;
-  final String epressionType;
+  final String expressionType;
 
-  factory VarTypeMismatchError(
-    String varName,
-    String currentType,
-    String epressionType,
-    Point position,
-  ) {
-    return VarTypeMismatchError._(
-      varName,
-      '$varName accepts ${currentType} but expression is of type ${epressionType}',
-      currentType,
-      epressionType,
-      position,
-    );
-  }
 
-  VarTypeMismatchError._(
+  VarTypeMismatchError(
     this.varName,
     this.currentType,
-    this.epressionType,
-    super.message,
+    this.expressionType,
     super.position,
   );
+
+  String get message =>
+      'Variable $varName is of type $currentType, but the expression is of type $expressionType';
 
   @override
   List<Object?> get props => [varName, ...super.props];
