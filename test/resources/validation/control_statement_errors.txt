@@ -1,0 +1,17 @@
+void main() {
+  final a = 10;
+
+  if(a + 2){
+    final s = 1;
+  }
+
+  int i = 1;
+
+  while(a > 2){
+    i++;
+  }
+
+  for(i = 0; i * 10; i++){
+    print(i);
+  }
+}

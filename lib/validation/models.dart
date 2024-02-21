@@ -13,6 +13,7 @@ export 'models/ast_processing/param_sign.dart';
 //----------------------------------------------
 
 // variables
+export 'models/validation_errors/missing_main_function_error.dart';
 export 'models/validation_errors/validation_error.dart';
 export 'models/validation_errors/var_already_declared_error.dart';
 export 'models/validation_errors/var_not_declared_error.dart';

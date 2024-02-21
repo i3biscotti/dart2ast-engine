@@ -1,0 +1,10 @@
+class Pizza {}
+
+void main(){
+    final margherita = Pizza();
+
+    final margherita.impasto = "grano";
+    margherita.inforna();
+
+    final patatine = Condimento();
+}

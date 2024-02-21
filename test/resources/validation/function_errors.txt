@@ -1,0 +1,14 @@
+int sum(int a, int b){
+    return a+b;
+}
+
+int division(){}
+
+void check (int a){
+    return a > 20;
+}
+
+void main(){
+   final result = sum(10, true);
+   var newResult = module(10,20);
+}

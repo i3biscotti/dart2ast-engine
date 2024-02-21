@@ -1,0 +1,11 @@
+void main(){
+    test = 1;
+    final test = 3;
+    test = 4;
+    var test = 6;
+
+    var superTest = true;
+    superTest = 1;
+
+    int b;
+}

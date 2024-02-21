@@ -4,12 +4,27 @@ extension ScriptFileValidator on ProgramFile {
   List<LangError> validate() {
     final errors = <LangError>[];
 
+    errors.addAll(_checkGlobalErrors());
     errors.addAll(_getVariableErrors());
     errors.addAll(_getClassErrors());
     errors.addAll(_getFunctionErrors());
     errors.addAll(_getIfErrors());
     errors.addAll(_getForErrors());
     errors.addAll(_getWhileErrors());
+
+    return errors;
+  }
+
+  List<ValidationError> _checkGlobalErrors(){
+    final errors = <ValidationError>[];
+
+    final hasMainFunction = this.lines
+        .whereType<FunctionDefinitionStatement>()
+        .any((f) => f.name == "main" && f.returnType == VariableValueType.VOID);
+
+    if(!hasMainFunction){
+      errors.add(MissingMainFunctionError(Point(0,0)));
+    }
 
     return errors;
   }
