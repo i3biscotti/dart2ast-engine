@@ -14,7 +14,6 @@ import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'expressions.pbenum.dart';
-import 'google/protobuf/any.pb.dart' as $1;
 import 'position.pb.dart' as $0;
 
 export 'expressions.pbenum.dart';
@@ -692,7 +691,7 @@ class BoolLit extends $pb.GeneratedMessage {
 
 class ListLiteralExpression extends $pb.GeneratedMessage {
   factory ListLiteralExpression({
-    $core.Iterable<$1.Any>? value,
+    $core.Iterable<Expression>? value,
     $0.Position? position,
   }) {
     final $result = create();
@@ -709,7 +708,7 @@ class ListLiteralExpression extends $pb.GeneratedMessage {
   factory ListLiteralExpression.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ListLiteralExpression', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
-    ..pc<$1.Any>(1, _omitFieldNames ? '' : 'value', $pb.PbFieldType.PM, subBuilder: $1.Any.create)
+    ..pc<Expression>(1, _omitFieldNames ? '' : 'value', $pb.PbFieldType.PM, subBuilder: Expression.create)
     ..aOM<$0.Position>(2, _omitFieldNames ? '' : 'position', subBuilder: $0.Position.create)
     ..hasRequiredFields = false
   ;
@@ -736,7 +735,7 @@ class ListLiteralExpression extends $pb.GeneratedMessage {
   static ListLiteralExpression? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<$1.Any> get value => $_getList(0);
+  $core.List<Expression> get value => $_getList(0);
 
   @$pb.TagNumber(2)
   $0.Position get position => $_getN(1);

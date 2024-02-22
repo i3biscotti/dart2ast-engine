@@ -82,12 +82,13 @@ class BoolLit extends Expression {
 }
 
 class ListLiteralExpression extends Expression {
-  final List value;
+  final List<Expression> value;
+
   ListLiteralExpression(this.value, super.position);
 
   ListLiteralExpression.fromJson(Map<String, dynamic> json)
       : value = List.from(json['value'])
-            .map((e) => deserializeToAst<Position>(e))
+            .map((e) => deserializeToAst<Expression>(e))
             .toList(),
         super(Position.fromJson(json['position']));
 
@@ -357,12 +358,11 @@ class PostDecrementExpression extends Expression {
 }
 
 class InputExpression extends Expression {
-
   InputExpression(super.position);
 
   InputExpression.fromJson(Map<String, dynamic> json)
-     : super(deserializeToAst<Position>(json['position']));
-  
+      : super(deserializeToAst<Position>(json['position']));
+
   @override
   List<Object?> get props => [position];
 

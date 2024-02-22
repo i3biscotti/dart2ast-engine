@@ -139,7 +139,8 @@ extension DartFileTranspilerExtension on ProgramFile {
 
 extension ListLiteralExpressionTranspilerExtension on ListLiteralExpression {
   String transpile() {
-    String expessionTranspiled = value.map((e) => e.value).toList().join(',');
+    String expessionTranspiled =
+        value.map((e) => e.value.transpile()).toList().join(',');
     String listliteralexp = '[$expessionTranspiled]';
     return listliteralexp;
   }
@@ -192,7 +193,8 @@ extension PreIncrementExpressionTranspilerExtension on PreIncrementExpression {
   }
 }
 
-extension PostIncrementExpressionTranspilerExtension on PostIncrementExpression {
+extension PostIncrementExpressionTranspilerExtension
+    on PostIncrementExpression {
   String transpile() {
     String expression = '$name++';
     return expression;
@@ -206,7 +208,8 @@ extension PreDecrementExpressionTranspilerExtension on PreDecrementExpression {
   }
 }
 
-extension PostDecrementExpressionTranspilerExtension on PostDecrementExpression {
+extension PostDecrementExpressionTranspilerExtension
+    on PostDecrementExpression {
   String transpile() {
     String expression = '$name--';
     return expression;
@@ -232,7 +235,6 @@ extension OutputExpressionTranspilerEsxtension on OutputExpression {
   }
 }
 
-
 extension ParenthesysExpressionTranspilerExtension on ParenthesysExpression {
   String transpile() {
     String par_open = '(';
@@ -248,7 +250,6 @@ extension VariableReferenceTranspilerExtension on VarReferenceExpression {
     return name;
   }
 }
-
 
 extension IfStatementTranspilerExtension on IfDefinitionStatement {
   String transpile([int depth = 0]) {
@@ -310,7 +311,8 @@ extension WhileStatementTranspilerExtension on WhileDefinitionStatement {
 
 // task 5
 
-extension ForInitOrIncrementStatementTranspilerExtension on ForInitOrIncrementStatement {
+extension ForInitOrIncrementStatementTranspilerExtension
+    on ForInitOrIncrementStatement {
   String transpile() {
     return switch (this) {
       VarDeclarationForStatement st => st.transpile(),
@@ -321,7 +323,8 @@ extension ForInitOrIncrementStatementTranspilerExtension on ForInitOrIncrementSt
   }
 }
 
-extension VarDeclarationForStatementTranspilerExtension on VarDeclarationForStatement {
+extension VarDeclarationForStatementTranspilerExtension
+    on VarDeclarationForStatement {
   String transpile() {
     var statement = '';
 
@@ -349,8 +352,7 @@ extension VarDeclarationForStatementTranspilerExtension on VarDeclarationForStat
 extension AssigmentForStatementTranspilerExtension on AssignmentForStatement {
   String transpile() {
     String valueTranspiled = value.transpile();
-    String statement =
-        '$name = $valueTranspiled';
+    String statement = '$name = $valueTranspiled';
     return statement;
   }
 }
@@ -363,17 +365,17 @@ extension ExpressionForStatementTranspilerExtension on ExpressionForStatement {
   }
 }
 
-extension ItemDefinitionTranspileExtension on ItemDefinition { 
+extension ItemDefinitionTranspileExtension on ItemDefinition {
   String transpile() {
-      String varTypeTranspiled = switch (varType) {
-        VariableType.variable => 'var',
-        VariableType.immutable => 'final',
-        VariableType.constant => 'const',
-        VariableType.type => valueType!.typeName,
-      };
+    String varTypeTranspiled = switch (varType) {
+      VariableType.variable => 'var',
+      VariableType.immutable => 'final',
+      VariableType.constant => 'const',
+      VariableType.type => valueType!.typeName,
+    };
 
     String itemdef = '$varTypeTranspiled $name';
-    
+
     return itemdef;
   }
 }
@@ -408,7 +410,8 @@ extension StandardForConditionTranspilerExtension on StandardForCondition {
     String initStatement = this.initStatement.transpile();
     String controlExpression = this.controlExpression.transpile();
     String incrementStatement = this.incrementStatement.transpile();
-    String stdforcond = '$initStatement; $controlExpression; $incrementStatement';
+    String stdforcond =
+        '$initStatement; $controlExpression; $incrementStatement';
     return stdforcond;
   }
 }
@@ -419,7 +422,6 @@ extension ForEachConditionTranspilerExtension on ForEachCondition {
     String expression = this.expression.transpile();
     String fecond = '$item in $expression';
     return fecond;
-
   }
 }
 

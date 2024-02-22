@@ -174,15 +174,15 @@ final $typed_data.Uint8List boolLitDescriptor = $convert.base64Decode(
 const ListLiteralExpression$json = {
   '1': 'ListLiteralExpression',
   '2': [
-    {'1': 'value', '3': 1, '4': 3, '5': 11, '6': '.google.protobuf.Any', '10': 'value'},
+    {'1': 'value', '3': 1, '4': 3, '5': 11, '6': '.protocol.Expression', '10': 'value'},
     {'1': 'position', '3': 2, '4': 1, '5': 11, '6': '.protocol.Position', '10': 'position'},
   ],
 };
 
 /// Descriptor for `ListLiteralExpression`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List listLiteralExpressionDescriptor = $convert.base64Decode(
-    'ChVMaXN0TGl0ZXJhbEV4cHJlc3Npb24SKgoFdmFsdWUYASADKAsyFC5nb29nbGUucHJvdG9idW'
-    'YuQW55UgV2YWx1ZRIuCghwb3NpdGlvbhgCIAEoCzISLnByb3RvY29sLlBvc2l0aW9uUghwb3Np'
+    'ChVMaXN0TGl0ZXJhbEV4cHJlc3Npb24SKgoFdmFsdWUYASADKAsyFC5wcm90b2NvbC5FeHByZX'
+    'NzaW9uUgV2YWx1ZRIuCghwb3NpdGlvbhgCIAEoCzISLnByb3RvY29sLlBvc2l0aW9uUghwb3Np'
     'dGlvbg==');
 
 @$core.Deprecated('Use binaryExpressionDescriptor instead')
