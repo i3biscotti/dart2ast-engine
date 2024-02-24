@@ -17,16 +17,17 @@ import 'dart:typed_data' as $typed_data;
 const VariableType$json = {
   '1': 'VariableType',
   '2': [
-    {'1': 'VARIABLE', '2': 0},
-    {'1': 'IMMUTABLE', '2': 1},
-    {'1': 'CONSTANT', '2': 2},
+    {'1': 'TYPE', '2': 0},
+    {'1': 'VARIABLE', '2': 1},
+    {'1': 'IMMUTABLE', '2': 2},
+    {'1': 'CONSTANT', '2': 3},
   ],
 };
 
 /// Descriptor for `VariableType`. Decode as a `google.protobuf.EnumDescriptorProto`.
 final $typed_data.Uint8List variableTypeDescriptor = $convert.base64Decode(
-    'CgxWYXJpYWJsZVR5cGUSDAoIVkFSSUFCTEUQABINCglJTU1VVEFCTEUQARIMCghDT05TVEFOVB'
-    'AC');
+    'CgxWYXJpYWJsZVR5cGUSCAoEVFlQRRAAEgwKCFZBUklBQkxFEAESDQoJSU1NVVRBQkxFEAISDA'
+    'oIQ09OU1RBTlQQAw==');
 
 @$core.Deprecated('Use encapsulationTypeDescriptor instead')
 const EncapsulationType$json = {
@@ -45,7 +46,7 @@ final $typed_data.Uint8List encapsulationTypeDescriptor = $convert.base64Decode(
 const ParameterType$json = {
   '1': 'ParameterType',
   '2': [
-    {'1': 'TYPE', '2': 0},
+    {'1': 'TYPED', '2': 0},
     {'1': 'THIS', '2': 1},
     {'1': 'SUPER', '2': 2},
   ],
@@ -53,7 +54,7 @@ const ParameterType$json = {
 
 /// Descriptor for `ParameterType`. Decode as a `google.protobuf.EnumDescriptorProto`.
 final $typed_data.Uint8List parameterTypeDescriptor = $convert.base64Decode(
-    'Cg1QYXJhbWV0ZXJUeXBlEggKBFRZUEUQABIICgRUSElTEAESCQoFU1VQRVIQAg==');
+    'Cg1QYXJhbWV0ZXJUeXBlEgkKBVRZUEVEEAASCAoEVEhJUxABEgkKBVNVUEVSEAI=');
 
 @$core.Deprecated('Use blockTypeDescriptor instead')
 const BlockType$json = {
@@ -143,7 +144,7 @@ const ClassDefinitionStatement$json = {
     {'1': 'encapsulation', '3': 1, '4': 1, '5': 14, '6': '.protocol.EncapsulationType', '10': 'encapsulation'},
     {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
     {'1': 'parentName', '3': 3, '4': 1, '5': 9, '10': 'parentName'},
-    {'1': 'properties', '3': 4, '4': 3, '5': 11, '6': '.protocol.PropertyDeclaration', '10': 'properties'},
+    {'1': 'properties', '3': 4, '4': 3, '5': 11, '6': '.protocol.VariableDeclarationStatement', '10': 'properties'},
     {'1': 'constructors', '3': 5, '4': 3, '5': 11, '6': '.protocol.ConstructorDefinitionStatement', '10': 'constructors'},
     {'1': 'methods', '3': 6, '4': 3, '5': 11, '6': '.protocol.FunctionDefinitionStatement', '10': 'methods'},
     {'1': 'parentClassType', '3': 7, '4': 1, '5': 11, '6': '.protocol.VariableValueType', '10': 'parentClassType'},
@@ -155,31 +156,13 @@ const ClassDefinitionStatement$json = {
 final $typed_data.Uint8List classDefinitionStatementDescriptor = $convert.base64Decode(
     'ChhDbGFzc0RlZmluaXRpb25TdGF0ZW1lbnQSQQoNZW5jYXBzdWxhdGlvbhgBIAEoDjIbLnByb3'
     'RvY29sLkVuY2Fwc3VsYXRpb25UeXBlUg1lbmNhcHN1bGF0aW9uEhIKBG5hbWUYAiABKAlSBG5h'
-    'bWUSHgoKcGFyZW50TmFtZRgDIAEoCVIKcGFyZW50TmFtZRI9Cgpwcm9wZXJ0aWVzGAQgAygLMh'
-    '0ucHJvdG9jb2wuUHJvcGVydHlEZWNsYXJhdGlvblIKcHJvcGVydGllcxJMCgxjb25zdHJ1Y3Rv'
-    'cnMYBSADKAsyKC5wcm90b2NvbC5Db25zdHJ1Y3RvckRlZmluaXRpb25TdGF0ZW1lbnRSDGNvbn'
-    'N0cnVjdG9ycxI/CgdtZXRob2RzGAYgAygLMiUucHJvdG9jb2wuRnVuY3Rpb25EZWZpbml0aW9u'
-    'U3RhdGVtZW50UgdtZXRob2RzEkUKD3BhcmVudENsYXNzVHlwZRgHIAEoCzIbLnByb3RvY29sLl'
-    'ZhcmlhYmxlVmFsdWVUeXBlUg9wYXJlbnRDbGFzc1R5cGUSLgoIcG9zaXRpb24YCCABKAsyEi5w'
-    'cm90b2NvbC5Qb3NpdGlvblIIcG9zaXRpb24=');
-
-@$core.Deprecated('Use propertyDeclarationDescriptor instead')
-const PropertyDeclaration$json = {
-  '1': 'PropertyDeclaration',
-  '2': [
-    {'1': 'varType', '3': 1, '4': 1, '5': 14, '6': '.protocol.VariableType', '10': 'varType'},
-    {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
-    {'1': 'valueType', '3': 3, '4': 1, '5': 11, '6': '.protocol.VariableValueType', '10': 'valueType'},
-    {'1': 'value', '3': 4, '4': 1, '5': 11, '6': '.protocol.Expression', '10': 'value'},
-  ],
-};
-
-/// Descriptor for `PropertyDeclaration`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List propertyDeclarationDescriptor = $convert.base64Decode(
-    'ChNQcm9wZXJ0eURlY2xhcmF0aW9uEjAKB3ZhclR5cGUYASABKA4yFi5wcm90b2NvbC5WYXJpYW'
-    'JsZVR5cGVSB3ZhclR5cGUSEgoEbmFtZRgCIAEoCVIEbmFtZRI5Cgl2YWx1ZVR5cGUYAyABKAsy'
-    'Gy5wcm90b2NvbC5WYXJpYWJsZVZhbHVlVHlwZVIJdmFsdWVUeXBlEioKBXZhbHVlGAQgASgLMh'
-    'QucHJvdG9jb2wuRXhwcmVzc2lvblIFdmFsdWU=');
+    'bWUSHgoKcGFyZW50TmFtZRgDIAEoCVIKcGFyZW50TmFtZRJGCgpwcm9wZXJ0aWVzGAQgAygLMi'
+    'YucHJvdG9jb2wuVmFyaWFibGVEZWNsYXJhdGlvblN0YXRlbWVudFIKcHJvcGVydGllcxJMCgxj'
+    'b25zdHJ1Y3RvcnMYBSADKAsyKC5wcm90b2NvbC5Db25zdHJ1Y3RvckRlZmluaXRpb25TdGF0ZW'
+    '1lbnRSDGNvbnN0cnVjdG9ycxI/CgdtZXRob2RzGAYgAygLMiUucHJvdG9jb2wuRnVuY3Rpb25E'
+    'ZWZpbml0aW9uU3RhdGVtZW50UgdtZXRob2RzEkUKD3BhcmVudENsYXNzVHlwZRgHIAEoCzIbLn'
+    'Byb3RvY29sLlZhcmlhYmxlVmFsdWVUeXBlUg9wYXJlbnRDbGFzc1R5cGUSLgoIcG9zaXRpb24Y'
+    'CCABKAsyEi5wcm90b2NvbC5Qb3NpdGlvblIIcG9zaXRpb24=');
 
 @$core.Deprecated('Use functionDefinitionStatementDescriptor instead')
 const FunctionDefinitionStatement$json = {
@@ -243,6 +226,7 @@ const Parameter$json = {
     {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
     {'1': 'type', '3': 2, '4': 1, '5': 14, '6': '.protocol.ParameterType', '10': 'type'},
     {'1': 'valueType', '3': 3, '4': 1, '5': 11, '6': '.protocol.VariableValueType', '10': 'valueType'},
+    {'1': 'position', '3': 4, '4': 1, '5': 11, '6': '.protocol.Position', '10': 'position'},
   ],
 };
 
@@ -250,7 +234,8 @@ const Parameter$json = {
 final $typed_data.Uint8List parameterDescriptor = $convert.base64Decode(
     'CglQYXJhbWV0ZXISEgoEbmFtZRgBIAEoCVIEbmFtZRIrCgR0eXBlGAIgASgOMhcucHJvdG9jb2'
     'wuUGFyYW1ldGVyVHlwZVIEdHlwZRI5Cgl2YWx1ZVR5cGUYAyABKAsyGy5wcm90b2NvbC5WYXJp'
-    'YWJsZVZhbHVlVHlwZVIJdmFsdWVUeXBl');
+    'YWJsZVZhbHVlVHlwZVIJdmFsdWVUeXBlEi4KCHBvc2l0aW9uGAQgASgLMhIucHJvdG9jb2wuUG'
+    '9zaXRpb25SCHBvc2l0aW9u');
 
 @$core.Deprecated('Use expressionDefinitionStatementDescriptor instead')
 const ExpressionDefinitionStatement$json = {

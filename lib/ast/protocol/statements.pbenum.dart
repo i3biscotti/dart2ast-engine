@@ -14,11 +14,13 @@ import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 class VariableType extends $pb.ProtobufEnum {
-  static const VariableType VARIABLE = VariableType._(0, _omitEnumNames ? '' : 'VARIABLE');
-  static const VariableType IMMUTABLE = VariableType._(1, _omitEnumNames ? '' : 'IMMUTABLE');
-  static const VariableType CONSTANT = VariableType._(2, _omitEnumNames ? '' : 'CONSTANT');
+  static const VariableType TYPE = VariableType._(0, _omitEnumNames ? '' : 'TYPE');
+  static const VariableType VARIABLE = VariableType._(1, _omitEnumNames ? '' : 'VARIABLE');
+  static const VariableType IMMUTABLE = VariableType._(2, _omitEnumNames ? '' : 'IMMUTABLE');
+  static const VariableType CONSTANT = VariableType._(3, _omitEnumNames ? '' : 'CONSTANT');
 
   static const $core.List<VariableType> values = <VariableType> [
+    TYPE,
     VARIABLE,
     IMMUTABLE,
     CONSTANT,
@@ -46,12 +48,12 @@ class EncapsulationType extends $pb.ProtobufEnum {
 }
 
 class ParameterType extends $pb.ProtobufEnum {
-  static const ParameterType TYPE = ParameterType._(0, _omitEnumNames ? '' : 'TYPE');
+  static const ParameterType TYPED = ParameterType._(0, _omitEnumNames ? '' : 'TYPED');
   static const ParameterType THIS = ParameterType._(1, _omitEnumNames ? '' : 'THIS');
   static const ParameterType SUPER = ParameterType._(2, _omitEnumNames ? '' : 'SUPER');
 
   static const $core.List<ParameterType> values = <ParameterType> [
-    TYPE,
+    TYPED,
     THIS,
     SUPER,
   ];
