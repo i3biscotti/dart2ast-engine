@@ -2,14 +2,6 @@ parser grammar DartParser;
 
 options{ tokenVocab=DartLexer; }
 
-/* 
-
-var name = "Simone"; 
-final int age = 16;
-double height = 1.75; 
-const text = "Hello World";
-
-*/
 dartFile: statement+ EOF;
     
 statement  
@@ -28,7 +20,7 @@ statement
     ;
 
 varDeclaration
-    : ( VAR | VAR  type | type ) ID ASSIGN expression;
+    : ( VAR | VAR  type | type ) ID (ASSIGN expression)?;
 
 assignment                   
     : ID ASSIGN expression;
@@ -55,11 +47,12 @@ expression
     | left=expression  operand=DIVISION             right=expression                                  #BinaryMathExpression
     | left=expression  operand=AND                  right=expression                                  #BinaryLogicExpression
     | left=expression  operand=OR                   right=expression                                  #BinaryLogicExpression
-    | left=expression  operand=GREATER_THAN         right=expression                                  #BinaryLogicExpression
-    | left=expression  operand=LOWER_THAN           right=expression                                  #BinaryLogicExpression
-    | left=expression  operand=GREATER_EQUAL_THAN   right=expression                                  #BinaryLogicExpression
-    | left=expression  operand=LOWER_EQUAL_THAN     right=expression                                  #BinaryLogicExpression
-    | left=expression  operand=EQUAL                right=expression                                  #BinaryLogicExpression
+    | left=expression  operand=GREATER_THAN         right=expression                                  #BinaryComparisonExpression
+    | left=expression  operand=LOWER_THAN           right=expression                                  #BinaryComparisonExpression
+    | left=expression  operand=GREATER_EQUAL_THAN   right=expression                                  #BinaryComparisonExpression
+    | left=expression  operand=LOWER_EQUAL_THAN     right=expression                                  #BinaryComparisonExpression
+    | left=expression  operand=EQUAL                right=expression                                  #BinaryComparisonExpression
+    | left=expression  operand=NOT_EQUAL            right=expression                                  #BinaryComparisonExpression
     |                  operand=MINUS                value=expression                                  #UnaryMathExpression
     |                  operand=PLUS                 value=expression                                  #UnaryMathExpression
     |                  operand=NOT                  value=expression                                  #UnaryLogicNegationExpression
