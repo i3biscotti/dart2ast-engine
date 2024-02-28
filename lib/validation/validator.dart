@@ -1,105 +1,114 @@
 import 'package:dart2ast_engine/dart2ast.dart';
+import 'processor/processor.dart';
 
 extension ScriptFileValidator on ProgramFile {
   List<LangError> validate() {
     final errors = <LangError>[];
 
+    final programProcessor = NodeProcessor(this);
+    final addErrorCallback = (LangError error) => errors.add(error);
+
     errors.addAll(_checkGlobalErrors());
-    errors.addAll(_getVariableErrors());
-    errors.addAll(_getClassErrors());
-    errors.addAll(_getFunctionErrors());
-    errors.addAll(_getIfErrors());
-    errors.addAll(_getForErrors());
-    errors.addAll(_getWhileErrors());
+    _getVariableErrors(programProcessor, addErrorCallback);
+    _getClassErrors(programProcessor, addErrorCallback);
+    _getFunctionErrors(programProcessor, addErrorCallback);
+    _getIfErrors(programProcessor, addErrorCallback);
+    _getForErrors(programProcessor, addErrorCallback);
+    _getWhileErrors(programProcessor, addErrorCallback);
+
+    programProcessor.process();
 
     return errors;
   }
 
-  List<ValidationError> _checkGlobalErrors(){
+  List<ValidationError> _checkGlobalErrors() {
     final errors = <ValidationError>[];
 
-    final hasMainFunction = this.lines
+    final hasMainFunction = this
+        .lines
         .whereType<FunctionDefinitionStatement>()
         .any((f) => f.name == "main" && f.returnType == VariableValueType.VOID);
 
-    if(!hasMainFunction){
-      errors.add(MissingMainFunctionError(Point(0,0)));
+    if (!hasMainFunction) {
+      errors.add(MissingMainFunctionError(Point(0, 0)));
     }
 
     return errors;
   }
 
-  List<ValidationError> _getVariableErrors() {
-    final errors = <ValidationError>[];
-
-    specificProcess<VariableDeclarationStatement>((node, scope) {
+  void _getVariableErrors(
+    NodeProcessor processor,
+    void Function(LangError error) addErrorCallback,
+  ) {
+    processor.addProcess<VariableDeclarationStatement>((node, scope) {
       if (scope.read<VariableSign>(node.name) != null) {
-        errors.add(VarAlreadyDeclaredError(node.name, node.position!.start));
+        addErrorCallback(
+            VarAlreadyDeclaredError(node.name, node.position?.start));
       }
 
       if (node.value != null) {
         final expressionType = extractType(scope, node.value!);
 
         if (node.valueType != null && expressionType != node.valueType) {
-          errors.add(
+          addErrorCallback(
             VarTypeMismatchError(
               node.name,
               node.valueType!.typeName,
               expressionType.typeName,
-              node.value!.position!.start,
+              node.value!.position?.start,
             ),
           );
         }
       } else {
-        errors.add(VarValueNotAssigned(node.name, node.position!.start));
+        addErrorCallback(VarValueNotAssigned(node.name, node.position?.start));
       }
     });
 
-    specificProcess<VarReferenceExpression>((node, scope) {
+    processor.addProcess<VarReferenceExpression>((node, scope) {
       if (scope.read<VariableSign>(node.name) == null) {
-        errors.add(
-          VarNotDeclaredError(node.name, node.position!.start),
+        addErrorCallback(
+          VarNotDeclaredError(node.name, node.position?.start),
         );
       }
     });
 
-    specificProcess<AssignmentStatement>((node, scope) {
+    processor.addProcess<AssignmentStatement>((node, scope) {
       final varSign = scope.read<VariableSign>(node.name);
       final expressionType = extractType(scope, node.value);
 
       if (varSign == null) {
-        errors.add(VarNotDeclaredError(node.name, node.position!.start));
+        addErrorCallback(VarNotDeclaredError(node.name, node.position?.start));
 
         return;
       }
 
       if (!varSign.isMutable) {
-        errors.add(VarImmutableError(node.name, node.position!.start));
+        addErrorCallback(VarImmutableError(node.name, node.position?.start));
       } else if (varSign.type != expressionType) {
-        errors.add(
+        addErrorCallback(
           VarTypeMismatchError(
             node.name,
             varSign.type.typeName,
             expressionType.typeName,
-            node.value.position!.start,
+            node.value.position?.start,
           ),
         );
       }
     });
-
-    return errors;
   }
 
-  List<ValidationError>   _getClassErrors() {
-    final errors = <ValidationError>[];
-
-    specificProcess<ClassDefinitionStatement>((node, scope) {
+  void _getClassErrors(
+    NodeProcessor processor,
+    void Function(LangError error) addErrorCallback,
+  ) {
+    processor.addProcess<ClassDefinitionStatement>((node, scope) {
       if (scope.read<ClassSign>(node.name) != null) {
-        errors.add(ClassAlreadyDeclaredError(node.name, node.position!.start));
+        addErrorCallback(
+            ClassAlreadyDeclaredError(node.name, node.position?.start));
       }
     });
 
-    specificProcess<ObjectPropertyAssignmentStatement>((node, scope) {
+    processor.addProcess<ObjectPropertyAssignmentStatement>((node, scope) {
       final variable = scope.read<VariableSign>(node.objectName);
 
       if (variable != null) {
@@ -110,22 +119,22 @@ extension ScriptFileValidator on ProgramFile {
             classSign!.properties.any((prop) => prop.name == node.propertyName);
 
         if (!hasProperty) {
-          errors.add(
+          addErrorCallback(
             ClassPropertyNotDefinedError(
               className,
               node.propertyName,
-              node.position!.start,
+              node.position?.start,
             ),
           );
         }
       } else {
-        errors.add(
-          VarNotDeclaredError(node.objectName, node.position!.start),
+        addErrorCallback(
+          VarNotDeclaredError(node.objectName, node.position?.start),
         );
       }
     });
 
-    specificProcess<ObjectPropertyReferenceExpression>((node, scope) {
+    processor.addProcess<ObjectPropertyReferenceExpression>((node, scope) {
       final variable = scope.read<VariableSign>(node.objectName);
 
       if (variable != null) {
@@ -136,22 +145,22 @@ extension ScriptFileValidator on ProgramFile {
             classSign!.properties.any((prop) => prop.name == node.propertyName);
 
         if (!hasProperty) {
-          errors.add(
+          addErrorCallback(
             ClassPropertyNotDefinedError(
               className,
               node.propertyName,
-              node.position!.start,
+              node.position?.start,
             ),
           );
         }
       } else {
-        errors.add(
-          VarNotDeclaredError(node.objectName, node.position!.start),
+        addErrorCallback(
+          VarNotDeclaredError(node.objectName, node.position?.start),
         );
       }
     });
 
-    specificProcess<ObjectMethodCallExpression>((node, scope) {
+    processor.addProcess<ObjectMethodCallExpression>((node, scope) {
       final variable = scope.read<VariableSign>(node.objectName);
 
       if (variable != null) {
@@ -163,11 +172,11 @@ extension ScriptFileValidator on ProgramFile {
             .firstOrNull;
 
         if (method == null) {
-          errors.add(
+          addErrorCallback(
             ClassMethodNotDefinedError(
               className,
               node.methodName,
-              node.position!.start,
+              node.position?.start,
             ),
           );
         } else {
@@ -178,54 +187,53 @@ extension ScriptFileValidator on ProgramFile {
               .toList();
 
           if (methodParams != callParams) {
-            errors.add(
+            addErrorCallback(
               FunctionSignMismatchError(
                 "$className.${node.methodName}",
                 "(${methodParams.join(", ")})",
                 "(${callParams.join(", ")})",
-                node.position!.start,
+                node.position?.start,
               ),
             );
           }
         }
       } else {
-        errors.add(
+        addErrorCallback(
           VarNotDeclaredError(
             node.objectName,
-            node.position!.start,
+            node.position?.start,
           ),
         );
       }
     });
-
-    return errors;
   }
 
-  List<ValidationError> _getFunctionErrors() {
-    final errors = <ValidationError>[];
-
-    specificProcess<FunctionDefinitionStatement>((node, scope) {
+  void _getFunctionErrors(
+    NodeProcessor processor,
+    void Function(LangError error) addErrorCallback,
+  ) {
+    processor.addProcess<FunctionDefinitionStatement>((node, scope) {
       final hasReturn = node.body.whereType<ReturnStatement>().isNotEmpty;
 
       if (scope.read<FunctionSign>(node.name) != null) {
-        errors.add(
+        addErrorCallback(
           FunctionAlreadyDefinedError(
             node.name,
-            node.position!.start,
+            node.position?.start,
           ),
         );
       } else if (!hasReturn && node.returnType != VariableValueType.VOID) {
-        errors.add(
+        addErrorCallback(
           FunctionMissingReturnError(
             node.name,
-            node.position!.start,
+            node.position?.start,
           ),
         );
       } else if (hasReturn && node.returnType == VariableValueType.VOID) {
-        errors.add(
+        addErrorCallback(
           FunctionReturnNotAllowedError(
             node.name,
-            node.position!.start,
+            node.position?.start,
           ),
         );
       } else if (hasReturn && node.returnType != null) {
@@ -235,19 +243,19 @@ extension ScriptFileValidator on ProgramFile {
         );
 
         if (returnType != node.returnType) {
-          errors.add(
+          addErrorCallback(
             FunctionReturnTypeMismatchError(
               node.name,
               node.returnType!.typeName,
               returnType.typeName,
-              node.position!.start,
+              node.position?.start,
             ),
           );
         }
       }
     });
 
-    specificProcess<FunctionCallExpression>((node, scope) {
+    processor.addProcess<FunctionCallExpression>((node, scope) {
       final function = scope.read<FunctionSign>(node.name);
 
       if (function != null) {
@@ -257,32 +265,31 @@ extension ScriptFileValidator on ProgramFile {
             node.parameters.map((e) => extractType(scope, e).typeName).toList();
 
         if (functionParams != callParams) {
-          errors.add(
+          addErrorCallback(
             FunctionSignMismatchError(
               node.name,
               "(${functionParams.join(", ")})",
               "(${callParams.join(", ")})",
-              node.position!.start,
+              node.position?.start,
             ),
           );
         }
       } else {
-        errors.add(
+        addErrorCallback(
           FunctionNotDefinedError(
             node.name,
-            node.position!.start,
+            node.position?.start,
           ),
         );
       }
     });
-
-    return errors;
   }
 
-  List<ValidationError> _getIfErrors() {
-    final errors = <ValidationError>[];
-
-    specificProcess<IfDefinitionStatement>(
+  void _getIfErrors(
+    NodeProcessor processor,
+    void Function(LangError error) addErrorCallback,
+  ) {
+    processor.addProcess<IfDefinitionStatement>(
       (node, context) {
         [
           node.ifBlock,
@@ -292,11 +299,11 @@ extension ScriptFileValidator on ProgramFile {
             final conditionType = extractType(context, ifBlock.condition!);
 
             if (conditionType != VariableValueType.BOOLEAN) {
-              errors.add(
+              addErrorCallback(
                 ExpressionMismatchError(
                   VariableValueType.BOOLEAN.typeName,
                   conditionType.typeName,
-                  ifBlock.position!.start,
+                  ifBlock.position?.start,
                 ),
               );
             }
@@ -304,36 +311,34 @@ extension ScriptFileValidator on ProgramFile {
         );
       },
     );
-
-    return errors;
   }
 
-  List<ValidationError> _getWhileErrors() {
-    final errors = <ValidationError>[];
-
-    specificProcess<WhileDefinitionStatement>(
+  void _getWhileErrors(
+    NodeProcessor processor,
+    void Function(LangError error) addErrorCallback,
+  ) {
+    processor.addProcess<WhileDefinitionStatement>(
       (node, context) {
         final conditionType = extractType(context, node.condition!);
 
         if (conditionType != VariableValueType.BOOLEAN) {
-          errors.add(
+          addErrorCallback(
             ExpressionMismatchError(
               VariableValueType.BOOLEAN.typeName,
               conditionType.typeName,
-              node.position!.start,
+              node.position?.start,
             ),
           );
         }
       },
     );
-
-    return errors;
   }
 
-  List<ValidationError> _getForErrors() {
-    final errors = <ValidationError>[];
-
-    specificProcess<ForDefinitionStatement>(
+  void _getForErrors(
+    NodeProcessor processor,
+    void Function(LangError error) addErrorCallback,
+  ) {
+    processor.addProcess<ForDefinitionStatement>(
       (node, context) {
         if (node.forCondition is StandardForCondition) {
           final condition = node.forCondition as StandardForCondition;
@@ -341,18 +346,16 @@ extension ScriptFileValidator on ProgramFile {
               extractType(context, condition.controlExpression);
 
           if (controlConditionType != VariableValueType.BOOLEAN) {
-            errors.add(
+            addErrorCallback(
               ExpressionMismatchError(
                 VariableValueType.BOOLEAN.typeName,
                 controlConditionType.typeName,
-                node.position!.start,
+                node.position?.start,
               ),
             );
           }
         }
       },
     );
-
-    return errors;
   }
 }

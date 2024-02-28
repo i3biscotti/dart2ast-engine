@@ -16,7 +16,18 @@ class ScopeContext {
     this.parent,
   });
 
-  ScopeContext wrap() => ScopeContext(parent: this);
+  ScopeContext wrap({
+    Map<String, VariableSign> declaredVariables = const {},
+    Map<String, FunctionSign> declaredFunctions = const {},
+    Map<String, ClassSign> declaredClasses = const {},
+  }) {
+    return ScopeContext(
+        parent: this,
+        declaredVariables: declaredVariables,
+        declaredFunctions: declaredFunctions,
+        declaredClasses: declaredClasses,
+      );
+  }
 
   ScopeContext? unwrap() => parent;
 

@@ -6,14 +6,6 @@ typedef ProcessOperationCallback = void Function(Node node, ScopeContext scope);
 String generateScopeId() => Uuid().v8();
 
 extension NodeProcessExtension on Node {
-  void specificProcess<T extends Node>(
-    void Function(T, ScopeContext) operation,
-  ) {
-    process((node, scope) {
-      if (node is T) operation(node, scope);
-    });
-  }
-
   void process(
     ProcessOperationCallback operation, [
     ScopeContext scope = const ScopeContext(),
@@ -62,11 +54,6 @@ extension StatementProcessExtension on Statement {
     ScopeContext scope,
     List<Statement> StatementsBlock,
   ) {
-    final newScope = scope.wrap();
-
-    final classes = StatementsBlock.whereType<ClassDefinitionStatement>()
-        .map((e) => _generateClassSign(newScope, e));
-
     final functions =
         StatementsBlock.whereType<FunctionDefinitionStatement>().map((e) {
       return FunctionSign(
@@ -76,12 +63,21 @@ extension StatementProcessExtension on Statement {
       );
     });
 
-    newScope.declaredClasses.addEntries(
+    final declaredFunctions = Map.fromEntries(
+      functions.map((e) => MapEntry(e.name, e)),
+    );
+
+    final classes = StatementsBlock.whereType<ClassDefinitionStatement>()
+        .map((e) => _generateClassSign(scope, e));
+
+    final declaredClasses = Map.fromEntries(
       classes.map((e) => MapEntry(e.name, e)),
     );
 
-    newScope.declaredFunctions.addEntries(
-      functions.map((e) => MapEntry(e.name, e)),
+    final newScope = scope.wrap(
+      declaredClasses: declaredClasses,
+      declaredFunctions: declaredFunctions,
+      declaredVariables: {},
     );
 
     return newScope;
@@ -193,7 +189,7 @@ extension ClassDefinitionStatementProcessExtension on ClassDefinitionStatement {
 extension ConstructorDefinitionStatementProcessExtension
     on ConstructorDefinitionStatement {
   void process(ProcessOperationCallback operation, ScopeContext scope) {
-    final newScope = scope.wrap();
+    final newScope = _prepareNewScope(scope, []);
 
     for (var statement in body) {
       statement.process(operation, newScope);
@@ -205,19 +201,23 @@ extension ExpressionTransformExtension on Expression {
   void process(ProcessOperationCallback operation, ScopeContext scope) {
     operation(this, scope);
 
-    final _ = switch (this.runtimeType) {
-      BinaryExpression e => (
-          e.left.process(operation, scope),
-          e.right.process(operation, scope)
-        ),
+    final _ = switch (this) {
+      BinaryExpression e => e
+        ..right.process(operation, scope)
+        ..left.process(operation, scope),
       UnaryLogicExpression e => e.value.process(operation, scope),
       UnaryMathExpression e => e.value.process(operation, scope),
       ParenthesysExpression e => e.value.process(operation, scope),
+      OutputExpression e => e.value.process(operation, scope),
       VarReferenceExpression _ => null,
       IntLit _ => null,
       DecLit _ => null,
       BoolLit _ => null,
       StringLit _ => null,
+      PostDecrementExpression _ => null,
+      PostIncrementExpression _ => null,
+      PreDecrementExpression _ => null,
+      PreIncrementExpression _ => null,
       _ => throw UnsupportedError(
           'Unknown expression type ${this.runtimeType}',
         ),
@@ -227,7 +227,7 @@ extension ExpressionTransformExtension on Expression {
 
 extension ForDefinitionStatementProcessExtension on ForDefinitionStatement {
   void process(ProcessOperationCallback operation, ScopeContext scope) {
-    final newScope = scope.wrap();
+    final newScope = _prepareNewScope(scope, []);
 
     switch (forCondition) {
       case ForEachCondition c:
@@ -294,7 +294,7 @@ extension IfDefinitionStatementProcessExtension on IfDefinitionStatement {
     ProcessOperationCallback operation,
     ScopeContext scope,
   ) {
-    final childContext = scope.wrap();
+    final childContext = _prepareNewScope(scope, []);
 
     for (var statement in block.statements) {
       statement.process(operation, childContext);
