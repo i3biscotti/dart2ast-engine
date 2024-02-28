@@ -21,9 +21,10 @@ extension NodeProcessExtension on Node {
     operation(this, scope);
 
     final _ = switch (this) {
-      ProgramFile program => program.process(operation, ScopeContext.rootScope),
-      Statement statement => statement.process(operation, scope),
-      Expression expression => expression.process(operation, scope),
+      ProgramFile n => n.process(operation, ScopeContext.rootScope),
+      Statement n => n.process(operation, scope),
+      Expression n => n.process(operation, scope),
+      IfBlock n => n.process(operation, scope),
       _ => throw UnsupportedError('Unknown node type')
     };
   }
@@ -43,43 +44,18 @@ extension StatementProcessExtension on Statement {
   void process(ProcessOperationCallback operation, ScopeContext scope) {
     operation(this, scope);
 
-    switch (this) {
-      case VariableDeclarationStatement statement:
-        statement.process(operation, scope);
-        break;
-
-      case AssignmentStatement statement:
-        statement.value.process(operation, scope);
-        break;
-
-      case ExpressionDefinitionStatement statement:
-        statement.value.process(operation, scope);
-        break;
-
-      case IfDefinitionStatement statement:
-        statement.process(operation, scope);
-        break;
-
-      case WhileDefinitionStatement statement:
-        statement.process(operation, scope);
-        break;
-
-      case ForDefinitionStatement statement:
-        statement.process(operation, scope);
-        break;
-
-      case FunctionDefinitionStatement statement:
-        statement.process(operation, scope);
-        break;
-
-      case ClassDefinitionStatement statement:
-        statement.process(operation, scope);
-        break;
-
-      case ReturnStatement statement:
-        statement.value.process(operation, scope);
-        break;
-    }
+    final _ = switch (this) {
+      VariableDeclarationStatement s => s.process(operation, scope),
+      AssignmentStatement s => s.value.process(operation, scope),
+      ExpressionDefinitionStatement s => s.value.process(operation, scope),
+      IfDefinitionStatement s => s.process(operation, scope),
+      WhileDefinitionStatement s => s.process(operation, scope),
+      ForDefinitionStatement s => s.process(operation, scope),
+      FunctionDefinitionStatement s => s.process(operation, scope),
+      ClassDefinitionStatement s => s.process(operation, scope),
+      ReturnStatement s => s.value.process(operation, scope),
+      _ => throw UnsupportedError('Unknown statement type ${this.runtimeType}')
+    };
   }
 
   ScopeContext _prepareNewScope(
@@ -181,6 +157,19 @@ extension ClassDefinitionStatementProcessExtension on ClassDefinitionStatement {
 
     final childContext = _prepareNewScope(scope, []);
 
+    childContext.declaredVariables.addEntries(
+      properties.map((e) {
+        return MapEntry(
+          e.name,
+          VariableSign(
+            e.name,
+            e.valueType ?? extractType(scope, e.value!),
+            e.varType == VariableType.type,
+          ),
+        );
+      }),
+    );
+
     childContext.declaredFunctions.addEntries(
       methods.map(_generateFunctionSign).map((e) => MapEntry(e.name, e)),
     );
@@ -216,29 +205,23 @@ extension ExpressionTransformExtension on Expression {
   void process(ProcessOperationCallback operation, ScopeContext scope) {
     operation(this, scope);
 
-    switch (this.runtimeType) {
-      case BinaryExpression expression:
-        expression.left.process(operation, scope);
-        expression.right.process(operation, scope);
-        break;
-      case UnaryLogicExpression expression:
-        expression.value.process(operation, scope);
-        break;
-      case UnaryMathExpression expression:
-        expression.value.process(operation, scope);
-        break;
-      case ParenthesysExpression expression:
-        expression.value.process(operation, scope);
-        break;
-      case VarReferenceExpression:
-      case IntLit:
-      case DecLit:
-      case BoolLit:
-      case StringLit:
-        break;
-      default:
-        throw UnsupportedError('Unknown expression type ${this.runtimeType}');
-    }
+    final _ = switch (this.runtimeType) {
+      BinaryExpression e => (
+          e.left.process(operation, scope),
+          e.right.process(operation, scope)
+        ),
+      UnaryLogicExpression e => e.value.process(operation, scope),
+      UnaryMathExpression e => e.value.process(operation, scope),
+      ParenthesysExpression e => e.value.process(operation, scope),
+      VarReferenceExpression _ => null,
+      IntLit _ => null,
+      DecLit _ => null,
+      BoolLit _ => null,
+      StringLit _ => null,
+      _ => throw UnsupportedError(
+          'Unknown expression type ${this.runtimeType}',
+        ),
+    };
   }
 }
 

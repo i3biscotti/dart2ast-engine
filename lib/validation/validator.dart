@@ -90,7 +90,7 @@ extension ScriptFileValidator on ProgramFile {
     return errors;
   }
 
-  List<ValidationError> _getClassErrors() {
+  List<ValidationError>   _getClassErrors() {
     final errors = <ValidationError>[];
 
     specificProcess<ClassDefinitionStatement>((node, scope) {
