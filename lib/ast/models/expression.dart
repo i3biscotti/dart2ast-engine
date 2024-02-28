@@ -164,13 +164,8 @@ class BinaryMathExpression extends BinaryExpression {
 enum LogicOperand {
   and("&&"),
   or("||"),
-  not("!"),
-  equal("=="),
-  lessThan("<"),
-  lessThanOrEqual("<="),
-  greaterThan(">"),
-  greaterThanOrEqual(">="),
-  notEqual("!=");
+  not("!");
+
 
   final String symbol;
 
@@ -181,16 +176,11 @@ enum LogicOperand {
       '&&' => LogicOperand.and,
       '||' => LogicOperand.or,
       '!' => LogicOperand.not,
-      '==' => LogicOperand.equal,
-      '<' => LogicOperand.lessThan,
-      '<=' => LogicOperand.lessThanOrEqual,
-      '>' => LogicOperand.greaterThan,
-      '>=' => LogicOperand.greaterThanOrEqual,
-      '!=' => LogicOperand.notEqual,
       _ => throw UnimplementedError(),
     };
   }
 }
+
 
 class BinaryLogicExpression extends BinaryExpression {
   final LogicOperand operand;
@@ -212,6 +202,51 @@ class BinaryLogicExpression extends BinaryExpression {
       "left": left.toJson(),
       "right": right.toJson(),
       "operand": operand.symbol,
+    };
+  }
+
+  @override
+  List<Object?> get props => [left, operand, right, position];
+}
+
+enum ComparisonOperand {
+  equal("=="),
+  lessThan("<"),
+  lessThanOrEqual("<="),
+  greaterThan(">"),
+  greaterThanOrEqual(">="),
+  notEqual("!=");
+
+  final String symbol;
+
+  const ComparisonOperand(this.symbol);
+
+  static ComparisonOperand fromJson(Map<String, dynamic> json) {
+    return switch (json['enumValue']) {
+      '==' => ComparisonOperand.equal,
+      '<' => ComparisonOperand.lessThan,
+      '<=' => ComparisonOperand.lessThanOrEqual,
+      '>' => ComparisonOperand.greaterThan,
+      '>=' => ComparisonOperand.greaterThanOrEqual,
+      '!=' => ComparisonOperand.notEqual,
+      _ => throw UnimplementedError(),
+    };
+  }
+}
+
+class BinaryComparisonExpression extends BinaryExpression {
+  final ComparisonOperand operand;
+
+  BinaryComparisonExpression(super.left, super.right, this.operand, super.position);
+
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "type": runtimeType.toString(),
+      "left": left.toJson(),
+      "right": right.toJson(),
+      "operand": operand,
     };
   }
 

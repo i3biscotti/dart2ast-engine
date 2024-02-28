@@ -25,6 +25,7 @@ extension ExpressionTranspilerExtension on Expression {
       ListLiteralExpression e => e.transpile(),
       BinaryLogicExpression e => e.transpile(),
       BinaryMathExpression e => e.transpile(),
+      BinaryComparisonExpression e => e.transpile(),
       UnaryLogicExpression e => e.transpile(),
       UnaryMathExpression e => e.transpile(),
       PreIncrementExpression e => e.transpile(),
@@ -160,6 +161,17 @@ extension BinaryLogicExpressionTranspilerExtension on BinaryLogicExpression {
   String transpile() {
     String leftTranspiler = left.transpile();
     String rightTranspiler = right.transpile();
+    String operatorTranspiler = operand.symbol;
+    String expression = '$leftTranspiler $operatorTranspiler $rightTranspiler';
+    return expression;
+  }
+}
+
+extension BinaryComparisonExpressionTranspilerExtension
+    on BinaryComparisonExpression {
+  String transpile() {
+    String rightTranspiler = right.transpile();
+    String leftTranspiler = left.transpile();
     String operatorTranspiler = operand.symbol;
     String expression = '$leftTranspiler $operatorTranspiler $rightTranspiler';
     return expression;

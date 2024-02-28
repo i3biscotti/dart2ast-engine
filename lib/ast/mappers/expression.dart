@@ -14,6 +14,7 @@ extension ExpressionConverterExtension on ExpressionContext {
       ListLiteralExpressionContext e => e.toAst(considerPosition),
       BinaryMathExpressionContext e => e.toAst(considerPosition),
       BinaryLogicExpressionContext e => e.toAst(considerPosition),
+      BinaryComparisonExpressionContext e => e.toAst(considerPosition),
       UnaryMathExpressionContext e => e.toAst(considerPosition),
       UnaryLogicNegationExpressionContext e => e.toAst(considerPosition),
       PreIncrementExpressionContext e => e.toAst(considerPosition),
@@ -77,17 +78,36 @@ extension BinaryLogicExpressionConverterExtension
     var operand = switch (this.operand?.text) {
       '&&' => LogicOperand.and,
       '||' => LogicOperand.or,
-      '==' => LogicOperand.equal,
-      '!=' => LogicOperand.notEqual,
       '!' => LogicOperand.not,
-      '<' => LogicOperand.lessThan,
-      '>' => LogicOperand.greaterThan,
-      '<=' => LogicOperand.lessThanOrEqual,
-      '>=' => LogicOperand.greaterThanOrEqual,
       _ => throw UnimplementedError()
     };
 
     return BinaryLogicExpression(
+      left,
+      right,
+      operand,
+      toPosition(considerPosition),
+    );
+  }
+}
+
+extension BinaryComparisonExpressionConverterExtension
+    on BinaryComparisonExpressionContext {
+  BinaryComparisonExpression toAst(bool considerPosition) {
+    final left = this.left!.toAst(considerPosition);
+    final right = this.right!.toAst(considerPosition);
+
+    var operand = switch (this.operand?.text) {
+      '==' => ComparisonOperand.equal,
+      '!=' => ComparisonOperand.notEqual,
+      '<' => ComparisonOperand.lessThan,
+      '<=' => ComparisonOperand.lessThanOrEqual,
+      '>' => ComparisonOperand.greaterThan,
+      '>=' => ComparisonOperand.greaterThanOrEqual,
+      _ => throw UnimplementedError()
+    };
+
+    return BinaryComparisonExpression(
       left,
       right,
       operand,
@@ -180,18 +200,15 @@ extension PostDecrementExpressionConverterExtension
   }
 }
 
-extension InputExpressionConverterExtension
-   on InputExpressionContext {
+extension InputExpressionConverterExtension on InputExpressionContext {
   InputExpression toAst(bool considerPosition) {
-
-    return InputExpression(
-      toPosition(considerPosition,)
-    );
+    return InputExpression(toPosition(
+      considerPosition,
+    ));
   }
 }
 
-extension OutputExpressionConverterExtension
-   on OutputExpressionContext {
+extension OutputExpressionConverterExtension on OutputExpressionContext {
   OutputExpression toAst(bool considerPosition) {
     final value = this.value!.toAst(considerPosition);
 
@@ -201,7 +218,6 @@ extension OutputExpressionConverterExtension
     );
   }
 }
-
 
 extension ParenthesysExpressionConverterExtension
     on ParenthesysExpressionContext {

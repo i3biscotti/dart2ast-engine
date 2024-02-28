@@ -44,7 +44,7 @@ extension VarDeclarationStatementConverterExtension
     }
 
     final name = varDeclaration!.ID()!.text!;
-    final value = varDeclaration.expression()!.toAst(considerPosition);
+    final value = varDeclaration.expression()?.toAst(considerPosition);
     final valueType = _Antlr4ToAstValueType(varDeclaration.type());
 
     return VariableDeclarationStatement(
