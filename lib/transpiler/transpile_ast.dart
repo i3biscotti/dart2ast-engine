@@ -140,7 +140,7 @@ extension DartFileTranspilerExtension on ProgramFile {
 extension ListLiteralExpressionTranspilerExtension on ListLiteralExpression {
   String transpile() {
     String expessionTranspiled =
-        value.map((e) => e.value.transpile()).toList().join(',');
+        value.map((e) => e.transpile()).toList().join(',');
     String listliteralexp = '[$expessionTranspiled]';
     return listliteralexp;
   }
