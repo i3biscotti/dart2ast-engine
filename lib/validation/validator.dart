@@ -47,7 +47,13 @@ extension ScriptFileValidator on ProgramFile {
       }
 
       if (node.value != null) {
-        final expressionType = extractType(scope, node.value!);
+        late VariableValueType expressionType;
+
+        try {
+          expressionType = extractType(scope, node.value!);
+        } catch (e) {
+          expressionType = VariableValueType.DYNAMIC;
+        }
 
         if (node.valueType != null && expressionType != node.valueType) {
           addErrorCallback(
@@ -102,9 +108,12 @@ extension ScriptFileValidator on ProgramFile {
     void Function(LangError error) addErrorCallback,
   ) {
     processor.addProcess<ClassDefinitionStatement>((node, scope) {
-      if (scope.read<ClassSign>(node.name) != null) {
+      final cSign = scope.read<ClassSign>(node.name);
+
+      if (cSign != null && cSign.position?.start != node.position?.start) {
         addErrorCallback(
-            ClassAlreadyDeclaredError(node.name, node.position?.start));
+          ClassAlreadyDeclaredError(node.name, node.position?.start),
+        );
       }
     });
 
@@ -214,15 +223,18 @@ extension ScriptFileValidator on ProgramFile {
   ) {
     processor.addProcess<FunctionDefinitionStatement>((node, scope) {
       final hasReturn = node.body.whereType<ReturnStatement>().isNotEmpty;
+      final fSign = scope.read<FunctionSign>(node.name);
 
-      if (scope.read<FunctionSign>(node.name) != null) {
+      if (fSign != null && fSign.position?.start != node.position?.start) {
         addErrorCallback(
           FunctionAlreadyDefinedError(
             node.name,
             node.position?.start,
           ),
         );
-      } else if (!hasReturn && node.returnType != VariableValueType.VOID) {
+      }
+
+      if (!hasReturn && node.returnType != VariableValueType.VOID) {
         addErrorCallback(
           FunctionMissingReturnError(
             node.name,
@@ -237,10 +249,7 @@ extension ScriptFileValidator on ProgramFile {
           ),
         );
       } else if (hasReturn && node.returnType != null) {
-        final returnType = extractType(
-          scope,
-          node.body.whereType<ReturnStatement>().last.value,
-        );
+        final returnType = _getFunctionReturnType(node, scope);
 
         if (returnType != node.returnType) {
           addErrorCallback(
@@ -256,11 +265,14 @@ extension ScriptFileValidator on ProgramFile {
     });
 
     processor.addProcess<FunctionCallExpression>((node, scope) {
-      final function = scope.read<FunctionSign>(node.name);
+      final fSign = scope.read<FunctionSign>(node.name);
 
-      if (function != null) {
+      final fNameSplitted = node.name.split(".");
+      final cSign = scope.read<ClassSign>(fNameSplitted.first);
+
+      if (fSign != null) {
         final functionParams =
-            function.parameters.map((e) => e.type.typeName).toList();
+            fSign.parameters.map((e) => e.type.typeName).toList();
         final callParams =
             node.parameters.map((e) => extractType(scope, e).typeName).toList();
 
@@ -274,7 +286,7 @@ extension ScriptFileValidator on ProgramFile {
             ),
           );
         }
-      } else {
+      } else if (cSign == null || node.parameters.isNotEmpty) {
         addErrorCallback(
           FunctionNotDefinedError(
             node.name,
@@ -283,6 +295,43 @@ extension ScriptFileValidator on ProgramFile {
         );
       }
     });
+  }
+
+  VariableValueType _getFunctionReturnType(
+    FunctionDefinitionStatement f,
+    ScopeContext context,
+  ) {
+    final innerCtx = context.wrap(declaredVariables: {});
+
+    innerCtx.declaredVariables.addEntries(
+      f.parameters.map((e) {
+        return MapEntry(
+          e.name,
+          VariableSign(e.name, e.valueType!, true, e.position),
+        );
+      }),
+    );
+
+    innerCtx.declaredVariables.addEntries(
+      f.body.whereType<VariableDeclarationStatement>().map((e) {
+        return MapEntry(
+          e.name,
+          VariableSign(
+            e.name,
+            e.valueType ?? extractType(context, e.value!),
+            true,
+            e.position,
+          ),
+        );
+      }),
+    );
+
+    final returnType = extractType(
+      innerCtx,
+      f.body.whereType<ReturnStatement>().last.value,
+    );
+
+    return returnType;
   }
 
   void _getIfErrors(

@@ -1,6 +1,5 @@
 import 'package:dart2ast_engine/dart2ast.dart';
 import 'package:test/test.dart';
-import 'package:uuid/data.dart';
 
 import 'helpers.dart';
 
@@ -98,8 +97,13 @@ void main() {
             equals(
               ProgramFile(
                 <Statement>[
-                  VariableDeclarationStatement(VariableType.constant, 'isOld',
-                      VariableValueType.BOOLEAN, BoolLit('false', null), null)
+                  VariableDeclarationStatement(
+                    VariableType.constant,
+                    'isOld',
+                    VariableValueType.BOOLEAN,
+                    BoolLit('false', null),
+                    null,
+                  )
                 ],
                 null,
               ),
@@ -147,18 +151,28 @@ void main() {
               ProgramFile(
                 <Statement>[
                   ExpressionDefinitionStatement(
-                      BinaryMathExpression(
-                          ParenthesysExpression(
-                              BinaryMathExpression(IntLit('3', null),
-                                  IntLit('4', null), MathOperand.plus, null),
-                              null),
-                          ParenthesysExpression(
-                              BinaryMathExpression(IntLit('4', null),
-                                  IntLit('3', null), MathOperand.minus, null),
-                              null),
-                          MathOperand.times,
+                    BinaryMathExpression(
+                      ParenthesysExpression(
+                          BinaryMathExpression(
+                            IntLit('3', null),
+                            IntLit('4', null),
+                            MathOperand.plus,
+                            null,
+                          ),
                           null),
-                      null),
+                      ParenthesysExpression(
+                          BinaryMathExpression(
+                            IntLit('4', null),
+                            IntLit('3', null),
+                            MathOperand.minus,
+                            null,
+                          ),
+                          null),
+                      MathOperand.times,
+                      null,
+                    ),
+                    null,
+                  ),
                 ],
                 null,
               ),
@@ -184,30 +198,37 @@ void main() {
                 <Statement>[
                   IfDefinitionStatement(
                       IfBlock(
-                          BinaryLogicExpression(
-                              VarReferenceExpression('voto', null),
-                              IntLit('18', null),
-                              LogicOperand.greaterThan,
-                              null),
-                          <Statement>[
-                            AssignmentStatement(
-                                'exam', StringLit('"passed"', null), null),
-                          ],
-                          BlockType.ifBlock,
-                          null),
+                        BinaryComparisonExpression(
+                          VarReferenceExpression('voto', null),
+                          IntLit('18', null),
+                          ComparisonOperand.greaterThan,
+                          null,
+                        ),
+                        <Statement>[
+                          AssignmentStatement(
+                              'exam', StringLit('"passed"', null), null),
+                        ],
+                        BlockType.ifBlock,
+                        null,
+                      ),
                       <IfBlock>[
                         IfBlock(
-                            BinaryLogicExpression(
-                                VarReferenceExpression('voto', null),
-                                IntLit('18', null),
-                                LogicOperand.equal,
-                                null),
-                            <Statement>[
-                              AssignmentStatement(
-                                  'exam', StringLit('"passed"', null), null),
-                            ],
-                            BlockType.elseIfBlock,
-                            null),
+                          BinaryComparisonExpression(
+                            VarReferenceExpression('voto', null),
+                            IntLit('18', null),
+                            ComparisonOperand.equal,
+                            null,
+                          ),
+                          <Statement>[
+                            AssignmentStatement(
+                              'exam',
+                              StringLit('"passed"', null),
+                              null,
+                            ),
+                          ],
+                          BlockType.elseIfBlock,
+                          null,
+                        ),
                       ],
                       IfBlock(
                           null,
@@ -249,41 +270,47 @@ void main() {
                     null,
                   ),
                   WhileDefinitionStatement(
-                      VarReferenceExpression('condition', null),
-                      <Statement>[
-                        IfDefinitionStatement(
-                            IfBlock(
-                                BinaryLogicExpression(
-                                  VarReferenceExpression('i', null),
-                                  IntLit('17', null),
-                                  LogicOperand.lessThan,
-                                  null,
-                                ),
-                                <Statement>[
-                                  AssignmentStatement(
-                                      'i',
-                                      BinaryMathExpression(
-                                        VarReferenceExpression('i', null),
-                                        IntLit('1', null),
-                                        MathOperand.plus,
-                                        null,
-                                      ),
-                                      null),
-                                ],
-                                BlockType.ifBlock,
-                                null),
-                            <IfBlock>[],
-                            IfBlock(
-                                null,
-                                <Statement>[
-                                  AssignmentStatement(
-                                      'condition', BoolLit('true', null), null),
-                                ],
-                                BlockType.elseBlock,
-                                null),
+                    VarReferenceExpression('condition', null),
+                    <Statement>[
+                      IfDefinitionStatement(
+                        IfBlock(
+                            BinaryComparisonExpression(
+                              VarReferenceExpression('i', null),
+                              IntLit('17', null),
+                              ComparisonOperand.lessThan,
+                              null,
+                            ),
+                            <Statement>[
+                              AssignmentStatement(
+                                  'i',
+                                  BinaryMathExpression(
+                                    VarReferenceExpression('i', null),
+                                    IntLit('1', null),
+                                    MathOperand.plus,
+                                    null,
+                                  ),
+                                  null),
+                            ],
+                            BlockType.ifBlock,
                             null),
-                      ],
-                      null),
+                        <IfBlock>[],
+                        IfBlock(
+                          null,
+                          <Statement>[
+                            AssignmentStatement(
+                              'condition',
+                              BoolLit('true', null),
+                              null,
+                            ),
+                          ],
+                          BlockType.elseBlock,
+                          null,
+                        ),
+                        null,
+                      ),
+                    ],
+                    null,
+                  ),
                 ],
                 null,
               ),
@@ -315,33 +342,40 @@ void main() {
                     null,
                   ),
                   ForDefinitionStatement(
-                      StandardForCondition(
-                          VarDeclarationForStatement(
-                            VariableType.type,
-                            'i',
-                            VariableValueType.INT,
-                            IntLit('0', null),
-                            null,
-                          ),
-                          BinaryLogicExpression(
-                              VarReferenceExpression('i', null),
-                              IntLit('3', null),
-                              LogicOperand.lessThan,
-                              null),
-                          ExpressionForStatement(
-                              PostIncrementExpression('i', null), null),
-                          null),
-                      <Statement>[
-                        AssignmentStatement(
-                            'a',
-                            BinaryMathExpression(
-                                VarReferenceExpression('a', null),
-                                IntLit('1', null),
-                                MathOperand.plus,
-                                null),
-                            null)
-                      ],
-                      null),
+                    StandardForCondition(
+                      VarDeclarationForStatement(
+                        VariableType.type,
+                        'i',
+                        VariableValueType.INT,
+                        IntLit('0', null),
+                        null,
+                      ),
+                      BinaryComparisonExpression(
+                        VarReferenceExpression('i', null),
+                        IntLit('3', null),
+                        ComparisonOperand.lessThan,
+                        null,
+                      ),
+                      ExpressionForStatement(
+                        PostIncrementExpression('i', null),
+                        null,
+                      ),
+                      null,
+                    ),
+                    <Statement>[
+                      AssignmentStatement(
+                        'a',
+                        BinaryMathExpression(
+                          VarReferenceExpression('a', null),
+                          IntLit('1', null),
+                          MathOperand.plus,
+                          null,
+                        ),
+                        null,
+                      )
+                    ],
+                    null,
+                  ),
                 ],
                 null,
               ),
@@ -365,27 +399,44 @@ void main() {
                       'list',
                       null,
                       ListLiteralExpression(
-                          [IntLit('1', null), IntLit('2', null)], null),
+                        <Expression>[
+                          IntLit('1', null),
+                          IntLit('2', null),
+                        ],
+                        null,
+                      ),
                       null),
-                  VariableDeclarationStatement(VariableType.variable, 'b', null,
-                      IntLit('0', null), null),
+                  VariableDeclarationStatement(
+                    VariableType.variable,
+                    'b',
+                    null,
+                    IntLit('0', null),
+                    null,
+                  ),
                   ForDefinitionStatement(
-                      ForEachCondition(
-                          ItemDefinition(VariableType.type, 'i',
-                              VariableValueType.INT, null),
-                          VarReferenceExpression('list', null),
-                          null),
-                      <Statement>[
-                        AssignmentStatement(
-                            'b',
-                            BinaryMathExpression(
-                                VarReferenceExpression('b', null),
-                                IntLit('1', null),
-                                MathOperand.plus,
-                                null),
-                            null),
-                      ],
-                      null),
+                    ForEachCondition(
+                        ItemDefinition(
+                          VariableType.type,
+                          'i',
+                          VariableValueType.INT,
+                          null,
+                        ),
+                        VarReferenceExpression('list', null),
+                        null),
+                    <Statement>[
+                      AssignmentStatement(
+                        'b',
+                        BinaryMathExpression(
+                          VarReferenceExpression('b', null),
+                          IntLit('1', null),
+                          MathOperand.plus,
+                          null,
+                        ),
+                        null,
+                      ),
+                    ],
+                    null,
+                  ),
                 ],
                 null,
               ),
@@ -399,46 +450,47 @@ void main() {
   group(
     "Task 6",
     () {
-     test('input_expression', () async {
-       final root = 
-          await parseResource2Ast('task6/input_expression');
+      test(
+        'input_expression',
+        () async {
+          final root = await parseResource2Ast('task6/input_expression');
 
-       expect(
-        root,
-        equals(
-          ProgramFile(
-            <Statement>[
-              VariableDeclarationStatement(
+          expect(
+            root,
+            equals(
+              ProgramFile(
+                <Statement>[
+                  VariableDeclarationStatement(
                     VariableType.immutable,
                     'input',
                     null,
-                    InputExpression(
-                      null
-                    ),
+                    InputExpression(null),
                     null,
                   ),
-               ],
-               null,
+                ],
+                null,
               ),
             ),
           );
         },
       );
 
-      test('output_expression', () async {
-        final root =
-           await parseResource2Ast('task6/output_expression');
-        
-        expect(
-          root, 
-          equals(
-            ProgramFile(
-              <Statement>[
-                ExpressionDefinitionStatement(
-                  OutputExpression(
-                    VarReferenceExpression('input', null),
-                    null),
-                  null,
+      test(
+        'output_expression',
+        () async {
+          final root = await parseResource2Ast('task6/output_expression');
+
+          expect(
+            root,
+            equals(
+              ProgramFile(
+                <Statement>[
+                  ExpressionDefinitionStatement(
+                    OutputExpression(
+                      VarReferenceExpression('input', null),
+                      null,
+                    ),
+                    null,
                   ),
                 ],
                 null,
@@ -555,10 +607,10 @@ void main() {
                     VariableType.variable,
                     "aIsGreaterThanB",
                     null,
-                    BinaryLogicExpression(
+                    BinaryComparisonExpression(
                       VarReferenceExpression('a', null),
                       VarReferenceExpression('b', null),
-                      LogicOperand.greaterThan,
+                      ComparisonOperand.greaterThan,
                       null,
                     ),
                     null,
@@ -702,10 +754,10 @@ void main() {
                       <Statement>[
                         AssignmentStatement(
                           'pro2',
-                          BinaryLogicExpression(
+                          BinaryComparisonExpression(
                             VarReferenceExpression('value', null),
                             VarReferenceExpression('prop1', null),
-                            LogicOperand.lessThanOrEqual,
+                            ComparisonOperand.lessThanOrEqual,
                             null,
                           ),
                           null,

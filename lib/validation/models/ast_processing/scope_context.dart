@@ -22,11 +22,11 @@ class ScopeContext {
     Map<String, ClassSign> declaredClasses = const {},
   }) {
     return ScopeContext(
-        parent: this,
-        declaredVariables: declaredVariables,
-        declaredFunctions: declaredFunctions,
-        declaredClasses: declaredClasses,
-      );
+      parent: this,
+      declaredVariables: declaredVariables,
+      declaredFunctions: declaredFunctions,
+      declaredClasses: declaredClasses,
+    );
   }
 
   ScopeContext? unwrap() => parent;
@@ -36,9 +36,9 @@ class ScopeContext {
 
     while (context != null) {
       final registryWhereSearch = switch (T) {
-        VariableSign => declaredVariables,
-        FunctionSign => declaredFunctions,
-        ClassSign => declaredClasses,
+        VariableSign => context.declaredVariables,
+        FunctionSign => context.declaredFunctions,
+        ClassSign => context.declaredClasses,
         _ => throw UnimplementedError(),
       };
 

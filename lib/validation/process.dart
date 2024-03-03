@@ -10,8 +10,6 @@ extension NodeProcessExtension on Node {
     ProcessOperationCallback operation, [
     ScopeContext scope = const ScopeContext(),
   ]) {
-    operation(this, scope);
-
     final _ = switch (this) {
       ProgramFile n => n.process(operation, ScopeContext.rootScope),
       Statement n => n.process(operation, scope),
@@ -26,8 +24,10 @@ extension ProgramFileProcessExtension on ProgramFile {
   void process(ProcessOperationCallback operation, ScopeContext scope) {
     operation(this, scope);
 
+    final globalScope = _prepareNewScope(scope, lines);
+
     for (var line in lines) {
-      line.process(operation, scope);
+      line.process(operation, globalScope);
     }
   }
 }
@@ -46,88 +46,105 @@ extension StatementProcessExtension on Statement {
       FunctionDefinitionStatement s => s.process(operation, scope),
       ClassDefinitionStatement s => s.process(operation, scope),
       ReturnStatement s => s.value.process(operation, scope),
+      ObjectPropertyAssignmentStatement s => s.value.process(operation, scope),
       _ => throw UnsupportedError('Unknown statement type ${this.runtimeType}')
     };
   }
+}
 
-  ScopeContext _prepareNewScope(
-    ScopeContext scope,
-    List<Statement> StatementsBlock,
-  ) {
-    final functions =
-        StatementsBlock.whereType<FunctionDefinitionStatement>().map((e) {
+ScopeContext _prepareNewScope(
+  ScopeContext scope,
+  List<Statement> StatementsBlock,
+) {
+  final functions =
+      StatementsBlock.whereType<FunctionDefinitionStatement>().map(
+    (e) {
       return FunctionSign(
         e.name,
         e.returnType!,
-        e.parameters.map((e) => ParamSign(e.name, e.valueType!)).toList(),
+        e.parameters.map((p) => ParamSign(p.name, p.valueType!)).toList(),
+        e.position,
       );
-    });
+    },
+  );
 
-    final declaredFunctions = Map.fromEntries(
-      functions.map((e) => MapEntry(e.name, e)),
+  final declaredFunctions = Map.fromEntries(
+    functions.map((e) => MapEntry(e.name, e)),
+  );
+
+  final classesFound = StatementsBlock.whereType<ClassDefinitionStatement>();
+
+  final classSigns = classesFound.map((e) => _generateClassSign(scope, e));
+
+  final declaredClasses = Map.fromEntries(
+    classSigns.map((e) => MapEntry(e.name, e)),
+  );
+
+  final classConstructorFunctions = classesFound
+      .expand((e) => e.constructors)
+      .map(_generateConstructorFunctionSign);
+
+  declaredFunctions.addEntries(
+    classConstructorFunctions.map((e) => MapEntry(e.name, e)),
+  );
+
+  final newScope = scope.wrap(
+    declaredClasses: declaredClasses,
+    declaredFunctions: declaredFunctions,
+    declaredVariables: {},
+  );
+
+  return newScope;
+}
+
+FunctionSign _generateFunctionSign(FunctionDefinitionStatement statement) {
+  return FunctionSign(
+    statement.name,
+    statement.returnType!,
+    statement.parameters.map((e) => ParamSign(e.name, e.valueType!)).toList(),
+    statement.position,
+  );
+}
+
+FunctionSign _generateConstructorFunctionSign(
+  ConstructorDefinitionStatement constr,
+) {
+  var functionName = constr.className;
+  functionName +=
+      constr.constructorName != null ? '.' + constr.constructorName! : '';
+
+  return FunctionSign(
+    functionName,
+    VariableValueType(constr.className),
+    constr.parameters.map((e) => ParamSign(e.name, e.valueType!)).toList(),
+    constr.position,
+  );
+}
+
+ClassSign _generateClassSign(
+  ScopeContext context,
+  ClassDefinitionStatement statement,
+) {
+  final classProperties = statement.properties.map((e) {
+    return VariableSign(
+      e.name,
+      e.valueType ?? extractType(context, e.value!),
+      true,
+      e.position,
     );
+  }).toList();
 
-    final classes = StatementsBlock.whereType<ClassDefinitionStatement>()
-        .map((e) => _generateClassSign(scope, e));
+  final classMethods = statement.methods.map(_generateFunctionSign).toList();
 
-    final declaredClasses = Map.fromEntries(
-      classes.map((e) => MapEntry(e.name, e)),
-    );
+  final classSign = ClassSign(
+    statement.name,
+    classProperties,
+    classMethods,
+    {},
+    statement.position,
+  );
 
-    final newScope = scope.wrap(
-      declaredClasses: declaredClasses,
-      declaredFunctions: declaredFunctions,
-      declaredVariables: {},
-    );
-
-    return newScope;
-  }
-
-  FunctionSign _generateFunctionSign(FunctionDefinitionStatement statement) {
-    return FunctionSign(
-      statement.name,
-      statement.returnType!,
-      statement.parameters.map((e) => ParamSign(e.name, e.valueType!)).toList(),
-    );
-  }
-
-  FunctionSign _generateConstructorFunctionSign(
-    ConstructorDefinitionStatement constr,
-  ) {
-    var functionName = constr.className;
-    functionName +=
-        constr.constructorName != null ? '.' + constr.constructorName! : '';
-
-    return FunctionSign(
-      functionName,
-      VariableValueType(constr.className),
-      constr.parameters.map((e) => ParamSign(e.name, e.valueType!)).toList(),
-    );
-  }
-
-  ClassSign _generateClassSign(
-    ScopeContext context,
-    ClassDefinitionStatement statement,
-  ) {
-    final classProperties = statement.properties.map((e) {
-      return VariableSign(
-        e.name,
-        e.valueType ?? extractType(context, e.value!),
-        true,
-      );
-    }).toList();
-
-    final classMethods = statement.methods.map(_generateFunctionSign).toList();
-
-    final classSign = ClassSign(
-      statement.name,
-      classProperties,
-      classMethods,
-      {},
-    );
-
-    return classSign;
-  }
+  return classSign;
 }
 
 extension VariableDeclarationStatementExtension
@@ -135,11 +152,23 @@ extension VariableDeclarationStatementExtension
   void process(ProcessOperationCallback operation, ScopeContext scope) {
     value?.process(operation, scope);
 
-    final sign = VariableSign(
-      name,
-      valueType ?? extractType(scope, value!),
-      varType == VariableType.variable || varType == VariableType.type,
-    );
+    late VariableSign sign;
+
+    try {
+      sign = VariableSign(
+        name,
+        valueType ?? extractType(scope, value!),
+        varType == VariableType.variable || varType == VariableType.type,
+        position,
+      );
+    } catch (e) {
+      sign = VariableSign(
+        name,
+        VariableValueType.DYNAMIC,
+        varType == VariableType.variable || varType == VariableType.type,
+        position,
+      );
+    }
 
     scope.declaredVariables[name] = sign;
   }
@@ -161,6 +190,7 @@ extension ClassDefinitionStatementProcessExtension on ClassDefinitionStatement {
             e.name,
             e.valueType ?? extractType(scope, e.value!),
             e.varType == VariableType.type,
+            e.position,
           ),
         );
       }),
@@ -209,6 +239,7 @@ extension ExpressionTransformExtension on Expression {
       UnaryMathExpression e => e.value.process(operation, scope),
       ParenthesysExpression e => e.value.process(operation, scope),
       OutputExpression e => e.value.process(operation, scope),
+      ObjectMethodCallExpression e => e.process(operation, scope),
       VarReferenceExpression _ => null,
       IntLit _ => null,
       DecLit _ => null,
@@ -218,6 +249,8 @@ extension ExpressionTransformExtension on Expression {
       PostIncrementExpression _ => null,
       PreDecrementExpression _ => null,
       PreIncrementExpression _ => null,
+      FunctionCallExpression _ => null,
+      ObjectPropertyReferenceExpression _ => null,
       _ => throw UnsupportedError(
           'Unknown expression type ${this.runtimeType}',
         ),
@@ -234,11 +267,14 @@ extension ForDefinitionStatementProcessExtension on ForDefinitionStatement {
         operation(c.itemDefinition, newScope);
         operation(c.expression, newScope);
 
+        final isMutable = c.itemDefinition.varType == VariableType.variable ||
+            c.itemDefinition.varType == VariableType.type;
+
         newScope.declaredVariables[c.itemDefinition.name] = VariableSign(
           c.itemDefinition.name,
           VariableValueType.DYNAMIC,
-          c.itemDefinition.varType == VariableType.variable ||
-              c.itemDefinition.varType == VariableType.type,
+          isMutable,
+          c.position,
         );
 
         break;
@@ -247,12 +283,14 @@ extension ForDefinitionStatementProcessExtension on ForDefinitionStatement {
 
         if (c.initStatement is VarDeclarationForStatement) {
           final variable = c.initStatement as VariableDeclarationStatement;
+          final isMutable = variable.varType == VariableType.variable ||
+              variable.varType == VariableType.type;
 
           newScope.declaredVariables[variable.name] = VariableSign(
             variable.name,
             variable.valueType ?? extractType(newScope, variable.value!),
-            variable.varType == VariableType.variable ||
-                variable.varType == VariableType.type,
+            isMutable,
+            variable.position,
           );
         }
 
@@ -311,13 +349,22 @@ extension FunctionDefinitionStatementProcessExtension
       parameters.map((e) {
         return MapEntry(
           e.name,
-          VariableSign(e.name, e.valueType!, true),
+          VariableSign(e.name, e.valueType!, true, e.position),
         );
       }),
     );
 
     for (var statement in body) {
       statement.process(operation, childContext);
+    }
+  }
+}
+
+extension ObjectMethodCallExpressionProcessExtension
+    on ObjectMethodCallExpression {
+  void process(ProcessOperationCallback operation, ScopeContext scope) {
+    for (var param in parameters) {
+      param.process(operation, scope);
     }
   }
 }
