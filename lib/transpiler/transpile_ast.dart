@@ -533,13 +533,20 @@ extension ConstructorDefinitionTranspilerExtension
 
     var thisConstructor = "";
 
-    if (thisConstructorParameters != null) {
-      thisConstructor =
-          this.thisConstructorParameters!.map((e) => e.transpile()).join(', ');
+    if (this.thisConstructor != null) {
+      thisConstructor = this
+          .thisConstructor!
+          .parameters
+          .map(
+            (e) => e.transpile(),
+          )
+          .join(', ');
+
       thisConstructor = ' : this($thisConstructor)';
     }
 
     String bodyTranspiled = ";";
+
     if (body.isNotEmpty) {
       bodyTranspiled = """
       | {

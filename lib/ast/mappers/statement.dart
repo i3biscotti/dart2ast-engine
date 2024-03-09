@@ -225,18 +225,20 @@ extension WhileStatementConverterExtension on WhileDefinitionStatementContext {
 
 //task 5
 
-extension ForInitOrIncrementStatementConverterExtension on ForInitOrIncrementStatementContext {
+extension ForInitOrIncrementStatementConverterExtension
+    on ForInitOrIncrementStatementContext {
   ForInitOrIncrementStatement toAst(bool considerPosition) {
     return switch (this) {
-       VarDeclarationForStatementContext st => st.toAst(considerPosition),
-       AssignmentForStatementContext st => st.toAst(considerPosition),
-       ExpressionForStatementContext st => st.toAst(considerPosition), 
-       _ => throw UnimplementedError()
+      VarDeclarationForStatementContext st => st.toAst(considerPosition),
+      AssignmentForStatementContext st => st.toAst(considerPosition),
+      ExpressionForStatementContext st => st.toAst(considerPosition),
+      _ => throw UnimplementedError()
     };
   }
 }
 
-extension VarDeclarationForStatementConverterExtension on VarDeclarationForStatementContext {
+extension VarDeclarationForStatementConverterExtension
+    on VarDeclarationForStatementContext {
   VarDeclarationForStatement toAst(bool considerPosition) {
     late final VariableType varType;
     final varDeclaration = this.varDeclaration();
@@ -261,7 +263,8 @@ extension VarDeclarationForStatementConverterExtension on VarDeclarationForState
   }
 }
 
-extension AssignmentForStatementConverterExtension on AssignmentForStatementContext {
+extension AssignmentForStatementConverterExtension
+    on AssignmentForStatementContext {
   AssignmentForStatement toAst(bool considerPosition) {
     final assigment = this.assignment();
     final name = assigment!.ID()!.text!;
@@ -275,7 +278,8 @@ extension AssignmentForStatementConverterExtension on AssignmentForStatementCont
   }
 }
 
-extension ExpressionForStatementConverterExtension on ExpressionForStatementContext {
+extension ExpressionForStatementConverterExtension
+    on ExpressionForStatementContext {
   ExpressionForStatement toAst(bool considerPosition) {
     final value = this.expression()!.toAst(considerPosition);
 
@@ -287,7 +291,7 @@ extension ExpressionForStatementConverterExtension on ExpressionForStatementCont
 }
 
 extension ItemDefinitionConverterExtension on ItemDefinitionContext {
-   ItemDefinition toAst(bool considerPosition) {
+  ItemDefinition toAst(bool considerPosition) {
     late final VariableType varType;
     if (this.VAR() != null) {
       varType = VariableType.variable;
@@ -309,13 +313,17 @@ extension ItemDefinitionConverterExtension on ItemDefinitionContext {
   }
 }
 
-
-extension ForDefinitionStatementConverterExtension on ForDefinitionStatementContext {
-   ForDefinitionStatement toAst(bool considerPosition) {
+extension ForDefinitionStatementConverterExtension
+    on ForDefinitionStatementContext {
+  ForDefinitionStatement toAst(bool considerPosition) {
     final forDefinition = this.forDefinition();
     final forCondition = forDefinition!.forCondition()!.toAst(considerPosition);
-    final statements = forDefinition.block()!.statements().map((e) => e.toAst(considerPosition)).toList();
-(considerPosition);
+    final statements = forDefinition
+        .block()!
+        .statements()
+        .map((e) => e.toAst(considerPosition))
+        .toList();
+    (considerPosition);
 
     return ForDefinitionStatement(
       forCondition,
@@ -326,16 +334,17 @@ extension ForDefinitionStatementConverterExtension on ForDefinitionStatementCont
 }
 
 extension ForConditionConverterExtension on ForConditionContext {
-   ForCondition toAst(bool considerPosition) {
-      return switch (this) {
-       StandardForConditionContext st => st.toAst(considerPosition),
-       ForEachConditionContext st => st.toAst(considerPosition),
-       _ => throw UnimplementedError()
+  ForCondition toAst(bool considerPosition) {
+    return switch (this) {
+      StandardForConditionContext st => st.toAst(considerPosition),
+      ForEachConditionContext st => st.toAst(considerPosition),
+      _ => throw UnimplementedError()
     };
-   }
+  }
 }
 
-extension StandardForConditionConverterExtension on StandardForConditionContext {
+extension StandardForConditionConverterExtension
+    on StandardForConditionContext {
   StandardForCondition toAst(bool considerPosition) {
     final initStatement = this.initStatement!.toAst(considerPosition);
     final controlExpression = this.expression()!.toAst(considerPosition);
@@ -351,16 +360,16 @@ extension StandardForConditionConverterExtension on StandardForConditionContext 
 }
 
 extension ForEachConditionConverterExtension on ForEachConditionContext {
-   ForEachCondition toAst(bool considerPosition) {
-     final itemDefinition = this.itemDefinition()!.toAst(considerPosition);
-     final expression = this.expression()!.toAst(considerPosition);
+  ForEachCondition toAst(bool considerPosition) {
+    final itemDefinition = this.itemDefinition()!.toAst(considerPosition);
+    final expression = this.expression()!.toAst(considerPosition);
 
-     return ForEachCondition(
+    return ForEachCondition(
       itemDefinition,
       expression,
       toPosition(considerPosition),
-     );
-   }
+    );
+  }
 }
 
 extension FunctionDefinitionStatementConverterExtension
@@ -554,22 +563,26 @@ extension NamedConstructorDeclarationStatementConverterExtension
         .map((e) => e.toAst(considerPosition))
         .toList();
 
-    List<Expression>? thisConmstructorParams = null;
+    ThisConstructorDefinition? thisConstructorParams = null;
 
     if (thisConstructorCall() != null) {
       final thisConstuctor = this.thisConstructorCall()!;
-
-      thisConmstructorParams = thisConstuctor
+      final params = thisConstuctor
           .expressions()
           .map((e) => e.toAst(considerPosition))
           .toList();
+
+      thisConstructorParams = ThisConstructorDefinition(
+        params,
+        thisConstuctor.toPosition(true),
+      );
     }
 
     return ConstructorDefinitionStatement(
       className,
       constructorName,
       parameters,
-      thisConmstructorParams,
+      thisConstructorParams,
       statements,
       toPosition(considerPosition),
     );
