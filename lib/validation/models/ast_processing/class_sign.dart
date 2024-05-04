@@ -11,5 +11,6 @@ class ClassSign extends ScopeObject {
     this.properties,
     this.methods,
     this.membersEncapsulationRegistry,
+    super.position,
   );
 }

@@ -25,6 +25,7 @@ extension ExpressionTranspilerExtension on Expression {
       ListLiteralExpression e => e.transpile(),
       BinaryLogicExpression e => e.transpile(),
       BinaryMathExpression e => e.transpile(),
+      BinaryComparisonExpression e => e.transpile(),
       UnaryLogicExpression e => e.transpile(),
       UnaryMathExpression e => e.transpile(),
       PreIncrementExpression e => e.transpile(),
@@ -140,7 +141,7 @@ extension DartFileTranspilerExtension on ProgramFile {
 extension ListLiteralExpressionTranspilerExtension on ListLiteralExpression {
   String transpile() {
     String expessionTranspiled =
-        value.map((e) => e.value.transpile()).toList().join(',');
+        value.map((e) => e.transpile()).toList().join(',');
     String listliteralexp = '[$expessionTranspiled]';
     return listliteralexp;
   }
@@ -160,6 +161,17 @@ extension BinaryLogicExpressionTranspilerExtension on BinaryLogicExpression {
   String transpile() {
     String leftTranspiler = left.transpile();
     String rightTranspiler = right.transpile();
+    String operatorTranspiler = operand.symbol;
+    String expression = '$leftTranspiler $operatorTranspiler $rightTranspiler';
+    return expression;
+  }
+}
+
+extension BinaryComparisonExpressionTranspilerExtension
+    on BinaryComparisonExpression {
+  String transpile() {
+    String rightTranspiler = right.transpile();
+    String leftTranspiler = left.transpile();
     String operatorTranspiler = operand.symbol;
     String expression = '$leftTranspiler $operatorTranspiler $rightTranspiler';
     return expression;
@@ -521,13 +533,20 @@ extension ConstructorDefinitionTranspilerExtension
 
     var thisConstructor = "";
 
-    if (thisConstructorParameters != null) {
-      thisConstructor =
-          this.thisConstructorParameters!.map((e) => e.transpile()).join(', ');
+    if (this.thisConstructor != null) {
+      thisConstructor = this
+          .thisConstructor!
+          .parameters
+          .map(
+            (e) => e.transpile(),
+          )
+          .join(', ');
+
       thisConstructor = ' : this($thisConstructor)';
     }
 
     String bodyTranspiled = ";";
+
     if (body.isNotEmpty) {
       bodyTranspiled = """
       | {

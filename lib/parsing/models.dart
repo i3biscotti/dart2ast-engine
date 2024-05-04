@@ -31,12 +31,12 @@ class ParsingResult with EquatableMixin {
 }
 
 abstract class LangError with EquatableMixin {
-  final Point position;
+  final Point? position;
 
   LangError(this.position);
 
   Map<String, dynamic> toJson() => {
-        "position": position.toJson(),
+        "position": position?.toJson(),
       };
 
   String get message;
@@ -52,7 +52,7 @@ class AntlrError extends LangError {
 
   Map<String, dynamic> toJson() => {
         "message": message,
-        "position": position.toJson(),
+        "position": position?.toJson(),
       };
 }
 

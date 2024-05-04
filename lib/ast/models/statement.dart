@@ -669,14 +669,14 @@ class ConstructorDefinitionStatement extends Statement {
   final String className;
   final String? constructorName;
   final List<Parameter> parameters;
-  final List<Expression>? thisConstructorParameters;
+  final ThisConstructorDefinition? thisConstructor;
   final List<Statement> body;
 
   ConstructorDefinitionStatement(
     this.className,
     this.constructorName,
     this.parameters,
-    this.thisConstructorParameters,
+    this.thisConstructor,
     this.body,
     super.position,
   );
@@ -688,9 +688,9 @@ class ConstructorDefinitionStatement extends Statement {
       List.from(json['parameters'])
           .map((e) => deserializeToAst<Parameter>(e))
           .toList(),
-      List.from(json['thisConstructorParameters'])
-          .map((e) => deserializeToAst<Expression>(e))
-          .toList(),
+      json['thisConstructor'] != null
+          ? ThisConstructorDefinition.fromJson(json['thisConstructor'])
+          : null,
       List.from(json['body'])
           .map((e) => deserializeToAst<Statement>(e))
           .toList(),
@@ -703,7 +703,7 @@ class ConstructorDefinitionStatement extends Statement {
         className,
         constructorName,
         parameters,
-        thisConstructorParameters,
+        thisConstructor,
         body,
         position,
       ];
@@ -715,9 +715,33 @@ class ConstructorDefinitionStatement extends Statement {
       "className": className,
       "constructorName": constructorName,
       "parameters": parameters.map((e) => e.toJson()).toList(),
-      "thisConstructorParameters":
-          thisConstructorParameters?.map((e) => e.toJson()).toList(),
+      "thisConstructor": thisConstructor?.toJson(),
       "body": body.map((e) => e.toJson()).toList(),
+      "position": position?.toJson(),
+    };
+  }
+}
+
+class ThisConstructorDefinition extends Node {
+  final List<Expression> parameters;
+
+  ThisConstructorDefinition(this.parameters, super.position);
+
+  ThisConstructorDefinition.fromJson(Map<String, dynamic> json)
+      : this(
+            List.from(json['parameters'])
+                .map((e) => deserializeToAst<Expression>(e))
+                .toList(),
+            deserializeToAst<Position>(json['position']));
+
+  @override
+  List<Object?> get props => [parameters, position];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "type": runtimeType.toString(),
+      "parameters": parameters.map((e) => e.toJson()).toList(),
       "position": position?.toJson(),
     };
   }

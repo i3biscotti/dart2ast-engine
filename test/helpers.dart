@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dart2ast_engine/dart2ast.dart';
-import 'package:dart2ast_engine/parsing/antlr_parser.dart';
 
 String _loadJsonResource(String resourceName) {
   return File('test/resources/$resourceName.json').readAsStringSync();
@@ -26,7 +25,9 @@ Future<DartFileContext> parseResource(String resourceName) async {
   if (!result.isCorrect()) {
     throw Exception(
       result.errors.map((e) {
-        return "[Ln ${e.position.line}, Col ${e.position.line}]${e.message}";
+        return e.position != null
+            ? "[Ln ${e.position!.line}, Col ${e.position!.line}]${e.message}"
+            : e.message;
       }).join('\n'),
     );
   } else if (result.root == null) {
@@ -36,7 +37,10 @@ Future<DartFileContext> parseResource(String resourceName) async {
   return result.root!;
 }
 
-Future<ProgramFile> parseResource2Ast(String resourceName) async {
+Future<ProgramFile> parseResource2Ast(
+  String resourceName, [
+  bool considerPositions = false,
+]) async {
   final node = await parseResource(resourceName);
-  return node.toAst(false);
+  return node.toAst(considerPositions);
 }

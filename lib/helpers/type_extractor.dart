@@ -6,6 +6,7 @@ VariableValueType extractType(ScopeContext context, Expression e) =>
       DecLit _ => VariableValueType.DOUBLE,
       BoolLit _ => VariableValueType.BOOLEAN,
       StringLit _ => VariableValueType.STRING,
+      BinaryComparisonExpression _ => VariableValueType.BOOLEAN,
       BinaryExpression e => extractType(context, e.left),
       UnaryLogicExpression _ => VariableValueType.BOOLEAN,
       UnaryMathExpression e => extractType(context, e.value),

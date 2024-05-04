@@ -5,5 +5,10 @@ class FunctionSign extends ScopeObject {
   final VariableValueType returnType;
   final List<ParamSign> parameters;
 
-  const FunctionSign(this.name, this.returnType, this.parameters);
+  const FunctionSign(
+    this.name,
+    this.returnType,
+    this.parameters,
+    super.position,
+  );
 }

@@ -365,7 +365,7 @@ class ClassDefinitionStatement extends $pb.GeneratedMessage {
     EncapsulationType? encapsulation,
     $core.String? name,
     $core.String? parentName,
-    $core.Iterable<PropertyDeclaration>? properties,
+    $core.Iterable<VariableDeclarationStatement>? properties,
     $core.Iterable<ConstructorDefinitionStatement>? constructors,
     $core.Iterable<FunctionDefinitionStatement>? methods,
     VariableValueType? parentClassType,
@@ -406,7 +406,7 @@ class ClassDefinitionStatement extends $pb.GeneratedMessage {
     ..e<EncapsulationType>(1, _omitFieldNames ? '' : 'encapsulation', $pb.PbFieldType.OE, defaultOrMaker: EncapsulationType.PUBLIC, valueOf: EncapsulationType.valueOf, enumValues: EncapsulationType.values)
     ..aOS(2, _omitFieldNames ? '' : 'name')
     ..aOS(3, _omitFieldNames ? '' : 'parentName', protoName: 'parentName')
-    ..pc<PropertyDeclaration>(4, _omitFieldNames ? '' : 'properties', $pb.PbFieldType.PM, subBuilder: PropertyDeclaration.create)
+    ..pc<VariableDeclarationStatement>(4, _omitFieldNames ? '' : 'properties', $pb.PbFieldType.PM, subBuilder: VariableDeclarationStatement.create)
     ..pc<ConstructorDefinitionStatement>(5, _omitFieldNames ? '' : 'constructors', $pb.PbFieldType.PM, subBuilder: ConstructorDefinitionStatement.create)
     ..pc<FunctionDefinitionStatement>(6, _omitFieldNames ? '' : 'methods', $pb.PbFieldType.PM, subBuilder: FunctionDefinitionStatement.create)
     ..aOM<VariableValueType>(7, _omitFieldNames ? '' : 'parentClassType', protoName: 'parentClassType', subBuilder: VariableValueType.create)
@@ -463,7 +463,7 @@ class ClassDefinitionStatement extends $pb.GeneratedMessage {
   void clearParentName() => clearField(3);
 
   @$pb.TagNumber(4)
-  $core.List<PropertyDeclaration> get properties => $_getList(3);
+  $core.List<VariableDeclarationStatement> get properties => $_getList(3);
 
   @$pb.TagNumber(5)
   $core.List<ConstructorDefinitionStatement> get constructors => $_getList(4);
@@ -492,102 +492,6 @@ class ClassDefinitionStatement extends $pb.GeneratedMessage {
   void clearPosition() => clearField(8);
   @$pb.TagNumber(8)
   $1.Position ensurePosition() => $_ensure(7);
-}
-
-class PropertyDeclaration extends $pb.GeneratedMessage {
-  factory PropertyDeclaration({
-    VariableType? varType,
-    $core.String? name,
-    VariableValueType? valueType,
-    $0.Expression? value,
-  }) {
-    final $result = create();
-    if (varType != null) {
-      $result.varType = varType;
-    }
-    if (name != null) {
-      $result.name = name;
-    }
-    if (valueType != null) {
-      $result.valueType = valueType;
-    }
-    if (value != null) {
-      $result.value = value;
-    }
-    return $result;
-  }
-  PropertyDeclaration._() : super();
-  factory PropertyDeclaration.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory PropertyDeclaration.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'PropertyDeclaration', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
-    ..e<VariableType>(1, _omitFieldNames ? '' : 'varType', $pb.PbFieldType.OE, protoName: 'varType', defaultOrMaker: VariableType.VARIABLE, valueOf: VariableType.valueOf, enumValues: VariableType.values)
-    ..aOS(2, _omitFieldNames ? '' : 'name')
-    ..aOM<VariableValueType>(3, _omitFieldNames ? '' : 'valueType', protoName: 'valueType', subBuilder: VariableValueType.create)
-    ..aOM<$0.Expression>(4, _omitFieldNames ? '' : 'value', subBuilder: $0.Expression.create)
-    ..hasRequiredFields = false
-  ;
-
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  PropertyDeclaration clone() => PropertyDeclaration()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  PropertyDeclaration copyWith(void Function(PropertyDeclaration) updates) => super.copyWith((message) => updates(message as PropertyDeclaration)) as PropertyDeclaration;
-
-  $pb.BuilderInfo get info_ => _i;
-
-  @$core.pragma('dart2js:noInline')
-  static PropertyDeclaration create() => PropertyDeclaration._();
-  PropertyDeclaration createEmptyInstance() => create();
-  static $pb.PbList<PropertyDeclaration> createRepeated() => $pb.PbList<PropertyDeclaration>();
-  @$core.pragma('dart2js:noInline')
-  static PropertyDeclaration getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PropertyDeclaration>(create);
-  static PropertyDeclaration? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  VariableType get varType => $_getN(0);
-  @$pb.TagNumber(1)
-  set varType(VariableType v) { setField(1, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasVarType() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearVarType() => clearField(1);
-
-  @$pb.TagNumber(2)
-  $core.String get name => $_getSZ(1);
-  @$pb.TagNumber(2)
-  set name($core.String v) { $_setString(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasName() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearName() => clearField(2);
-
-  @$pb.TagNumber(3)
-  VariableValueType get valueType => $_getN(2);
-  @$pb.TagNumber(3)
-  set valueType(VariableValueType v) { setField(3, v); }
-  @$pb.TagNumber(3)
-  $core.bool hasValueType() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearValueType() => clearField(3);
-  @$pb.TagNumber(3)
-  VariableValueType ensureValueType() => $_ensure(2);
-
-  @$pb.TagNumber(4)
-  $0.Expression get value => $_getN(3);
-  @$pb.TagNumber(4)
-  set value($0.Expression v) { setField(4, v); }
-  @$pb.TagNumber(4)
-  $core.bool hasValue() => $_has(3);
-  @$pb.TagNumber(4)
-  void clearValue() => clearField(4);
-  @$pb.TagNumber(4)
-  $0.Expression ensureValue() => $_ensure(3);
 }
 
 class FunctionDefinitionStatement extends $pb.GeneratedMessage {
@@ -849,6 +753,7 @@ class Parameter extends $pb.GeneratedMessage {
     $core.String? name,
     ParameterType? type,
     VariableValueType? valueType,
+    $1.Position? position,
   }) {
     final $result = create();
     if (name != null) {
@@ -860,6 +765,9 @@ class Parameter extends $pb.GeneratedMessage {
     if (valueType != null) {
       $result.valueType = valueType;
     }
+    if (position != null) {
+      $result.position = position;
+    }
     return $result;
   }
   Parameter._() : super();
@@ -868,8 +776,9 @@ class Parameter extends $pb.GeneratedMessage {
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Parameter', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'name')
-    ..e<ParameterType>(2, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: ParameterType.TYPE, valueOf: ParameterType.valueOf, enumValues: ParameterType.values)
+    ..e<ParameterType>(2, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: ParameterType.TYPED, valueOf: ParameterType.valueOf, enumValues: ParameterType.values)
     ..aOM<VariableValueType>(3, _omitFieldNames ? '' : 'valueType', protoName: 'valueType', subBuilder: VariableValueType.create)
+    ..aOM<$1.Position>(4, _omitFieldNames ? '' : 'position', subBuilder: $1.Position.create)
     ..hasRequiredFields = false
   ;
 
@@ -922,6 +831,17 @@ class Parameter extends $pb.GeneratedMessage {
   void clearValueType() => clearField(3);
   @$pb.TagNumber(3)
   VariableValueType ensureValueType() => $_ensure(2);
+
+  @$pb.TagNumber(4)
+  $1.Position get position => $_getN(3);
+  @$pb.TagNumber(4)
+  set position($1.Position v) { setField(4, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasPosition() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearPosition() => clearField(4);
+  @$pb.TagNumber(4)
+  $1.Position ensurePosition() => $_ensure(3);
 }
 
 class ExpressionDefinitionStatement extends $pb.GeneratedMessage {
@@ -1382,7 +1302,7 @@ class VarDeclarationForStatement extends $pb.GeneratedMessage {
   factory VarDeclarationForStatement.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'VarDeclarationForStatement', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
-    ..e<VariableType>(1, _omitFieldNames ? '' : 'varType', $pb.PbFieldType.OE, protoName: 'varType', defaultOrMaker: VariableType.VARIABLE, valueOf: VariableType.valueOf, enumValues: VariableType.values)
+    ..e<VariableType>(1, _omitFieldNames ? '' : 'varType', $pb.PbFieldType.OE, protoName: 'varType', defaultOrMaker: VariableType.TYPE, valueOf: VariableType.valueOf, enumValues: VariableType.values)
     ..aOS(2, _omitFieldNames ? '' : 'name')
     ..aOM<VariableValueType>(3, _omitFieldNames ? '' : 'valueType', protoName: 'valueType', subBuilder: VariableValueType.create)
     ..aOM<$0.Expression>(4, _omitFieldNames ? '' : 'value', subBuilder: $0.Expression.create)
@@ -1983,7 +1903,7 @@ class ItemDefinition extends $pb.GeneratedMessage {
   factory ItemDefinition.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ItemDefinition', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
-    ..e<VariableType>(1, _omitFieldNames ? '' : 'varType', $pb.PbFieldType.OE, protoName: 'varType', defaultOrMaker: VariableType.VARIABLE, valueOf: VariableType.valueOf, enumValues: VariableType.values)
+    ..e<VariableType>(1, _omitFieldNames ? '' : 'varType', $pb.PbFieldType.OE, protoName: 'varType', defaultOrMaker: VariableType.TYPE, valueOf: VariableType.valueOf, enumValues: VariableType.values)
     ..aOS(2, _omitFieldNames ? '' : 'name')
     ..aOM<VariableValueType>(3, _omitFieldNames ? '' : 'valueType', protoName: 'valueType', subBuilder: VariableValueType.create)
     ..aOM<$1.Position>(4, _omitFieldNames ? '' : 'position', subBuilder: $1.Position.create)
@@ -2247,7 +2167,7 @@ class VariableDeclarationStatement extends $pb.GeneratedMessage {
   factory VariableDeclarationStatement.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'VariableDeclarationStatement', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
-    ..e<VariableType>(1, _omitFieldNames ? '' : 'varType', $pb.PbFieldType.OE, protoName: 'varType', defaultOrMaker: VariableType.VARIABLE, valueOf: VariableType.valueOf, enumValues: VariableType.values)
+    ..e<VariableType>(1, _omitFieldNames ? '' : 'varType', $pb.PbFieldType.OE, protoName: 'varType', defaultOrMaker: VariableType.TYPE, valueOf: VariableType.valueOf, enumValues: VariableType.values)
     ..aOS(2, _omitFieldNames ? '' : 'name')
     ..aOM<VariableValueType>(3, _omitFieldNames ? '' : 'valueType', protoName: 'valueType', subBuilder: VariableValueType.create)
     ..aOM<$0.Expression>(4, _omitFieldNames ? '' : 'value', subBuilder: $0.Expression.create)

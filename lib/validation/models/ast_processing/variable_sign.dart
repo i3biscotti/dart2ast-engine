@@ -5,5 +5,10 @@ class VariableSign extends ScopeObject {
   final VariableValueType type;
   final bool isMutable;
 
-  const VariableSign(this.name, this.type, this.isMutable);
+  const VariableSign(
+    this.name,
+    this.type,
+    this.isMutable,
+    super.position,
+  );
 }

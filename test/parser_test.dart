@@ -1,9 +1,6 @@
-import 'dart:io';
-import 'dart:math';
 
 import 'package:antlr4/antlr4.dart';
 import 'package:dart2ast_engine/antlr.dart';
-import 'package:dart2ast_engine/parsing/antlr_parser.dart';
 import 'package:indent/indent.dart';
 import 'package:test/test.dart';
 
@@ -15,14 +12,14 @@ String getMultilineParseTree(DartFileContext root) {
 
 List<String> _node2StringList(
   ParserRuleContext node, [
-  String identation = "",
+  String indentation = "",
 ]) {
-  final childIdentation = "  ${identation}";
+  final childIndentation = "  ${indentation}";
 
   final children = node.children
           ?.map((c) => switch (c) {
-                ParserRuleContext n => _node2StringList(n, childIdentation),
-                TerminalNode n => <String>["${childIdentation}T[${n.text}]"],
+                ParserRuleContext n => _node2StringList(n, childIndentation),
+                TerminalNode n => <String>["${childIndentation}T[${n.text}]"],
                 Object o => throw UnsupportedError(
                     "Unknown ${o.runtimeType} node type",
                   ),
@@ -32,7 +29,7 @@ List<String> _node2StringList(
       [];
 
   return [
-    "${identation}Node(${node.runtimeType.toString().replaceAll("Context", "")})",
+    "${indentation}Node(${node.runtimeType.toString().replaceAll("Context", "")})",
     ...children
   ];
 }
