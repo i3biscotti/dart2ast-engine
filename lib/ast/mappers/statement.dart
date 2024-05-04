@@ -568,8 +568,8 @@ extension NamedConstructorDeclarationStatementConverterExtension
     return ConstructorDefinitionStatement(
       className,
       constructorName,
-      parameters,
-      thisConmstructorParams,
+      parameters, 
+      thisConmstructorParams,            //constructor
       statements,
       toPosition(considerPosition),
     );
