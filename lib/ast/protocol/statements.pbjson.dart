@@ -211,13 +211,15 @@ const ThisConstructorDefinition$json = {
   '1': 'ThisConstructorDefinition',
   '2': [
     {'1': 'parameters', '3': 1, '4': 3, '5': 11, '6': '.protocol.Expression', '10': 'parameters'},
+    {'1': 'position', '3': 2, '4': 1, '5': 11, '6': '.protocol.Position', '10': 'position'},
   ],
 };
 
 /// Descriptor for `ThisConstructorDefinition`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List thisConstructorDefinitionDescriptor = $convert.base64Decode(
     'ChlUaGlzQ29uc3RydWN0b3JEZWZpbml0aW9uEjQKCnBhcmFtZXRlcnMYASADKAsyFC5wcm90b2'
-    'NvbC5FeHByZXNzaW9uUgpwYXJhbWV0ZXJz');
+    'NvbC5FeHByZXNzaW9uUgpwYXJhbWV0ZXJzEi4KCHBvc2l0aW9uGAIgASgLMhIucHJvdG9jb2wu'
+    'UG9zaXRpb25SCHBvc2l0aW9u');
 
 @$core.Deprecated('Use parameterDescriptor instead')
 const Parameter$json = {

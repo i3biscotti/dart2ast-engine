@@ -36,17 +36,28 @@ class LogicOperand extends $pb.ProtobufEnum {
   static const LogicOperand AND = LogicOperand._(0, _omitEnumNames ? '' : 'AND');
   static const LogicOperand OR = LogicOperand._(1, _omitEnumNames ? '' : 'OR');
   static const LogicOperand NOT = LogicOperand._(2, _omitEnumNames ? '' : 'NOT');
-  static const LogicOperand EQUAL = LogicOperand._(3, _omitEnumNames ? '' : 'EQUAL');
-  static const LogicOperand LESS_THAN = LogicOperand._(4, _omitEnumNames ? '' : 'LESS_THAN');
-  static const LogicOperand LESS_THAN_OR_EQUAL = LogicOperand._(5, _omitEnumNames ? '' : 'LESS_THAN_OR_EQUAL');
-  static const LogicOperand GREATER_THAN = LogicOperand._(6, _omitEnumNames ? '' : 'GREATER_THAN');
-  static const LogicOperand GREATER_THAN_OR_EQUAL = LogicOperand._(7, _omitEnumNames ? '' : 'GREATER_THAN_OR_EQUAL');
-  static const LogicOperand NOT_EQUAL = LogicOperand._(8, _omitEnumNames ? '' : 'NOT_EQUAL');
 
   static const $core.List<LogicOperand> values = <LogicOperand> [
     AND,
     OR,
     NOT,
+  ];
+
+  static final $core.Map<$core.int, LogicOperand> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static LogicOperand? valueOf($core.int value) => _byValue[value];
+
+  const LogicOperand._($core.int v, $core.String n) : super(v, n);
+}
+
+class ComparisonOperand extends $pb.ProtobufEnum {
+  static const ComparisonOperand EQUAL = ComparisonOperand._(0, _omitEnumNames ? '' : 'EQUAL');
+  static const ComparisonOperand LESS_THAN = ComparisonOperand._(1, _omitEnumNames ? '' : 'LESS_THAN');
+  static const ComparisonOperand LESS_THAN_OR_EQUAL = ComparisonOperand._(2, _omitEnumNames ? '' : 'LESS_THAN_OR_EQUAL');
+  static const ComparisonOperand GREATER_THAN = ComparisonOperand._(3, _omitEnumNames ? '' : 'GREATER_THAN');
+  static const ComparisonOperand GREATER_THAN_OR_EQUAL = ComparisonOperand._(4, _omitEnumNames ? '' : 'GREATER_THAN_OR_EQUAL');
+  static const ComparisonOperand NOT_EQUAL = ComparisonOperand._(5, _omitEnumNames ? '' : 'NOT_EQUAL');
+
+  static const $core.List<ComparisonOperand> values = <ComparisonOperand> [
     EQUAL,
     LESS_THAN,
     LESS_THAN_OR_EQUAL,
@@ -55,10 +66,10 @@ class LogicOperand extends $pb.ProtobufEnum {
     NOT_EQUAL,
   ];
 
-  static final $core.Map<$core.int, LogicOperand> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static LogicOperand? valueOf($core.int value) => _byValue[value];
+  static final $core.Map<$core.int, ComparisonOperand> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static ComparisonOperand? valueOf($core.int value) => _byValue[value];
 
-  const LogicOperand._($core.int v, $core.String n) : super(v, n);
+  const ComparisonOperand._($core.int v, $core.String n) : super(v, n);
 }
 
 

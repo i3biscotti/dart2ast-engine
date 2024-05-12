@@ -35,10 +35,11 @@ enum Expression_Expr {
   inputExpression, 
   outputExpression, 
   varReferenceExpression, 
-  parenthesysExpression, 
+  parenthesisExpression, 
   functionCallExpression, 
   objectPropertyReferenceExpression, 
   objectMethodCallExpression, 
+  binaryComparisonExpression, 
   notSet
 }
 
@@ -60,10 +61,11 @@ class Expression extends $pb.GeneratedMessage {
     InputExpression? inputExpression,
     OutputExpression? outputExpression,
     VarReferenceExpression? varReferenceExpression,
-    ParenthesisExpression? parenthesysExpression,
+    ParenthesisExpression? parenthesisExpression,
     FunctionCallExpression? functionCallExpression,
     ObjectPropertyReferenceExpression? objectPropertyReferenceExpression,
     ObjectMethodCallExpression? objectMethodCallExpression,
+    BinaryComparisonExpression? binaryComparisonExpression,
   }) {
     final $result = create();
     if (intLit != null) {
@@ -114,8 +116,8 @@ class Expression extends $pb.GeneratedMessage {
     if (varReferenceExpression != null) {
       $result.varReferenceExpression = varReferenceExpression;
     }
-    if (parenthesysExpression != null) {
-      $result.parenthesysExpression = parenthesysExpression;
+    if (parenthesisExpression != null) {
+      $result.parenthesisExpression = parenthesisExpression;
     }
     if (functionCallExpression != null) {
       $result.functionCallExpression = functionCallExpression;
@@ -125,6 +127,9 @@ class Expression extends $pb.GeneratedMessage {
     }
     if (objectMethodCallExpression != null) {
       $result.objectMethodCallExpression = objectMethodCallExpression;
+    }
+    if (binaryComparisonExpression != null) {
+      $result.binaryComparisonExpression = binaryComparisonExpression;
     }
     return $result;
   }
@@ -149,14 +154,15 @@ class Expression extends $pb.GeneratedMessage {
     15 : Expression_Expr.inputExpression,
     16 : Expression_Expr.outputExpression,
     17 : Expression_Expr.varReferenceExpression,
-    18 : Expression_Expr.parenthesysExpression,
+    18 : Expression_Expr.parenthesisExpression,
     19 : Expression_Expr.functionCallExpression,
     20 : Expression_Expr.objectPropertyReferenceExpression,
     21 : Expression_Expr.objectMethodCallExpression,
+    22 : Expression_Expr.binaryComparisonExpression,
     0 : Expression_Expr.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Expression', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
-    ..oo(0, [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21])
+    ..oo(0, [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22])
     ..aOM<IntLit>(2, _omitFieldNames ? '' : 'intLit', protoName: 'intLit', subBuilder: IntLit.create)
     ..aOM<DecLit>(3, _omitFieldNames ? '' : 'decLit', protoName: 'decLit', subBuilder: DecLit.create)
     ..aOM<StringLit>(4, _omitFieldNames ? '' : 'stringLit', protoName: 'stringLit', subBuilder: StringLit.create)
@@ -173,10 +179,11 @@ class Expression extends $pb.GeneratedMessage {
     ..aOM<InputExpression>(15, _omitFieldNames ? '' : 'inputExpression', protoName: 'inputExpression', subBuilder: InputExpression.create)
     ..aOM<OutputExpression>(16, _omitFieldNames ? '' : 'outputExpression', protoName: 'outputExpression', subBuilder: OutputExpression.create)
     ..aOM<VarReferenceExpression>(17, _omitFieldNames ? '' : 'varReferenceExpression', protoName: 'varReferenceExpression', subBuilder: VarReferenceExpression.create)
-    ..aOM<ParenthesisExpression>(18, _omitFieldNames ? '' : 'parenthesysExpression', protoName: 'parenthesysExpression', subBuilder: ParenthesisExpression.create)
+    ..aOM<ParenthesisExpression>(18, _omitFieldNames ? '' : 'parenthesisExpression', protoName: 'parenthesisExpression', subBuilder: ParenthesisExpression.create)
     ..aOM<FunctionCallExpression>(19, _omitFieldNames ? '' : 'functionCallExpression', protoName: 'functionCallExpression', subBuilder: FunctionCallExpression.create)
     ..aOM<ObjectPropertyReferenceExpression>(20, _omitFieldNames ? '' : 'objectPropertyReferenceExpression', protoName: 'objectPropertyReferenceExpression', subBuilder: ObjectPropertyReferenceExpression.create)
     ..aOM<ObjectMethodCallExpression>(21, _omitFieldNames ? '' : 'objectMethodCallExpression', protoName: 'objectMethodCallExpression', subBuilder: ObjectMethodCallExpression.create)
+    ..aOM<BinaryComparisonExpression>(22, _omitFieldNames ? '' : 'binaryComparisonExpression', protoName: 'binaryComparisonExpression', subBuilder: BinaryComparisonExpression.create)
     ..hasRequiredFields = false
   ;
 
@@ -381,15 +388,15 @@ class Expression extends $pb.GeneratedMessage {
   VarReferenceExpression ensureVarReferenceExpression() => $_ensure(15);
 
   @$pb.TagNumber(18)
-  ParenthesisExpression get parenthesysExpression => $_getN(16);
+  ParenthesisExpression get parenthesisExpression => $_getN(16);
   @$pb.TagNumber(18)
-  set parenthesysExpression(ParenthesisExpression v) { setField(18, v); }
+  set parenthesisExpression(ParenthesisExpression v) { setField(18, v); }
   @$pb.TagNumber(18)
-  $core.bool hasParenthesysExpression() => $_has(16);
+  $core.bool hasParenthesisExpression() => $_has(16);
   @$pb.TagNumber(18)
-  void clearParenthesysExpression() => clearField(18);
+  void clearParenthesisExpression() => clearField(18);
   @$pb.TagNumber(18)
-  ParenthesisExpression ensureParenthesysExpression() => $_ensure(16);
+  ParenthesisExpression ensureParenthesisExpression() => $_ensure(16);
 
   @$pb.TagNumber(19)
   FunctionCallExpression get functionCallExpression => $_getN(17);
@@ -423,6 +430,17 @@ class Expression extends $pb.GeneratedMessage {
   void clearObjectMethodCallExpression() => clearField(21);
   @$pb.TagNumber(21)
   ObjectMethodCallExpression ensureObjectMethodCallExpression() => $_ensure(19);
+
+  @$pb.TagNumber(22)
+  BinaryComparisonExpression get binaryComparisonExpression => $_getN(20);
+  @$pb.TagNumber(22)
+  set binaryComparisonExpression(BinaryComparisonExpression v) { setField(22, v); }
+  @$pb.TagNumber(22)
+  $core.bool hasBinaryComparisonExpression() => $_has(20);
+  @$pb.TagNumber(22)
+  void clearBinaryComparisonExpression() => clearField(22);
+  @$pb.TagNumber(22)
+  BinaryComparisonExpression ensureBinaryComparisonExpression() => $_ensure(20);
 }
 
 class IntLit extends $pb.GeneratedMessage {
@@ -996,6 +1014,104 @@ class BinaryLogicExpression extends $pb.GeneratedMessage {
   LogicOperand get operand => $_getN(2);
   @$pb.TagNumber(3)
   set operand(LogicOperand v) { setField(3, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasOperand() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearOperand() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $0.Position get position => $_getN(3);
+  @$pb.TagNumber(4)
+  set position($0.Position v) { setField(4, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasPosition() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearPosition() => clearField(4);
+  @$pb.TagNumber(4)
+  $0.Position ensurePosition() => $_ensure(3);
+}
+
+class BinaryComparisonExpression extends $pb.GeneratedMessage {
+  factory BinaryComparisonExpression({
+    Expression? left,
+    Expression? right,
+    ComparisonOperand? operand,
+    $0.Position? position,
+  }) {
+    final $result = create();
+    if (left != null) {
+      $result.left = left;
+    }
+    if (right != null) {
+      $result.right = right;
+    }
+    if (operand != null) {
+      $result.operand = operand;
+    }
+    if (position != null) {
+      $result.position = position;
+    }
+    return $result;
+  }
+  BinaryComparisonExpression._() : super();
+  factory BinaryComparisonExpression.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory BinaryComparisonExpression.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'BinaryComparisonExpression', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
+    ..aOM<Expression>(1, _omitFieldNames ? '' : 'left', subBuilder: Expression.create)
+    ..aOM<Expression>(2, _omitFieldNames ? '' : 'right', subBuilder: Expression.create)
+    ..e<ComparisonOperand>(3, _omitFieldNames ? '' : 'operand', $pb.PbFieldType.OE, defaultOrMaker: ComparisonOperand.EQUAL, valueOf: ComparisonOperand.valueOf, enumValues: ComparisonOperand.values)
+    ..aOM<$0.Position>(4, _omitFieldNames ? '' : 'position', subBuilder: $0.Position.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  BinaryComparisonExpression clone() => BinaryComparisonExpression()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  BinaryComparisonExpression copyWith(void Function(BinaryComparisonExpression) updates) => super.copyWith((message) => updates(message as BinaryComparisonExpression)) as BinaryComparisonExpression;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static BinaryComparisonExpression create() => BinaryComparisonExpression._();
+  BinaryComparisonExpression createEmptyInstance() => create();
+  static $pb.PbList<BinaryComparisonExpression> createRepeated() => $pb.PbList<BinaryComparisonExpression>();
+  @$core.pragma('dart2js:noInline')
+  static BinaryComparisonExpression getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<BinaryComparisonExpression>(create);
+  static BinaryComparisonExpression? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  Expression get left => $_getN(0);
+  @$pb.TagNumber(1)
+  set left(Expression v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasLeft() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearLeft() => clearField(1);
+  @$pb.TagNumber(1)
+  Expression ensureLeft() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  Expression get right => $_getN(1);
+  @$pb.TagNumber(2)
+  set right(Expression v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasRight() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearRight() => clearField(2);
+  @$pb.TagNumber(2)
+  Expression ensureRight() => $_ensure(1);
+
+  @$pb.TagNumber(3)
+  ComparisonOperand get operand => $_getN(2);
+  @$pb.TagNumber(3)
+  set operand(ComparisonOperand v) { setField(3, v); }
   @$pb.TagNumber(3)
   $core.bool hasOperand() => $_has(2);
   @$pb.TagNumber(3)

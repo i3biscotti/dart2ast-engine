@@ -6,7 +6,7 @@ extension IntLiteralExpression2Protobuf on ast.IntLit {
   protocol.IntLit toProtobuf() {
     return protocol.IntLit(
       value: value,
-      position: position!.toProtobuf()
+      position: position?.toProtobuf()
     );
   }
 }
@@ -15,7 +15,7 @@ extension DoubleLiteralExpression2Protobuf on ast.DecLit {
     protocol.DecLit toProtobuf() {
     return protocol.DecLit(
       value: value,
-      position: position!.toProtobuf()
+      position: position?.toProtobuf()
     );
   }
 }
@@ -24,7 +24,7 @@ extension BoolLiteralExpression2Protobuf on ast.BoolLit {
   protocol.BoolLit toProtobuf() {
     return protocol.BoolLit(
       value: value,
-      position: position!.toProtobuf()
+      position: position?.toProtobuf()
     );
   }
 }
@@ -33,7 +33,7 @@ extension StringLiteralExpression2Protobuf on ast.StringLit {
   protocol.StringLit toProtobuf() {
     return protocol.StringLit(
       value: value,
-      position: position!.toProtobuf()
+      position: position?.toProtobuf()
     );
   }
 }
@@ -42,7 +42,7 @@ extension ListLiteralExpression2Protobuf on ast.ListLiteralExpression {
   protocol.ListLiteralExpression toProtobuf() {
     return protocol.ListLiteralExpression(
       value: value.map((e) => protocol.convertExpressionToProtobuf(e)).toList(),
-      position: position!.toProtobuf());
+      position: position?.toProtobuf());
   }
 }
 
@@ -59,16 +59,24 @@ extension MathOperand2Protobuf on ast.MathOperand {
 
 extension LogicOperand2Protobuf on ast.LogicOperand {
   protocol.LogicOperand toProtobuf() {
+
     return switch (this) {
       ast.LogicOperand.and => protocol.LogicOperand.AND,
       ast.LogicOperand.or => protocol.LogicOperand.OR,
-      ast.LogicOperand.equal => protocol.LogicOperand.EQUAL,
-      ast.LogicOperand.notEqual => protocol.LogicOperand.NOT_EQUAL,
       ast.LogicOperand.not => protocol.LogicOperand.NOT,
-      ast.LogicOperand.lessThan => protocol.LogicOperand.LESS_THAN,
-      ast.LogicOperand.greaterThan => protocol.LogicOperand.GREATER_THAN,
-      ast.LogicOperand.lessThanOrEqual => protocol.LogicOperand.LESS_THAN_OR_EQUAL,
-      ast.LogicOperand.greaterThanOrEqual => protocol.LogicOperand.GREATER_THAN_OR_EQUAL,     
+    };
+  }
+}
+
+extension ComparisonOperand2Protobuf on ast.ComparisonOperand {
+  protocol.ComparisonOperand toProtobuf() {
+    return switch (this) {
+      ast.ComparisonOperand.equal => protocol.ComparisonOperand.EQUAL,
+      ast.ComparisonOperand.notEqual => protocol.ComparisonOperand.NOT_EQUAL,
+      ast.ComparisonOperand.lessThan => protocol.ComparisonOperand.LESS_THAN,
+      ast.ComparisonOperand.greaterThan => protocol.ComparisonOperand.GREATER_THAN,
+      ast.ComparisonOperand.lessThanOrEqual => protocol.ComparisonOperand.LESS_THAN_OR_EQUAL,
+      ast.ComparisonOperand.greaterThanOrEqual => protocol.ComparisonOperand.GREATER_THAN_OR_EQUAL,
     };
   }
 }
@@ -79,7 +87,7 @@ extension BinaryMathExpression2Protobuf on ast.BinaryMathExpression {
       left: protocol.convertExpressionToProtobuf(left),
       right: protocol.convertExpressionToProtobuf(right),
       operand: operand.toProtobuf(),
-      position: position!.toProtobuf()
+      position: position?.toProtobuf()
     );
   }
 }
@@ -90,7 +98,18 @@ extension BinaryLogicExpression2Protobuf on ast.BinaryLogicExpression {
       left: protocol.convertExpressionToProtobuf(left),
       right: protocol.convertExpressionToProtobuf(right),
       operand: operand.toProtobuf(),
-      position: position!.toProtobuf()
+      position: position?.toProtobuf()
+    );
+  }
+}
+
+extension BinaryComparisonExpression2Protobuf on ast.BinaryComparisonExpression {
+  protocol.BinaryComparisonExpression toProtobuf() {
+    return protocol.BinaryComparisonExpression(
+      left: protocol.convertExpressionToProtobuf(left),
+      right: protocol.convertExpressionToProtobuf(right),
+      operand: operand.toProtobuf(),
+      position: position?.toProtobuf()
     );
   }
 }
@@ -100,7 +119,7 @@ extension UnaryMathExpression2Protobuf on ast.UnaryMathExpression {
     return protocol.UnaryMathExpression(
       value: protocol.convertExpressionToProtobuf(value),
       operand: operand.toProtobuf(),
-      position: position!.toProtobuf()
+      position: position?.toProtobuf()
     );
   }
 }
@@ -110,7 +129,7 @@ extension UnaryLogicExpression2Protobuf on ast.UnaryLogicExpression {
     return protocol.UnaryLogicExpression(
       value: protocol.convertExpressionToProtobuf(value),
       operand: operand.toProtobuf(),
-      position: position!.toProtobuf()
+      position: position?.toProtobuf()
     );
   }
 }
@@ -119,7 +138,7 @@ extension PreIncrementExpression2Protobuf on ast.PreIncrementExpression {
     protocol.PreIncrementExpression toProtobuf() {
     return protocol.PreIncrementExpression(
       name: name,
-      position: position!.toProtobuf()
+      position: position?.toProtobuf()
     );   
   }
 }
@@ -128,7 +147,7 @@ extension PostIncrementExpression2Protobuf on ast.PostIncrementExpression {
     protocol.PostIncrementExpression toProtobuf() {
     return protocol.PostIncrementExpression(
       name: name,
-      position: position!.toProtobuf()
+      position: position?.toProtobuf()
     );   
   }
 }
@@ -137,7 +156,7 @@ extension PreDecrementExpression2Protobuf on ast.PreDecrementExpression {
     protocol.PreDecrementExpression toProtobuf() {
     return protocol.PreDecrementExpression(
       name: name,
-      position: position!.toProtobuf()
+      position: position?.toProtobuf()
     );   
   }
 }
@@ -146,7 +165,7 @@ extension PostDecrementExpression2Protobuf on ast.PostDecrementExpression {
     protocol.PostDecrementExpression toProtobuf() {
     return protocol.PostDecrementExpression(
       name: name,
-      position: position!.toProtobuf()
+      position: position?.toProtobuf()
     );   
   }
 }
@@ -154,7 +173,7 @@ extension PostDecrementExpression2Protobuf on ast.PostDecrementExpression {
 extension InputExpression2Protobuf on ast.InputExpression {
   protocol.InputExpression toProtobuf() {
     return protocol.InputExpression(
-      position: position!.toProtobuf()
+      position: position?.toProtobuf()
     );
   }
 }
@@ -162,7 +181,7 @@ extension InputExpression2Protobuf on ast.InputExpression {
 extension OutputExpression2Protobuf on ast.OutputExpression {
     protocol.OutputExpression toProtobuf() {
     return protocol.OutputExpression(
-      position: position!.toProtobuf()
+      position: position?.toProtobuf()
     );
   }
 }
@@ -171,7 +190,7 @@ extension ParenthesysExpression2Protobuf on ast.ParenthesysExpression {
     protocol.ParenthesisExpression toProtobuf() {
     return protocol.ParenthesisExpression(
       value: protocol.convertExpressionToProtobuf(value),
-      position: position!.toProtobuf()
+      position: position?.toProtobuf()
     );
   }
 }
@@ -180,7 +199,7 @@ extension VarReferenceExpression2Protobuf on ast.VarReferenceExpression {
     protocol.VarReferenceExpression toProtobuf() {
     return protocol.VarReferenceExpression(
       name: name,
-      position: position!.toProtobuf()
+      position: position?.toProtobuf()
     );   
   }
 }
@@ -190,7 +209,7 @@ extension FunctionCallExpression2Protobuf on ast.FunctionCallExpression {
     return protocol.FunctionCallExpression(
       name: name,
       parameters: parameters.map((e) => protocol.convertExpressionToProtobuf(e)).toList(),
-      position: position!.toProtobuf()
+      position: position?.toProtobuf()
     );
 
   }
@@ -202,7 +221,7 @@ extension ObjectMethodCallExpression2Protobuf on ast.ObjectMethodCallExpression 
       objectName: objectName,
       methodName: methodName,
       parameters: parameters.map((e) => protocol.convertExpressionToProtobuf(e)).toList(),
-      position: position!.toProtobuf()
+      position: position?.toProtobuf()
     );
   }
 }
@@ -212,7 +231,7 @@ extension ObjectPropertyReferenceExpression2Protobuf on ast.ObjectPropertyRefere
     return protocol.ObjectPropertyReferenceExpression(
       objectName: objectName,
       propertyName: propertyName,
-      position: position!.toProtobuf()
+      position: position?.toProtobuf()
     );
   }
 }

@@ -707,10 +707,14 @@ class ConstructorDefinitionStatement extends $pb.GeneratedMessage {
 class ThisConstructorDefinition extends $pb.GeneratedMessage {
   factory ThisConstructorDefinition({
     $core.Iterable<$0.Expression>? parameters,
+    $1.Position? position,
   }) {
     final $result = create();
     if (parameters != null) {
       $result.parameters.addAll(parameters);
+    }
+    if (position != null) {
+      $result.position = position;
     }
     return $result;
   }
@@ -720,6 +724,7 @@ class ThisConstructorDefinition extends $pb.GeneratedMessage {
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ThisConstructorDefinition', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
     ..pc<$0.Expression>(1, _omitFieldNames ? '' : 'parameters', $pb.PbFieldType.PM, subBuilder: $0.Expression.create)
+    ..aOM<$1.Position>(2, _omitFieldNames ? '' : 'position', subBuilder: $1.Position.create)
     ..hasRequiredFields = false
   ;
 
@@ -746,6 +751,17 @@ class ThisConstructorDefinition extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(1)
   $core.List<$0.Expression> get parameters => $_getList(0);
+
+  @$pb.TagNumber(2)
+  $1.Position get position => $_getN(1);
+  @$pb.TagNumber(2)
+  set position($1.Position v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasPosition() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearPosition() => clearField(2);
+  @$pb.TagNumber(2)
+  $1.Position ensurePosition() => $_ensure(1);
 }
 
 class Parameter extends $pb.GeneratedMessage {

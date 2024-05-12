@@ -236,7 +236,7 @@ extension ParameterType2Protobuf on ast.ParameterType{
     return switch (this) {
       ast.ParameterType.THIS => protocol.ParameterType.THIS,
       ast.ParameterType.SUPER => protocol.ParameterType.SUPER,
-      ast.ParameterType.TYPE => protocol.ParameterType.TYPE,
+      ast.ParameterType.TYPE => protocol.ParameterType.TYPED,
     };
   }
 }
@@ -273,8 +273,11 @@ extension ConstructorDefinitionStatement2Protobuf on ast.ConstructorDefinitionSt
       body: body.map((s) => convertStatementToProtobuf(s)).toList(),
       position: position?.toProtobuf()
     );
-    if (thisConstructorParameters != null) {
-      constructor.thisConstructor = thisConstructorParameters.map((e) => e.toProtobuf());
+    if (thisConstructor != null) {
+      constructor.thisConstructor = protocol.ThisConstructorDefinition(
+        parameters: thisConstructor!.parameters.map(convertExpressionToProtobuf).toList(),
+        position: thisConstructor!.position?.toProtobuf()
+      );
     };
     return constructor;
   }
@@ -287,7 +290,7 @@ extension ClassDefinitionStatement2Protobuf on ast.ClassDefinitionStatement {
       encapsulation: encapsulationType.toProtobuf(),
       name: name,
       parentName: parentName,
-      properties: properties.map((e) => convertStatementToProtobuf(e)),
+      properties: properties.map((e) => e.toProtobuf()),
       constructors: constructors.map((e) => e.toProtobuf()).toList(),        
       methods: methods.map((e) => e.toProtobuf()).toList(),              
       position: position?.toProtobuf()

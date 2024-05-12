@@ -36,20 +36,31 @@ const LogicOperand$json = {
     {'1': 'AND', '2': 0},
     {'1': 'OR', '2': 1},
     {'1': 'NOT', '2': 2},
-    {'1': 'EQUAL', '2': 3},
-    {'1': 'LESS_THAN', '2': 4},
-    {'1': 'LESS_THAN_OR_EQUAL', '2': 5},
-    {'1': 'GREATER_THAN', '2': 6},
-    {'1': 'GREATER_THAN_OR_EQUAL', '2': 7},
-    {'1': 'NOT_EQUAL', '2': 8},
   ],
 };
 
 /// Descriptor for `LogicOperand`. Decode as a `google.protobuf.EnumDescriptorProto`.
 final $typed_data.Uint8List logicOperandDescriptor = $convert.base64Decode(
-    'CgxMb2dpY09wZXJhbmQSBwoDQU5EEAASBgoCT1IQARIHCgNOT1QQAhIJCgVFUVVBTBADEg0KCU'
-    'xFU1NfVEhBThAEEhYKEkxFU1NfVEhBTl9PUl9FUVVBTBAFEhAKDEdSRUFURVJfVEhBThAGEhkK'
-    'FUdSRUFURVJfVEhBTl9PUl9FUVVBTBAHEg0KCU5PVF9FUVVBTBAI');
+    'CgxMb2dpY09wZXJhbmQSBwoDQU5EEAASBgoCT1IQARIHCgNOT1QQAg==');
+
+@$core.Deprecated('Use comparisonOperandDescriptor instead')
+const ComparisonOperand$json = {
+  '1': 'ComparisonOperand',
+  '2': [
+    {'1': 'EQUAL', '2': 0},
+    {'1': 'LESS_THAN', '2': 1},
+    {'1': 'LESS_THAN_OR_EQUAL', '2': 2},
+    {'1': 'GREATER_THAN', '2': 3},
+    {'1': 'GREATER_THAN_OR_EQUAL', '2': 4},
+    {'1': 'NOT_EQUAL', '2': 5},
+  ],
+};
+
+/// Descriptor for `ComparisonOperand`. Decode as a `google.protobuf.EnumDescriptorProto`.
+final $typed_data.Uint8List comparisonOperandDescriptor = $convert.base64Decode(
+    'ChFDb21wYXJpc29uT3BlcmFuZBIJCgVFUVVBTBAAEg0KCUxFU1NfVEhBThABEhYKEkxFU1NfVE'
+    'hBTl9PUl9FUVVBTBACEhAKDEdSRUFURVJfVEhBThADEhkKFUdSRUFURVJfVEhBTl9PUl9FUVVB'
+    'TBAEEg0KCU5PVF9FUVVBTBAF');
 
 @$core.Deprecated('Use expressionDescriptor instead')
 const Expression$json = {
@@ -71,10 +82,11 @@ const Expression$json = {
     {'1': 'inputExpression', '3': 15, '4': 1, '5': 11, '6': '.protocol.InputExpression', '9': 0, '10': 'inputExpression'},
     {'1': 'outputExpression', '3': 16, '4': 1, '5': 11, '6': '.protocol.OutputExpression', '9': 0, '10': 'outputExpression'},
     {'1': 'varReferenceExpression', '3': 17, '4': 1, '5': 11, '6': '.protocol.VarReferenceExpression', '9': 0, '10': 'varReferenceExpression'},
-    {'1': 'parenthesysExpression', '3': 18, '4': 1, '5': 11, '6': '.protocol.ParenthesisExpression', '9': 0, '10': 'parenthesysExpression'},
+    {'1': 'parenthesisExpression', '3': 18, '4': 1, '5': 11, '6': '.protocol.ParenthesisExpression', '9': 0, '10': 'parenthesisExpression'},
     {'1': 'functionCallExpression', '3': 19, '4': 1, '5': 11, '6': '.protocol.FunctionCallExpression', '9': 0, '10': 'functionCallExpression'},
     {'1': 'objectPropertyReferenceExpression', '3': 20, '4': 1, '5': 11, '6': '.protocol.ObjectPropertyReferenceExpression', '9': 0, '10': 'objectPropertyReferenceExpression'},
     {'1': 'objectMethodCallExpression', '3': 21, '4': 1, '5': 11, '6': '.protocol.ObjectMethodCallExpression', '9': 0, '10': 'objectMethodCallExpression'},
+    {'1': 'binaryComparisonExpression', '3': 22, '4': 1, '5': 11, '6': '.protocol.BinaryComparisonExpression', '9': 0, '10': 'binaryComparisonExpression'},
   ],
   '8': [
     {'1': 'expr'},
@@ -105,14 +117,16 @@ final $typed_data.Uint8List expressionDescriptor = $convert.base64Decode(
     'NzaW9uSABSD2lucHV0RXhwcmVzc2lvbhJIChBvdXRwdXRFeHByZXNzaW9uGBAgASgLMhoucHJv'
     'dG9jb2wuT3V0cHV0RXhwcmVzc2lvbkgAUhBvdXRwdXRFeHByZXNzaW9uEloKFnZhclJlZmVyZW'
     '5jZUV4cHJlc3Npb24YESABKAsyIC5wcm90b2NvbC5WYXJSZWZlcmVuY2VFeHByZXNzaW9uSABS'
-    'FnZhclJlZmVyZW5jZUV4cHJlc3Npb24SVwoVcGFyZW50aGVzeXNFeHByZXNzaW9uGBIgASgLMh'
-    '8ucHJvdG9jb2wuUGFyZW50aGVzaXNFeHByZXNzaW9uSABSFXBhcmVudGhlc3lzRXhwcmVzc2lv'
+    'FnZhclJlZmVyZW5jZUV4cHJlc3Npb24SVwoVcGFyZW50aGVzaXNFeHByZXNzaW9uGBIgASgLMh'
+    '8ucHJvdG9jb2wuUGFyZW50aGVzaXNFeHByZXNzaW9uSABSFXBhcmVudGhlc2lzRXhwcmVzc2lv'
     'bhJaChZmdW5jdGlvbkNhbGxFeHByZXNzaW9uGBMgASgLMiAucHJvdG9jb2wuRnVuY3Rpb25DYW'
     'xsRXhwcmVzc2lvbkgAUhZmdW5jdGlvbkNhbGxFeHByZXNzaW9uEnsKIW9iamVjdFByb3BlcnR5'
     'UmVmZXJlbmNlRXhwcmVzc2lvbhgUIAEoCzIrLnByb3RvY29sLk9iamVjdFByb3BlcnR5UmVmZX'
     'JlbmNlRXhwcmVzc2lvbkgAUiFvYmplY3RQcm9wZXJ0eVJlZmVyZW5jZUV4cHJlc3Npb24SZgoa'
     'b2JqZWN0TWV0aG9kQ2FsbEV4cHJlc3Npb24YFSABKAsyJC5wcm90b2NvbC5PYmplY3RNZXRob2'
-    'RDYWxsRXhwcmVzc2lvbkgAUhpvYmplY3RNZXRob2RDYWxsRXhwcmVzc2lvbkIGCgRleHBy');
+    'RDYWxsRXhwcmVzc2lvbkgAUhpvYmplY3RNZXRob2RDYWxsRXhwcmVzc2lvbhJmChpiaW5hcnlD'
+    'b21wYXJpc29uRXhwcmVzc2lvbhgWIAEoCzIkLnByb3RvY29sLkJpbmFyeUNvbXBhcmlzb25FeH'
+    'ByZXNzaW9uSABSGmJpbmFyeUNvbXBhcmlzb25FeHByZXNzaW9uQgYKBGV4cHI=');
 
 @$core.Deprecated('Use intLitDescriptor instead')
 const IntLit$json = {
@@ -234,6 +248,24 @@ final $typed_data.Uint8List binaryLogicExpressionDescriptor = $convert.base64Dec
     'Npb25SBGxlZnQSKgoFcmlnaHQYAiABKAsyFC5wcm90b2NvbC5FeHByZXNzaW9uUgVyaWdodBIw'
     'CgdvcGVyYW5kGAMgASgOMhYucHJvdG9jb2wuTG9naWNPcGVyYW5kUgdvcGVyYW5kEi4KCHBvc2'
     'l0aW9uGAQgASgLMhIucHJvdG9jb2wuUG9zaXRpb25SCHBvc2l0aW9u');
+
+@$core.Deprecated('Use binaryComparisonExpressionDescriptor instead')
+const BinaryComparisonExpression$json = {
+  '1': 'BinaryComparisonExpression',
+  '2': [
+    {'1': 'left', '3': 1, '4': 1, '5': 11, '6': '.protocol.Expression', '10': 'left'},
+    {'1': 'right', '3': 2, '4': 1, '5': 11, '6': '.protocol.Expression', '10': 'right'},
+    {'1': 'operand', '3': 3, '4': 1, '5': 14, '6': '.protocol.ComparisonOperand', '10': 'operand'},
+    {'1': 'position', '3': 4, '4': 1, '5': 11, '6': '.protocol.Position', '10': 'position'},
+  ],
+};
+
+/// Descriptor for `BinaryComparisonExpression`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List binaryComparisonExpressionDescriptor = $convert.base64Decode(
+    'ChpCaW5hcnlDb21wYXJpc29uRXhwcmVzc2lvbhIoCgRsZWZ0GAEgASgLMhQucHJvdG9jb2wuRX'
+    'hwcmVzc2lvblIEbGVmdBIqCgVyaWdodBgCIAEoCzIULnByb3RvY29sLkV4cHJlc3Npb25SBXJp'
+    'Z2h0EjUKB29wZXJhbmQYAyABKA4yGy5wcm90b2NvbC5Db21wYXJpc29uT3BlcmFuZFIHb3Blcm'
+    'FuZBIuCghwb3NpdGlvbhgEIAEoCzISLnByb3RvY29sLlBvc2l0aW9uUghwb3NpdGlvbg==');
 
 @$core.Deprecated('Use unaryMathExpressionDescriptor instead')
 const UnaryMathExpression$json = {

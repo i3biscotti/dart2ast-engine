@@ -11,7 +11,7 @@ $pb.GeneratedMessage convertToProtobuf<T extends Object>(T object) {
   }
 }
 
-protocol.AstObject convertAstObjectToProtobuf<T extends ast.AstObject>(T object) {
+protocol.AstObject convertAstObjectToProtobuf(ast.AstObject object) {
   final astObject = protocol.AstObject();
 
   final _ = switch (object) {
@@ -87,7 +87,7 @@ protocol.Expression convertExpressionToProtobuf(ast.Expression object) {
     ast.PostDecrementExpression e => expression.postDecrementExpression = e.toProtobuf(),
     ast.InputExpression e => expression.inputExpression = e.toProtobuf(),
     ast.OutputExpression e => expression.outputExpression = e.toProtobuf(),
-    ast.ParenthesysExpression e => expression.parenthesysExpression = e.toProtobuf(),
+    ast.ParenthesysExpression e => expression.parenthesisExpression = e.toProtobuf(),
     ast.VarReferenceExpression e => expression.varReferenceExpression = e.toProtobuf(),
     ast.FunctionCallExpression e => expression.functionCallExpression = e.toProtobuf(),
     ast.ObjectMethodCallExpression e => expression.objectMethodCallExpression = e.toProtobuf(),

@@ -61,8 +61,8 @@ enum VariableType {
 
 class VariableValueType extends AstObject {
   final String typeName;
-
   VariableValueType(this.typeName);
+
 
   factory VariableValueType.fromName(String name) {
     return switch (name) {
@@ -78,9 +78,9 @@ class VariableValueType extends AstObject {
 
   static VariableValueType get INT => VariableValueType('int');
   static VariableValueType get DOUBLE => VariableValueType('double');
-  static VariableValueType get STRING => VariableValueType('String');
+  static VariableValueType get STRING => VariableValueType('string');
   static VariableValueType get BOOLEAN => VariableValueType('bool');
-  static VariableValueType get LIST => VariableValueType('List');
+  static VariableValueType get LIST => VariableValueType('list');
   static VariableValueType get DYNAMIC => VariableValueType('dynamic');
   static VariableValueType get VOID => VariableValueType('void');
 
