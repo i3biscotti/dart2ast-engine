@@ -152,7 +152,7 @@ void main() {
 
       test(
         'assignment_statement',
-            () async {
+        () async {
           final root = await parseResource2Ast('task1/assignment_statement');
           final pbRoot = convertAstObjectToProtobuf(root);
 
@@ -177,6 +177,174 @@ void main() {
               """
                   .trimMargin(),
             ),
+          );
+        },
+      );
+    },
+  );
+
+  group(
+    'Task 2',
+    () {
+      test(
+        'expression_definition',
+        () async {
+          final root = await parseResource2Ast('task2/expression_definition');
+          final pbRoot = convertAstObjectToProtobuf(root);
+
+          expect(
+            pbRoot.toString(),
+            """
+            |node: {
+            |  programFile: {
+            |    lines: {
+            |      expressionDefinitionStatement: {
+            |        value: {
+            |          binaryMathExpression: {
+            |            left: {
+            |              parenthesisExpression: {
+            |                value: {
+            |                  binaryMathExpression: {
+            |                    left: {
+            |                      intLit: {
+            |                        value: 3
+            |                      }
+            |                    }
+            |                    right: {
+            |                      intLit: {
+            |                        value: 4
+            |                      }
+            |                    }
+            |                    operand: PLUS
+            |                  }
+            |                }
+            |              }
+            |            }
+            |            right: {
+            |              parenthesisExpression: {
+            |                value: {
+            |                  binaryMathExpression: {
+            |                    left: {
+            |                      intLit: {
+            |                        value: 4
+            |                      }
+            |                    }
+            |                    right: {
+            |                      intLit: {
+            |                        value: 3
+            |                      }
+            |                    }
+            |                    operand: MINUS
+            |                  }
+            |                }
+            |              }
+            |            }
+            |            operand: TIMES
+            |          }
+            |        }
+            |      }
+            |    }
+            |  }
+            |}
+            """
+                .trimMargin(),
+          );
+        },
+      );
+    },
+  );
+
+  group(
+    'Task 3',
+    () {
+      test(
+        'if_statement',
+        () async {
+          final root = await parseResource2Ast('task3/if_statement');
+          final pbRoot = convertAstObjectToProtobuf(root);
+
+          expect(
+            pbRoot.toString(),
+            """
+            |node: {
+            |  programFile: {
+            |    lines: {
+            |      ifDefinitionStatement: {
+            |        ifBlock: {
+            |          condition: {
+            |            binaryComparisonExpression: {
+            |              left: {
+            |                varReferenceExpression: {
+            |                  name: voto
+            |                }
+            |              }
+            |              right: {
+            |                intLit: {
+            |                  value: 18
+            |                }
+            |              }
+            |              operand: GREATER_THAN
+            |            }
+            |          }
+            |          statements: {
+            |            assignmentStatement: {
+            |              name: exam
+            |              value: {
+            |                stringLit: {
+            |                  value: "passed"
+            |                }
+            |              }
+            |            }
+            |          }
+            |          blockType: IF_BLOCK
+            |        }
+            |        elseIfBlocks: {
+            |          condition: {
+            |            binaryComparisonExpression: {
+            |              left: {
+            |                varReferenceExpression: {
+            |                  name: voto
+            |                }
+            |              }
+            |              right: {
+            |                intLit: {
+            |                  value: 18
+            |                }
+            |              }
+            |              operand: EQUAL
+            |            }
+            |          }
+            |          statements: {
+            |            assignmentStatement: {
+            |              name: exam
+            |              value: {
+            |                stringLit: {
+            |                  value: "passed"
+            |                }
+            |              }
+            |            }
+            |          }
+            |          blockType: ELSE_IF_BLOCK
+            |        }
+            |        elseBlock: {
+            |          statements: {
+            |            assignmentStatement: {
+            |              name: exam
+            |              value: {
+            |                stringLit: {
+            |                  value: "failed"
+            |                }
+            |              }
+            |            }
+            |          }
+            |          blockType: ELSE_BLOCK
+            |        }
+            |      }
+            |    }
+            |  }
+            |}
+            """
+                .trimMargin(),
           );
         },
       );
