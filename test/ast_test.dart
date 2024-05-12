@@ -835,10 +835,13 @@ void main() {
                         null,
                       ),
                     ],
-                    <Expression>[
-                      VarReferenceExpression("a", null),
-                      DecLit("12.1", null)
-                    ],
+                    ThisConstructorDefinition(
+                      <Expression>[
+                        VarReferenceExpression("a", null),
+                        DecLit("12.1", null)
+                      ],
+                      null,
+                    ),
                     <Statement>[],
                     null,
                   ),
