@@ -350,4 +350,300 @@ void main() {
       );
     },
   );
+
+  group(
+    "Task 4",
+    () {
+      test(
+        'while_statement',
+        () async {
+          final root = await parseResource2Ast('task4/while_statement');
+          final pbRoot = convertAstObjectToProtobuf(root);
+
+          expect(
+            pbRoot.toString(),
+            equals(
+              """
+                |node: {
+                |  programFile: {
+                |    lines: {
+                |      varDeclarationStatement: {
+                |        varType: VARIABLE
+                |        name: i
+                |        valueType: {
+                |          name: int
+                |        }
+                |        value: {
+                |          intLit: {
+                |            value: 1
+                |          }
+                |        }
+                |      }
+                |    }
+                |    lines: {
+                |      whileDefinitionStatement: {
+                |        condition: {
+                |          varReferenceExpression: {
+                |            name: condition
+                |          }
+                |        }
+                |        statements: {
+                |          ifDefinitionStatement: {
+                |            ifBlock: {
+                |              condition: {
+                |                binaryComparisonExpression: {
+                |                  left: {
+                |                    varReferenceExpression: {
+                |                      name: i
+                |                    }
+                |                  }
+                |                  right: {
+                |                    intLit: {
+                |                      value: 17
+                |                    }
+                |                  }
+                |                  operand: LESS_THAN
+                |                }
+                |              }
+                |              statements: {
+                |                assignmentStatement: {
+                |                  name: i
+                |                  value: {
+                |                    binaryMathExpression: {
+                |                      left: {
+                |                        varReferenceExpression: {
+                |                          name: i
+                |                        }
+                |                      }
+                |                      right: {
+                |                        intLit: {
+                |                          value: 1
+                |                        }
+                |                      }
+                |                      operand: PLUS
+                |                    }
+                |                  }
+                |                }
+                |              }
+                |              blockType: IF_BLOCK
+                |            }
+                |            elseBlock: {
+                |              statements: {
+                |                assignmentStatement: {
+                |                  name: condition
+                |                  value: {
+                |                    boolLit: {
+                |                      value: true
+                |                    }
+                |                  }
+                |                }
+                |              }
+                |              blockType: ELSE_BLOCK
+                |            }
+                |          }
+                |        }
+                |      }
+                |    }
+                |  }
+                |}
+                """
+                  .trimMargin(),
+            ),
+          );
+        },
+      );
+    },
+  );
+
+  group(
+    "Task 5",
+    () {
+      test('for_statement', () async {
+        final root = await parseResource2Ast('task5/for_statement');
+        final pbRoot = convertAstObjectToProtobuf(root);
+
+        expect(
+          pbRoot.toString(),
+          equals(
+            """
+              |node: {
+              |  programFile: {
+              |    lines: {
+              |      varDeclarationStatement: {
+              |        varType: VARIABLE
+              |        name: a
+              |        value: {
+              |          intLit: {
+              |            value: 0
+              |          }
+              |        }
+              |      }
+              |    }
+              |    lines: {
+              |      forDefinitionStatement: {
+              |        forCondition: {
+              |          standardForCondition: {
+              |            initStatement: {
+              |              varDeclarationForStatement: {
+              |                varType: TYPE
+              |                name: i
+              |                valueType: {
+              |                  name: int
+              |                }
+              |                value: {
+              |                  intLit: {
+              |                    value: 0
+              |                  }
+              |                }
+              |              }
+              |            }
+              |            controlExpression: {
+              |              binaryComparisonExpression: {
+              |                left: {
+              |                  varReferenceExpression: {
+              |                    name: i
+              |                  }
+              |                }
+              |                right: {
+              |                  intLit: {
+              |                    value: 3
+              |                  }
+              |                }
+              |                operand: LESS_THAN
+              |              }
+              |            }
+              |            incrementStatement: {
+              |              expressionForStatement: {
+              |                value: {
+              |                  postIncrementExpression: {
+              |                    name: i
+              |                  }
+              |                }
+              |              }
+              |            }
+              |          }
+              |        }
+              |        statements: {
+              |          assignmentStatement: {
+              |            name: a
+              |            value: {
+              |              binaryMathExpression: {
+              |                left: {
+              |                  varReferenceExpression: {
+              |                    name: a
+              |                  }
+              |                }
+              |                right: {
+              |                  intLit: {
+              |                    value: 1
+              |                  }
+              |                }
+              |                operand: PLUS
+              |              }
+              |            }
+              |          }
+              |        }
+              |      }
+              |    }
+              |  }
+              |}
+              """
+                .trimMargin(),
+          ),
+        );
+      });
+
+      test(
+        'for_each_statement',
+        () async {
+          final root = await parseResource2Ast('task5/for_each_statement');
+          final pbRoot = convertAstObjectToProtobuf(root);
+
+          expect(
+            pbRoot.toString(),
+            equals(
+              """
+                |node: {
+                |  programFile: {
+                |    lines: {
+                |      varDeclarationStatement: {
+                |        varType: IMMUTABLE
+                |        name: list
+                |        value: {
+                |          listLiteralExpression: {
+                |            value: {
+                |              intLit: {
+                |                value: 1
+                |              }
+                |            }
+                |            value: {
+                |              intLit: {
+                |                value: 2
+                |              }
+                |            }
+                |          }
+                |        }
+                |      }
+                |    }
+                |    lines: {
+                |      varDeclarationStatement: {
+                |        varType: VARIABLE
+                |        name: b
+                |        value: {
+                |          intLit: {
+                |            value: 0
+                |          }
+                |        }
+                |      }
+                |    }
+                |    lines: {
+                |      forDefinitionStatement: {
+                |        forCondition: {
+                |          forEachCondition: {
+                |            itemDefinition: {
+                |              varType: TYPE
+                |              name: i
+                |              valueType: {
+                |                name: int
+                |              }
+                |            }
+                |            expression: {
+                |              varReferenceExpression: {
+                |                name: list
+                |              }
+                |            }
+                |          }
+                |        }
+                |        statements: {
+                |          assignmentStatement: {
+                |            name: b
+                |            value: {
+                |              binaryMathExpression: {
+                |                left: {
+                |                  varReferenceExpression: {
+                |                    name: b
+                |                  }
+                |                }
+                |                right: {
+                |                  intLit: {
+                |                    value: 1
+                |                  }
+                |                }
+                |                operand: PLUS
+                |              }
+                |            }
+                |          }
+                |        }
+                |      }
+                |    }
+                |  }
+                |}
+                """
+                  .trimMargin(),
+            ),
+          );
+        },
+      );
+    },
+  );
 }
