@@ -646,4 +646,639 @@ void main() {
       );
     },
   );
+
+  group(
+    "Task 6",
+    () {
+      test(
+        'input_expression',
+        () async {
+          final root = await parseResource2Ast('task6/input_expression');
+          final pbRoot = convertAstObjectToProtobuf(root);
+
+          expect(
+            pbRoot.toString(),
+            equals(
+              """
+              |node: {
+              |  programFile: {
+              |    lines: {
+              |      varDeclarationStatement: {
+              |        varType: IMMUTABLE
+              |        name: input
+              |        value: {
+              |          inputExpression: {
+              |          }
+              |        }
+              |      }
+              |    }
+              |  }
+              |}
+              """
+                  .trimMargin(),
+            ),
+          );
+        },
+      );
+
+      test(
+        'output_expression',
+        () async {
+          final root = await parseResource2Ast('task6/output_expression');
+          final pbRoot = convertAstObjectToProtobuf(root);
+
+          expect(
+            pbRoot.toString(),
+            equals(
+              """
+              |node: {
+              |  programFile: {
+              |    lines: {
+              |      expressionDefinitionStatement: {
+              |        value: {
+              |          outputExpression: {
+              |            value: {
+              |              varReferenceExpression: {
+              |                name: input
+              |              }
+              |            }
+              |          }
+              |        }
+              |      }
+              |    }
+              |  }
+              |}
+              """
+                  .trimMargin(),
+            ),
+          );
+        },
+      );
+    },
+  );
+
+  group(
+    "Task 7",
+    () {
+      test('void_function_without_params', () async {
+        final root =
+            await parseResource2Ast('task7/void_function_without_params');
+        final pbRoot = convertAstObjectToProtobuf(root);
+
+        expect(
+          pbRoot.toString(),
+          equals(
+            """
+            |node: {
+            |  programFile: {
+            |    lines: {
+            |      functionDefinitionStatement: {
+            |        name: emptyFunction
+            |        returnType: {
+            |          name: void
+            |        }
+            |      }
+            |    }
+            |  }
+            |}
+            """
+                .trimMargin(),
+          ),
+        );
+      });
+
+      test('int_sum_function', () async {
+        final root = await parseResource2Ast('task7/int_sum_function');
+        final pbRoot = convertAstObjectToProtobuf(root);
+
+        expect(
+          pbRoot.toString(),
+          equals(
+            """
+            |node: {
+            |  programFile: {
+            |    lines: {
+            |      functionDefinitionStatement: {
+            |        name: sum
+            |        parameters: {
+            |          name: a
+            |          type: TYPED
+            |          valueType: {
+            |            name: int
+            |          }
+            |        }
+            |        parameters: {
+            |          name: b
+            |          type: TYPED
+            |          valueType: {
+            |            name: int
+            |          }
+            |        }
+            |        returnType: {
+            |          name: int
+            |        }
+            |        statements: {
+            |          returnStatement: {
+            |            value: {
+            |              binaryMathExpression: {
+            |                left: {
+            |                  varReferenceExpression: {
+            |                    name: a
+            |                  }
+            |                }
+            |                right: {
+            |                  varReferenceExpression: {
+            |                    name: b
+            |                  }
+            |                }
+            |                operand: PLUS
+            |              }
+            |            }
+            |          }
+            |        }
+            |      }
+            |    }
+            |  }
+            |}
+            """
+                .trimMargin(),
+          ),
+        );
+      });
+
+      test(
+        'call_function',
+        () async {
+          final root = await parseResource2Ast('task7/call_function');
+          final pbRoot = convertAstObjectToProtobuf(root);
+
+          expect(
+            pbRoot.toString(),
+            equals(
+              """
+            |node: {
+            |  programFile: {
+            |    lines: {
+            |      functionDefinitionStatement: {
+            |        name: operations
+            |        parameters: {
+            |          name: a
+            |          type: TYPED
+            |          valueType: {
+            |            name: int
+            |          }
+            |        }
+            |        parameters: {
+            |          name: b
+            |          type: TYPED
+            |          valueType: {
+            |            name: int
+            |          }
+            |        }
+            |        parameters: {
+            |          name: c
+            |          type: TYPED
+            |          valueType: {
+            |            name: bool
+            |          }
+            |        }
+            |        returnType: {
+            |          name: bool
+            |        }
+            |        statements: {
+            |          varDeclarationStatement: {
+            |            varType: VARIABLE
+            |            name: aIsGreaterThanB
+            |            value: {
+            |              binaryComparisonExpression: {
+            |                left: {
+            |                  varReferenceExpression: {
+            |                    name: a
+            |                  }
+            |                }
+            |                right: {
+            |                  varReferenceExpression: {
+            |                    name: b
+            |                  }
+            |                }
+            |                operand: GREATER_THAN
+            |              }
+            |            }
+            |          }
+            |        }
+            |        statements: {
+            |          varDeclarationStatement: {
+            |            varType: IMMUTABLE
+            |            name: isGreaterAndCondition
+            |            value: {
+            |              binaryLogicExpression: {
+            |                left: {
+            |                  varReferenceExpression: {
+            |                    name: aIsGreaterThanB
+            |                  }
+            |                }
+            |                right: {
+            |                  varReferenceExpression: {
+            |                    name: c
+            |                  }
+            |                }
+            |                operand: AND
+            |              }
+            |            }
+            |          }
+            |        }
+            |        statements: {
+            |          returnStatement: {
+            |            value: {
+            |              varReferenceExpression: {
+            |                name: isGreaterAndCondition
+            |              }
+            |            }
+            |          }
+            |        }
+            |      }
+            |    }
+            |    lines: {
+            |      functionDefinitionStatement: {
+            |        name: main
+            |        returnType: {
+            |          name: void
+            |        }
+            |        statements: {
+            |          varDeclarationStatement: {
+            |            varType: IMMUTABLE
+            |            name: result
+            |            value: {
+            |              functionCallExpression: {
+            |                name: operations
+            |                parameters: {
+            |                  intLit: {
+            |                    value: 11
+            |                  }
+            |                }
+            |                parameters: {
+            |                  intLit: {
+            |                    value: 12
+            |                  }
+            |                }
+            |                parameters: {
+            |                  boolLit: {
+            |                    value: false
+            |                  }
+            |                }
+            |              }
+            |            }
+            |          }
+            |        }
+            |      }
+            |    }
+            |  }
+            |}
+            """
+                  .trimMargin(),
+            ),
+          );
+        },
+      );
+    },
+  );
+
+  group(
+    "Task 8",
+    () {
+      test('empty_class', () async {
+        final rootNode = await parseResource2Ast('task8/empty_class');
+        final pbRoot = convertAstObjectToProtobuf(rootNode);
+
+        expect(
+          pbRoot.toString(),
+          """
+          |node: {
+          |  programFile: {
+          |    lines: {
+          |      classDefinitionStatement: {
+          |        encapsulation: PUBLIC
+          |        name: SimpleClass
+          |      }
+          |    }
+          |  }
+          |}
+          """
+              .trimMargin(),
+        );
+      });
+
+      test(
+        'class_with_methods',
+        () async {
+          final rootNode = await parseResource2Ast('task8/class_with_methods');
+          final pbRoot = convertAstObjectToProtobuf(rootNode);
+
+          expect(
+            pbRoot.toString(),
+            """
+            |node: {
+            |  programFile: {
+            |    lines: {
+            |      classDefinitionStatement: {
+            |        encapsulation: PUBLIC
+            |        name: SimpleClass
+            |        properties: {
+            |          varType: IMMUTABLE
+            |          name: prop1
+            |          valueType: {
+            |            name: int
+            |          }
+            |        }
+            |        properties: {
+            |          varType: TYPE
+            |          name: pro2
+            |          valueType: {
+            |            name: bool
+            |          }
+            |        }
+            |        constructors: {
+            |          className: SimpleClass
+            |          parameters: {
+            |            name: prop1
+            |            type: THIS
+            |          }
+            |          parameters: {
+            |            name: pro2
+            |            type: THIS
+            |          }
+            |        }
+            |        methods: {
+            |          name: sum
+            |          parameters: {
+            |            name: value
+            |            type: TYPED
+            |            valueType: {
+            |              name: int
+            |            }
+            |          }
+            |          returnType: {
+            |            name: int
+            |          }
+            |          statements: {
+            |            assignmentStatement: {
+            |              name: pro2
+            |              value: {
+            |                binaryComparisonExpression: {
+            |                  left: {
+            |                    varReferenceExpression: {
+            |                      name: value
+            |                    }
+            |                  }
+            |                  right: {
+            |                    varReferenceExpression: {
+            |                      name: prop1
+            |                    }
+            |                  }
+            |                  operand: LESS_THAN_OR_EQUAL
+            |                }
+            |              }
+            |            }
+            |          }
+            |          statements: {
+            |            returnStatement: {
+            |              value: {
+            |                binaryMathExpression: {
+            |                  left: {
+            |                    varReferenceExpression: {
+            |                      name: value
+            |                    }
+            |                  }
+            |                  right: {
+            |                    varReferenceExpression: {
+            |                      name: prop1
+            |                    }
+            |                  }
+            |                  operand: PLUS
+            |                }
+            |              }
+            |            }
+            |          }
+            |        }
+            |      }
+            |    }
+            |  }
+            |}
+            """
+                .trimMargin(),
+          );
+        },
+      );
+
+      test('class_with_multiple_constructors', () async {
+        final rootNode =
+            await parseResource2Ast('task8/class_with_multiple_constructors');
+        final pbRoot = convertAstObjectToProtobuf(rootNode);
+
+        expect(
+          pbRoot.toString(),
+          equals(
+            """
+            |node: {
+            |  programFile: {
+            |    lines: {
+            |      classDefinitionStatement: {
+            |        encapsulation: PUBLIC
+            |        name: MultiplePass
+            |        properties: {
+            |          varType: IMMUTABLE
+            |          name: a
+            |          valueType: {
+            |            name: int
+            |          }
+            |        }
+            |        properties: {
+            |          varType: TYPE
+            |          name: b
+            |          valueType: {
+            |            name: double
+            |          }
+            |        }
+            |        constructors: {
+            |          className: MultiplePass
+            |          parameters: {
+            |            name: a
+            |            type: THIS
+            |          }
+            |          parameters: {
+            |            name: b
+            |            type: THIS
+            |          }
+            |        }
+            |        constructors: {
+            |          className: MultiplePass
+            |          constructorName: test
+            |          parameters: {
+            |            name: a
+            |            type: TYPED
+            |            valueType: {
+            |              name: int
+            |            }
+            |          }
+            |          thisConstructor: {
+            |            parameters: {
+            |              varReferenceExpression: {
+            |                name: a
+            |              }
+            |            }
+            |            parameters: {
+            |              decLit: {
+            |                value: 12.1
+            |              }
+            |            }
+            |          }
+            |        }
+            |      }
+            |    }
+            |  }
+            |}
+            """
+                .trimMargin(),
+          ),
+        );
+      });
+
+      test('class_hierarchy', () async {
+        final rootNode = await parseResource2Ast('task8/class_hierarchy');
+        final pbRoot = convertAstObjectToProtobuf(rootNode);
+
+        expect(
+          pbRoot.toString(),
+          equals(
+            """
+            |node: {
+            |  programFile: {
+            |    lines: {
+            |      classDefinitionStatement: {
+            |        encapsulation: PUBLIC
+            |        name: SecretWars
+            |        parentName: Marvel
+            |      }
+            |    }
+            |  }
+            |}
+            """
+                .trimMargin(),
+          ),
+        );
+      });
+
+      test('private_class', () async {
+        final rootNode = await parseResource2Ast('task8/private_class');
+        final pbRoot = convertAstObjectToProtobuf(rootNode);
+        expect(
+          pbRoot.toString(),
+          equals(
+            """
+            |node: {
+            |  programFile: {
+            |    lines: {
+            |      classDefinitionStatement: {
+            |        encapsulation: PRIVATE
+            |        name: SecretWar
+            |      }
+            |    }
+            |  }
+            |}
+            """
+                .trimMargin(),
+          ),
+        );
+      });
+    },
+  );
+
+  group(
+    "Task 9",
+    () {
+      test('object_instance', () async {
+        final root = await parseResource2Ast('task9/object_instance');
+        final pbRoot = convertAstObjectToProtobuf(root);
+        expect(
+          pbRoot.toString(),
+          equals(
+            """
+            |node: {
+            |  programFile: {
+            |    lines: {
+            |      varDeclarationStatement: {
+            |        varType: IMMUTABLE
+            |        name: element
+            |        value: {
+            |          functionCallExpression: {
+            |            name: ClassToInstance
+            |          }
+            |        }
+            |      }
+            |    }
+            |  }
+            |}
+            """
+                .trimMargin(),
+          ),
+        );
+      });
+
+      test('method_call', () async {
+        final root = await parseResource2Ast('task9/method_call');
+        final pbRoot = convertAstObjectToProtobuf(root);
+
+        expect(
+          pbRoot.toString(),
+          equals(
+            """
+            |node: {
+            |  programFile: {
+            |    lines: {
+            |      expressionDefinitionStatement: {
+            |        value: {
+            |          objectMethodCallExpression: {
+            |            objectName: element
+            |            methodName: execute
+            |          }
+            |        }
+            |      }
+            |    }
+            |  }
+            |}
+            """.trimMargin(),
+          ),
+        );
+      });
+
+      test('property_assignment', () async {
+        final root = await parseResource2Ast('task9/property_assignment');
+        final pbRoot = convertAstObjectToProtobuf(root);
+
+        expect(
+          pbRoot.toString(),
+          equals(
+            """
+            |node: {
+            |  programFile: {
+            |    lines: {
+            |      objectPropertyAssignmentStatement: {
+            |        objectName: element
+            |        propertyName: name
+            |        value: {
+            |          stringLit: {
+            |            value: "Pacco"
+            |          }
+            |        }
+            |      }
+            |    }
+            |  }
+            |}
+            """
+                .trimMargin(),
+          ),
+        );
+      });
+    },
+  );
 }

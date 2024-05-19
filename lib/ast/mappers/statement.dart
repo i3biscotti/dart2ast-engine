@@ -574,7 +574,7 @@ extension NamedConstructorDeclarationStatementConverterExtension
 
       thisConstructorParams = ThisConstructorDefinition(
         params,
-        thisConstuctor.toPosition(true),
+        thisConstuctor.toPosition(considerPosition),
       );
     }
 

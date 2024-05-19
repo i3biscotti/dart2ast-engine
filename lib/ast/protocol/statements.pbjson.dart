@@ -96,6 +96,7 @@ const Statement$json = {
     {'1': 'varDeclarationStatement', '3': 7, '4': 1, '5': 11, '6': '.protocol.VariableDeclarationStatement', '9': 0, '10': 'varDeclarationStatement'},
     {'1': 'whileDefinitionStatement', '3': 8, '4': 1, '5': 11, '6': '.protocol.WhileDefinitionStatement', '9': 0, '10': 'whileDefinitionStatement'},
     {'1': 'forDefinitionStatement', '3': 9, '4': 1, '5': 11, '6': '.protocol.ForDefinitionStatement', '9': 0, '10': 'forDefinitionStatement'},
+    {'1': 'functionDefinitionStatement', '3': 10, '4': 1, '5': 11, '6': '.protocol.FunctionDefinitionStatement', '9': 0, '10': 'functionDefinitionStatement'},
   ],
   '8': [
     {'1': 'stmt'},
@@ -119,7 +120,9 @@ final $typed_data.Uint8List statementDescriptor = $convert.base64Decode(
     'F3ZhckRlY2xhcmF0aW9uU3RhdGVtZW50EmAKGHdoaWxlRGVmaW5pdGlvblN0YXRlbWVudBgIIA'
     'EoCzIiLnByb3RvY29sLldoaWxlRGVmaW5pdGlvblN0YXRlbWVudEgAUhh3aGlsZURlZmluaXRp'
     'b25TdGF0ZW1lbnQSWgoWZm9yRGVmaW5pdGlvblN0YXRlbWVudBgJIAEoCzIgLnByb3RvY29sLk'
-    'ZvckRlZmluaXRpb25TdGF0ZW1lbnRIAFIWZm9yRGVmaW5pdGlvblN0YXRlbWVudEIGCgRzdG10');
+    'ZvckRlZmluaXRpb25TdGF0ZW1lbnRIAFIWZm9yRGVmaW5pdGlvblN0YXRlbWVudBJpChtmdW5j'
+    'dGlvbkRlZmluaXRpb25TdGF0ZW1lbnQYCiABKAsyJS5wcm90b2NvbC5GdW5jdGlvbkRlZmluaX'
+    'Rpb25TdGF0ZW1lbnRIAFIbZnVuY3Rpb25EZWZpbml0aW9uU3RhdGVtZW50QgYKBHN0bXQ=');
 
 @$core.Deprecated('Use assignmentStatementDescriptor instead')
 const AssignmentStatement$json = {

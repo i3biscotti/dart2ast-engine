@@ -79,6 +79,7 @@ enum Statement_Stmt {
   varDeclarationStatement, 
   whileDefinitionStatement, 
   forDefinitionStatement, 
+  functionDefinitionStatement, 
   notSet
 }
 
@@ -93,6 +94,7 @@ class Statement extends $pb.GeneratedMessage {
     VariableDeclarationStatement? varDeclarationStatement,
     WhileDefinitionStatement? whileDefinitionStatement,
     ForDefinitionStatement? forDefinitionStatement,
+    FunctionDefinitionStatement? functionDefinitionStatement,
   }) {
     final $result = create();
     if (assignmentStatement != null) {
@@ -122,6 +124,9 @@ class Statement extends $pb.GeneratedMessage {
     if (forDefinitionStatement != null) {
       $result.forDefinitionStatement = forDefinitionStatement;
     }
+    if (functionDefinitionStatement != null) {
+      $result.functionDefinitionStatement = functionDefinitionStatement;
+    }
     return $result;
   }
   Statement._() : super();
@@ -138,10 +143,11 @@ class Statement extends $pb.GeneratedMessage {
     7 : Statement_Stmt.varDeclarationStatement,
     8 : Statement_Stmt.whileDefinitionStatement,
     9 : Statement_Stmt.forDefinitionStatement,
+    10 : Statement_Stmt.functionDefinitionStatement,
     0 : Statement_Stmt.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Statement', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
-    ..oo(0, [1, 2, 3, 4, 5, 6, 7, 8, 9])
+    ..oo(0, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
     ..aOM<AssignmentStatement>(1, _omitFieldNames ? '' : 'assignmentStatement', protoName: 'assignmentStatement', subBuilder: AssignmentStatement.create)
     ..aOM<ClassDefinitionStatement>(2, _omitFieldNames ? '' : 'classDefinitionStatement', protoName: 'classDefinitionStatement', subBuilder: ClassDefinitionStatement.create)
     ..aOM<ExpressionDefinitionStatement>(3, _omitFieldNames ? '' : 'expressionDefinitionStatement', protoName: 'expressionDefinitionStatement', subBuilder: ExpressionDefinitionStatement.create)
@@ -151,6 +157,7 @@ class Statement extends $pb.GeneratedMessage {
     ..aOM<VariableDeclarationStatement>(7, _omitFieldNames ? '' : 'varDeclarationStatement', protoName: 'varDeclarationStatement', subBuilder: VariableDeclarationStatement.create)
     ..aOM<WhileDefinitionStatement>(8, _omitFieldNames ? '' : 'whileDefinitionStatement', protoName: 'whileDefinitionStatement', subBuilder: WhileDefinitionStatement.create)
     ..aOM<ForDefinitionStatement>(9, _omitFieldNames ? '' : 'forDefinitionStatement', protoName: 'forDefinitionStatement', subBuilder: ForDefinitionStatement.create)
+    ..aOM<FunctionDefinitionStatement>(10, _omitFieldNames ? '' : 'functionDefinitionStatement', protoName: 'functionDefinitionStatement', subBuilder: FunctionDefinitionStatement.create)
     ..hasRequiredFields = false
   ;
 
@@ -276,6 +283,17 @@ class Statement extends $pb.GeneratedMessage {
   void clearForDefinitionStatement() => clearField(9);
   @$pb.TagNumber(9)
   ForDefinitionStatement ensureForDefinitionStatement() => $_ensure(8);
+
+  @$pb.TagNumber(10)
+  FunctionDefinitionStatement get functionDefinitionStatement => $_getN(9);
+  @$pb.TagNumber(10)
+  set functionDefinitionStatement(FunctionDefinitionStatement v) { setField(10, v); }
+  @$pb.TagNumber(10)
+  $core.bool hasFunctionDefinitionStatement() => $_has(9);
+  @$pb.TagNumber(10)
+  void clearFunctionDefinitionStatement() => clearField(10);
+  @$pb.TagNumber(10)
+  FunctionDefinitionStatement ensureFunctionDefinitionStatement() => $_ensure(9);
 }
 
 class AssignmentStatement extends $pb.GeneratedMessage {

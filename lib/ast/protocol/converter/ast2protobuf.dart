@@ -63,7 +63,7 @@ protocol.Statement convertStatementToProtobuf(ast.Statement object) {
     ast.ForDefinitionStatement s => statement.forDefinitionStatement =
         s.toProtobuf(),
     ast.ForCondition node => node,
-    ast.FunctionDefinitionStatement s => UnimplementedError(""),
+    ast.FunctionDefinitionStatement s => statement.functionDefinitionStatement =  s.toProtobuf(),
     ast.Parameter node => node,
     ast.ClassDefinitionStatement s => statement.classDefinitionStatement =
         s.toProtobuf(),

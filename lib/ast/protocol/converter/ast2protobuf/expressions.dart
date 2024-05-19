@@ -181,6 +181,7 @@ extension InputExpression2Protobuf on ast.InputExpression {
 extension OutputExpression2Protobuf on ast.OutputExpression {
     protocol.OutputExpression toProtobuf() {
     return protocol.OutputExpression(
+      value: protocol.convertExpressionToProtobuf(value),
       position: position?.toProtobuf()
     );
   }
