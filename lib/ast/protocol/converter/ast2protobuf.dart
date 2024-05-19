@@ -1,7 +1,8 @@
 import 'package:dart2ast_engine/ast/models.dart' as ast;
 import 'package:dart2ast_engine/ast/protocol.dart' as protocol;
-import 'package:dart2ast_engine/ast/protocol/converter/ast2protobuf/base.dart';
 import 'package:protobuf/protobuf.dart' as $pb;
+
+import 'ast2protobuf/base.dart';
 
 $pb.GeneratedMessage convertToProtobuf<T extends Object>(T object) {
   if (object is ast.AstObject) {
@@ -31,10 +32,6 @@ protocol.Node convertNodeToProtobuf<T extends ast.Node>(T object) {
     ast.ProgramFile p => node.programFile = p.toProtobuf(),
     ast.Statement s => node.statement = convertStatementToProtobuf(s),
     ast.Expression e => node.expression = convertExpressionToProtobuf(e),
-    ast.IfBlock ifBlock => UnimplementedError(""),
-    ast.ForCondition forCond => UnimplementedError(""),
-    ast.ItemDefinition itemDef => UnimplementedError(""),
-    ast.Parameter param => UnimplementedError(""),
     _ => throw UnsupportedError("${object.runtimeType} not supported"),
   };
 
@@ -63,7 +60,8 @@ protocol.Statement convertStatementToProtobuf(ast.Statement object) {
     ast.ForDefinitionStatement s => statement.forDefinitionStatement =
         s.toProtobuf(),
     ast.ForCondition node => node,
-    ast.FunctionDefinitionStatement s => statement.functionDefinitionStatement =  s.toProtobuf(),
+    ast.FunctionDefinitionStatement s => statement.functionDefinitionStatement =
+        s.toProtobuf(),
     ast.Parameter node => node,
     ast.ClassDefinitionStatement s => statement.classDefinitionStatement =
         s.toProtobuf(),

@@ -1,3 +1,4 @@
+import 'package:dart2ast_engine/ast/protocol/converter/protobuf2ast/base.dart';
 import 'package:dart2ast_engine/dart2ast.dart';
 import 'package:dart2ast_engine/ast/protocol.dart' as pb;
 import 'package:test/test.dart';
@@ -24,7 +25,7 @@ void main() {
                   ),
                 ),
               ],
-            ),
+            ).toAst(),
             equals(
               ProgramFile(
                 <Statement>[
@@ -61,7 +62,7 @@ void main() {
                   ),
                 ),
               ],
-            ),
+            ).toAst(),
             equals(
               ProgramFile(
                 <Statement>[
@@ -137,7 +138,7 @@ void main() {
                   ),
                 ),
               ],
-            ),
+            ).toAst(),
             equals(
               ProgramFile(
                 <Statement>[
@@ -173,7 +174,7 @@ void main() {
                   ),
                 ),
               ],
-            ),
+            ).toAst(),
             equals(
               ProgramFile(
                 <Statement>[
@@ -250,7 +251,7 @@ void main() {
                   ),
                 ),
               ],
-            ),
+            ).toAst(),
             equals(
               ProgramFile(
                 <Statement>[
@@ -380,7 +381,7 @@ void main() {
                   ),
                 ),
               ],
-            ),
+            ).toAst(),
             equals(
               ProgramFile(
                 <Statement>[
@@ -521,7 +522,7 @@ void main() {
                   ),
                 ),
               ],
-            ),
+            ).toAst(),
             equals(
               ProgramFile(
                 <Statement>[
@@ -664,7 +665,7 @@ void main() {
                   ),
                 ),
               ],
-            ),
+            ).toAst(),
             equals(
               ProgramFile(
                 <Statement>[
@@ -777,7 +778,7 @@ void main() {
                   ),
                 ),
               ],
-            ),
+            ).toAst(),
             equals(
               ProgramFile(
                 <Statement>[
@@ -853,7 +854,7 @@ void main() {
                   ),
                 ),
               ],
-            ),
+            ).toAst(),
             equals(
               ProgramFile(
                 <Statement>[
@@ -927,7 +928,7 @@ void main() {
                   ),
                 ),
               ],
-            ),
+            ).toAst(),
             equals(
               ProgramFile(
                 <Statement>[
@@ -994,7 +995,7 @@ void main() {
                   ),
                 ),
               ],
-            ),
+            ).toAst(),
             equals(
               ProgramFile(
                 <Statement>[
@@ -1064,7 +1065,7 @@ void main() {
                   ),
                 ))
               ],
-            ),
+            ).toAst(),
             equals(
               ProgramFile(
                 <Statement>[
@@ -1176,7 +1177,7 @@ void main() {
                 ),
               ),
             ],
-          ),
+          ).toAst(),
           ProgramFile(
             <Statement>[
               ClassDefinitionStatement(
@@ -1701,7 +1702,7 @@ void main() {
                 ),
               ),
             ],
-          ),
+          ).toAst(),
           equals(
             ProgramFile(
               <Statement>[
@@ -1739,7 +1740,7 @@ void main() {
                 ),
               ),
             ],
-          ),
+          ).toAst(),
           equals(
             ProgramFile(
               <Statement>[
@@ -1778,7 +1779,7 @@ void main() {
                   ),
                 ),
               ],
-            ),
+            ).toAst(),
             equals(
               ProgramFile(
                 <Statement>[
