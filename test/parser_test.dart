@@ -195,7 +195,7 @@ void main() {
       |      Node(IfBlock)
       |        T[if]
       |        T[(]
-      |        Node(BinaryLogicExpression)
+      |        Node(BinaryComparisonExpression)
       |          Node(VarReferenceExpression)
       |            T[voto]
       |          T[>]
@@ -216,7 +216,7 @@ void main() {
       |        T[else]
       |        T[if]
       |        T[(]
-      |        Node(BinaryLogicExpression)
+      |        Node(BinaryComparisonExpression)
       |          Node(VarReferenceExpression)
       |            T[voto]
       |          T[==]
@@ -286,7 +286,7 @@ void main() {
             |            Node(IfBlock)
             |              T[if]
             |              T[(]
-            |              Node(BinaryLogicExpression)
+            |              Node(BinaryComparisonExpression)
             |                Node(VarReferenceExpression)
             |                  T[i]
             |                T[<]
@@ -359,7 +359,7 @@ void main() {
             |            Node(IntLiteralExpression)
             |              T[0]
             |        T[;]
-            |        Node(BinaryLogicExpression)
+            |        Node(BinaryComparisonExpression)
             |          Node(VarReferenceExpression)
             |            T[i]
             |          T[<]
@@ -613,7 +613,7 @@ void main() {
             |            T[var]
             |            T[aIsGreaterThanB]
             |            T[=]
-            |            Node(BinaryLogicExpression)
+            |            Node(BinaryComparisonExpression)
             |              Node(VarReferenceExpression)
             |                T[a]
             |              T[>]
@@ -791,7 +791,7 @@ void main() {
           |              Node(Assignment)
           |                T[pro2]
           |                T[=]
-          |                Node(BinaryLogicExpression)
+          |                Node(BinaryComparisonExpression)
           |                  Node(VarReferenceExpression)
           |                    T[value]
           |                  T[<=]
