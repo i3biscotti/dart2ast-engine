@@ -3,13 +3,14 @@ import 'package:dart2ast_engine/ast/protocol.dart' as protocol;
 import 'base.dart';
 
 extension ProtocolVariableDeclarationStatementDeserializer
-on protocol.VariableDeclarationStatement {
+    on protocol.VariableDeclarationStatement {
   ast.VariableDeclarationStatement toAst() {
     final _varType = this.varType.toAst();
     final _name = this.name;
-    final _valueType = this.valueType.toAst();
-    final _value = protocol.convertExpressionFromProtobuf(this.value);
-    final _position = this.position.toAst();
+    final _valueType = hasValueType() ? this.valueType.toAst() : null;
+    final _value =
+        hasValue() ? protocol.convertExpressionFromProtobuf(this.value) : null;
+    final _position = this.position.toAst(hasPosition());
 
     return ast.VariableDeclarationStatement(
       _varType,
@@ -43,11 +44,11 @@ extension on protocol.VariableValueType {
 }
 
 extension ProtocolAssignmentStatementDeserializer
-on protocol.AssignmentStatement {
+    on protocol.AssignmentStatement {
   ast.AssignmentStatement toAst() {
     final _name = this.name;
     final _value = protocol.convertExpressionFromProtobuf(this.value);
-    final _position = this.position.toAst();
+    final _position = this.position.toAst(hasPosition());
 
     return ast.AssignmentStatement(
       _name,
@@ -58,10 +59,10 @@ on protocol.AssignmentStatement {
 }
 
 extension ProtocolExpressionDefinitionStatementSerializer
-on protocol.ExpressionDefinitionStatement {
+    on protocol.ExpressionDefinitionStatement {
   ast.ExpressionDefinitionStatement toAst() {
     final _value = protocol.convertExpressionFromProtobuf(this.value);
-    final _position = this.position.toAst();
+    final _position = this.position.toAst(hasPosition());
 
     return ast.ExpressionDefinitionStatement(
       _value,
@@ -73,7 +74,7 @@ on protocol.ExpressionDefinitionStatement {
 extension ProtocolReturnStatement on protocol.ReturnStatement {
   ast.ReturnStatement toAst() {
     final _value = protocol.convertExpressionFromProtobuf(this.value);
-    final _position = this.position.toAst();
+    final _position = this.position.toAst(hasPosition());
 
     return ast.ReturnStatement(
       _value,
@@ -88,7 +89,7 @@ extension ProtocolIfDefinitionStatement on protocol.IfDefinitionStatement {
     final _elseIfBlocks = this.elseIfBlocks.map((e) => e.toAst()).toList();
     final _elseBlock = this.elseBlock.toAst();
 
-    final _position = this.position.toAst();
+    final _position = this.position.toAst(hasPosition());
 
     return ast.IfDefinitionStatement(
       _ifBlock,
@@ -102,10 +103,12 @@ extension ProtocolIfDefinitionStatement on protocol.IfDefinitionStatement {
 extension on protocol.IfBlock {
   ast.IfBlock toAst() {
     final _blockType = this.blockType.toAst();
-    final _condition = protocol.convertExpressionFromProtobuf(this.condition);
+    final _condition = this.hasCondition()
+        ? protocol.convertExpressionFromProtobuf(this.condition)
+        : null;
     final _block =
-    this.statements.map(protocol.convertStatementFromProtobuf).toList();
-    final _position = this.position.toAst();
+        this.statements.map(protocol.convertStatementFromProtobuf).toList();
+    final _position = this.position.toAst(hasPosition());
 
     return ast.IfBlock(
       _condition,
@@ -132,12 +135,12 @@ extension on protocol.BlockType {
 }
 
 extension ProtocolWhileDefinitionStatement
-on protocol.WhileDefinitionStatement {
+    on protocol.WhileDefinitionStatement {
   ast.WhileDefinitionStatement toAst() {
     final _condition = protocol.convertExpressionFromProtobuf(this.condition);
     final _block =
-    this.statements.map(protocol.convertStatementFromProtobuf).toList();
-    final _position = this.position.toAst();
+        this.statements.map(protocol.convertStatementFromProtobuf).toList();
+    final _position = this.position.toAst(hasPosition());
 
     return ast.WhileDefinitionStatement(
       _condition,
@@ -151,8 +154,8 @@ extension ProtocolForDefinitionStatement on protocol.ForDefinitionStatement {
   ast.ForDefinitionStatement toAst() {
     final _condition = this.forCondition.toAst();
     final _block =
-    this.statements.map(protocol.convertStatementFromProtobuf).toList();
-    final _position = this.position.toAst();
+        this.statements.map(protocol.convertStatementFromProtobuf).toList();
+    final _position = this.position.toAst(hasPosition());
 
     return ast.ForDefinitionStatement(
       _condition,
@@ -178,9 +181,9 @@ extension on protocol.StandardForCondition {
   ast.StandardForCondition toAst() {
     final _initStatement = this.initStatement.toAst();
     final _controlExpression =
-    protocol.convertExpressionFromProtobuf(this.controlExpression);
+        protocol.convertExpressionFromProtobuf(this.controlExpression);
     final _incrementStatement = this.incrementStatement.toAst();
-    final _position = this.position.toAst();
+    final _position = this.position.toAst(hasPosition());
 
     return ast.StandardForCondition(
       _initStatement,
@@ -209,7 +212,7 @@ extension on protocol.AssignmentForStatement {
   ast.AssignmentForStatement toAst() {
     final _name = this.name;
     final _value = protocol.convertExpressionFromProtobuf(this.value);
-    final _position = this.position.toAst();
+    final _position = this.position.toAst(hasPosition());
 
     return ast.AssignmentForStatement(
       _name,
@@ -222,7 +225,7 @@ extension on protocol.AssignmentForStatement {
 extension on protocol.ExpressionForStatement {
   ast.ExpressionForStatement toAst() {
     final _value = protocol.convertExpressionFromProtobuf(this.value);
-    final _position = this.position.toAst();
+    final _position = this.position.toAst(hasPosition());
 
     return ast.ExpressionForStatement(
       _value,
@@ -235,9 +238,9 @@ extension on protocol.VarDeclarationForStatement {
   ast.VarDeclarationForStatement toAst() {
     final _varType = this.varType.toAst();
     final _name = this.name;
-    final _valueType = this.valueType.toAst();
+    final _valueType = hasValueType() ? this.valueType.toAst() : null;
     final _value = protocol.convertExpressionFromProtobuf(this.value);
-    final _position = this.position.toAst();
+    final _position = this.position.toAst(hasPosition());
 
     return ast.VarDeclarationForStatement(
       _varType,
@@ -253,7 +256,7 @@ extension on protocol.ForEachCondition {
   ast.ForEachCondition toAst() {
     final _itemDefinition = this.itemDefinition.toAst();
     final _expression = protocol.convertExpressionFromProtobuf(this.expression);
-    final _position = this.position.toAst();
+    final _position = this.position.toAst(hasPosition());
 
     return ast.ForEachCondition(
       _itemDefinition,
@@ -267,8 +270,8 @@ extension on protocol.ItemDefinition {
   ast.ItemDefinition toAst() {
     final _varType = this.varType.toAst();
     final _name = this.name;
-    final _valueType = this.valueType.toAst();
-    final _position = this.position.toAst();
+    final _valueType = hasValueType() ? this.valueType.toAst() : null;
+    final _position = this.position.toAst(hasPosition());
 
     return ast.ItemDefinition(
       _varType,
@@ -280,13 +283,13 @@ extension on protocol.ItemDefinition {
 }
 
 extension ProtocolFunctionDefinitionStatement
-on protocol.FunctionDefinitionStatement {
+    on protocol.FunctionDefinitionStatement {
   ast.FunctionDefinitionStatement toAst() {
     final _name = this.name;
     final _parameters = this.parameters.map((p) => p.toAst()).toList();
     final _statements =
-    this.statements.map(protocol.convertStatementFromProtobuf).toList();
-    final _position = this.position.toAst();
+        this.statements.map(protocol.convertStatementFromProtobuf).toList();
+    final _position = this.position.toAst(hasPosition());
     final _returnType = this.returnType.toAst();
 
     return ast.FunctionDefinitionStatement(
@@ -302,9 +305,9 @@ on protocol.FunctionDefinitionStatement {
 extension on protocol.Parameter {
   ast.Parameter toAst() {
     final _type = this.type.toAst();
-    final _valueType = this.valueType.toAst();
+    final _valueType = hasValueType() ? this.valueType.toAst() : null;
     final _name = this.name;
-    final _position = this.position.toAst();
+    final _position = this.position.toAst(hasPosition());
 
     return ast.Parameter(
       _name,
@@ -313,21 +316,109 @@ extension on protocol.Parameter {
       _position,
     );
   }
-
-
 }
 
-extension on protocol.ParameterType{
+extension on protocol.ParameterType {
   ast.ParameterType toAst() {
-    switch(this){
-    case protocol.ParameterType.THIS:
-    return ast.ParameterType.THIS;
-    case protocol.ParameterType.TYPED:
-    return ast.ParameterType.TYPE;
-    case protocol.ParameterType.SUPER:
-    return ast.ParameterType.SUPER;
-    default:
-    throw UnsupportedError("ParameterType $this not supported");
+    switch (this) {
+      case protocol.ParameterType.THIS:
+        return ast.ParameterType.THIS;
+      case protocol.ParameterType.TYPED:
+        return ast.ParameterType.TYPE;
+      case protocol.ParameterType.SUPER:
+        return ast.ParameterType.SUPER;
+      default:
+        throw UnsupportedError("ParameterType $this not supported");
     }
+  }
+}
+
+extension ProtocolClassDefinitionStatementDeserializer
+    on protocol.ClassDefinitionStatement {
+  ast.ClassDefinitionStatement toAst() {
+    final _name = this.name;
+    final _encapsulationType = this.encapsulation.toAst();
+    final _parentName = this.hasParentName() ? this.parentName : null;
+    final _fields = this.properties.map((f) => f.toAst()).toList();
+    final _constructors = this.constructors.map((c) => c.toAst()).toList();
+    final _methods = this.methods.map((m) => m.toAst()).toList();
+    final _position = this.position.toAst(hasPosition());
+
+    return ast.ClassDefinitionStatement(
+      _encapsulationType,
+      _name,
+      _parentName,
+      _fields,
+      _constructors,
+      _methods,
+      _position,
+    );
+  }
+}
+
+extension on protocol.EncapsulationType {
+  ast.EncapsulationType toAst() {
+    switch (this) {
+      case protocol.EncapsulationType.PUBLIC:
+        return ast.EncapsulationType.public;
+      case protocol.EncapsulationType.PRIVATE:
+        return ast.EncapsulationType.private;
+      default:
+        throw UnsupportedError("EncapsulationType $this not supported");
+    }
+  }
+}
+
+extension on protocol.ConstructorDefinitionStatement {
+  ast.ConstructorDefinitionStatement toAst() {
+    final _className = this.className;
+    final _constructorName =
+        this.hasConstructorName() ? this.constructorName : null;
+    final _parameters = this.parameters.map((p) => p.toAst()).toList();
+    final _statements =
+        this.body.map(protocol.convertStatementFromProtobuf).toList();
+    final _thisConstructor =
+        this.hasThisConstructor() ? this.thisConstructor.toAst() : null;
+
+    final _position = this.position.toAst(hasPosition());
+
+    return ast.ConstructorDefinitionStatement(
+      _className,
+      _constructorName,
+      _parameters,
+      _thisConstructor,
+      _statements,
+      _position,
+    );
+  }
+}
+
+extension on protocol.ThisConstructorDefinition {
+  ast.ThisConstructorDefinition toAst() {
+    final _parameters =
+        this.parameters.map(protocol.convertExpressionFromProtobuf).toList();
+    final _position = this.position.toAst(hasPosition());
+
+    return ast.ThisConstructorDefinition(
+      _parameters,
+      _position,
+    );
+  }
+}
+
+extension ProtocolPropertyAssignmentStatementDeserializer
+    on protocol.ObjectPropertyAssignmentStatement {
+  ast.ObjectPropertyAssignmentStatement toAst() {
+    final _objectName = this.objectName;
+    final _propertyName = this.propertyName;
+    final _value = protocol.convertExpressionFromProtobuf(this.value);
+    final _position = this.position.toAst(hasPosition());
+
+    return ast.ObjectPropertyAssignmentStatement(
+      _objectName,
+      _propertyName,
+      _value,
+      _position,
+    );
   }
 }

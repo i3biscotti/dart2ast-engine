@@ -54,6 +54,7 @@ void main() {
                   varDeclarationStatement: pb.VariableDeclarationStatement(
                     varType: pb.VariableType.IMMUTABLE,
                     name: 'height',
+                    valueType: pb.VariableValueType(name: "double"),
                     value: pb.Expression(
                       decLit: pb.DecLit(
                         value: '1.70',
@@ -100,7 +101,7 @@ void main() {
                   ),
                 ),
               ],
-            ),
+            ).toAst(),
             equals(
               ProgramFile(
                 <Statement>[
@@ -448,6 +449,18 @@ void main() {
             pb.ProgramFile(
               lines: [
                 pb.Statement(
+                  varDeclarationStatement: pb.VariableDeclarationStatement(
+                    varType: pb.VariableType.VARIABLE,
+                    name: 'i',
+                    valueType: pb.VariableValueType(name: "int"),
+                    value: pb.Expression(
+                      intLit: pb.IntLit(
+                        value: '1',
+                      ),
+                    ),
+                  ),
+                ),
+                pb.Statement(
                   whileDefinitionStatement: pb.WhileDefinitionStatement(
                     condition: pb.Expression(
                       varReferenceExpression: pb.VarReferenceExpression(
@@ -595,13 +608,24 @@ void main() {
             pb.ProgramFile(
               lines: [
                 pb.Statement(
+                  varDeclarationStatement: pb.VariableDeclarationStatement(
+                    varType: pb.VariableType.VARIABLE,
+                    name: 'a',
+                    value: pb.Expression(
+                      intLit: pb.IntLit(
+                        value: '0',
+                      ),
+                    ),
+                  ),
+                ),
+                pb.Statement(
                   forDefinitionStatement: pb.ForDefinitionStatement(
                     forCondition: pb.ForCondition(
                       standardForCondition: pb.StandardForCondition(
                         initStatement: pb.ForInitOrIncrementStatement(
                           varDeclarationForStatement:
                               pb.VarDeclarationForStatement(
-                            varType: pb.VariableType.VARIABLE,
+                            varType: pb.VariableType.TYPE,
                             name: 'i',
                             valueType: pb.VariableValueType(name: "int"),
                             value: pb.Expression(
@@ -726,6 +750,39 @@ void main() {
             pb.ProgramFile(
               lines: [
                 pb.Statement(
+                  varDeclarationStatement: pb.VariableDeclarationStatement(
+                    varType: pb.VariableType.IMMUTABLE,
+                    name: 'list',
+                    value: pb.Expression(
+                      listLiteralExpression: pb.ListLiteralExpression(
+                        value: [
+                          pb.Expression(
+                            intLit: pb.IntLit(
+                              value: '1',
+                            ),
+                          ),
+                          pb.Expression(
+                            intLit: pb.IntLit(
+                              value: '2',
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                pb.Statement(
+                  varDeclarationStatement: pb.VariableDeclarationStatement(
+                    varType: pb.VariableType.VARIABLE,
+                    name: 'b',
+                    value: pb.Expression(
+                      intLit: pb.IntLit(
+                        value: '0',
+                      ),
+                    ),
+                  ),
+                ),
+                pb.Statement(
                   forDefinitionStatement: pb.ForDefinitionStatement(
                     forCondition: pb.ForCondition(
                       forEachCondition: pb.ForEachCondition(
@@ -735,19 +792,8 @@ void main() {
                           valueType: pb.VariableValueType(name: "int"),
                         ),
                         expression: pb.Expression(
-                          listLiteralExpression: pb.ListLiteralExpression(
-                            value: [
-                              pb.Expression(
-                                intLit: pb.IntLit(
-                                  value: '1',
-                                ),
-                              ),
-                              pb.Expression(
-                                intLit: pb.IntLit(
-                                  value: '2',
-                                ),
-                              ),
-                            ],
+                          varReferenceExpression: pb.VarReferenceExpression(
+                            name: 'list',
                           ),
                         ),
                       ),
@@ -883,14 +929,18 @@ void main() {
                   expressionDefinitionStatement:
                       pb.ExpressionDefinitionStatement(
                     value: pb.Expression(
-                      varReferenceExpression: pb.VarReferenceExpression(
-                        name: 'input',
+                      outputExpression: pb.OutputExpression(
+                        value: pb.Expression(
+                          varReferenceExpression: pb.VarReferenceExpression(
+                            name: 'input',
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
               ],
-            ),
+            ).toAst(),
             equals(
               ProgramFile(
                 <Statement>[
@@ -1044,26 +1094,125 @@ void main() {
             pb.ProgramFile(
               lines: [
                 pb.Statement(
-                    expressionDefinitionStatement:
-                        pb.ExpressionDefinitionStatement(
-                  value: pb.Expression(
-                    functionCallExpression: pb.FunctionCallExpression(
-                      name: 'sum',
-                      parameters: [
-                        pb.Expression(
-                          intLit: pb.IntLit(
-                            value: '1',
+                  functionDefinitionStatement: pb.FunctionDefinitionStatement(
+                    name: 'operations',
+                    returnType: pb.VariableValueType(name: "bool"),
+                    parameters: [
+                      pb.Parameter(
+                        name: 'a',
+                        type: pb.ParameterType.TYPED,
+                        valueType: pb.VariableValueType(name: "int"),
+                      ),
+                      pb.Parameter(
+                        name: 'b',
+                        type: pb.ParameterType.TYPED,
+                        valueType: pb.VariableValueType(name: "int"),
+                      ),
+                      pb.Parameter(
+                        name: 'c',
+                        type: pb.ParameterType.TYPED,
+                        valueType: pb.VariableValueType(name: "bool"),
+                      ),
+                    ],
+                    statements: [
+                      pb.Statement(
+                        varDeclarationStatement:
+                            pb.VariableDeclarationStatement(
+                          varType: pb.VariableType.VARIABLE,
+                          name: 'aIsGreaterThanB',
+                          value: pb.Expression(
+                            binaryComparisonExpression:
+                                pb.BinaryComparisonExpression(
+                              left: pb.Expression(
+                                varReferenceExpression:
+                                    pb.VarReferenceExpression(
+                                  name: 'a',
+                                ),
+                              ),
+                              right: pb.Expression(
+                                varReferenceExpression:
+                                    pb.VarReferenceExpression(
+                                  name: 'b',
+                                ),
+                              ),
+                              operand: pb.ComparisonOperand.GREATER_THAN,
+                            ),
                           ),
                         ),
-                        pb.Expression(
-                          intLit: pb.IntLit(
-                            value: '2',
+                      ),
+                      pb.Statement(
+                        varDeclarationStatement:
+                            pb.VariableDeclarationStatement(
+                          varType: pb.VariableType.IMMUTABLE,
+                          name: 'isGreaterAndCondition',
+                          value: pb.Expression(
+                            binaryLogicExpression: pb.BinaryLogicExpression(
+                              left: pb.Expression(
+                                varReferenceExpression:
+                                    pb.VarReferenceExpression(
+                                  name: 'aIsGreaterThanB',
+                                ),
+                              ),
+                              right: pb.Expression(
+                                varReferenceExpression:
+                                    pb.VarReferenceExpression(
+                                  name: 'c',
+                                ),
+                              ),
+                              operand: pb.LogicOperand.AND,
+                            ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                      pb.Statement(
+                        returnStatement: pb.ReturnStatement(
+                          value: pb.Expression(
+                            varReferenceExpression: pb.VarReferenceExpression(
+                              name: 'isGreaterAndCondition',
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ))
+                ),
+                pb.Statement(
+                  functionDefinitionStatement: pb.FunctionDefinitionStatement(
+                    name: 'main',
+                    returnType: pb.VariableValueType(name: "void"),
+                    statements: [
+                      pb.Statement(
+                        varDeclarationStatement:
+                            pb.VariableDeclarationStatement(
+                          varType: pb.VariableType.IMMUTABLE,
+                          name: 'result',
+                          value: pb.Expression(
+                            functionCallExpression: pb.FunctionCallExpression(
+                              name: 'operations',
+                              parameters: [
+                                pb.Expression(
+                                  intLit: pb.IntLit(
+                                    value: '11',
+                                  ),
+                                ),
+                                pb.Expression(
+                                  intLit: pb.IntLit(
+                                    value: '12',
+                                  ),
+                                ),
+                                pb.Expression(
+                                  boolLit: pb.BoolLit(
+                                    value: 'false',
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ).toAst(),
             equals(
@@ -1295,7 +1444,7 @@ void main() {
                   ),
                 ),
               ],
-            ),
+            ).toAst(),
             ProgramFile(
               <Statement>[
                 ClassDefinitionStatement(
@@ -1420,35 +1569,28 @@ void main() {
                           valueType: pb.VariableValueType(name: "int"),
                         ),
                       ],
-                      body: [
-                        pb.Statement(
-                          assignmentStatement: pb.AssignmentStatement(
-                            name: 'a',
-                            value: pb.Expression(
-                              intLit: pb.IntLit(
-                                value: '12',
-                              ),
+                      thisConstructor: pb.ThisConstructorDefinition(
+                        parameters: [
+                          pb.Expression(
+                            varReferenceExpression: pb.VarReferenceExpression(
+                              name: 'a',
                             ),
                           ),
-                        ),
-                        pb.Statement(
-                          assignmentStatement: pb.AssignmentStatement(
-                            name: 'b',
-                            value: pb.Expression(
-                              decLit: pb.DecLit(
-                                value: '12.1',
-                              ),
+                          pb.Expression(
+                            decLit: pb.DecLit(
+                              value: '12.1',
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
+                      body: [],
                     ),
                   ],
                   methods: [],
                 ),
               ),
             ],
-          ),
+          ).toAst(),
           ProgramFile(
             <Statement>[
               ClassDefinitionStatement(
@@ -1553,7 +1695,7 @@ void main() {
                 ),
               ),
             ],
-          ),
+          ).toAst(),
           ProgramFile(
             <Statement>[
               ClassDefinitionStatement(
@@ -1604,33 +1746,17 @@ void main() {
             lines: [
               pb.Statement(
                 classDefinitionStatement: pb.ClassDefinitionStatement(
-                  name: 'SimpleClass',
+                  name: 'SecretWars',
                   encapsulation: pb.EncapsulationType.PUBLIC,
+                  parentName: 'Marvel',
                   properties: [],
                   constructors: [],
                   methods: [],
                 ),
               ),
-              pb.Statement(
-                classDefinitionStatement: pb.ClassDefinitionStatement(
-                  name: 'SimpleClass2',
-                  encapsulation: pb.EncapsulationType.PUBLIC,
-                  properties: [],
-                  constructors: [],
-                  methods: [],
-                ),
-              ),
-              pb.Statement(
-                classDefinitionStatement: pb.ClassDefinitionStatement(
-                  name: 'SimpleClass3',
-                  encapsulation: pb.EncapsulationType.PUBLIC,
-                  properties: [],
-                  constructors: [],
-                  methods: [],
-                ),
-              ),
+
             ],
-          ),
+          ).toAst(),
           ProgramFile(
             <Statement>[
               ClassDefinitionStatement(
@@ -1662,7 +1788,7 @@ void main() {
                 ),
               ),
             ],
-          ),
+          ).toAst(),
           ProgramFile(
             <Statement>[
               ClassDefinitionStatement(

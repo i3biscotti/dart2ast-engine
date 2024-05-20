@@ -130,15 +130,18 @@ const AssignmentStatement$json = {
   '2': [
     {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
     {'1': 'value', '3': 2, '4': 1, '5': 11, '6': '.protocol.Expression', '10': 'value'},
-    {'1': 'position', '3': 3, '4': 1, '5': 11, '6': '.protocol.Position', '10': 'position'},
+    {'1': 'position', '3': 3, '4': 1, '5': 11, '6': '.protocol.Position', '9': 0, '10': 'position', '17': true},
+  ],
+  '8': [
+    {'1': '_position'},
   ],
 };
 
 /// Descriptor for `AssignmentStatement`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List assignmentStatementDescriptor = $convert.base64Decode(
     'ChNBc3NpZ25tZW50U3RhdGVtZW50EhIKBG5hbWUYASABKAlSBG5hbWUSKgoFdmFsdWUYAiABKA'
-    'syFC5wcm90b2NvbC5FeHByZXNzaW9uUgV2YWx1ZRIuCghwb3NpdGlvbhgDIAEoCzISLnByb3Rv'
-    'Y29sLlBvc2l0aW9uUghwb3NpdGlvbg==');
+    'syFC5wcm90b2NvbC5FeHByZXNzaW9uUgV2YWx1ZRIzCghwb3NpdGlvbhgDIAEoCzISLnByb3Rv'
+    'Y29sLlBvc2l0aW9uSABSCHBvc2l0aW9uiAEBQgsKCV9wb3NpdGlvbg==');
 
 @$core.Deprecated('Use classDefinitionStatementDescriptor instead')
 const ClassDefinitionStatement$json = {
@@ -151,7 +154,10 @@ const ClassDefinitionStatement$json = {
     {'1': 'constructors', '3': 5, '4': 3, '5': 11, '6': '.protocol.ConstructorDefinitionStatement', '10': 'constructors'},
     {'1': 'methods', '3': 6, '4': 3, '5': 11, '6': '.protocol.FunctionDefinitionStatement', '10': 'methods'},
     {'1': 'parentClassType', '3': 7, '4': 1, '5': 11, '6': '.protocol.VariableValueType', '10': 'parentClassType'},
-    {'1': 'position', '3': 8, '4': 1, '5': 11, '6': '.protocol.Position', '10': 'position'},
+    {'1': 'position', '3': 8, '4': 1, '5': 11, '6': '.protocol.Position', '9': 0, '10': 'position', '17': true},
+  ],
+  '8': [
+    {'1': '_position'},
   ],
 };
 
@@ -164,8 +170,8 @@ final $typed_data.Uint8List classDefinitionStatementDescriptor = $convert.base64
     'b25zdHJ1Y3RvcnMYBSADKAsyKC5wcm90b2NvbC5Db25zdHJ1Y3RvckRlZmluaXRpb25TdGF0ZW'
     '1lbnRSDGNvbnN0cnVjdG9ycxI/CgdtZXRob2RzGAYgAygLMiUucHJvdG9jb2wuRnVuY3Rpb25E'
     'ZWZpbml0aW9uU3RhdGVtZW50UgdtZXRob2RzEkUKD3BhcmVudENsYXNzVHlwZRgHIAEoCzIbLn'
-    'Byb3RvY29sLlZhcmlhYmxlVmFsdWVUeXBlUg9wYXJlbnRDbGFzc1R5cGUSLgoIcG9zaXRpb24Y'
-    'CCABKAsyEi5wcm90b2NvbC5Qb3NpdGlvblIIcG9zaXRpb24=');
+    'Byb3RvY29sLlZhcmlhYmxlVmFsdWVUeXBlUg9wYXJlbnRDbGFzc1R5cGUSMwoIcG9zaXRpb24Y'
+    'CCABKAsyEi5wcm90b2NvbC5Qb3NpdGlvbkgAUghwb3NpdGlvbogBAUILCglfcG9zaXRpb24=');
 
 @$core.Deprecated('Use functionDefinitionStatementDescriptor instead')
 const FunctionDefinitionStatement$json = {
@@ -175,7 +181,10 @@ const FunctionDefinitionStatement$json = {
     {'1': 'parameters', '3': 2, '4': 3, '5': 11, '6': '.protocol.Parameter', '10': 'parameters'},
     {'1': 'returnType', '3': 3, '4': 1, '5': 11, '6': '.protocol.VariableValueType', '10': 'returnType'},
     {'1': 'statements', '3': 4, '4': 3, '5': 11, '6': '.protocol.Statement', '10': 'statements'},
-    {'1': 'position', '3': 5, '4': 1, '5': 11, '6': '.protocol.Position', '10': 'position'},
+    {'1': 'position', '3': 5, '4': 1, '5': 11, '6': '.protocol.Position', '9': 0, '10': 'position', '17': true},
+  ],
+  '8': [
+    {'1': '_position'},
   ],
 };
 
@@ -184,8 +193,9 @@ final $typed_data.Uint8List functionDefinitionStatementDescriptor = $convert.bas
     'ChtGdW5jdGlvbkRlZmluaXRpb25TdGF0ZW1lbnQSEgoEbmFtZRgBIAEoCVIEbmFtZRIzCgpwYX'
     'JhbWV0ZXJzGAIgAygLMhMucHJvdG9jb2wuUGFyYW1ldGVyUgpwYXJhbWV0ZXJzEjsKCnJldHVy'
     'blR5cGUYAyABKAsyGy5wcm90b2NvbC5WYXJpYWJsZVZhbHVlVHlwZVIKcmV0dXJuVHlwZRIzCg'
-    'pzdGF0ZW1lbnRzGAQgAygLMhMucHJvdG9jb2wuU3RhdGVtZW50UgpzdGF0ZW1lbnRzEi4KCHBv'
-    'c2l0aW9uGAUgASgLMhIucHJvdG9jb2wuUG9zaXRpb25SCHBvc2l0aW9u');
+    'pzdGF0ZW1lbnRzGAQgAygLMhMucHJvdG9jb2wuU3RhdGVtZW50UgpzdGF0ZW1lbnRzEjMKCHBv'
+    'c2l0aW9uGAUgASgLMhIucHJvdG9jb2wuUG9zaXRpb25IAFIIcG9zaXRpb26IAQFCCwoJX3Bvc2'
+    'l0aW9u');
 
 @$core.Deprecated('Use constructorDefinitionStatementDescriptor instead')
 const ConstructorDefinitionStatement$json = {
@@ -196,7 +206,10 @@ const ConstructorDefinitionStatement$json = {
     {'1': 'parameters', '3': 3, '4': 3, '5': 11, '6': '.protocol.Parameter', '10': 'parameters'},
     {'1': 'body', '3': 4, '4': 3, '5': 11, '6': '.protocol.Statement', '10': 'body'},
     {'1': 'thisConstructor', '3': 5, '4': 1, '5': 11, '6': '.protocol.ThisConstructorDefinition', '10': 'thisConstructor'},
-    {'1': 'position', '3': 6, '4': 1, '5': 11, '6': '.protocol.Position', '10': 'position'},
+    {'1': 'position', '3': 6, '4': 1, '5': 11, '6': '.protocol.Position', '9': 0, '10': 'position', '17': true},
+  ],
+  '8': [
+    {'1': '_position'},
   ],
 };
 
@@ -207,22 +220,26 @@ final $typed_data.Uint8List constructorDefinitionStatementDescriptor = $convert.
     'YW1ldGVycxgDIAMoCzITLnByb3RvY29sLlBhcmFtZXRlclIKcGFyYW1ldGVycxInCgRib2R5GA'
     'QgAygLMhMucHJvdG9jb2wuU3RhdGVtZW50UgRib2R5Ek0KD3RoaXNDb25zdHJ1Y3RvchgFIAEo'
     'CzIjLnByb3RvY29sLlRoaXNDb25zdHJ1Y3RvckRlZmluaXRpb25SD3RoaXNDb25zdHJ1Y3Rvch'
-    'IuCghwb3NpdGlvbhgGIAEoCzISLnByb3RvY29sLlBvc2l0aW9uUghwb3NpdGlvbg==');
+    'IzCghwb3NpdGlvbhgGIAEoCzISLnByb3RvY29sLlBvc2l0aW9uSABSCHBvc2l0aW9uiAEBQgsK'
+    'CV9wb3NpdGlvbg==');
 
 @$core.Deprecated('Use thisConstructorDefinitionDescriptor instead')
 const ThisConstructorDefinition$json = {
   '1': 'ThisConstructorDefinition',
   '2': [
     {'1': 'parameters', '3': 1, '4': 3, '5': 11, '6': '.protocol.Expression', '10': 'parameters'},
-    {'1': 'position', '3': 2, '4': 1, '5': 11, '6': '.protocol.Position', '10': 'position'},
+    {'1': 'position', '3': 2, '4': 1, '5': 11, '6': '.protocol.Position', '9': 0, '10': 'position', '17': true},
+  ],
+  '8': [
+    {'1': '_position'},
   ],
 };
 
 /// Descriptor for `ThisConstructorDefinition`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List thisConstructorDefinitionDescriptor = $convert.base64Decode(
     'ChlUaGlzQ29uc3RydWN0b3JEZWZpbml0aW9uEjQKCnBhcmFtZXRlcnMYASADKAsyFC5wcm90b2'
-    'NvbC5FeHByZXNzaW9uUgpwYXJhbWV0ZXJzEi4KCHBvc2l0aW9uGAIgASgLMhIucHJvdG9jb2wu'
-    'UG9zaXRpb25SCHBvc2l0aW9u');
+    'NvbC5FeHByZXNzaW9uUgpwYXJhbWV0ZXJzEjMKCHBvc2l0aW9uGAIgASgLMhIucHJvdG9jb2wu'
+    'UG9zaXRpb25IAFIIcG9zaXRpb26IAQFCCwoJX3Bvc2l0aW9u');
 
 @$core.Deprecated('Use parameterDescriptor instead')
 const Parameter$json = {
@@ -231,7 +248,10 @@ const Parameter$json = {
     {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
     {'1': 'type', '3': 2, '4': 1, '5': 14, '6': '.protocol.ParameterType', '10': 'type'},
     {'1': 'valueType', '3': 3, '4': 1, '5': 11, '6': '.protocol.VariableValueType', '10': 'valueType'},
-    {'1': 'position', '3': 4, '4': 1, '5': 11, '6': '.protocol.Position', '10': 'position'},
+    {'1': 'position', '3': 4, '4': 1, '5': 11, '6': '.protocol.Position', '9': 0, '10': 'position', '17': true},
+  ],
+  '8': [
+    {'1': '_position'},
   ],
 };
 
@@ -239,23 +259,26 @@ const Parameter$json = {
 final $typed_data.Uint8List parameterDescriptor = $convert.base64Decode(
     'CglQYXJhbWV0ZXISEgoEbmFtZRgBIAEoCVIEbmFtZRIrCgR0eXBlGAIgASgOMhcucHJvdG9jb2'
     'wuUGFyYW1ldGVyVHlwZVIEdHlwZRI5Cgl2YWx1ZVR5cGUYAyABKAsyGy5wcm90b2NvbC5WYXJp'
-    'YWJsZVZhbHVlVHlwZVIJdmFsdWVUeXBlEi4KCHBvc2l0aW9uGAQgASgLMhIucHJvdG9jb2wuUG'
-    '9zaXRpb25SCHBvc2l0aW9u');
+    'YWJsZVZhbHVlVHlwZVIJdmFsdWVUeXBlEjMKCHBvc2l0aW9uGAQgASgLMhIucHJvdG9jb2wuUG'
+    '9zaXRpb25IAFIIcG9zaXRpb26IAQFCCwoJX3Bvc2l0aW9u');
 
 @$core.Deprecated('Use expressionDefinitionStatementDescriptor instead')
 const ExpressionDefinitionStatement$json = {
   '1': 'ExpressionDefinitionStatement',
   '2': [
     {'1': 'value', '3': 1, '4': 1, '5': 11, '6': '.protocol.Expression', '10': 'value'},
-    {'1': 'position', '3': 2, '4': 1, '5': 11, '6': '.protocol.Position', '10': 'position'},
+    {'1': 'position', '3': 2, '4': 1, '5': 11, '6': '.protocol.Position', '9': 0, '10': 'position', '17': true},
+  ],
+  '8': [
+    {'1': '_position'},
   ],
 };
 
 /// Descriptor for `ExpressionDefinitionStatement`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List expressionDefinitionStatementDescriptor = $convert.base64Decode(
     'Ch1FeHByZXNzaW9uRGVmaW5pdGlvblN0YXRlbWVudBIqCgV2YWx1ZRgBIAEoCzIULnByb3RvY2'
-    '9sLkV4cHJlc3Npb25SBXZhbHVlEi4KCHBvc2l0aW9uGAIgASgLMhIucHJvdG9jb2wuUG9zaXRp'
-    'b25SCHBvc2l0aW9u');
+    '9sLkV4cHJlc3Npb25SBXZhbHVlEjMKCHBvc2l0aW9uGAIgASgLMhIucHJvdG9jb2wuUG9zaXRp'
+    'b25IAFIIcG9zaXRpb26IAQFCCwoJX3Bvc2l0aW9u');
 
 @$core.Deprecated('Use ifDefinitionStatementDescriptor instead')
 const IfDefinitionStatement$json = {
@@ -264,7 +287,10 @@ const IfDefinitionStatement$json = {
     {'1': 'ifBlock', '3': 1, '4': 1, '5': 11, '6': '.protocol.IfBlock', '10': 'ifBlock'},
     {'1': 'elseIfBlocks', '3': 2, '4': 3, '5': 11, '6': '.protocol.IfBlock', '10': 'elseIfBlocks'},
     {'1': 'elseBlock', '3': 3, '4': 1, '5': 11, '6': '.protocol.IfBlock', '10': 'elseBlock'},
-    {'1': 'position', '3': 4, '4': 1, '5': 11, '6': '.protocol.Position', '10': 'position'},
+    {'1': 'position', '3': 4, '4': 1, '5': 11, '6': '.protocol.Position', '9': 0, '10': 'position', '17': true},
+  ],
+  '8': [
+    {'1': '_position'},
   ],
 };
 
@@ -273,7 +299,8 @@ final $typed_data.Uint8List ifDefinitionStatementDescriptor = $convert.base64Dec
     'ChVJZkRlZmluaXRpb25TdGF0ZW1lbnQSKwoHaWZCbG9jaxgBIAEoCzIRLnByb3RvY29sLklmQm'
     'xvY2tSB2lmQmxvY2sSNQoMZWxzZUlmQmxvY2tzGAIgAygLMhEucHJvdG9jb2wuSWZCbG9ja1IM'
     'ZWxzZUlmQmxvY2tzEi8KCWVsc2VCbG9jaxgDIAEoCzIRLnByb3RvY29sLklmQmxvY2tSCWVsc2'
-    'VCbG9jaxIuCghwb3NpdGlvbhgEIAEoCzISLnByb3RvY29sLlBvc2l0aW9uUghwb3NpdGlvbg==');
+    'VCbG9jaxIzCghwb3NpdGlvbhgEIAEoCzISLnByb3RvY29sLlBvc2l0aW9uSABSCHBvc2l0aW9u'
+    'iAEBQgsKCV9wb3NpdGlvbg==');
 
 @$core.Deprecated('Use ifBlockDescriptor instead')
 const IfBlock$json = {
@@ -282,7 +309,10 @@ const IfBlock$json = {
     {'1': 'condition', '3': 1, '4': 1, '5': 11, '6': '.protocol.Expression', '10': 'condition'},
     {'1': 'statements', '3': 2, '4': 3, '5': 11, '6': '.protocol.Statement', '10': 'statements'},
     {'1': 'blockType', '3': 3, '4': 1, '5': 14, '6': '.protocol.BlockType', '10': 'blockType'},
-    {'1': 'position', '3': 4, '4': 1, '5': 11, '6': '.protocol.Position', '10': 'position'},
+    {'1': 'position', '3': 4, '4': 1, '5': 11, '6': '.protocol.Position', '9': 0, '10': 'position', '17': true},
+  ],
+  '8': [
+    {'1': '_position'},
   ],
 };
 
@@ -290,8 +320,9 @@ const IfBlock$json = {
 final $typed_data.Uint8List ifBlockDescriptor = $convert.base64Decode(
     'CgdJZkJsb2NrEjIKCWNvbmRpdGlvbhgBIAEoCzIULnByb3RvY29sLkV4cHJlc3Npb25SCWNvbm'
     'RpdGlvbhIzCgpzdGF0ZW1lbnRzGAIgAygLMhMucHJvdG9jb2wuU3RhdGVtZW50UgpzdGF0ZW1l'
-    'bnRzEjEKCWJsb2NrVHlwZRgDIAEoDjITLnByb3RvY29sLkJsb2NrVHlwZVIJYmxvY2tUeXBlEi'
-    '4KCHBvc2l0aW9uGAQgASgLMhIucHJvdG9jb2wuUG9zaXRpb25SCHBvc2l0aW9u');
+    'bnRzEjEKCWJsb2NrVHlwZRgDIAEoDjITLnByb3RvY29sLkJsb2NrVHlwZVIJYmxvY2tUeXBlEj'
+    'MKCHBvc2l0aW9uGAQgASgLMhIucHJvdG9jb2wuUG9zaXRpb25IAFIIcG9zaXRpb26IAQFCCwoJ'
+    'X3Bvc2l0aW9u');
 
 @$core.Deprecated('Use whileDefinitionStatementDescriptor instead')
 const WhileDefinitionStatement$json = {
@@ -299,7 +330,10 @@ const WhileDefinitionStatement$json = {
   '2': [
     {'1': 'condition', '3': 1, '4': 1, '5': 11, '6': '.protocol.Expression', '10': 'condition'},
     {'1': 'statements', '3': 2, '4': 3, '5': 11, '6': '.protocol.Statement', '10': 'statements'},
-    {'1': 'position', '3': 3, '4': 1, '5': 11, '6': '.protocol.Position', '10': 'position'},
+    {'1': 'position', '3': 3, '4': 1, '5': 11, '6': '.protocol.Position', '9': 0, '10': 'position', '17': true},
+  ],
+  '8': [
+    {'1': '_position'},
   ],
 };
 
@@ -307,8 +341,8 @@ const WhileDefinitionStatement$json = {
 final $typed_data.Uint8List whileDefinitionStatementDescriptor = $convert.base64Decode(
     'ChhXaGlsZURlZmluaXRpb25TdGF0ZW1lbnQSMgoJY29uZGl0aW9uGAEgASgLMhQucHJvdG9jb2'
     'wuRXhwcmVzc2lvblIJY29uZGl0aW9uEjMKCnN0YXRlbWVudHMYAiADKAsyEy5wcm90b2NvbC5T'
-    'dGF0ZW1lbnRSCnN0YXRlbWVudHMSLgoIcG9zaXRpb24YAyABKAsyEi5wcm90b2NvbC5Qb3NpdG'
-    'lvblIIcG9zaXRpb24=');
+    'dGF0ZW1lbnRSCnN0YXRlbWVudHMSMwoIcG9zaXRpb24YAyABKAsyEi5wcm90b2NvbC5Qb3NpdG'
+    'lvbkgAUghwb3NpdGlvbogBAUILCglfcG9zaXRpb24=');
 
 @$core.Deprecated('Use forInitOrIncrementStatementDescriptor instead')
 const ForInitOrIncrementStatement$json = {
@@ -341,7 +375,10 @@ const VarDeclarationForStatement$json = {
     {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
     {'1': 'valueType', '3': 3, '4': 1, '5': 11, '6': '.protocol.VariableValueType', '10': 'valueType'},
     {'1': 'value', '3': 4, '4': 1, '5': 11, '6': '.protocol.Expression', '10': 'value'},
-    {'1': 'position', '3': 5, '4': 1, '5': 11, '6': '.protocol.Position', '10': 'position'},
+    {'1': 'position', '3': 5, '4': 1, '5': 11, '6': '.protocol.Position', '9': 0, '10': 'position', '17': true},
+  ],
+  '8': [
+    {'1': '_position'},
   ],
 };
 
@@ -350,8 +387,8 @@ final $typed_data.Uint8List varDeclarationForStatementDescriptor = $convert.base
     'ChpWYXJEZWNsYXJhdGlvbkZvclN0YXRlbWVudBIwCgd2YXJUeXBlGAEgASgOMhYucHJvdG9jb2'
     'wuVmFyaWFibGVUeXBlUgd2YXJUeXBlEhIKBG5hbWUYAiABKAlSBG5hbWUSOQoJdmFsdWVUeXBl'
     'GAMgASgLMhsucHJvdG9jb2wuVmFyaWFibGVWYWx1ZVR5cGVSCXZhbHVlVHlwZRIqCgV2YWx1ZR'
-    'gEIAEoCzIULnByb3RvY29sLkV4cHJlc3Npb25SBXZhbHVlEi4KCHBvc2l0aW9uGAUgASgLMhIu'
-    'cHJvdG9jb2wuUG9zaXRpb25SCHBvc2l0aW9u');
+    'gEIAEoCzIULnByb3RvY29sLkV4cHJlc3Npb25SBXZhbHVlEjMKCHBvc2l0aW9uGAUgASgLMhIu'
+    'cHJvdG9jb2wuUG9zaXRpb25IAFIIcG9zaXRpb26IAQFCCwoJX3Bvc2l0aW9u');
 
 @$core.Deprecated('Use assignmentForStatementDescriptor instead')
 const AssignmentForStatement$json = {
@@ -359,30 +396,36 @@ const AssignmentForStatement$json = {
   '2': [
     {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
     {'1': 'value', '3': 2, '4': 1, '5': 11, '6': '.protocol.Expression', '10': 'value'},
-    {'1': 'position', '3': 3, '4': 1, '5': 11, '6': '.protocol.Position', '10': 'position'},
+    {'1': 'position', '3': 3, '4': 1, '5': 11, '6': '.protocol.Position', '9': 0, '10': 'position', '17': true},
+  ],
+  '8': [
+    {'1': '_position'},
   ],
 };
 
 /// Descriptor for `AssignmentForStatement`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List assignmentForStatementDescriptor = $convert.base64Decode(
     'ChZBc3NpZ25tZW50Rm9yU3RhdGVtZW50EhIKBG5hbWUYASABKAlSBG5hbWUSKgoFdmFsdWUYAi'
-    'ABKAsyFC5wcm90b2NvbC5FeHByZXNzaW9uUgV2YWx1ZRIuCghwb3NpdGlvbhgDIAEoCzISLnBy'
-    'b3RvY29sLlBvc2l0aW9uUghwb3NpdGlvbg==');
+    'ABKAsyFC5wcm90b2NvbC5FeHByZXNzaW9uUgV2YWx1ZRIzCghwb3NpdGlvbhgDIAEoCzISLnBy'
+    'b3RvY29sLlBvc2l0aW9uSABSCHBvc2l0aW9uiAEBQgsKCV9wb3NpdGlvbg==');
 
 @$core.Deprecated('Use expressionForStatementDescriptor instead')
 const ExpressionForStatement$json = {
   '1': 'ExpressionForStatement',
   '2': [
     {'1': 'value', '3': 1, '4': 1, '5': 11, '6': '.protocol.Expression', '10': 'value'},
-    {'1': 'position', '3': 2, '4': 1, '5': 11, '6': '.protocol.Position', '10': 'position'},
+    {'1': 'position', '3': 2, '4': 1, '5': 11, '6': '.protocol.Position', '9': 0, '10': 'position', '17': true},
+  ],
+  '8': [
+    {'1': '_position'},
   ],
 };
 
 /// Descriptor for `ExpressionForStatement`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List expressionForStatementDescriptor = $convert.base64Decode(
     'ChZFeHByZXNzaW9uRm9yU3RhdGVtZW50EioKBXZhbHVlGAEgASgLMhQucHJvdG9jb2wuRXhwcm'
-    'Vzc2lvblIFdmFsdWUSLgoIcG9zaXRpb24YAiABKAsyEi5wcm90b2NvbC5Qb3NpdGlvblIIcG9z'
-    'aXRpb24=');
+    'Vzc2lvblIFdmFsdWUSMwoIcG9zaXRpb24YAiABKAsyEi5wcm90b2NvbC5Qb3NpdGlvbkgAUghw'
+    'b3NpdGlvbogBAUILCglfcG9zaXRpb24=');
 
 @$core.Deprecated('Use forDefinitionStatementDescriptor instead')
 const ForDefinitionStatement$json = {
@@ -390,7 +433,10 @@ const ForDefinitionStatement$json = {
   '2': [
     {'1': 'forCondition', '3': 1, '4': 1, '5': 11, '6': '.protocol.ForCondition', '10': 'forCondition'},
     {'1': 'statements', '3': 2, '4': 3, '5': 11, '6': '.protocol.Statement', '10': 'statements'},
-    {'1': 'position', '3': 3, '4': 1, '5': 11, '6': '.protocol.Position', '10': 'position'},
+    {'1': 'position', '3': 3, '4': 1, '5': 11, '6': '.protocol.Position', '9': 0, '10': 'position', '17': true},
+  ],
+  '8': [
+    {'1': '_position'},
   ],
 };
 
@@ -398,8 +444,8 @@ const ForDefinitionStatement$json = {
 final $typed_data.Uint8List forDefinitionStatementDescriptor = $convert.base64Decode(
     'ChZGb3JEZWZpbml0aW9uU3RhdGVtZW50EjoKDGZvckNvbmRpdGlvbhgBIAEoCzIWLnByb3RvY2'
     '9sLkZvckNvbmRpdGlvblIMZm9yQ29uZGl0aW9uEjMKCnN0YXRlbWVudHMYAiADKAsyEy5wcm90'
-    'b2NvbC5TdGF0ZW1lbnRSCnN0YXRlbWVudHMSLgoIcG9zaXRpb24YAyABKAsyEi5wcm90b2NvbC'
-    '5Qb3NpdGlvblIIcG9zaXRpb24=');
+    'b2NvbC5TdGF0ZW1lbnRSCnN0YXRlbWVudHMSMwoIcG9zaXRpb24YAyABKAsyEi5wcm90b2NvbC'
+    '5Qb3NpdGlvbkgAUghwb3NpdGlvbogBAUILCglfcG9zaXRpb24=');
 
 @$core.Deprecated('Use forConditionDescriptor instead')
 const ForCondition$json = {
@@ -427,7 +473,10 @@ const StandardForCondition$json = {
     {'1': 'initStatement', '3': 1, '4': 1, '5': 11, '6': '.protocol.ForInitOrIncrementStatement', '10': 'initStatement'},
     {'1': 'controlExpression', '3': 2, '4': 1, '5': 11, '6': '.protocol.Expression', '10': 'controlExpression'},
     {'1': 'incrementStatement', '3': 3, '4': 1, '5': 11, '6': '.protocol.ForInitOrIncrementStatement', '10': 'incrementStatement'},
-    {'1': 'position', '3': 4, '4': 1, '5': 11, '6': '.protocol.Position', '10': 'position'},
+    {'1': 'position', '3': 4, '4': 1, '5': 11, '6': '.protocol.Position', '9': 0, '10': 'position', '17': true},
+  ],
+  '8': [
+    {'1': '_position'},
   ],
 };
 
@@ -437,8 +486,8 @@ final $typed_data.Uint8List standardForConditionDescriptor = $convert.base64Deco
     'wuRm9ySW5pdE9ySW5jcmVtZW50U3RhdGVtZW50Ug1pbml0U3RhdGVtZW50EkIKEWNvbnRyb2xF'
     'eHByZXNzaW9uGAIgASgLMhQucHJvdG9jb2wuRXhwcmVzc2lvblIRY29udHJvbEV4cHJlc3Npb2'
     '4SVQoSaW5jcmVtZW50U3RhdGVtZW50GAMgASgLMiUucHJvdG9jb2wuRm9ySW5pdE9ySW5jcmVt'
-    'ZW50U3RhdGVtZW50UhJpbmNyZW1lbnRTdGF0ZW1lbnQSLgoIcG9zaXRpb24YBCABKAsyEi5wcm'
-    '90b2NvbC5Qb3NpdGlvblIIcG9zaXRpb24=');
+    'ZW50U3RhdGVtZW50UhJpbmNyZW1lbnRTdGF0ZW1lbnQSMwoIcG9zaXRpb24YBCABKAsyEi5wcm'
+    '90b2NvbC5Qb3NpdGlvbkgAUghwb3NpdGlvbogBAUILCglfcG9zaXRpb24=');
 
 @$core.Deprecated('Use forEachConditionDescriptor instead')
 const ForEachCondition$json = {
@@ -446,7 +495,10 @@ const ForEachCondition$json = {
   '2': [
     {'1': 'itemDefinition', '3': 1, '4': 1, '5': 11, '6': '.protocol.ItemDefinition', '10': 'itemDefinition'},
     {'1': 'expression', '3': 2, '4': 1, '5': 11, '6': '.protocol.Expression', '10': 'expression'},
-    {'1': 'position', '3': 3, '4': 1, '5': 11, '6': '.protocol.Position', '10': 'position'},
+    {'1': 'position', '3': 3, '4': 1, '5': 11, '6': '.protocol.Position', '9': 0, '10': 'position', '17': true},
+  ],
+  '8': [
+    {'1': '_position'},
   ],
 };
 
@@ -454,8 +506,8 @@ const ForEachCondition$json = {
 final $typed_data.Uint8List forEachConditionDescriptor = $convert.base64Decode(
     'ChBGb3JFYWNoQ29uZGl0aW9uEkAKDml0ZW1EZWZpbml0aW9uGAEgASgLMhgucHJvdG9jb2wuSX'
     'RlbURlZmluaXRpb25SDml0ZW1EZWZpbml0aW9uEjQKCmV4cHJlc3Npb24YAiABKAsyFC5wcm90'
-    'b2NvbC5FeHByZXNzaW9uUgpleHByZXNzaW9uEi4KCHBvc2l0aW9uGAMgASgLMhIucHJvdG9jb2'
-    'wuUG9zaXRpb25SCHBvc2l0aW9u');
+    'b2NvbC5FeHByZXNzaW9uUgpleHByZXNzaW9uEjMKCHBvc2l0aW9uGAMgASgLMhIucHJvdG9jb2'
+    'wuUG9zaXRpb25IAFIIcG9zaXRpb26IAQFCCwoJX3Bvc2l0aW9u');
 
 @$core.Deprecated('Use itemDefinitionDescriptor instead')
 const ItemDefinition$json = {
@@ -464,7 +516,10 @@ const ItemDefinition$json = {
     {'1': 'varType', '3': 1, '4': 1, '5': 14, '6': '.protocol.VariableType', '10': 'varType'},
     {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
     {'1': 'valueType', '3': 3, '4': 1, '5': 11, '6': '.protocol.VariableValueType', '10': 'valueType'},
-    {'1': 'position', '3': 4, '4': 1, '5': 11, '6': '.protocol.Position', '10': 'position'},
+    {'1': 'position', '3': 4, '4': 1, '5': 11, '6': '.protocol.Position', '9': 0, '10': 'position', '17': true},
+  ],
+  '8': [
+    {'1': '_position'},
   ],
 };
 
@@ -472,8 +527,8 @@ const ItemDefinition$json = {
 final $typed_data.Uint8List itemDefinitionDescriptor = $convert.base64Decode(
     'Cg5JdGVtRGVmaW5pdGlvbhIwCgd2YXJUeXBlGAEgASgOMhYucHJvdG9jb2wuVmFyaWFibGVUeX'
     'BlUgd2YXJUeXBlEhIKBG5hbWUYAiABKAlSBG5hbWUSOQoJdmFsdWVUeXBlGAMgASgLMhsucHJv'
-    'dG9jb2wuVmFyaWFibGVWYWx1ZVR5cGVSCXZhbHVlVHlwZRIuCghwb3NpdGlvbhgEIAEoCzISLn'
-    'Byb3RvY29sLlBvc2l0aW9uUghwb3NpdGlvbg==');
+    'dG9jb2wuVmFyaWFibGVWYWx1ZVR5cGVSCXZhbHVlVHlwZRIzCghwb3NpdGlvbhgEIAEoCzISLn'
+    'Byb3RvY29sLlBvc2l0aW9uSABSCHBvc2l0aW9uiAEBQgsKCV9wb3NpdGlvbg==');
 
 @$core.Deprecated('Use objectPropertyAssignmentStatementDescriptor instead')
 const ObjectPropertyAssignmentStatement$json = {
@@ -482,7 +537,10 @@ const ObjectPropertyAssignmentStatement$json = {
     {'1': 'objectName', '3': 1, '4': 1, '5': 9, '10': 'objectName'},
     {'1': 'propertyName', '3': 2, '4': 1, '5': 9, '10': 'propertyName'},
     {'1': 'value', '3': 3, '4': 1, '5': 11, '6': '.protocol.Expression', '10': 'value'},
-    {'1': 'position', '3': 4, '4': 1, '5': 11, '6': '.protocol.Position', '10': 'position'},
+    {'1': 'position', '3': 4, '4': 1, '5': 11, '6': '.protocol.Position', '9': 0, '10': 'position', '17': true},
+  ],
+  '8': [
+    {'1': '_position'},
   ],
 };
 
@@ -490,22 +548,26 @@ const ObjectPropertyAssignmentStatement$json = {
 final $typed_data.Uint8List objectPropertyAssignmentStatementDescriptor = $convert.base64Decode(
     'CiFPYmplY3RQcm9wZXJ0eUFzc2lnbm1lbnRTdGF0ZW1lbnQSHgoKb2JqZWN0TmFtZRgBIAEoCV'
     'IKb2JqZWN0TmFtZRIiCgxwcm9wZXJ0eU5hbWUYAiABKAlSDHByb3BlcnR5TmFtZRIqCgV2YWx1'
-    'ZRgDIAEoCzIULnByb3RvY29sLkV4cHJlc3Npb25SBXZhbHVlEi4KCHBvc2l0aW9uGAQgASgLMh'
-    'IucHJvdG9jb2wuUG9zaXRpb25SCHBvc2l0aW9u');
+    'ZRgDIAEoCzIULnByb3RvY29sLkV4cHJlc3Npb25SBXZhbHVlEjMKCHBvc2l0aW9uGAQgASgLMh'
+    'IucHJvdG9jb2wuUG9zaXRpb25IAFIIcG9zaXRpb26IAQFCCwoJX3Bvc2l0aW9u');
 
 @$core.Deprecated('Use returnStatementDescriptor instead')
 const ReturnStatement$json = {
   '1': 'ReturnStatement',
   '2': [
     {'1': 'value', '3': 1, '4': 1, '5': 11, '6': '.protocol.Expression', '10': 'value'},
-    {'1': 'position', '3': 2, '4': 1, '5': 11, '6': '.protocol.Position', '10': 'position'},
+    {'1': 'position', '3': 2, '4': 1, '5': 11, '6': '.protocol.Position', '9': 0, '10': 'position', '17': true},
+  ],
+  '8': [
+    {'1': '_position'},
   ],
 };
 
 /// Descriptor for `ReturnStatement`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List returnStatementDescriptor = $convert.base64Decode(
     'Cg9SZXR1cm5TdGF0ZW1lbnQSKgoFdmFsdWUYASABKAsyFC5wcm90b2NvbC5FeHByZXNzaW9uUg'
-    'V2YWx1ZRIuCghwb3NpdGlvbhgCIAEoCzISLnByb3RvY29sLlBvc2l0aW9uUghwb3NpdGlvbg==');
+    'V2YWx1ZRIzCghwb3NpdGlvbhgCIAEoCzISLnByb3RvY29sLlBvc2l0aW9uSABSCHBvc2l0aW9u'
+    'iAEBQgsKCV9wb3NpdGlvbg==');
 
 @$core.Deprecated('Use variableDeclarationStatementDescriptor instead')
 const VariableDeclarationStatement$json = {
@@ -515,7 +577,10 @@ const VariableDeclarationStatement$json = {
     {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
     {'1': 'valueType', '3': 3, '4': 1, '5': 11, '6': '.protocol.VariableValueType', '10': 'valueType'},
     {'1': 'value', '3': 4, '4': 1, '5': 11, '6': '.protocol.Expression', '10': 'value'},
-    {'1': 'position', '3': 5, '4': 1, '5': 11, '6': '.protocol.Position', '10': 'position'},
+    {'1': 'position', '3': 5, '4': 1, '5': 11, '6': '.protocol.Position', '9': 0, '10': 'position', '17': true},
+  ],
+  '8': [
+    {'1': '_position'},
   ],
 };
 
@@ -524,6 +589,6 @@ final $typed_data.Uint8List variableDeclarationStatementDescriptor = $convert.ba
     'ChxWYXJpYWJsZURlY2xhcmF0aW9uU3RhdGVtZW50EjAKB3ZhclR5cGUYASABKA4yFi5wcm90b2'
     'NvbC5WYXJpYWJsZVR5cGVSB3ZhclR5cGUSEgoEbmFtZRgCIAEoCVIEbmFtZRI5Cgl2YWx1ZVR5'
     'cGUYAyABKAsyGy5wcm90b2NvbC5WYXJpYWJsZVZhbHVlVHlwZVIJdmFsdWVUeXBlEioKBXZhbH'
-    'VlGAQgASgLMhQucHJvdG9jb2wuRXhwcmVzc2lvblIFdmFsdWUSLgoIcG9zaXRpb24YBSABKAsy'
-    'Ei5wcm90b2NvbC5Qb3NpdGlvblIIcG9zaXRpb24=');
+    'VlGAQgASgLMhQucHJvdG9jb2wuRXhwcmVzc2lvblIFdmFsdWUSMwoIcG9zaXRpb24YBSABKAsy'
+    'Ei5wcm90b2NvbC5Qb3NpdGlvbkgAUghwb3NpdGlvbogBAUILCglfcG9zaXRpb24=');
 
