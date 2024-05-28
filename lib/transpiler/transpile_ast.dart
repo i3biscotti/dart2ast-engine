@@ -34,7 +34,7 @@ extension ExpressionTranspilerExtension on Expression {
       PostDecrementExpression e => e.transpile(),
       InputExpression e => e.transpile(),
       OutputExpression e => e.transpile(),
-      ParenthesysExpression e => e.transpile(),
+      ParenthesisExpression e => e.transpile(),
       VarReferenceExpression e => e.transpile(),
       FunctionCallExpression e => e.transpile(),
       ObjectMethodCallExpression e => e.transpile(),
@@ -247,7 +247,7 @@ extension OutputExpressionTranspilerEsxtension on OutputExpression {
   }
 }
 
-extension ParenthesysExpressionTranspilerExtension on ParenthesysExpression {
+extension ParenthesysExpressionTranspilerExtension on ParenthesisExpression {
   String transpile() {
     String par_open = '(';
     String valueTranspiler = value.transpile();

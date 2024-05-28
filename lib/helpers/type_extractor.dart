@@ -10,7 +10,7 @@ VariableValueType extractType(ScopeContext context, Expression e) =>
       BinaryExpression e => extractType(context, e.left),
       UnaryLogicExpression _ => VariableValueType.BOOLEAN,
       UnaryMathExpression e => extractType(context, e.value),
-      ParenthesysExpression e => extractType(context, e.value),
+      ParenthesisExpression e => extractType(context, e.value),
       VarReferenceExpression e => context.read<VariableSign>(e.name)!.type,
       FunctionCallExpression e => _extractTypeFromFunctionOrClassConstructor(
           e,
