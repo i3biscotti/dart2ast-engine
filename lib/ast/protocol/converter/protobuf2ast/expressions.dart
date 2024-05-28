@@ -141,11 +141,11 @@ extension ProtocolUnaryLogicExpressionDeserializer on protocol.UnaryLogicExpress
 }
 
 extension ProtocolParenthesisExpressionDeserializer on protocol.ParenthesisExpression {
-  ast.ParenthesysExpression toAst(){
+  ast.ParenthesisExpression toAst(){
     final _expression = protocol.convertExpressionFromProtobuf(this.value);
     final _position = this.position.toAst(hasPosition());
 
-    return ast.ParenthesysExpression(_expression, _position);
+    return ast.ParenthesisExpression(_expression, _position);
   }
 }
 

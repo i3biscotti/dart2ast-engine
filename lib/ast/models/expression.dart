@@ -6,79 +6,38 @@ abstract class Expression extends Node {
 
 class IntLit extends Expression {
   final String value;
-  IntLit(this.value, super.position);
 
-  factory IntLit.fromJson(Map<String, dynamic> json) {
-    return IntLit(json['value'], deserializeToAst<Position>(json['position']));
-  }
+  IntLit(this.value, super.position);
 
   @override
   List<Object?> get props => [value, position];
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'type': runtimeType.toString(),
-        'value': value,
-        'position': position?.toJson(),
-      };
 }
 
 class DecLit extends Expression {
   final String value;
-  DecLit(this.value, super.position);
 
-  factory DecLit.fromJson(Map<String, dynamic> json) {
-    return DecLit(json['value'], deserializeToAst<Position>(json['position']));
-  }
+  DecLit(this.value, super.position);
 
   @override
   List<Object?> get props => [value, position];
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'type': runtimeType.toString(),
-        'value': value,
-        'position': position?.toJson(),
-      };
 }
 
 class StringLit extends Expression {
   final String value;
-  StringLit(this.value, super.position);
 
-  factory StringLit.fromJson(Map<String, dynamic> json) {
-    return StringLit(
-        json['value'], deserializeToAst<Position>(json['position']));
-  }
+  StringLit(this.value, super.position);
 
   @override
   List<Object?> get props => [value, position];
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'type': runtimeType.toString(),
-        'value': value,
-        'position': position?.toJson(),
-      };
 }
 
 class BoolLit extends Expression {
   final String value;
+
   BoolLit(this.value, super.position);
 
   @override
   List<Object?> get props => [value, position];
-
-  factory BoolLit.fromJson(Map<String, dynamic> json) {
-    return BoolLit(json['value'], deserializeToAst<Position>(json['position']));
-  }
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'type': runtimeType.toString(),
-        'value': value,
-        'position': position?.toJson(),
-      };
 }
 
 class ListLiteralExpression extends Expression {
@@ -86,21 +45,8 @@ class ListLiteralExpression extends Expression {
 
   ListLiteralExpression(this.value, super.position);
 
-  ListLiteralExpression.fromJson(Map<String, dynamic> json)
-      : value = List.from(json['value'])
-            .map((e) => deserializeToAst<Expression>(e))
-            .toList(),
-        super(Position.fromJson(json['position']));
-
   @override
   List<Object?> get props => [value, position];
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'type': runtimeType.toString(),
-        'value': value.map((e) => e.toJson()).toList(),
-        'position': position?.toJson(),
-      };
 }
 
 abstract class BinaryExpression extends Expression {
@@ -122,40 +68,12 @@ enum MathOperand {
   final String symbol;
 
   const MathOperand(this.symbol);
-
-  static MathOperand fromJson(Map<String, dynamic> json) {
-    return switch (json['enumValue']) {
-      'plus' => MathOperand.plus,
-      'minus' => MathOperand.minus,
-      'times' => MathOperand.times,
-      'division' => MathOperand.division,
-      _ => throw UnimplementedError(),
-    };
-  }
 }
 
 class BinaryMathExpression extends BinaryExpression {
   final MathOperand operand;
 
   BinaryMathExpression(super.left, super.right, this.operand, super.position);
-
-  BinaryMathExpression.fromJson(Map<String, dynamic> json)
-      : operand = MathOperand.fromJson(json['operand']),
-        super(
-          deserializeToAst<Expression>(json['left']),
-          deserializeToAst<Expression>(json['right']),
-          deserializeToAst<Position>(json['position']),
-        );
-
-  @override
-  Map<String, dynamic> toJson() {
-    return {
-      "type": runtimeType.toString(),
-      "left": left.toJson(),
-      "right": right.toJson(),
-      "operand": operand.symbol,
-    };
-  }
 
   @override
   List<Object?> get props => [left, operand, right, position];
@@ -165,7 +83,6 @@ enum LogicOperand {
   and("&&"),
   or("||"),
   not("!");
-
 
   final String symbol;
 
@@ -181,29 +98,10 @@ enum LogicOperand {
   }
 }
 
-
 class BinaryLogicExpression extends BinaryExpression {
   final LogicOperand operand;
 
   BinaryLogicExpression(super.left, super.right, this.operand, super.position);
-
-  BinaryLogicExpression.fromJson(Map<String, dynamic> json)
-      : operand = LogicOperand.fromJson(json['operand']),
-        super(
-          deserializeToAst<Expression>(json['left']),
-          deserializeToAst<Expression>(json['right']),
-          deserializeToAst<Position>(json['position']),
-        );
-
-  @override
-  Map<String, dynamic> toJson() {
-    return {
-      "type": runtimeType.toString(),
-      "left": left.toJson(),
-      "right": right.toJson(),
-      "operand": operand.symbol,
-    };
-  }
 
   @override
   List<Object?> get props => [left, operand, right, position];
@@ -220,35 +118,17 @@ enum ComparisonOperand {
   final String symbol;
 
   const ComparisonOperand(this.symbol);
-
-  static ComparisonOperand fromJson(Map<String, dynamic> json) {
-    return switch (json['enumValue']) {
-      '==' => ComparisonOperand.equal,
-      '<' => ComparisonOperand.lessThan,
-      '<=' => ComparisonOperand.lessThanOrEqual,
-      '>' => ComparisonOperand.greaterThan,
-      '>=' => ComparisonOperand.greaterThanOrEqual,
-      '!=' => ComparisonOperand.notEqual,
-      _ => throw UnimplementedError(),
-    };
-  }
 }
 
 class BinaryComparisonExpression extends BinaryExpression {
   final ComparisonOperand operand;
 
-  BinaryComparisonExpression(super.left, super.right, this.operand, super.position);
-
-
-  @override
-  Map<String, dynamic> toJson() {
-    return {
-      "type": runtimeType.toString(),
-      "left": left.toJson(),
-      "right": right.toJson(),
-      "operand": operand,
-    };
-  }
+  BinaryComparisonExpression(
+    super.left,
+    super.right,
+    this.operand,
+    super.position,
+  );
 
   @override
   List<Object?> get props => [left, operand, right, position];
@@ -260,23 +140,8 @@ class UnaryMathExpression extends Expression {
 
   UnaryMathExpression(this.value, this.operand, super.position);
 
-  UnaryMathExpression.fromJson(Map<String, dynamic> json)
-      : operand = MathOperand.fromJson(json['operand']),
-        value = deserializeToAst<Expression>(json['value']),
-        super(deserializeToAst<Position>(json['position']));
-
   @override
   List<Object?> get props => [value, operand, position];
-
-  @override
-  Map<String, dynamic> toJson() {
-    return {
-      "type": runtimeType.toString(),
-      "value": value.toJson(),
-      "operand": operand.symbol,
-      "position": position?.toJson(),
-    };
-  }
 }
 
 class UnaryLogicExpression extends Expression {
@@ -285,23 +150,8 @@ class UnaryLogicExpression extends Expression {
 
   UnaryLogicExpression(this.value, this.operand, super.position);
 
-  UnaryLogicExpression.fromJson(Map<String, dynamic> json)
-      : operand = LogicOperand.fromJson(json['operand']),
-        value = deserializeToAst<Expression>(json['value']),
-        super(deserializeToAst<Position>(json['position']));
-
   @override
   List<Object?> get props => [value, operand, position];
-
-  @override
-  Map<String, dynamic> toJson() {
-    return {
-      "type": runtimeType.toString(),
-      "value": value.toJson(),
-      "operand": operand.symbol,
-      "position": position?.toJson(),
-    };
-  }
 }
 
 class PreIncrementExpression extends Expression {
@@ -309,21 +159,8 @@ class PreIncrementExpression extends Expression {
 
   PreIncrementExpression(this.name, super.position);
 
-  PreIncrementExpression.fromJson(Map<String, dynamic> json)
-      : name = json['name'],
-        super(deserializeToAst<Position>(json['position']));
-
   @override
   List<Object?> get props => [name, position];
-
-  @override
-  Map<String, dynamic> toJson() {
-    return {
-      "type": runtimeType.toString(),
-      "name": name,
-      "position": position?.toJson(),
-    };
-  }
 }
 
 class PostIncrementExpression extends Expression {
@@ -331,21 +168,8 @@ class PostIncrementExpression extends Expression {
 
   PostIncrementExpression(this.name, super.position);
 
-  PostIncrementExpression.fromJson(Map<String, dynamic> json)
-      : name = json['name'],
-        super(deserializeToAst<Position>(json['position']));
-
   @override
   List<Object?> get props => [name, position];
-
-  @override
-  Map<String, dynamic> toJson() {
-    return {
-      "type": runtimeType.toString(),
-      "name": name,
-      "position": position?.toJson(),
-    };
-  }
 }
 
 class PreDecrementExpression extends Expression {
@@ -353,21 +177,8 @@ class PreDecrementExpression extends Expression {
 
   PreDecrementExpression(this.name, super.position);
 
-  PreDecrementExpression.fromJson(Map<String, dynamic> json)
-      : name = json['name'],
-        super(deserializeToAst<Position>(json['position']));
-
   @override
   List<Object?> get props => [name, position];
-
-  @override
-  Map<String, dynamic> toJson() {
-    return {
-      "type": runtimeType.toString(),
-      "name": name,
-      "position": position?.toJson(),
-    };
-  }
 }
 
 class PostDecrementExpression extends Expression {
@@ -375,39 +186,15 @@ class PostDecrementExpression extends Expression {
 
   PostDecrementExpression(this.name, super.position);
 
-  PostDecrementExpression.fromJson(Map<String, dynamic> json)
-      : name = json['name'],
-        super(deserializeToAst<Position>(json['position']));
-
   @override
   List<Object?> get props => [name, position];
-
-  @override
-  Map<String, dynamic> toJson() {
-    return {
-      "type": runtimeType.toString(),
-      "name": name,
-      "position": position?.toJson(),
-    };
-  }
 }
 
 class InputExpression extends Expression {
   InputExpression(super.position);
 
-  InputExpression.fromJson(Map<String, dynamic> json)
-      : super(deserializeToAst<Position>(json['position']));
-
   @override
   List<Object?> get props => [position];
-
-  @override
-  Map<String, dynamic> toJson() {
-    return {
-      "type": runtimeType.toString(),
-      "position": position?.toJson(),
-    };
-  }
 }
 
 class OutputExpression extends Expression {
@@ -415,21 +202,8 @@ class OutputExpression extends Expression {
 
   OutputExpression(this.value, super.position);
 
-  OutputExpression.fromJson(Map<String, dynamic> json)
-      : value = deserializeToAst<Expression>(json['value']),
-        super(deserializeToAst<Position>(json['position']));
-
   @override
   List<Object?> get props => [value, position];
-
-  @override
-  Map<String, dynamic> toJson() {
-    return {
-      "type": runtimeType.toString(),
-      "value": value.toJson(),
-      "position": position?.toJson(),
-    };
-  }
 }
 
 class VarReferenceExpression extends Expression {
@@ -437,43 +211,17 @@ class VarReferenceExpression extends Expression {
 
   VarReferenceExpression(this.name, super.position);
 
-  VarReferenceExpression.fromJson(Map<String, dynamic> json)
-      : name = json['name'],
-        super(deserializeToAst<Position>(json['position']));
-
   @override
   List<Object?> get props => [name, position];
-
-  @override
-  Map<String, dynamic> toJson() {
-    return {
-      "type": runtimeType.toString(),
-      "name": name,
-      "position": position?.toJson(),
-    };
-  }
 }
 
-class ParenthesysExpression extends Expression {
+class ParenthesisExpression extends Expression {
   final Expression value;
 
-  ParenthesysExpression(this.value, super.position);
-
-  ParenthesysExpression.fromJson(Map<String, dynamic> json)
-      : value = deserializeToAst<Expression>(json['value']),
-        super(deserializeToAst<Position>(json['position']));
+  ParenthesisExpression(this.value, super.position);
 
   @override
   List<Object?> get props => [value, position];
-
-  @override
-  Map<String, dynamic> toJson() {
-    return {
-      "type": runtimeType.toString(),
-      "value": value.toJson(),
-      "position": position?.toJson(),
-    };
-  }
 }
 
 class FunctionCallExpression extends Expression {
@@ -482,25 +230,8 @@ class FunctionCallExpression extends Expression {
 
   FunctionCallExpression(this.name, this.parameters, super.position);
 
-  FunctionCallExpression.fromJson(Map<String, dynamic> json)
-      : name = json['name'],
-        parameters = List.from(json['parameters'])
-            .map((e) => deserializeToAst<Expression>(e))
-            .toList(),
-        super(deserializeToAst<Position>(json['position']));
-
   @override
   List<Object?> get props => [name, parameters, position];
-
-  @override
-  Map<String, dynamic> toJson() {
-    return {
-      "type": runtimeType.toString(),
-      "name": name,
-      "parameters": parameters.map((e) => e.toJson()).toList(),
-      "position": position?.toJson(),
-    };
-  }
 }
 
 class ObjectPropertyReferenceExpression extends Expression {
@@ -513,28 +244,8 @@ class ObjectPropertyReferenceExpression extends Expression {
     super.position,
   );
 
-  factory ObjectPropertyReferenceExpression.fromJson(
-    Map<String, dynamic> json,
-  ) {
-    return ObjectPropertyReferenceExpression(
-      json['objectName'],
-      json['propertyName'],
-      deserializeToAst<Position>(json['position']),
-    );
-  }
-
   @override
   List<Object?> get props => [objectName, propertyName, position];
-
-  @override
-  Map<String, dynamic> toJson() {
-    return {
-      "type": runtimeType.toString(),
-      "objectName": objectName,
-      "propertyName": propertyName,
-      "position": position?.toJson(),
-    };
-  }
 }
 
 class ObjectMethodCallExpression extends Expression {
@@ -549,28 +260,6 @@ class ObjectMethodCallExpression extends Expression {
     super.position,
   );
 
-  factory ObjectMethodCallExpression.fromJson(Map<String, dynamic> json) {
-    return ObjectMethodCallExpression(
-      json['objectName'],
-      json['methodName'],
-      List.from(json['parameters'])
-          .map((e) => deserializeToAst<Expression>(e))
-          .toList(),
-      deserializeToAst<Position>(json['position']),
-    );
-  }
-
   @override
   List<Object?> get props => [objectName, methodName, parameters, position];
-
-  @override
-  Map<String, dynamic> toJson() {
-    return {
-      "type": runtimeType.toString(),
-      "objectName": objectName,
-      "methodName": methodName,
-      "parameters": parameters.map((e) => e.toJson()).toList(),
-      "position": position?.toJson(),
-    };
-  }
 }

@@ -237,7 +237,7 @@ extension ExpressionTransformExtension on Expression {
         ..left.process(operation, scope),
       UnaryLogicExpression e => e.value.process(operation, scope),
       UnaryMathExpression e => e.value.process(operation, scope),
-      ParenthesysExpression e => e.value.process(operation, scope),
+      ParenthesisExpression e => e.value.process(operation, scope),
       OutputExpression e => e.value.process(operation, scope),
       ObjectMethodCallExpression e => e.process(operation, scope),
       VarReferenceExpression _ => null,

@@ -103,7 +103,7 @@ protocol.Expression convertExpressionToProtobuf(ast.Expression object) {
         e.toProtobuf(),
     ast.InputExpression e => expression.inputExpression = e.toProtobuf(),
     ast.OutputExpression e => expression.outputExpression = e.toProtobuf(),
-    ast.ParenthesysExpression e => expression.parenthesisExpression =
+    ast.ParenthesisExpression e => expression.parenthesisExpression =
         e.toProtobuf(),
     ast.VarReferenceExpression e => expression.varReferenceExpression =
         e.toProtobuf(),

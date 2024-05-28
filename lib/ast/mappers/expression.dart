@@ -221,10 +221,10 @@ extension OutputExpressionConverterExtension on OutputExpressionContext {
 
 extension ParenthesysExpressionConverterExtension
     on ParenthesysExpressionContext {
-  ParenthesysExpression toAst(bool considerPosition) {
+  ParenthesisExpression toAst(bool considerPosition) {
     final value = this.value!.toAst(considerPosition);
 
-    return ParenthesysExpression(
+    return ParenthesisExpression(
       value,
       toPosition(considerPosition),
     );

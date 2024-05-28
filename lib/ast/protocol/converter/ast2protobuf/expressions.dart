@@ -187,7 +187,7 @@ extension OutputExpression2Protobuf on ast.OutputExpression {
   }
 }
 
-extension ParenthesysExpression2Protobuf on ast.ParenthesysExpression {
+extension ParenthesysExpression2Protobuf on ast.ParenthesisExpression {
     protocol.ParenthesisExpression toProtobuf() {
     return protocol.ParenthesisExpression(
       value: protocol.convertExpressionToProtobuf(value),

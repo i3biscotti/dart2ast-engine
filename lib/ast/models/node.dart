@@ -24,12 +24,7 @@ class Position extends AstObject {
 
   Position(this.start, this.end);
 
-  factory Position.fromJson(Map<String, dynamic> json) {
-    return Position(
-      Point(json['start']['line'], json['start']['column']),
-      Point(json['end']['line'], json['end']['column']),
-    );
-  }
+
 
   @override
   List<Object?> get props => [start, end];
@@ -53,19 +48,12 @@ class Position extends AstObject {
     return start.line >= other.start.line ||
         (start.line == other.start.line && start.column >= other.start.column);
   }
-
-  Map<String, dynamic> toJson() => {
-        'start': start.toJson(),
-        'end': end.toJson(),
-      };
 }
 
 abstract class Node extends AstObject {
   final Position? position;
 
   Node(this.position);
-
-  Map<String, dynamic> toJson();
 }
 
 class ProgramFile extends Node {
@@ -73,22 +61,10 @@ class ProgramFile extends Node {
 
   ProgramFile(this.lines, super.position);
 
-  factory ProgramFile.fromJson(Map<String, dynamic> json) {
-    return ProgramFile(
-      List<Map<String, dynamic>>.from(json['lines'])
-          .map((e) => deserializeToAst<Statement>(e))
-          .toList(),
-      deserializeToAst<Position>(json['position']),
-    );
-  }
+
 
   @override
   List<Object?> get props => [lines, position];
 
-  @override
-  Map<String, dynamic> toJson() => {
-        'type': runtimeType.toString(),
-        'lines': lines.map((e) => e.toJson()).toList(),
-        'position': position?.toJson(),
-      };
+
 }
