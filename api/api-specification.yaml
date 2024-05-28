@@ -6,7 +6,7 @@ info:
 servers:
   - url: http://localhost:8080
 paths:
-  /compile:
+  /generate-code:
     post:
       description: Given the AST, generates the code
       requestBody:
@@ -20,7 +20,7 @@ paths:
                   type: object
                   properties:
                     program:
-                      $ref: '#/components/schemas/Program'
+                      $ref: '#/components/schemas/ProgramFile'
       responses:
         200:
           description: OK
@@ -34,7 +34,7 @@ paths:
                   code:
                     type: string
 
-  /ast:
+  /generate-ast:
     post:
       description: Given the code, generates the AST
       requestBody:
@@ -60,22 +60,10 @@ paths:
                     type: object
                     properties:
                       program:
-                        $ref: '#/components/schemas/Program'
+                        $ref: '#/components/schemas/ProgramFile'
 
 components:
   schemas:
-    Node:
-      type: object
-      properties:
-        position:
-          $ref: '#/components/schemas/Position'
-    Point:
-      type: object
-      properties:
-        line:
-          type: integer
-        col:
-          type: integer
     Position:
       type: object
       properties:
@@ -83,83 +71,531 @@ components:
           $ref: '#/components/schemas/Point'
         end:
           $ref: '#/components/schemas/Point'
-    Program:
-      allOf:
-        - $ref: '#/components/schemas/Node'
-        - type: object
-          properties:
-            lines:
-              type: array
-              items:
-                $ref: '#/components/schemas/Statement'
-
+    Point:
+      type: object
+      properties:
+        line:
+          type: integer
+          format: int32
+        column:
+          type: integer
+          format: int32
+    AstObject:
+      type: object
+      properties:
+        type:
+          oneOf:
+            - $ref: '#/components/schemas/Position'
+            - $ref: '#/components/schemas/Point'
+            - $ref: '#/components/schemas/Node'
+    Node:
+      type: object
+      properties:
+        subtype:
+          oneOf:
+            - $ref: '#/components/schemas/Expression'
+            - $ref: '#/components/schemas/Statement'
+            - $ref: '#/components/schemas/ProgramFile'
+            - $ref: '#/components/schemas/IfBlock'
+            - $ref: '#/components/schemas/ForCondition'
+            - $ref: '#/components/schemas/ItemDefinition'
+            - $ref: '#/components/schemas/Parameter'
+    ProgramFile:
+      type: object
+      properties:
+        lines:
+          type: array
+          items:
+            $ref: '#/components/schemas/Statement'
+        position:
+          $ref: '#/components/schemas/Position'
     Statement:
-      allOf:
-        - $ref: '#/components/schemas/Node'
-        - type: object
-    VariableType:
-      type: string
-      enum:
-        - variable
-        - immutable
-        - constant
-    VariableDeclaration:
-      allOf:
-        - $ref: '#/components/schemas/Statement'
-        - type: object
-          properties:
-            name:
-              type: string
-            type:
-              $ref: '#/components/schemas/VariableType'
-            valueType:
-              $ref: '#/components/schemas/VariableValueType'
-            value:
-              $ref: '#/components/schemas/Expression'
-    Assignment:
+      type: object
+      properties:
+        stmt:
+          oneOf:
+            - $ref: '#/components/schemas/AssignmentStatement'
+            - $ref: '#/components/schemas/ClassDefinitionStatement'
+            - $ref: '#/components/schemas/ExpressionDefinitionStatement'
+            - $ref: '#/components/schemas/IfDefinitionStatement'
+            - $ref: '#/components/schemas/ObjectPropertyAssignmentStatement'
+            - $ref: '#/components/schemas/ReturnStatement'
+            - $ref: '#/components/schemas/VariableDeclarationStatement'
+            - $ref: '#/components/schemas/WhileDefinitionStatement'
+            - $ref: '#/components/schemas/ForDefinitionStatement'
+            - $ref: '#/components/schemas/FunctionDefinitionStatement'
+    AssignmentStatement:
       type: object
       properties:
         name:
           type: string
         value:
           $ref: '#/components/schemas/Expression'
+        position:
+          $ref: '#/components/schemas/Position'
+    ClassDefinitionStatement:
+      type: object
+      properties:
+        encapsulation:
+          type: string
+          enum: [PUBLIC, PRIVATE]
+        name:
+          type: string
+        parentName:
+          type: string
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/VariableDeclarationStatement'
+        constructors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConstructorDefinitionStatement'
+        methods:
+          type: array
+          items:
+            $ref: '#/components/schemas/FunctionDefinitionStatement'
+        parentClassType:
+          $ref: '#/components/schemas/VariableValueType'
+        position:
+          $ref: '#/components/schemas/Position'
+    FunctionDefinitionStatement:
+      type: object
+      properties:
+        name:
+          type: string
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
+        returnType:
+          $ref: '#/components/schemas/VariableValueType'
+        statements:
+          type: array
+          items:
+            $ref: '#/components/schemas/Statement'
+        position:
+          $ref: '#/components/schemas/Position'
+    ConstructorDefinitionStatement:
+      type: object
+      properties:
+        className:
+          type: string
+        constructorName:
+          type: string
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/Statement'
+        thisConstructor:
+          $ref: '#/components/schemas/ThisConstructorDefinition'
+        position:
+          $ref: '#/components/schemas/Position'
+    Parameter:
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+          enum: [TYPED, THIS, SUPER]
+        valueType:
+          $ref: '#/components/schemas/VariableValueType'
+        position:
+          $ref: '#/components/schemas/Position'
+    ExpressionDefinitionStatement:
+      type: object
+      properties:
+        value:
+          $ref: '#/components/schemas/Expression'
+        position:
+          $ref: '#/components/schemas/Position'
+    IfDefinitionStatement:
+      type: object
+      properties:
+        ifBlock:
+          $ref: '#/components/schemas/IfBlock'
+        elseIfBlocks:
+          type: array
+          items:
+            $ref: '#/components/schemas/IfBlock'
+        elseBlock:
+          $ref: '#/components/schemas/IfBlock'
+        position:
+          $ref: '#/components/schemas/Position'
+    IfBlock:
+      type: object
+      properties:
+        condition:
+          $ref: '#/components/schemas/Expression'
+        statements:
+          type: array
+          items:
+            $ref: '#/components/schemas/Statement'
+        blockType:
+          type: string
+          enum: [IF_BLOCK, ELSE_IF_BLOCK, ELSE_BLOCK]
+        position:
+          $ref: '#/components/schemas/Position'
+    WhileDefinitionStatement:
+      type: object
+      properties:
+        condition:
+          $ref: '#/components/schemas/Expression'
+        statements:
+          type: array
+          items:
+            $ref: '#/components/schemas/Statement'
+        position:
+          $ref: '#/components/schemas/Position'
+    ForDefinitionStatement:
+      type: object
+      properties:
+        forCondition:
+          $ref: '#/components/schemas/ForCondition'
+        statements:
+          type: array
+          items:
+            $ref: '#/components/schemas/Statement'
+        position:
+          $ref: '#/components/schemas/Position'
+    ForCondition:
+      type: object
+      properties:
+        condition:
+          oneOf:
+            - $ref: '#/components/schemas/StandardForCondition'
+            - $ref: '#/components/schemas/ForEachCondition'
+    ItemDefinition:
+      type: object
+      properties:
+        varType:
+          type: string
+          enum: [TYPE, VARIABLE, IMMUTABLE, CONSTANT]
+        name:
+          type: string
+        valueType:
+          $ref: '#/components/schemas/VariableValueType'
+        position:
+          $ref: '#/components/schemas/Position'
+    ObjectPropertyAssignmentStatement:
+      type: object
+      properties:
+        objectName:
+          type: string
+        propertyName:
+          type: string
+        value:
+          $ref: '#/components/schemas/Expression'
+        position:
+          $ref: '#/components/schemas/Position'
+    ReturnStatement:
+      type: object
+      properties:
+        value:
+          $ref: '#/components/schemas/Expression'
+        position:
+          $ref: '#/components/schemas/Position'
+    VariableDeclarationStatement:
+      type: object
+      properties:
+        varType:
+          type: string
+          enum: [TYPE, VARIABLE, IMMUTABLE, CONSTANT]
+        name:
+          type: string
+        valueType:
+          $ref: '#/components/schemas/VariableValueType'
+        value:
+          $ref: '#/components/schemas/Expression'
+        position:
+          $ref: '#/components/schemas/Position'
     Expression:
-      allOf:
-        - $ref: '#/components/schemas/Node'
-        - type: object
+      type: object
+      properties:
+        expr:
+          oneOf:
+            - $ref: '#/components/schemas/IntLit'
+            - $ref: '#/components/schemas/DecLit'
+            - $ref: '#/components/schemas/StringLit'
+            - $ref: '#/components/schemas/BoolLit'
+            - $ref: '#/components/schemas/ListLiteralExpression'
+            - $ref: '#/components/schemas/BinaryMathExpression'
+            - $ref: '#/components/schemas/BinaryLogicExpression'
+            - $ref: '#/components/schemas/BinaryComparisonExpression'
+            - $ref: '#/components/schemas/UnaryMathExpression'
+            - $ref: '#/components/schemas/UnaryLogicExpression'
+            - $ref: '#/components/schemas/PreIncrementExpression'
+            - $ref: '#/components/schemas/PostIncrementExpression'
+            - $ref: '#/components/schemas/PreDecrementExpression'
+            - $ref: '#/components/schemas/PostDecrementExpression'
+            - $ref: '#/components/schemas/InputExpression'
+            - $ref: '#/components/schemas/OutputExpression'
+            - $ref: '#/components/schemas/VarReferenceExpression'
+            - $ref: '#/components/schemas/ParenthesisExpression'
+            - $ref: '#/components/schemas/FunctionCallExpression'
+            - $ref: '#/components/schemas/ObjectPropertyReferenceExpression'
+            - $ref: '#/components/schemas/ObjectMethodCallExpression'
     IntLit:
-      allOf:
-        - $ref: '#/components/schemas/Expression'
-        - type: object
-        - properties:
-            value:
-              type: string
+      type: object
+      properties:
+        value:
+          type: string
+        position:
+          $ref: '#/components/schemas/Position'
     DecLit:
-      allOf:
-        - $ref: '#/components/schemas/Expression'
-        - type: object
-        - properties:
-            value:
-              type: string
-    BooleanLit:
-      allOf:
-        - $ref: '#/components/schemas/Expression'
-        - type: object
-        - properties:
-            value:
-              type: string
+      type: object
+      properties:
+        value:
+          type: string
+        position:
+          $ref: '#/components/schemas/Position'
     StringLit:
-      allOf:
-        - $ref: '#/components/schemas/Expression'
-        - type: object
-        - properties:
-            value:
-              type: string
+      type: object
+      properties:
+        value:
+          type: string
+        position:
+          $ref: '#/components/schemas/Position'
+    BoolLit:
+      type: object
+      properties:
+        value:
+          type: string
+        position:
+          $ref: '#/components/schemas/Position'
+    ListLiteralExpression:
+      type: object
+      properties:
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/Expression'
+        position:
+          $ref: '#/components/schemas/Position'
+    BinaryExpression:
+      type: object
+      properties:
+        left:
+          $ref: '#/components/schemas/Expression'
+        right:
+          $ref: '#/components/schemas/Expression'
+    BinaryMathExpression:
+      type: object
+      properties:
+        left:
+          $ref: '#/components/schemas/Expression'
+        right:
+          $ref: '#/components/schemas/Expression'
+        operand:
+          type: string
+          enum: [PLUS, MINUS, TIMES, DIVISION]
+        position:
+          $ref: '#/components/schemas/Position'
+    BinaryLogicExpression:
+      type: object
+      properties:
+        left:
+          $ref: '#/components/schemas/Expression'
+        right:
+          $ref: '#/components/schemas/Expression'
+        operand:
+          type: string
+          enum: [AND, OR, NOT]
+        position:
+          $ref: '#/components/schemas/Position'
+    BinaryComparisonExpression:
+      type: object
+      properties:
+        left:
+          $ref: '#/components/schemas/Expression'
+        right:
+          $ref: '#/components/schemas/Expression'
+        operand:
+          type: string
+          enum: [EQUAL, LESS_THAN, LESS_THAN_OR_EQUAL, GREATER_THAN, GREATER_THAN_OR_EQUAL, NOT_EQUAL]
+        position:
+          $ref: '#/components/schemas/Position'
+    UnaryMathExpression:
+      type: object
+      properties:
+        value:
+          $ref: '#/components/schemas/Expression'
+        operand:
+          type: string
+          enum: [PLUS, MINUS, TIMES, DIVISION]
+        position:
+          $ref: '#/components/schemas/Position'
+    UnaryLogicExpression:
+      type: object
+      properties:
+        value:
+          $ref: '#/components/schemas/Expression'
+        operand:
+          type: string
+          enum: [AND, OR, NOT]
+        position:
+          $ref: '#/components/schemas/Position'
+    PreIncrementExpression:
+      type: object
+      properties:
+        name:
+          type: string
+        position:
+          $ref: '#/components/schemas/Position'
+    PostIncrementExpression:
+      type: object
+      properties:
+        name:
+          type: string
+        position:
+          $ref: '#/components/schemas/Position'
+    PreDecrementExpression:
+      type: object
+      properties:
+        name:
+          type: string
+        position:
+          $ref: '#/components/schemas/Position'
+    PostDecrementExpression:
+      type: object
+      properties:
+        name:
+          type: string
+        position:
+          $ref: '#/components/schemas/Position'
+    InputExpression:
+      type: object
+      properties:
+        position:
+          $ref: '#/components/schemas/Position'
+    OutputExpression:
+      type: object
+      properties:
+        value:
+          $ref: '#/components/schemas/Expression'
+        position:
+          $ref: '#/components/schemas/Position'
+    VarReferenceExpression:
+      type: object
+      properties:
+        name:
+          type: string
+        position:
+          $ref: '#/components/schemas/Position'
+    ParenthesisExpression:
+      type: object
+      properties:
+        value:
+          $ref: '#/components/schemas/Expression'
+        position:
+          $ref: '#/components/schemas/Position'
+    FunctionCallExpression:
+      type: object
+      properties:
+        name:
+          type: string
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Expression'
+        position:
+          $ref: '#/components/schemas/Position'
+    ObjectPropertyReferenceExpression:
+      type: object
+      properties:
+        objectName:
+          type: string
+        propertyName:
+          type: string
+        position:
+          $ref: '#/components/schemas/Position'
+    ObjectMethodCallExpression:
+      type: object
+      properties:
+        objectName:
+          type: string
+        methodName:
+          type: string
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Expression'
+        position:
+          $ref: '#/components/schemas/Position'
+    ThisConstructorDefinition:
+      type: object
+      properties:
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Expression'
+        position:
+          $ref: '#/components/schemas/Position'
     VariableValueType:
-      type: string
-      enum:
-        - Int
-        - Double
-        - String
-        - Boolean
-        - Reference
+      type: object
+      properties:
+        name:
+          type: string
+    ForEachCondition:
+      type: object
+      properties:
+        itemDefinition:
+          $ref: '#/components/schemas/ItemDefinition'
+        expression:
+          $ref: '#/components/schemas/Expression'
+        position:
+          $ref: '#/components/schemas/Position'
+    StandardForCondition:
+      type: object
+      properties:
+        initStatement:
+          $ref: '#/components/schemas/ForInitOrIncrementStatement'
+        controlExpression:
+          $ref: '#/components/schemas/Expression'
+        incrementStatement:
+          $ref: '#/components/schemas/ForInitOrIncrementStatement'
+        position:
+          $ref: '#/components/schemas/Position'
+    ForInitOrIncrementStatement:
+      type: object
+      properties:
+        init_or_increment:
+          oneOf:
+            - $ref: '#/components/schemas/VarDeclarationForStatement'
+            - $ref: '#/components/schemas/AssignmentForStatement'
+            - $ref: '#/components/schemas/ExpressionForStatement'
+    VarDeclarationForStatement:
+      type: object
+      properties:
+        varType:
+          type: string
+          enum: [ TYPE, VARIABLE, IMMUTABLE, CONSTANT ]
+        name:
+          type: string
+        valueType:
+          $ref: '#/components/schemas/VariableValueType'
+        value:
+          $ref: '#/components/schemas/Expression'
+        position:
+          $ref: '#/components/schemas/Position'
+    AssignmentForStatement:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          $ref: '#/components/schemas/Expression'
+        position:
+          $ref: '#/components/schemas/Position'
+    ExpressionForStatement:
+      type: object
+      properties:
+        value:
+          $ref: '#/components/schemas/Expression'
+        position:
+          $ref: '#/components/schemas/Position'
