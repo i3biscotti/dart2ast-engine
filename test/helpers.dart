@@ -17,9 +17,17 @@ Future<String> serializeAstFromResource(String resourceName) async {
   return jsonEncode(serializeAst(root));
 }
 
+File getFileResource(String resourceName) {
+  return File('test/resources/$resourceName.txt');
+}
+
+Future<String> getStringResource(String resourceName) {
+  return getFileResource(resourceName).readAsString();
+}
+
 Future<DartFileContext> parseResource(String resourceName) async {
   final result = await AntlrParserFacade.parseFromFile(
-    File('test/resources/$resourceName.txt'),
+    getFileResource(resourceName),
   );
 
   if (!result.isCorrect()) {

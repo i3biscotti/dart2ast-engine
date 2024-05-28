@@ -152,7 +152,7 @@ void main() {
                 <Statement>[
                   ExpressionDefinitionStatement(
                     BinaryMathExpression(
-                      ParenthesysExpression(
+                      ParenthesisExpression(
                           BinaryMathExpression(
                             IntLit('3', null),
                             IntLit('4', null),
@@ -160,7 +160,7 @@ void main() {
                             null,
                           ),
                           null),
-                      ParenthesysExpression(
+                      ParenthesisExpression(
                           BinaryMathExpression(
                             IntLit('4', null),
                             IntLit('3', null),
