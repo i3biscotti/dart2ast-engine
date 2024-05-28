@@ -158,7 +158,7 @@ void main() {
             """
            |var a = 0;
            |for (int i = 0; i < 3; i++) {
-           |    a = a + 1;
+           |  a = a + 1;
            |}
            """
                 .trimMargin(),
@@ -176,7 +176,7 @@ void main() {
            |final list = [1,2];
            |var b = 0;
            |for (int i in list) {
-           |    b = b + 1;
+           |  b = b + 1;
            |}
            """
                 .trimMargin(),

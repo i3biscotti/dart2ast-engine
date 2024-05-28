@@ -107,7 +107,7 @@ extension ExpressionDefinitionStatementTranspilerExtension
     on ExpressionDefinitionStatement {
   String transpile([int depth = 0]) {
     String valueTranspiler = value.transpile();
-    String expression = '$valueTranspiler;';
+    String expression = '${generateIdentationSpace(depth)}$valueTranspiler;';
     return expression;
   }
 }
@@ -397,13 +397,13 @@ extension ForDefinitionStatementTranspilerExtension on ForDefinitionStatement {
     String forConditionTranspiled = forCondition.transpile();
     String statementsTranspiled =
         statements.map((s) => s.transpile(depth + 1)).join('\n');
-    String forstatement = """
-                          |for ($forConditionTranspiled) {
-                          |${generateIdentationSpace(depth + 1)}$statementsTranspiled
-                          |}
+    String forStatement = """
+                          |${generateIdentationSpace(depth)}for ($forConditionTranspiled) {
+                          |$statementsTranspiled
+                          |${generateIdentationSpace(depth)}}
                            """
         .trimMargin();
-    return forstatement;
+    return forStatement;
   }
 }
 
@@ -446,8 +446,7 @@ extension FunctionDefinitionTranspilerExtension on FunctionDefinitionStatement {
     String bodyTranspiled = "{}";
 
     if (body.isNotEmpty) {
-      var bodyStatementsTranspiled =
-          body.map((e) => e.transpile(depth + 1)).join('\n');
+      var bodyStatementsTranspiled = body.map((e) => e.transpile(depth + 1)).join('\n');
       bodyTranspiled = """
                 |{
                 |$bodyStatementsTranspiled

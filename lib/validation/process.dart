@@ -282,7 +282,7 @@ extension ForDefinitionStatementProcessExtension on ForDefinitionStatement {
         operation(c.initStatement, newScope);
 
         if (c.initStatement is VarDeclarationForStatement) {
-          final variable = c.initStatement as VariableDeclarationStatement;
+          final variable = c.initStatement as VarDeclarationForStatement;
           final isMutable = variable.varType == VariableType.variable ||
               variable.varType == VariableType.type;
 

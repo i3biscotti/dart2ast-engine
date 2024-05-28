@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dart2ast_engine/ast/protocol/converter/ast2protobuf/base.dart';
-import 'package:dart2ast_engine/dart2ast.dart';
 import 'package:dart_frog/dart_frog.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
@@ -18,7 +17,7 @@ void main() {
       () async {
         final context = _MockRequestContext();
         final code = await getStringResource('http/code');
-        final expectedParsed = await parseResource2Ast('http/code');
+        final expectedParsed = await parseResource2Ast('http/code', true);
         final expectedAstSerialized = expectedParsed.toProtobuf();
 
         when(() => context.request).thenReturn(
@@ -65,17 +64,12 @@ void main() {
         final expectedResponse = jsonEncode(
           {
             'success': false,
-            'ast': {
-              'errors': [
-                {
-                  'message': 'Expected to find \';\'',
-                  'position': {
-                    'line': 1,
-                    'column': 1,
-                  },
-                },
-              ],
-            }
+            "errors": [
+              {
+                "message": "Entrypoint main function is missing in program",
+                "position": {"line": 0, "column": 0}
+              }
+            ]
           },
         );
 

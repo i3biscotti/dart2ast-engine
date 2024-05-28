@@ -37,10 +37,10 @@ void main() {
         final expectedResponse = jsonEncode({
           'success': true,
           'code': code,
-        });
+        }).replaceAll('\\r', '');
 
         expect(response.statusCode, equals(HttpStatus.ok));
-        expect(response.body(), completion(equals(expectedResponse)));
+        expect(await response.body(), equals(expectedResponse));
       },
     );
   });
