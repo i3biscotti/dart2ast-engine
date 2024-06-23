@@ -389,8 +389,8 @@ extension ScriptFileValidator on ProgramFile {
   ) {
     processor.addProcess<ForDefinitionStatement>(
       (node, context) {
-        if (node.forCondition is StandardForCondition) {
-          final condition = node.forCondition as StandardForCondition;
+        final condition = node.forCondition;
+        if (condition is StandardForCondition) {
           final controlConditionType =
               extractType(context, condition.controlExpression);
 
@@ -399,6 +399,18 @@ extension ScriptFileValidator on ProgramFile {
               ExpressionMismatchError(
                 VariableValueType.BOOLEAN.typeName,
                 controlConditionType.typeName,
+                node.position?.start,
+              ),
+            );
+          }
+        }else if (condition is ForEachCondition){
+          final iterable = extractType(context, condition.expression);
+
+          if (iterable != VariableValueType.LIST) {
+            addErrorCallback(
+              ExpressionMismatchError(
+                VariableValueType.LIST.typeName,
+                iterable.typeName,
                 node.position?.start,
               ),
             );

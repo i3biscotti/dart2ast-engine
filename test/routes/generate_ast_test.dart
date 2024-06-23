@@ -5,7 +5,7 @@ import 'package:dart2ast_engine/ast/protocol/converter/ast2protobuf/base.dart';
 import 'package:dart_frog/dart_frog.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
-import '../../routes/generate_ast.dart' as route;
+import '../../routes/generate-ast.dart' as route;
 import '../helpers.dart';
 
 class _MockRequestContext extends Mock implements RequestContext {}

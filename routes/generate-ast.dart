@@ -42,7 +42,7 @@ Future<Response> onRequest(RequestContext context) async {
     return Response.json(
       body: {
         'success': true,
-        'ast': result.root!.toProtobuf().writeToJsonMap(),
+        'ast': result.root!.toProtobuf().toProto3Json(),
       },
       statusCode: HttpStatus.ok,
     );

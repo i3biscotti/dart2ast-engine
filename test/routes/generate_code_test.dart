@@ -5,7 +5,7 @@ import 'package:dart_frog/dart_frog.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 import 'dart:io';
-import '../../routes/generate_code.dart' as route;
+import '../../routes/generate-code.dart' as route;
 
 import '../helpers.dart';
 
