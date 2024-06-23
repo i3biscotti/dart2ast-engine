@@ -20,12 +20,16 @@ Future<Response> onRequest(RequestContext context) async {
       );
     }
 
-    final astProtobuf = protocol.ProgramFile.fromJson(jsonEncode(astJson));
+    final astProtobuf = protocol.ProgramFile()
+      ..mergeFromProto3Json(Map<String,dynamic>.from(astJson));
+
     final ast = astProtobuf.toAst();
     final code = ast.transpile();
 
     return Response.json(body: {'success': true, 'code': code});
-  } catch (e) {
+  } catch (e, stacktrace) {
+    print(e);
+    print(stacktrace);
     return Response.json(
       body: {'error': 'Invalid request'},
       statusCode: HttpStatus.badRequest,
