@@ -1,5 +1,6 @@
 import 'package:dart2ast_engine/dart2ast.dart';
 import 'processor/processor.dart';
+import 'package:collection/collection.dart';
 
 extension ScriptFileValidator on ProgramFile {
   List<LangError> validate() {
@@ -55,6 +56,8 @@ extension ScriptFileValidator on ProgramFile {
           expressionType = VariableValueType.DYNAMIC;
         }
 
+        if(expressionType == VariableValueType.DYNAMIC) return;
+
         if (node.valueType != null && expressionType != node.valueType) {
           addErrorCallback(
             VarTypeMismatchError(
@@ -81,6 +84,7 @@ extension ScriptFileValidator on ProgramFile {
     processor.addProcess<AssignmentStatement>((node, scope) {
       final varSign = scope.read<VariableSign>(node.name);
       final expressionType = extractType(scope, node.value);
+      if(expressionType == VariableValueType.DYNAMIC) return;
 
       if (varSign == null) {
         addErrorCallback(VarNotDeclaredError(node.name, node.position?.start));
@@ -195,7 +199,7 @@ extension ScriptFileValidator on ProgramFile {
               .map((e) => extractType(scope, e).typeName)
               .toList();
 
-          if (methodParams != callParams) {
+          if (! ListEquality().equals(methodParams ,callParams)) {
             addErrorCallback(
               FunctionSignMismatchError(
                 "$className.${node.methodName}",
@@ -276,7 +280,9 @@ extension ScriptFileValidator on ProgramFile {
         final callParams =
             node.parameters.map((e) => extractType(scope, e).typeName).toList();
 
-        if (functionParams != callParams) {
+
+
+        if (!ListEquality<String>().equals(functionParams, callParams)) {
           addErrorCallback(
             FunctionSignMismatchError(
               node.name,
@@ -346,6 +352,7 @@ extension ScriptFileValidator on ProgramFile {
         ].forEach(
           (ifBlock) {
             final conditionType = extractType(context, ifBlock.condition!);
+            if(conditionType == VariableValueType.DYNAMIC) return;
 
             if (conditionType != VariableValueType.BOOLEAN) {
               addErrorCallback(
@@ -369,6 +376,7 @@ extension ScriptFileValidator on ProgramFile {
     processor.addProcess<WhileDefinitionStatement>(
       (node, context) {
         final conditionType = extractType(context, node.condition!);
+        if(conditionType == VariableValueType.DYNAMIC) return;
 
         if (conditionType != VariableValueType.BOOLEAN) {
           addErrorCallback(
@@ -393,6 +401,7 @@ extension ScriptFileValidator on ProgramFile {
         if (condition is StandardForCondition) {
           final controlConditionType =
               extractType(context, condition.controlExpression);
+          if(controlConditionType == VariableValueType.DYNAMIC) return;
 
           if (controlConditionType != VariableValueType.BOOLEAN) {
             addErrorCallback(
@@ -405,6 +414,7 @@ extension ScriptFileValidator on ProgramFile {
           }
         }else if (condition is ForEachCondition){
           final iterable = extractType(context, condition.expression);
+          if(iterable == VariableValueType.DYNAMIC) return;
 
           if (iterable != VariableValueType.LIST) {
             addErrorCallback(

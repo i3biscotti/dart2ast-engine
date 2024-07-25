@@ -15,7 +15,7 @@ extension StatementConverterExtension on StatementContext {
       ReturnStatementContext st => st.toAst(considerPosition),
       ClassDefinitionStatementContext st => st.toAst(considerPosition),
       ObjectPropertyAssignmentStatementContext st => st.toAst(considerPosition),
-      _ => throw UnimplementedError()
+      _ => throw UnimplementedError(this.text),
     };
   }
 }

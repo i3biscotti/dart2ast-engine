@@ -82,7 +82,7 @@ ScopeContext _prepareNewScope(
 
   final classConstructorFunctions = classesFound
       .expand((e) => e.constructors)
-      .map(_generateConstructorFunctionSign);
+      .map((c) => _generateConstructorFunctionSign(c, declaredClasses[c.className]!));
 
   declaredFunctions.addEntries(
     classConstructorFunctions.map((e) => MapEntry(e.name, e)),
@@ -108,15 +108,28 @@ FunctionSign _generateFunctionSign(FunctionDefinitionStatement statement) {
 
 FunctionSign _generateConstructorFunctionSign(
   ConstructorDefinitionStatement constr,
+    ClassSign classSign,
 ) {
   var functionName = constr.className;
   functionName +=
       constr.constructorName != null ? '.' + constr.constructorName! : '';
 
+
+  final constrParams = constr.parameters.map((e) {
+    final valueType = e.valueType ??
+        classSign.properties
+            .firstWhere(
+              (p) => p.name == e.name,
+            )
+            .type;
+
+    return ParamSign(e.name, valueType);
+  }).toList();
+
   return FunctionSign(
     functionName,
     VariableValueType(constr.className),
-    constr.parameters.map((e) => ParamSign(e.name, e.valueType!)).toList(),
+    constrParams,
     constr.position,
   );
 }
@@ -200,9 +213,11 @@ extension ClassDefinitionStatementProcessExtension on ClassDefinitionStatement {
       methods.map(_generateFunctionSign).map((e) => MapEntry(e.name, e)),
     );
 
+    final classSign = childContext.read<ClassSign>(name)!;
+
     childContext.declaredFunctions.addEntries(
       constructors
-          .map(_generateConstructorFunctionSign)
+          .map((c) => _generateConstructorFunctionSign(c, classSign))
           .map((e) => MapEntry(e.name, e)),
     );
 
@@ -250,6 +265,7 @@ extension ExpressionTransformExtension on Expression {
       PreDecrementExpression _ => null,
       PreIncrementExpression _ => null,
       FunctionCallExpression _ => null,
+      InputExpression _ => null,
       ObjectPropertyReferenceExpression _ => null,
       _ => throw UnsupportedError(
           'Unknown expression type ${this.runtimeType}',

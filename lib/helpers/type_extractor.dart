@@ -12,6 +12,7 @@ VariableValueType extractType(ScopeContext context, Expression e) =>
       UnaryMathExpression e => extractType(context, e.value),
       ParenthesisExpression e => extractType(context, e.value),
       VarReferenceExpression e => context.read<VariableSign>(e.name)!.type,
+      ListLiteralExpression e => VariableValueType.LIST,
       FunctionCallExpression e => _extractTypeFromFunctionOrClassConstructor(
           e,
           context,
@@ -24,7 +25,7 @@ VariableValueType extractType(ScopeContext context, Expression e) =>
           ref,
           context,
         ),
-      _ => throw UnsupportedError('Unknown expression type')
+      _ => throw UnsupportedError('Unknown expression type' + e.runtimeType.toString()),
     };
 
 VariableValueType _extractTypeFromFunctionOrClassConstructor(

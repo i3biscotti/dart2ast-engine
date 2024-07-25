@@ -268,6 +268,7 @@ extension IfStatementTranspilerExtension on IfDefinitionStatement {
     String ifBlockTranspiler = ifBlock.transpile(depth);
     String elseIfBlocksTranspiler =
         elseIfBlocks.map((b) => b.transpile(depth)).toList().join(', ');
+
     String? elseBlockTranspiler = elseBlock?.transpile(depth);
     String statement =
         '$ifBlockTranspiler$elseIfBlocksTranspiler$elseBlockTranspiler';

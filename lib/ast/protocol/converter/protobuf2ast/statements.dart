@@ -87,7 +87,7 @@ extension ProtocolIfDefinitionStatement on protocol.IfDefinitionStatement {
   ast.IfDefinitionStatement toAst() {
     final _ifBlock = this.ifBlock.toAst();
     final _elseIfBlocks = this.elseIfBlocks.map((e) => e.toAst()).toList();
-    final _elseBlock = this.elseBlock.toAst();
+    final _elseBlock = this.hasElseBlock() ? this.elseBlock.toAst() : null;
 
     final _position = this.position.toAst(hasPosition());
 
