@@ -304,7 +304,7 @@ extension ForDefinitionStatementProcessExtension on ForDefinitionStatement {
 
           newScope.declaredVariables[variable.name] = VariableSign(
             variable.name,
-            variable.valueType ?? extractType(newScope, variable.value!),
+            variable.valueType ?? extractType(newScope, variable.value),
             isMutable,
             variable.position,
           );
